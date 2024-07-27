@@ -17,8 +17,8 @@ public class Database {
         trains.add(t);
     }
 
-    public void addStation() {
-        
+    public void addStation(Station s) {
+        stations.add(s);
     }
 
     public Ring getRing() {
