@@ -24,7 +24,7 @@ public class Visualiser extends JPanel {
         trains = new ArrayList<>();
         stations = new ArrayList<>();
 
-        runThread = new Thread(() -> run());
+        runThread = new Thread(this::run);
         runThread.start();
     }
 
