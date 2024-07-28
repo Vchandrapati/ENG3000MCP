@@ -52,13 +52,12 @@ public class MessageHandler {
     }
 
     private void handleTrainMessage(Server.Client client, String[] inputArr, Database db, VisualiserServer visServer) {
-        double angle = Double.parseDouble(inputArr[2]);
-        double speed = Double.parseDouble(inputArr[3]);
+        double angle = Double.parseDouble(inputArr[1]);
+        double speed = Double.parseDouble(inputArr[2]);
         Train newTrain = new Train(0, 0, speed, angle);
         db.addTrain(newTrain);
         visServer.updateTrains(db.getTrains());
         client.sendMessage("Train confirmed!");
-        System.out.println(inputArr[4]);
         client.lastMessage = "Train confirmed";
     }
 
@@ -68,7 +67,6 @@ public class MessageHandler {
         db.addStation(newStation);
         visServer.updateStations(db.getStations());
         client.sendMessage("Station confirmed!");
-        System.out.println(inputArr[2]);
         client.lastMessage = "Station confirmed";
     }
 }
