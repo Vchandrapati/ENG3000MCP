@@ -1,5 +1,4 @@
-import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -8,8 +7,8 @@ import javax.swing.JPanel;
 
 public class Visualiser extends JPanel {
     private static final Logger logger = Logger.getLogger(Visualiser.class.getName());
-    private static final double SCALE = 10.0; // 1 meter = 10 pixels
-    private static final double FRAME_RATE = 30.0; // 30 frames per second
+    private static final double SCALE = 0.5; // 1 meter = 10 pixels
+    private static final double FRAME_RATE = 100.0; // 30 frames per second
     private static final double TIME_INTERVAL = 1000.0 / FRAME_RATE; // Time interval per frame in milliseconds
     volatile boolean running = true;
     Thread runThread;
@@ -43,7 +42,7 @@ public class Visualiser extends JPanel {
 
     public void run() {
         long time = System.currentTimeMillis();
-        long timeInterval = 1000 / 30; // 30 fps
+        long timeInterval = (long) TIME_INTERVAL; // 30 fps
         while (running) {
             if (System.currentTimeMillis() - time >= timeInterval) {
                 time = System.currentTimeMillis();
@@ -75,6 +74,8 @@ public class Visualiser extends JPanel {
 
         synchronized (stations) {
             for (Station station : stations) {
+                Point pos = ring.findPos(station.angle, station.stationSizeW, station.stationSizeH);
+                station.setPos(pos);
                 station.paint(g);
             }
         }

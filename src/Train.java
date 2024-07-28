@@ -32,12 +32,13 @@ public class Train implements Paintable {
     }
 
     public void updatePosition(double scalePerFrame) {
-        // Update the angle based on speed (converted to pixels per frame)
+        // Update the angle based on scaled speed
         this.angle += this.speed * scalePerFrame;
     }
 
     @Override
     public void paint(Graphics g) {
         g.drawRect(x, y, trainSize, trainSize);
+        g.drawString(String.valueOf(this.speed), x, y - 5);
     }
 }
