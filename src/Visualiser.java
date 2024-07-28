@@ -2,16 +2,16 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.swing.JPanel;
 
 public class Visualiser extends JPanel {
+    private static final Logger logger = Logger.getLogger(Visualiser.class.getName());
     volatile boolean running = true;
     Thread runThread;
-
     int w;
     int h;
-
     Ring ring;
     List<Train> trains;
     List<Station> stations;

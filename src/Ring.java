@@ -1,7 +1,9 @@
 import java.awt.Graphics;
 import java.awt.Point;
+import java.util.logging.Logger;
 
 public class Ring implements Paintable{
+    private static final Logger logger = Logger.getLogger(Ring.class.getName());
     private int width;
     private int height;
     private int offsetX = 300;

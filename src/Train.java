@@ -1,7 +1,9 @@
 import java.awt.Graphics;
 import java.awt.Point;
+import java.util.logging.Logger;
 
-public class Train implements Paintable{
+public class Train implements Paintable {
+    private static final Logger logger = Logger.getLogger(Train.class.getName());
     int x = 0;
     int y = 0;
     int trainSize = 30;

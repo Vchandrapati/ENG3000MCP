@@ -9,11 +9,13 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.*;
 
 public class Server {
+    private static final Logger logger = Logger.getLogger(Server.class.getName());
     static final int PORT = 6666;
-    private VisualiserServer visServer;
-    private Database database;
+    private final VisualiserServer visServer;
+    private final Database database;
     private final Thread connectClientThread;
     private  final Thread manageClientThread;
     private  final ScheduledExecutorService sendClientThread;
@@ -21,8 +23,8 @@ public class Server {
     private volatile boolean manageClientRunning = true;
     private volatile boolean sendClientRunning = true;
     private ServerSocket serverSocket;
-    private List<Client> clients;
-    private MessageHandler messageHandler;
+    private final List<Client> clients;
+    private final MessageHandler messageHandler;
     public Server(VisualiserServer vis, int w, int h) {
         this.visServer = vis;
         database = new Database(new Ring(w, h));
@@ -33,11 +35,11 @@ public class Server {
         clients = new CopyOnWriteArrayList<>();
 
         //starts a thread that only listens for client connections
-        connectClientThread = new Thread(() -> connectClients());
+        connectClientThread = new Thread(this::connectClients);
         connectClientThread.start();
 
         //starts a thread that processes client inputs
-        manageClientThread = new Thread(() -> manageClientsInput());
+        manageClientThread = new Thread(this::manageClientsInput);
         manageClientThread.start();
 
         sendClientThread = Executors.newScheduledThreadPool(1);
@@ -62,12 +64,13 @@ public class Server {
 
     private void connectClients() {
         while (connectClientRunning) {
-            System.out.println("Waiting for new client");
+            logger.info("Server listening for clients on port: " + PORT);
             try {
                 Socket clientSocket = serverSocket.accept();
+                logger.info("Accepted new client connection: " + clientSocket.getRemoteSocketAddress());
                 clients.add(new Client(clientSocket, clients.size()));
             } catch (IOException e) {
-                if(connectClientRunning) System.out.println("Error accepting client connection: " + e.getMessage());
+                logger.log(Level.SEVERE, "Error accepting client connection", e);
             }
         }
     }
@@ -87,9 +90,9 @@ public class Server {
     private void startServer() {
         try {
             serverSocket = new ServerSocket(PORT);
-            System.out.println("Server is running");
+            logger.info("Server completed startup");
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Error starting up server", e);
         }
     }
 
@@ -102,16 +105,19 @@ public class Server {
                 manageClientRunning = false;
                 sendClientRunning = false;
 
+                serverSocket.close();
+
                 manageClientThread.join();
                 connectClientThread.join();
                 sendClientThread.shutdownNow();
 
-                serverSocket.close();
                 closeClients();
             }
-            System.out.println("Server has stopped");
-        } catch (Exception e) {
-            e.printStackTrace();
+            logger.info("Server shutdown successfully");
+        } catch (InterruptedException e) {
+            logger.log(Level.SEVERE, "Error shutting down thread", e);
+        }catch (IOException e) {
+            logger.log(Level.SEVERE, "Error shutting down server", e);
         }
     }
 
@@ -122,6 +128,7 @@ public class Server {
     }
 
     class Client {
+        private static final Logger logger = Logger.getLogger(Client.class.getName());
         Socket clientSocket;
         PrintWriter output;
         BufferedReader input;
@@ -140,8 +147,8 @@ public class Server {
                 this.output = new PrintWriter(clientSocket.getOutputStream(), true);
                 this.input = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
                 this.id = num;
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (IOException e) {
+                logger.log(Level.SEVERE, "Failed to start client IO", e);
             }
         }
 
@@ -151,8 +158,7 @@ public class Server {
                 if(input.ready()) clientInput = input.readLine();
                 else return "";
             } catch (Exception e) {
-                e.printStackTrace();
-                System.out.println("Failed to read client " + id + " input");
+                logger.log(Level.SEVERE, String.format("Failed to read input of client %d", id), e);
             }
             return clientInput;
         }
@@ -161,7 +167,7 @@ public class Server {
             try {
                 output.println(s);
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.log(Level.SEVERE, "Failed to send message", e);
             }
         }
 
@@ -171,9 +177,9 @@ public class Server {
                 if(clientSocket != null) clientSocket.close();
                 output.close();
                 input.close();
-                System.out.println("Client " + id + " closed");
-            } catch (Exception e) {
-                e.printStackTrace();
+                logger.info(String.format("Connection to client %d close", id));
+            } catch (IOException e) {
+                logger.log(Level.SEVERE, "Failed to close client", e);
             }
         }
     }

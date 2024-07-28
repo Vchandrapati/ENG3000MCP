@@ -1,4 +1,7 @@
+import java.util.logging.Logger;
+
 public class MessageHandler {
+    private static final Logger logger = Logger.getLogger(MessageHandler.class.getName());
     public void handleMessage(Server.Client client, String message, Database db, VisualiserServer visServer) {
            String[] input = message.split(",");
 
@@ -27,8 +30,8 @@ public class MessageHandler {
     }
 
     private void handleStationInit(Server.Client client) {
-        client.sendMessage("ACK trainInit");
-        client.clientType = Server.Client.type.TRAIN;
+        client.sendMessage("ACK stationInit");
+        client.clientType = Server.Client.type.STATION;
     }
 
     private void handlePing(Server.Client client, String[] inputArr, Database db) {

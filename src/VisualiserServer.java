@@ -1,8 +1,9 @@
 import java.util.List;
+import java.util.logging.Logger;
 
 public class VisualiserServer {
+    private static final Logger logger = Logger.getLogger(VisualiserServer.class.getName());
     Visualiser vis;
-
     public VisualiserServer(Visualiser vis) {
         this.vis = vis;
     }
