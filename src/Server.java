@@ -12,24 +12,17 @@ import java.util.concurrent.TimeUnit;
 
 public class Server {
     static final int PORT = 6666;
-
     private VisualiserServer visServer;
-
     private Database database;
-
     private final Thread connectClientThread;
     private  final Thread manageClientThread;
     private  final ScheduledExecutorService sendClientThread;
-
     private volatile boolean connectClientRunning = true;
-
     private volatile boolean manageClientRunning = true;
-
     private volatile boolean sendClientRunning = true;
-
     private ServerSocket serverSocket;
-
     private List<Client> clients;
+    private MessageHandler messageHandler;
     public Server(VisualiserServer vis, int w, int h) {
         this.visServer = vis;
         database = new Database(new Ring(w, h));
@@ -49,6 +42,8 @@ public class Server {
 
         sendClientThread = Executors.newScheduledThreadPool(1);
         startClientPoller();
+
+        messageHandler = new MessageHandler();
     }
 
     private void startClientPoller() {
@@ -77,76 +72,18 @@ public class Server {
         }
     }
 
-    //checks each client if they have sent a message
+    // Checks each client if they have sent a message
     private void manageClientsInput() {
         while(manageClientRunning) {
             //adds all connected clients that are waiting
             for (Client client : clients) {
                 String input = client.readClient();
-                processClientsInput(client, input);
+                messageHandler.handleMessage(client, input, database, visServer);
             }
         }
     }
 
-    private void processClientsInput(Client client, String input) {
-        if (client.lastMessage.isEmpty()) {
-            if (input.equals("trainInit") || input.equals("stationInit")) {
-                handleInitialClientMessages(client, input);
-            } else {
-                handleClientMessages(client, input);
-            }
-        }
-    }
-
-    private void handleInitialClientMessages(Client client, String input) {
-        if (input.equals("trainInit")) {
-            client.sendMessage("ack trainInit");
-            client.lastMessage = "trainInit";
-            client.clientType = Client.type.TRAIN;
-        } else if (input.equals("stationInit")) {
-            client.sendMessage("ack stationInit");
-            client.lastMessage = "stationInit";
-            client.clientType = Client.type.STATION;
-        }
-    }
-
-    private void handleClientMessages(Client client, String input) {
-        String[] inputArr = input.split(",");
-        if (client.lastMessage.equals("trainInit") && inputArr.length == 5 && inputArr[0].equals("train")) {
-            handleTrainMessage(client, inputArr);
-        } else if (client.lastMessage.equals("stationInit") && inputArr.length == 5 && inputArr[0].equals("station")) {
-                handleStationMessage(client, inputArr);
-        } else if (inputArr[0].equals("ping")) {
-            handlePingMessage(client, inputArr);
-        } else {
-            client.sendMessage("Error, client gave wrong message");
-        }
-    }
-
-    private void handleTrainMessage(Client client, String[] inputArr) {
-        double angle = Double.parseDouble(inputArr[2]);
-        double speed = Double.parseDouble(inputArr[3]);
-        Train newTrain = new Train(0, 0, speed, angle);
-        database.addTrain(newTrain);
-        visServer.updateTrains(database.getTrains());
-        client.sendMessage("Train confirmed!");
-        System.out.println(inputArr[4]);
-        client.lastMessage = "Train confirmed";
-    }
-
-    private void handleStationMessage(Client client, String[] inputArr) {
-        //TODO
-    }
-
-    private void handlePingMessage(Client client, String[] inputArr) {
-        int id = client.id;
-        Train t = database.getTrain(id);
-        t.speed = Double.valueOf(inputArr[1]);
-        database.updateTrain(t);
-        System.out.println(inputArr[1] + " Given speed of train : Train : " + client.id);
-    }
-
-    //initialises the server
+    // Initialises the server
     private void startServer() {
         try {
             serverSocket = new ServerSocket(PORT);
@@ -156,8 +93,8 @@ public class Server {
         }
     }
 
-    //shutdowns the active threads safely
-    public void stop(){
+    // Closes the active threads safely
+    public void stop() {
         try {
             visServer.stop();
             if(serverSocket != null) {
@@ -184,7 +121,7 @@ public class Server {
         }
     }
 
-    private static class Client {
+    class Client {
         Socket clientSocket;
         PrintWriter output;
         BufferedReader input;
@@ -239,7 +176,6 @@ public class Server {
                 e.printStackTrace();
             }
         }
-
     }
 }
 
