@@ -38,7 +38,7 @@ public class Ring implements Paintable{
         return this.y;
     }
 
-    public Point findPos(double angle, int objectSize) {
+    public Point findPos(double angle, int objectW, int objectH) {
         int x = (int) (width / 2 + (ovalWidth / 2) * Math.cos(angle)) - objectW / 2;
         int y = (int) (height / 2 + (ovalHeight / 2) * Math.sin(angle)) - objectH / 2;
         return new Point(x, y);
