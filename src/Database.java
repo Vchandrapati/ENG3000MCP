@@ -15,10 +15,12 @@ public class Database {
     }
 
     public void addTrain(Train t) {
+        t.setPos(ring.findPos(t.angle, t.trainSize, t.trainSize));
         trains.add(t);
     }
 
     public void addStation(Station s) {
+        s.setPos(ring.findPos(s.angle, s.stationSizeW, s.stationSizeH));
         stations.add(s);
     }
 
@@ -34,8 +36,12 @@ public class Database {
         return trains.get(id);
     }
 
-    public void updateTrain(Train t) {
+    public List<Station> getStations() {
+        return stations;
+    }
 
+    public void updateTrain(Train t) {
+        //TODO
     }
     
 }
