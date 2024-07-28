@@ -4,7 +4,7 @@ public class MessageHandler {
     private static final Logger logger = Logger.getLogger(MessageHandler.class.getName());
     public void handleMessage(Server.Client client, String message, Database db, VisualiserServer visServer) {
            String[] input = message.split(",");
-            messsage = input[0];
+            message = input[0];
 
            switch (message) {
                case "trainInit":
@@ -20,7 +20,7 @@ public class MessageHandler {
                    handleTrainMessage(client, input, db, visServer);
                    break;
                case "station":
-                   handleStationMessage(client, input);
+                   handleStationMessage(client, input, db, visServer);
                    break;
                default:
                    error();
