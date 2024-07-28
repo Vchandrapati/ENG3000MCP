@@ -44,6 +44,7 @@ public class MessageHandler {
 
     private void handlePing(Server.Client client, String[] inputArr, Database db) {
         int id = client.id;
+        System.out.println(id);
         Train t = db.getTrain(id);
         t.speed = Double.parseDouble(inputArr[1]);
         db.updateTrain(t);

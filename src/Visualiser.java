@@ -8,6 +8,9 @@ import javax.swing.JPanel;
 
 public class Visualiser extends JPanel {
     private static final Logger logger = Logger.getLogger(Visualiser.class.getName());
+    private static final double SCALE = 10.0; // 1 meter = 10 pixels
+    private static final double FRAME_RATE = 30.0; // 30 frames per second
+    private static final double TIME_INTERVAL = 1000.0 / FRAME_RATE; // Time interval per frame in milliseconds
     volatile boolean running = true;
     Thread runThread;
     int w;
@@ -64,8 +67,8 @@ public class Visualiser extends JPanel {
 
         synchronized (trains) {
             for (Train train : trains) {
-                train.angle += train.speed;
-                train.setPos(ring.findPos(train.angle, train.trainSize));
+                train.updatePosition(SCALE / FRAME_RATE);
+                train.setPos(ring.findPos(train.angle, train.trainSize, train.trainSize));
                 train.paint(g);
             }
         }
