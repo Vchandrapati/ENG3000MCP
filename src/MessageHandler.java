@@ -4,6 +4,7 @@ public class MessageHandler {
     private static final Logger logger = Logger.getLogger(MessageHandler.class.getName());
     public void handleMessage(Server.Client client, String message, Database db, VisualiserServer visServer) {
            String[] input = message.split(",");
+            messsage = input[0];
 
            switch (message) {
                case "trainInit":
@@ -21,7 +22,14 @@ public class MessageHandler {
                case "station":
                    handleStationMessage(client, input);
                    break;
+               default:
+                   error();
+                   break;
            }
+    }
+    
+    private void error() {
+        //TODO
     }
 
     private void handleTrainInit(Server.Client client) {
@@ -53,7 +61,13 @@ public class MessageHandler {
         client.lastMessage = "Train confirmed";
     }
 
-    private void handleStationMessage(Server.Client client, String[] inputArr) {
-        //TODO
+    private void handleStationMessage(Server.Client client, String[] inputArr, Database db, VisualiserServer visServer) {
+        double angle = Double.parseDouble(inputArr[1]);
+        Station newStation = new Station(0, 0, angle);
+        db.addStation(newStation);
+        visServer.updateStations(db.getStations());
+        client.sendMessage("Station confirmed!");
+        System.out.println(inputArr[2]);
+        client.lastMessage = "Station confirmed";
     }
 }
