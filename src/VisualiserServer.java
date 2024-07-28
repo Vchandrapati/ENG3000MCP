@@ -13,9 +13,9 @@ public class VisualiserServer {
         vis.trains = list;
     }
 
-    public void updateRing(Ring ring) {
+    public void updateTrack(Track track) {
         //will be blocked if locked by thread, however only a 1/30s max lock
-        vis.ring = ring;
+        vis.track = track;
     }
 
     public void updateStations(List<Station> list) {

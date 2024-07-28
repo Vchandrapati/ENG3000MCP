@@ -8,17 +8,17 @@ public class Train implements Paintable {
     int y = 0;
     int trainSize = 30;
     double speed;
-    double angle;
+    double distance;
     enum State {
         OFF, ON, ERROR
     }
     State trainState;
 
-    public Train(int x, int y, double speed, double angle) {
+    public Train(int x, int y, double speed, double distance) {
         this.x = x;
         this.y = y;
         this.speed = speed;
-        this.angle = angle;
+        this.distance = distance;
         trainState = State.OFF;
     }
 
@@ -33,7 +33,7 @@ public class Train implements Paintable {
 
     public void updatePosition(double scalePerFrame) {
         // Update the angle based on scaled speed
-        this.angle += this.speed * scalePerFrame;
+        this.distance += this.speed * scalePerFrame;
     }
 
     @Override

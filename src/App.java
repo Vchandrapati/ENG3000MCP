@@ -23,11 +23,18 @@ public class App {
 
             setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
             setPreferredSize(new Dimension(w, h));
-            setLocation(wMax/2 - w/2, hMax/2 - h/2);
+            setLocation(wMax / 2 - w / 2, hMax / 2 - h / 2);
             setSize(w, h);
 
             Visualiser vis = new Visualiser(w, h);
             add(vis);
+
+            // Example of adding stations
+            Station station1 = new Station(50);
+            Station station2 = new Station(200);
+
+            vis.addStation(station1);
+            vis.addStation(station2);
 
             Server server = new Server(new VisualiserServer(vis), w, h);
 

@@ -63,7 +63,7 @@ public class MessageHandler {
 
     private void handleStationMessage(Server.Client client, String[] inputArr, Database db, VisualiserServer visServer) {
         double angle = Double.parseDouble(inputArr[1]);
-        Station newStation = new Station(0, 0, angle);
+        Station newStation = new Station(angle);
         db.addStation(newStation);
         visServer.updateStations(db.getStations());
         client.sendMessage("Station confirmed!");

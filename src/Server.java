@@ -27,8 +27,9 @@ public class Server {
     private final MessageHandler messageHandler;
     public Server(VisualiserServer vis, int w, int h) {
         this.visServer = vis;
-        database = new Database(new Ring(w, h));
-        vis.updateRing(database.getRing());
+        Track track = new Track();
+        database = new Database(track);
+        vis.updateTrack(track);
 
         startServer();
 

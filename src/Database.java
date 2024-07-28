@@ -4,28 +4,28 @@ import java.util.logging.Logger;
 
 public class Database {
     private static final Logger logger = Logger.getLogger(Database.class.getName());
-    private Ring ring;
+    private Track track;
     private List<Train> trains;
     private List<Station> stations;
 
-    public Database(Ring ring) {
-        this.ring = ring;
+    public Database(Track ring) {
+        this.track = track;
         trains = new ArrayList<>();
         stations = new ArrayList<>();
     }
 
     public void addTrain(Train t) {
-        t.setPos(ring.findPos(t.angle, t.trainSize, t.trainSize));
+        t.setPos(track.findPos(t.distance));
         trains.add(t);
     }
 
     public void addStation(Station s) {
-        s.setPos(ring.findPos(s.angle, s.stationSizeW, s.stationSizeH));
+        s.setPos(track.findPos(s.distance));
         stations.add(s);
     }
 
-    public Ring getRing() {
-        return ring;
+    public Track getTrack() {
+        return track;
     }
 
     public List<Train> getTrains() {
