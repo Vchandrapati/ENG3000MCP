@@ -1,12 +1,18 @@
 import java.net.*;
 import java.io.*;
+import java.util.Random;
 
 
 public class TestClient {
     private Socket clientSocket;
     private PrintWriter out;
     private BufferedReader in;
-    double speed;
+    double min = 0.01;
+    double max = 0.5;
+    double range = max - min;
+    double speed = (Math.random() * range) + min;
+    private boolean running = true;
+    int ID;
 
     public void startConnection(String ip, int port) throws Exception {
         clientSocket = new Socket(ip, port);
@@ -16,7 +22,31 @@ public class TestClient {
         print("Connected to " + ip + " on " + port);
 
         String r = sendMessage("trainInit");
-        if(r.equals("ACK trainInit")) sendMessage("train,0,0.2");
+        if(r.equals("ACK trainInit")) sendMessage("train,0," + speed);
+        new Thread(this::listener).start();
+    }
+
+    public void listener() {
+        try {
+            while (running) {
+                String message = readMessage();
+                if(message != null) {
+                    String[] input = message.split(",");
+                    message = input[0];
+                    if(message.equals("ID")) {
+                        sendMessage("CONFIRM");
+                        ID = Integer.parseInt(input[1]);
+                        System.out.println(ID);
+                    }
+
+                    if(message.equals("STATUS")) {
+                        sendMessage("STATUS," + ID + "," + speed);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public String sendMessage(String msg) {

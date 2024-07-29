@@ -1,5 +1,7 @@
 import java.awt.*;
 import java.awt.geom.AffineTransform;
+import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.logging.Logger;
 
 public class Train implements Paintable, Constants {
@@ -10,14 +12,16 @@ public class Train implements Paintable, Constants {
     double speed;
     double distance;
     double angle;
+    int ID;
     enum State {
         OFF, ON, ERROR
     }
     State trainState;
 
-    public Train(double speed, double distance) {
+    public Train(int ID, double speed, double distance) {
         this.speed = speed;
         this.distance = distance;
+        this.ID = ID;
         trainState = State.OFF;
     }
 
@@ -50,14 +54,17 @@ public class Train implements Paintable, Constants {
         g2d.rotate(angle);
 
         // Draw the train centered at the origin
-        g2d.drawRect(-trainW / 2, -trainH/ 2, trainW, trainH);
+        g2d.setColor(Color.GREEN);
+        g2d.fillRect(-trainW / 2, -trainH/ 2, trainW, trainH);
 
+        BigDecimal roundedSpeed = new BigDecimal(speed);
+        roundedSpeed = roundedSpeed.round(new MathContext(3));
         if(angle < 4 && angle > 2) {
             g2d.rotate(Math.PI);
-            g2d.drawString(String.valueOf(this.speed), -trainW / 2, trainH / 2 + 15);
+            g2d.drawString("ID: " + ID + " Speed: " + roundedSpeed, -trainW / 2, trainH / 2 + 15);
         }
         else
-            g2d.drawString(String.valueOf(this.speed), -trainW / 2, -trainH / 2 - 5);
+            g2d.drawString("ID: " + ID + " Speed: " + roundedSpeed, -trainW / 2, -trainH / 2 - 5);
 
         g2d.setTransform(old); // Restore the original transform
     }

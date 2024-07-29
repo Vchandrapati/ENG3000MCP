@@ -1,10 +1,11 @@
 import java.util.logging.Logger;
 
 public class MessageHandler {
+    int ID = 0;
     private static final Logger logger = Logger.getLogger(MessageHandler.class.getName());
     public void handleMessage(Server.Client client, String message, Database db, VisualiserServer visServer) {
            String[] input = message.split(",");
-            message = input[0];
+           message = input[0];
 
            switch (message) {
                case "trainInit":
@@ -13,23 +14,31 @@ public class MessageHandler {
                case "stationInit":
                    handleStationInit(client);
                    break;
-               case "PING":
-                   handlePing(client, input, db);
-                   break;
                case "train":
                    handleTrainMessage(client, input, db, visServer);
                    break;
                case "station":
                    handleStationMessage(client, input, db, visServer);
                    break;
+               case "STATUS":
+                   handleStatusMessage(client, input, db);
+                   break;
                default:
-                   error();
+                   defaultResponse(client);
                    break;
            }
     }
-    
-    private void error() {
-        //TODO
+
+    private void handleStatusMessage(Server.Client client, String[] input, Database db) {
+        int id = client.id;
+        Train t = db.getTrain(id);
+        t.speed = Double.parseDouble(input[1]);
+        db.updateTrain(t);
+        System.out.println(input[1] + " Given speed of train : Train : " + client.id);
+    }
+
+    private void defaultResponse(Server.Client client) {
+        client.sendMessage("OK");
     }
 
     private void handleTrainInit(Server.Client client) {
@@ -42,23 +51,14 @@ public class MessageHandler {
         client.clientType = Server.Client.type.STATION;
     }
 
-    private void handlePing(Server.Client client, String[] inputArr, Database db) {
-        int id = client.id;
-        System.out.println(id);
-        Train t = db.getTrain(id);
-        t.speed = Double.parseDouble(inputArr[1]);
-        db.updateTrain(t);
-        System.out.println(inputArr[1] + " Given speed of train : Train : " + client.id);
-    }
-
     private void handleTrainMessage(Server.Client client, String[] inputArr, Database db, VisualiserServer visServer) {
         double startDistance = Double.parseDouble(inputArr[1]);
         double speed = Double.parseDouble(inputArr[2]);
-        Train newTrain = new Train(speed, startDistance);
-        db.addTrain(newTrain);
+        Train newTrain = new Train(client.id, speed, startDistance);
+        db.addTrain(client.id, newTrain);
         visServer.updateTrains(db.getTrains());
-        client.sendMessage("Train confirmed!");
-        client.lastMessage = "Train confirmed";
+        client.sendMessage("ID " + client.id);
+        client.lastMessage = "ID " + client.id;
     }
 
     private void handleStationMessage(Server.Client client, String[] inputArr, Database db, VisualiserServer visServer) {

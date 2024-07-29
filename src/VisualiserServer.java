@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 public class VisualiserServer {
@@ -8,7 +9,7 @@ public class VisualiserServer {
         this.vis = vis;
     }
 
-    public void updateTrains(List<Train> list) {
+    public void updateTrains(Map<Integer, Train> list) {
         //will be blocked if locked by thread, however only a 1/30s max lock
         vis.trains = list;
     }

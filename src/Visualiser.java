@@ -1,6 +1,8 @@
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import javax.swing.JPanel;
@@ -13,7 +15,7 @@ public class Visualiser extends JPanel implements Constants{
     int w;
     int h;
     Track track;
-    List<Train> trains;
+    Map<Integer, Train> trains;
     List<Station> stations;
 
     List<Checkpoint> checkpoints;
@@ -22,7 +24,7 @@ public class Visualiser extends JPanel implements Constants{
         this.w = w;
         this.h = h;
 
-        trains = new ArrayList<>();
+        trains = new HashMap<>();
         stations = new ArrayList<>();
         checkpoints = new ArrayList<>();
 
@@ -54,9 +56,7 @@ public class Visualiser extends JPanel implements Constants{
 
     public void updatePositions() {
         synchronized (trains) {
-            for (Train train : trains) {
-                train.updatePosition(1 / FRAME_RATE, track); // Update the train's position
-            }
+            trains.forEach((k, v) -> v.updatePosition(1 / FRAME_RATE, track));
         }
     }
 
@@ -72,9 +72,7 @@ public class Visualiser extends JPanel implements Constants{
         track.paint(g2d);
 
         synchronized (trains) {
-            for (Train train : trains) {
-                train.paint(g2d); // Paint the trains
-            }
+            trains.forEach((k, v) -> v.paint(g2d));
         }
 
         synchronized (stations) {

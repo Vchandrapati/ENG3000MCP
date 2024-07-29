@@ -1,4 +1,3 @@
-import java.awt.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -12,9 +11,8 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.*;
 
-public class Server {
+public class Server implements Constants {
     private static final Logger logger = Logger.getLogger(Server.class.getName());
-    static final int PORT = 6666;
     private final VisualiserServer visServer;
     private final Database database;
     private final Thread connectClientThread;
@@ -61,7 +59,7 @@ public class Server {
             }
         };
 
-        sendClientThread.scheduleAtFixedRate(pingTask, 0, 1, TimeUnit.SECONDS); // Ping clients every second
+        sendClientThread.scheduleAtFixedRate(pingTask, 0, 2, TimeUnit.SECONDS); // Ping clients every second
     }
 
     private void connectClients() {
@@ -83,7 +81,9 @@ public class Server {
             //adds all connected clients that are waiting
             for (Client client : clients) {
                 String input = client.readClient();
-                messageHandler.handleMessage(client, input, database, visServer);
+
+                if(!input.isEmpty())
+                    messageHandler.handleMessage(client, input, database, visServer);
             }
         }
     }
@@ -134,21 +134,21 @@ public class Server {
         Socket clientSocket;
         PrintWriter output;
         BufferedReader input;
-        int id;
         String lastMessage = "";
+        public int id = 0;
         enum type {
             TRAIN, STATION, UNKNOWN
         }
 
         type clientType;
 
-        public Client(Socket clientSocket, int num) {
+        public Client(Socket clientSocket, int ID) {
             try {
                 this.clientType = type.UNKNOWN;
                 this.clientSocket = clientSocket;
                 this.output = new PrintWriter(clientSocket.getOutputStream(), true);
                 this.input = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-                this.id = num;
+                this.id = ID;
             } catch (IOException e) {
                 logger.log(Level.SEVERE, "Failed to start client IO", e);
             }

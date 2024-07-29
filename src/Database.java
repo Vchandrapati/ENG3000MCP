@@ -1,22 +1,35 @@
+import javax.xml.crypto.Data;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Logger;
 
 public class Database {
     private static final Logger logger = Logger.getLogger(Database.class.getName());
     private Track track;
-    private List<Train> trains;
+    private Map<Integer, Train> trains;
     private List<Station> stations;
 
-    public Database(Track track) {
+    private static Database instance;
+
+    private Database(Track track) {
         this.track = track;
-        trains = new ArrayList<>();
+        trains = new HashMap<>();
         stations = new ArrayList<>();
     }
 
-    public void addTrain(Train t) {
+    public static synchronized Database getInstance(Track track) {
+        if(instance == null)
+            instance = new Database(track);
+
+        return instance;
+    }
+
+    public void addTrain(int ID, Train t) {
         t.setPos(track.findPos(t.distance));
-        trains.add(t);
+        trains.put(ID, t);
     }
 
     public void addStation(Station s) {
@@ -28,7 +41,7 @@ public class Database {
         return track;
     }
 
-    public List<Train> getTrains() {
+    public Map<Integer, Train> getTrains() {
         return trains;
     }
 

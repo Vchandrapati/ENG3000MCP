@@ -20,7 +20,7 @@ public class App {
             setupWindow();
             Visualiser vis = setupVisualizer();
             Track track = new Track(new Point(300, 500));
-            Database db = new Database(track);
+            Database db = Database.getInstance(track);
             Server server = new Server(new VisualiserServer(vis), db, track);
             setupWindowListener(server);
         }
