@@ -2,10 +2,12 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Track implements Paintable{
+public class Track implements Paintable {
     private List<TrackSegment> segments;
     private List<Point> points;
     Point startPoint;
+
+    double totalLength = 0;
 
     public Track(Point startPoint) {
         this.startPoint = startPoint;
@@ -29,7 +31,9 @@ public class Track implements Paintable{
 
     public void generatePoints() {
         points.clear();
-        for(TrackSegment segment : segments) {
+        totalLength = 0;
+        for (TrackSegment segment : segments) {
+            totalLength += segment.getLength();
             points.addAll(segment.generatePoints());
         }
     }
@@ -62,5 +66,18 @@ public class Track implements Paintable{
         }
         // If distance is out of range, return last point
         return points.get(points.size() - 1);
+    }
+
+
+    public double getTangentAngle(double distance) {
+        double accumulatedDistance = 0.0;
+        for (TrackSegment segment : segments) {
+            double segmentLength = segment.getLength();
+            if (accumulatedDistance + segmentLength >= distance) {
+                return segment.getTangentAngle(distance - accumulatedDistance);
+            }
+            accumulatedDistance += segmentLength;
+        }
+        return 0.0; // Default angle if distance is out of range
     }
 }

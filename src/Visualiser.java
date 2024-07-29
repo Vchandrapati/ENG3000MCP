@@ -5,11 +5,9 @@ import java.util.logging.Logger;
 
 import javax.swing.JPanel;
 
-public class Visualiser extends JPanel {
+public class Visualiser extends JPanel implements Constants{
     private static final Logger logger = Logger.getLogger(Visualiser.class.getName());
-    public static final double SCALE = 2; // 1 meter = 0.5 pixels
-    private static final double FRAME_RATE = 60.0; // 30 frames per second
-    private static final double TIME_INTERVAL = 1000.0 / FRAME_RATE; // Time interval per frame in milliseconds
+    private static final double TIME_INTERVAL = SCALE / FRAME_RATE;
     volatile boolean running = true;
     Thread runThread;
     int w;

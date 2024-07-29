@@ -16,7 +16,7 @@ public class TestClient {
         print("Connected to " + ip + " on " + port);
 
         String r = sendMessage("trainInit");
-        if(r.equals("ACK trainInit")) sendMessage("train,0,1");
+        if(r.equals("ACK trainInit")) sendMessage("train,0,0.2");
     }
 
     public String sendMessage(String msg) {

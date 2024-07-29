@@ -3,11 +3,9 @@ import java.util.ArrayList;
 
 class CurveSegment extends TrackSegment {
     private Point center;
-    private Point end;
     private double radius;
     private double startAngle;
     private double sweepAngle;
-    public static final double SCALE = 1000; // 1 meter = 1000 pixels
 
     /**
      * Constructor to create a curve segment.
@@ -47,7 +45,6 @@ class CurveSegment extends TrackSegment {
             int y = (int) (center.y + radius * Math.sin(angle));
             points.add(new Point(x, y));
         }
-        end = points.getLast();
         return points;
     }
 
@@ -58,4 +55,12 @@ class CurveSegment extends TrackSegment {
         int y = (int) (center.y + radius * Math.sin(angle));
         return new Point(x, y);
     }
+
+    @Override
+    public double getTangentAngle(double distance) {
+        // Calculate the angle of the tangent to the curve at the given distance
+        double angle = startAngle + (distance / radius) * Math.signum(sweepAngle);
+        return angle + (sweepAngle > 0 ? Math.PI / 2 : -Math.PI / 2); // Perpendicular to the radius
+    }
+
 }

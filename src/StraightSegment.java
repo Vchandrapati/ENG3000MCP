@@ -4,7 +4,6 @@ import java.util.ArrayList;
 public class StraightSegment extends TrackSegment {
     private final Point start;
     private final Point end;
-    public static final double SCALE = 1000.0; // 1 meter = 1000 pixels
 
     public StraightSegment(double startX, double startY, double lengthMeters, double angleDegrees) {
         double lengthPixels = lengthMeters * SCALE;
@@ -41,4 +40,11 @@ public class StraightSegment extends TrackSegment {
         int y = (int) (start.y + ratio * (end.y - start.y));
         return new Point(x, y);
     }
+
+    @Override
+    public double getTangentAngle(double distance) {
+        // Calculate the angle of the segment in radians
+        return Math.atan2(end.y - start.y, end.x - start.x);
+    }
+
 }
