@@ -8,7 +8,7 @@ public class Database {
     private List<Train> trains;
     private List<Station> stations;
 
-    public Database(Track ring) {
+    public Database(Track track) {
         this.track = track;
         trains = new ArrayList<>();
         stations = new ArrayList<>();

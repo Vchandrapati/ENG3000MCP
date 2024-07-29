@@ -13,19 +13,10 @@ public class TestClient {
         out = new PrintWriter(clientSocket.getOutputStream(), true);
         in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
-        print("Connected to " + ip + " : " + port);
+        print("Connected to " + ip + " on " + port);
 
         String r = sendMessage("trainInit");
-        if(r.equals("ACK trainInit")) sendMessage("train,0,0.1");
-
-        r = sendMessage("stationInit");
-        if(r.equals("ACK stationInit")) sendMessage("station,1");
-
-        while (true) {
-            if (readMessage().equals("STATUS")) {
-
-            }
-        }
+        if(r.equals("ACK trainInit")) sendMessage("train,0,1");
     }
 
     public String sendMessage(String msg) {

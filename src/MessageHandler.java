@@ -52,9 +52,9 @@ public class MessageHandler {
     }
 
     private void handleTrainMessage(Server.Client client, String[] inputArr, Database db, VisualiserServer visServer) {
-        double angle = Double.parseDouble(inputArr[1]);
+        double startDistance = Double.parseDouble(inputArr[1]);
         double speed = Double.parseDouble(inputArr[2]);
-        Train newTrain = new Train(0, 0, speed, angle);
+        Train newTrain = new Train(speed, startDistance);
         db.addTrain(newTrain);
         visServer.updateTrains(db.getTrains());
         client.sendMessage("Train confirmed!");

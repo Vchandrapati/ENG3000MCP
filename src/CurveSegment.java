@@ -23,7 +23,6 @@ class CurveSegment extends TrackSegment {
         this.center = calculateCurveCenter(startPoint, this.radius, startAngleDegrees);
     }
 
-
     private Point calculateCurveCenter(Point startPoint, double radius, double startAngleDegrees) {
         double angleRad = Math.toRadians(startAngleDegrees);
         int centerX = (int) (startPoint.x - radius * Math.cos(angleRad));

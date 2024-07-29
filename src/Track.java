@@ -5,8 +5,10 @@ import java.util.List;
 public class Track implements Paintable{
     private List<TrackSegment> segments;
     private List<Point> points;
+    Point startPoint;
 
-    public Track() {
+    public Track(Point startPoint) {
+        this.startPoint = startPoint;
         segments = new ArrayList<>();
         points = new ArrayList<>();
         generateSegments();
@@ -15,11 +17,14 @@ public class Track implements Paintable{
 
     private void generateSegments() {
         // Add the first straight segment
-        StraightSegment tmpS = new StraightSegment(50, 250, 0.2, 0);
-        segments.add(tmpS);
-        CurveSegment tmpC = new CurveSegment(tmpS.getEnd(), 0.08, 180, 90);
+        CurveSegment tmpC = new CurveSegment(startPoint, 0.20, 90, 180);
         segments.add(tmpC);
-        segments.add(new StraightSegment(tmpC.getEnd().x, tmpC.getEnd().y, 0.2, 0));
+        StraightSegment tmpS = new StraightSegment(tmpC.getEnd().x, tmpC.getEnd().y, 0.50, 0);
+        segments.add(tmpS);
+        tmpC = new CurveSegment(tmpS.getEnd(), 0.20, -90, 180);
+        segments.add(tmpC);
+        tmpS = new StraightSegment(tmpC.getEnd().x, tmpC.getEnd().y, -0.50, 0);
+        segments.add(tmpS);
     }
 
     public void generatePoints() {
@@ -31,10 +36,17 @@ public class Track implements Paintable{
 
     @Override
     public void paint(Graphics g) {
+        Graphics2D g2d = (Graphics2D) g;  // Cast Graphics to Graphics2D
+        g2d.setColor(Color.BLACK);  // Set the color for the lines
+
+        // Set the stroke to a thicker line
+        float thickness = 3.0f;  // Adjust the thickness as needed
+        g2d.setStroke(new BasicStroke(thickness));
+
         for (int i = 0; i < points.size() - 1; i++) {
             Point p1 = points.get(i);
             Point p2 = points.get(i + 1);
-            g.drawLine(p1.x, p1.y, p2.x, p2.y);
+            g2d.drawLine(p1.x, p1.y, p2.x, p2.y);
         }
     }
 

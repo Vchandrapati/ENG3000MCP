@@ -4,8 +4,8 @@ import java.util.logging.Logger;
 
 public class Train implements Paintable {
     private static final Logger logger = Logger.getLogger(Train.class.getName());
-    int x = 0;
-    int y = 0;
+    int x;
+    int y;
     int trainSize = 30;
     double speed;
     double distance;
@@ -14,9 +14,7 @@ public class Train implements Paintable {
     }
     State trainState;
 
-    public Train(int x, int y, double speed, double distance) {
-        this.x = x;
-        this.y = y;
+    public Train(double speed, double distance) {
         this.speed = speed;
         this.distance = distance;
         trainState = State.OFF;
@@ -31,9 +29,11 @@ public class Train implements Paintable {
         this.y = (int) p.getY();
     }
 
-    public void updatePosition(double scalePerFrame) {
-        // Update the angle based on scaled speed
-        this.distance += this.speed * scalePerFrame;
+    public void updatePosition(double scalePerFrame, Track track) {
+        double distancePerFrame = this.speed * scalePerFrame;
+        this.distance += distancePerFrame; // Update the distance traveled in meters
+        Point newPos = track.findPos(this.distance); // Find the new position on the track
+        setPos(newPos); // Update the train's position
     }
 
     @Override

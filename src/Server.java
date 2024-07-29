@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -25,10 +26,10 @@ public class Server {
     private ServerSocket serverSocket;
     private final List<Client> clients;
     private final MessageHandler messageHandler;
-    public Server(VisualiserServer vis, int w, int h) {
+    public Server(VisualiserServer vis, Database db, Track track) {
         this.visServer = vis;
-        Track track = new Track();
-        database = new Database(track);
+        this.database = db;
+
         vis.updateTrack(track);
 
         startServer();
