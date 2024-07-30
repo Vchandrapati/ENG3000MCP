@@ -12,16 +12,16 @@ public class Train implements Paintable, Constants {
     double speed;
     double distance;
     double angle;
-    int ID;
+    int id;
     enum State {
         OFF, ON, ERROR
     }
     State trainState;
 
-    public Train(int ID, double speed, double distance) {
+    public Train(int id, double speed, double distance) {
         this.speed = speed;
         this.distance = distance;
-        this.ID = ID;
+        this.id = id;
         trainState = State.OFF;
     }
 
@@ -31,7 +31,7 @@ public class Train implements Paintable, Constants {
     }
 
     public void updatePosition(double scalePerFrame, Track track) {
-        double distancePerFrame = this.speed * SCALE * scalePerFrame;
+        double distancePerFrame = this.speed * scalePerFrame;
         this.distance += distancePerFrame; // Update the distance traveled in meters
 
         double totalTrackLength = track.totalLength;
@@ -55,16 +55,16 @@ public class Train implements Paintable, Constants {
 
         // Draw the train centered at the origin
         g2d.setColor(Color.GREEN);
-        g2d.fillRect(-trainW / 2, -trainH/ 2, trainW, trainH);
+        g2d.fillRect(-trainW / 2, -trainH / 2, trainW, trainH);
 
-        BigDecimal roundedSpeed = new BigDecimal(speed);
+        BigDecimal roundedSpeed = BigDecimal.valueOf(speed);
         roundedSpeed = roundedSpeed.round(new MathContext(3));
         if(angle < 4 && angle > 2) {
             g2d.rotate(Math.PI);
-            g2d.drawString("ID: " + ID + " Speed: " + roundedSpeed, -trainW / 2, trainH / 2 + 15);
+            g2d.drawString("ID: " + id + " Speed: " + roundedSpeed, -trainW / 2, trainH / 2 + 15);
         }
         else
-            g2d.drawString("ID: " + ID + " Speed: " + roundedSpeed, -trainW / 2, -trainH / 2 - 5);
+            g2d.drawString("ID: " + id + " Speed: " + roundedSpeed, -trainW / 2, -trainH / 2 - 5);
 
         g2d.setTransform(old); // Restore the original transform
     }

@@ -20,13 +20,14 @@ public class Visualiser extends JPanel implements Constants{
 
     List<Checkpoint> checkpoints;
 
-    public Visualiser(int w, int h) {
+    public Visualiser(int w, int h, Track track) {
         this.w = w;
         this.h = h;
 
         trains = new HashMap<>();
         stations = new ArrayList<>();
         checkpoints = new ArrayList<>();
+        this.track = track;
 
         runThread = new Thread(this::run);
         runThread.start();

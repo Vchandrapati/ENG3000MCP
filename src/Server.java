@@ -14,7 +14,6 @@ import java.util.logging.*;
 public class Server implements Constants {
     private static final Logger logger = Logger.getLogger(Server.class.getName());
     private final VisualiserServer visServer;
-    private final Database database;
     private final Thread connectClientThread;
     private  final Thread manageClientThread;
     private  final ScheduledExecutorService sendClientThread;
@@ -24,11 +23,12 @@ public class Server implements Constants {
     private ServerSocket serverSocket;
     private final List<Client> clients;
     private final MessageHandler messageHandler;
-    public Server(VisualiserServer vis, Database db, Track track) {
-        this.visServer = vis;
-        this.database = db;
+    private final Database db;
 
+    public Server(VisualiserServer vis, Track track, Database db) {
+        this.visServer = vis;
         vis.updateTrack(track);
+        this.db = db;
 
         startServer();
 
@@ -45,7 +45,7 @@ public class Server implements Constants {
         sendClientThread = Executors.newScheduledThreadPool(1);
         startClientPoller();
 
-        messageHandler = new MessageHandler();
+        this.messageHandler = new MessageHandler();
     }
 
     private void startClientPoller() {
@@ -83,7 +83,7 @@ public class Server implements Constants {
                 String input = client.readClient();
 
                 if(!input.isEmpty())
-                    messageHandler.handleMessage(client, input, database, visServer);
+                    messageHandler.handleMessage(client, input, db, visServer);
             }
         }
     }
@@ -123,6 +123,10 @@ public class Server implements Constants {
         }
     }
 
+    public void communicate(int id, String message) {
+        clients.get(id).sendMessage(message);
+    }
+
     private void closeClients() {
         for (Client client : clients) {
             client.close();
@@ -135,11 +139,10 @@ public class Server implements Constants {
         PrintWriter output;
         BufferedReader input;
         String lastMessage = "";
-        public int id = 0;
+        public int id;
         enum type {
             TRAIN, STATION, UNKNOWN
         }
-
         type clientType;
 
         public Client(Socket clientSocket, int ID) {

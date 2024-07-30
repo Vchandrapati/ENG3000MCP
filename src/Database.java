@@ -11,10 +11,9 @@ public class Database {
     private Track track;
     private Map<Integer, Train> trains;
     private List<Station> stations;
-
     private static Database instance;
 
-    private Database(Track track) {
+    public Database(Track track) {
         this.track = track;
         trains = new HashMap<>();
         stations = new ArrayList<>();

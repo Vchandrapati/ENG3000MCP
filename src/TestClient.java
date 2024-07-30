@@ -1,9 +1,7 @@
 import java.net.*;
 import java.io.*;
-import java.util.Random;
 
-
-public class TestClient {
+public class TestClient implements Runnable {
     private Socket clientSocket;
     private PrintWriter out;
     private BufferedReader in;
@@ -12,17 +10,27 @@ public class TestClient {
     double range = max - min;
     double speed = (Math.random() * range) + min;
     private boolean running = true;
-    int ID;
+    int id;
+    private String ip;
+    private int port;
+    private double startingDistance;
 
-    public void startConnection(String ip, int port) throws Exception {
+    public TestClient(String ip, int port, double startingDistance) {
+        this.ip = ip;
+        this.port = port;
+        this.startingDistance = startingDistance;
+    }
+
+    public void startConnection() throws Exception {
         clientSocket = new Socket(ip, port);
         out = new PrintWriter(clientSocket.getOutputStream(), true);
         in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
         print("Connected to " + ip + " on " + port);
 
-        String r = sendMessage("trainInit");
-        if(r.equals("ACK trainInit")) sendMessage("train,0," + speed);
+        sendMessage("trainInit");
+        String message = readMessage();
+        if (message.equals("ACK trainInit")) sendMessage("train," + startingDistance + "," + speed);
         new Thread(this::listener).start();
     }
 
@@ -30,17 +38,19 @@ public class TestClient {
         try {
             while (running) {
                 String message = readMessage();
-                if(message != null) {
+                if (message != null) {
                     String[] input = message.split(",");
                     message = input[0];
-                    if(message.equals("ID")) {
+                    if (message.equals("ID")) {
                         sendMessage("CONFIRM");
-                        ID = Integer.parseInt(input[1]);
-                        System.out.println(ID);
+                        id = Integer.parseInt(input[1]);
+                        System.out.println(id);
                     }
-
-                    if(message.equals("STATUS")) {
-                        sendMessage("STATUS," + ID + "," + speed);
+                    if (message.equals("STATUS")) {
+                        sendMessage("STATUS," + id + "," + speed);
+                    }
+                    if (message.equals("SPD")) {
+                        speed = Double.parseDouble(input[1]);
                     }
                 }
             }
@@ -49,23 +59,21 @@ public class TestClient {
         }
     }
 
-    public String sendMessage(String msg) {
+    public void sendMessage(String msg) {
         try {
-            out.print(msg+"\n");
+            out.print(msg + "\n");
             out.flush();
-            String resp = in.readLine();
             System.out.println("Client sends " + msg);
-            System.out.println("Client received " + resp);
-            return resp;
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "";
     }
 
     public String readMessage() {
         try {
-            if(in != null && in.ready()) return in.readLine();
+            String resp = in.readLine();
+            System.out.println("Client recieved " + resp);
+            return resp;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -77,18 +85,33 @@ public class TestClient {
     }
 
     public void stopConnection() throws IOException {
+        running = false;
         in.close();
         out.close();
         clientSocket.close();
     }
 
-    public static void main(String[] args) {
-        TestClient client = new TestClient();
+    @Override
+    public void run() {
         try {
-            client.startConnection("localhost", 6666);
+            startConnection();
         } catch (Exception e) {
-            System.exit(64);
-            System.out.println("Could not connect :(");
+            e.printStackTrace();
+        }
+    }
+
+    public static void main(String[] args) {
+        int numberOfClients = 1; // Set the number of clients you want to spawn
+        String ip = "localhost";
+        int port = 6666;
+
+        double trackLength = 2.2566; // Total length of the track in meters
+        double spacing = trackLength / numberOfClients; // Equal spacing around the track
+
+        for (int i = 0; i < numberOfClients; i++) {
+            double startingDistance = i * spacing;
+            TestClient client = new TestClient(ip, port, startingDistance);
+            new Thread(client).start();
         }
     }
 }

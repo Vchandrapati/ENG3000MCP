@@ -25,7 +25,7 @@ public class Track implements Paintable {
         segments.add(tmpS);
         tmpC = new CurveSegment(tmpS.getEnd(), 0.20, -90, 180);
         segments.add(tmpC);
-        tmpS = new StraightSegment(tmpC.getEnd().x, tmpC.getEnd().y, -0.50, 0);
+        tmpS = new StraightSegment(tmpC.getEnd().x, tmpC.getEnd().y, 0.50, 180);
         segments.add(tmpS);
     }
 
@@ -65,7 +65,7 @@ public class Track implements Paintable {
             accumulatedDistance += segmentLength;
         }
         // If distance is out of range, return last point
-        return points.get(points.size() - 1);
+        return points.getLast();
     }
 
 

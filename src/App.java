@@ -18,10 +18,12 @@ public class App {
 
         public Display() {
             setupWindow();
-            Visualiser vis = setupVisualizer();
             Track track = new Track(new Point(300, 500));
             Database db = Database.getInstance(track);
-            Server server = new Server(new VisualiserServer(vis), db, track);
+            Visualiser vis = setupVisualizer(track);
+            Server server = new Server(new VisualiserServer(vis), track, db);
+            Processor processor = Processor.getInstance(db, server);
+            processor.start();
             setupWindowListener(server);
         }
 
@@ -36,15 +38,9 @@ public class App {
             setVisible(true);
         }
 
-        private Visualiser setupVisualizer() {
-            Visualiser vis = new Visualiser(W, H);
+        private Visualiser setupVisualizer(Track track) {
+            Visualiser vis = new Visualiser(W, H, track);
             add(vis);
-
-            Station station1 = new Station(50);
-            Station station2 = new Station(200);
-            vis.addStation(station1);
-            vis.addStation(station2);
-
             return vis;
         }
 

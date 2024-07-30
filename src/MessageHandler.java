@@ -1,8 +1,8 @@
 import java.util.logging.Logger;
 
 public class MessageHandler {
-    int ID = 0;
     private static final Logger logger = Logger.getLogger(MessageHandler.class.getName());
+
     public void handleMessage(Server.Client client, String message, Database db, VisualiserServer visServer) {
            String[] input = message.split(",");
            message = input[0];
@@ -32,7 +32,7 @@ public class MessageHandler {
     private void handleStatusMessage(Server.Client client, String[] input, Database db) {
         int id = client.id;
         Train t = db.getTrain(id);
-        t.speed = Double.parseDouble(input[1]);
+        t.speed = Double.parseDouble(input[2]);
         db.updateTrain(t);
         System.out.println(input[1] + " Given speed of train : Train : " + client.id);
     }
@@ -57,8 +57,8 @@ public class MessageHandler {
         Train newTrain = new Train(client.id, speed, startDistance);
         db.addTrain(client.id, newTrain);
         visServer.updateTrains(db.getTrains());
-        client.sendMessage("ID " + client.id);
-        client.lastMessage = "ID " + client.id;
+        client.sendMessage("ID," + client.id);
+        client.lastMessage = "ID," + client.id;
     }
 
     private void handleStationMessage(Server.Client client, String[] inputArr, Database db, VisualiserServer visServer) {

@@ -9,11 +9,13 @@ public class StraightSegment extends TrackSegment {
         double lengthPixels = lengthMeters * SCALE;
         double angleRadians = Math.toRadians(angleDegrees);
         this.start = new Point((int)startX, (int)startY);
+
         this.end = new Point(
                 (int)(start.x + lengthPixels * Math.cos(angleRadians)),
                 (int)(start.y + lengthPixels * Math.sin(angleRadians))
         );
-        this.length = start.distance(end);
+
+        this.length = Math.abs(lengthMeters); // Ensure that distance is positive
     }
 
     public Point getEnd() {
@@ -23,7 +25,7 @@ public class StraightSegment extends TrackSegment {
     @Override
     public ArrayList<Point> generatePoints() {
         ArrayList<Point> points = new ArrayList<>();
-        int numPoints = (int) length;
+        int numPoints = (int) (length * SCALE);
         for (int i = 0; i <= numPoints; i++) {
             double ratio = (double) i / numPoints;
             int x = (int) (start.x + ratio * (end.x - start.x));
@@ -35,7 +37,7 @@ public class StraightSegment extends TrackSegment {
 
     @Override
     public Point findPos(double distance) {
-        double ratio = distance / length;
+        double ratio = (distance * SCALE)  / (length * SCALE);
         int x = (int) (start.x + ratio * (end.x - start.x));
         int y = (int) (start.y + ratio * (end.y - start.y));
         return new Point(x, y);
