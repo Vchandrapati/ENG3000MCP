@@ -1,0 +1,31 @@
+Train assumptions
+- Train has three states, OFF, ON and ERROR
+- When ON -> train can move around the track
+- When OFF -> train has not connected but not been started by the server
+- when -> ERROR something wrong has happened to a train
+- Train can pass through staton when OFF
+
+Station assumptions
+- Station has three states, OPENDOOR, CLOSEDDOOR, OFF
+- When CLOSEDOOR -> Train can enter station, then the train will stop for a set time, station doors open, then close then the train goes OFF
+- When OPENDOOR -> Train cannot enter as another train is in the station, thus the train must wait outside until the doors are closed
+- When OFF -> Train can pass through as if there is no station
+
+Client Server Communication Protocol
+- Client connects to server through socket
+- Client can send "trainInit" or "stationInit" as the first message
+- Server will send "ACK trainInit" or "ACK stationInit" respective of the last message
+- Client will receive the ack and then send the details for the respective entity
+- IF TRAIN : Client will send "train,pos,speed" where pos is a double in the range between (0 - 0.5)
+and where speed is a double in the range between (0.01 - 0.1)
+- IF STATION : Client will send "station,pos" where pos is a double in the range between (0 - 180)
+- Server will send "confirmed Train" or "confirmed Station"
+
+Server sends Ping for details
+
+Potential inputs
+""
+trainInit
+stationInit
+train details
+station details
