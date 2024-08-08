@@ -1,0 +1,23 @@
+
+
+java:S2629S"7Use the built-in formatting to construct this argument.(Å‚ÊŒøÿÿÿÿ8Ñ—”“2J$8d9372ae-3aae-4c8a-9bc6-2ca9532b4516
+g
+java:S2629U"$Invoke method(s) only conditionally.(ªê¼Ú8Ñ—”“2J$1ac809db-1067-44ad-bf02-38947cf7cd4c
+‡
+java:S2095a"DUse try-with-resources or close this "Socket" in a "finally" clause.(»˜…¥8×—”“2J$cb7520d4-5bcf-4150-9b4d-4d90b1733638
+¥
+java:S1450"bRemove the "manageClientRunning" field and declare it as a local variable in the relevant methods.( Ûûò8Í‘•“2J$19e25e85-fe11-4087-9efc-e0ad0bfa346a
+~	java:S125"<This block of commented-out lines of code should be removed.(Ì—»›8Ä„”•“2J$a356167b-d7e8-48c9-82c3-64d1dc01fc69
+ƒ	java:S125/"<This block of commented-out lines of code should be removed.(ÀÚıèşÿÿÿÿ8‹â“•“2J$5dc88d56-cbaf-47cb-96d0-6a871c3d4779
+ƒ	java:S125k"<This block of commented-out lines of code should be removed.(‹ÙÏÌüÿÿÿÿ8ˆÍ‘•“2J$6d5db6ee-1596-4137-abc6-dd84650410c4
+¢
+java:S2142’"^Either re-interrupt this method or rethrow the "InterruptedException" that can be caught here.(ä ¹€8Ş—”“2J$b64d1b79-51f6-4967-a4ca-776f3fab3438
+„	java:S125‹"<This block of commented-out lines of code should be removed.(è‘”ùÿÿÿÿ8¡Ñ”•“2J$e776564c-8bd3-4ae9-b53e-dde5c6113a96
+q
+java:S1068".Remove this unused "visualiser" private field.(äƒÜè8©Íğ”“2J$c66faa93-c9f5-44c9-9923-6d327bb9abf0
+z
+java:S1068"7Remove this unused "manageClientRunning" private field.( Ûûò8ŒÍ‘•“2J$d158c606-5329-4edc-9625-eb4d4e3dd585
+z
+java:S1068 "2Remove this unused "messageHandler" private field.(Ô„âıÿÿÿÿ8ŒÍ‘•“2J$d84801f4-b264-4e71-9f73-2a9a592c6363
+n
+java:S1068!"&Remove this unused "db" private field.(‚¤í·şÿÿÿÿ8ŒÍ‘•“2J$6d8d9108-00a5-486a-8470-833827e1cd8e
