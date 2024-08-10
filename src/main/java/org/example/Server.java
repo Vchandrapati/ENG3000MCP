@@ -20,7 +20,6 @@ import java.util.logging.Logger;
 
 public class Server implements Constants {
     private static final Logger logger = Logger.getLogger(Server.class.getName());
-    private final Visualiser visualiser;
     private final Thread connectClientThread;
 //    private  final Thread manageClientThread;
     private  final ScheduledExecutorService sendClientThread;
@@ -31,8 +30,7 @@ public class Server implements Constants {
     private final List<Client> clients;
     private final MessageHandler messageHandler;
     private final Database db;
-    public Server(Visualiser visualiser, Database db) {
-        this.visualiser = visualiser;
+    public Server(Database db) {
         this.db = db;
 
         startServer();
@@ -145,6 +143,7 @@ public class Server implements Constants {
             logger.info("Server shutdown successfully");
         } catch (InterruptedException e) {
             logger.log(Level.SEVERE, "Error shutting down thread", e);
+            Thread.currentThread().interrupt();
         }catch (IOException e) {
             logger.log(Level.SEVERE, "Error shutting down server", e);
         }

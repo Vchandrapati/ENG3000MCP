@@ -16,9 +16,9 @@ public class TestClient implements Runnable {
     double speed = (Math.random() * range) + min;
     private boolean running = true;
     int id;
-    private String ip;
-    private int port;
-    private double startingDistance;
+    private final String ip;
+    private final int port;
+    private final double startingDistance;
 
     public TestClient(String ip, int port, double startingDistance) {
         this.ip = ip;
@@ -26,7 +26,7 @@ public class TestClient implements Runnable {
         this.startingDistance = startingDistance;
     }
 
-    public void startConnection() throws Exception {
+    public void startConnection() throws IOException {
         clientSocket = new Socket(ip, port);
         out = new PrintWriter(clientSocket.getOutputStream(), true);
         in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));

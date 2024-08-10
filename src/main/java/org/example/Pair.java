@@ -23,11 +23,14 @@ public class Pair<F, S> {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o)
+    public boolean equals(Object obj) {
+        if (this == obj)
             return true;
 
-        Pair that = (Pair) o;
+        if (obj != null || this.getClass() != obj.getClass())
+            return false;
+
+        Pair that = (Pair) obj;
         return first == that.first && second.equals(that.second);
     }
 

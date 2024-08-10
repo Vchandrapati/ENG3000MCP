@@ -1,6 +1,4 @@
 
-S
-#src/main/java/org/example/Main.java,0\b\0ba1b9c7a4878802f938e331cc2d8a042087ec6b
 7
 pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec
 R
@@ -29,20 +27,12 @@ Z
 *src/main/java/org/example/ClientTable.java,e\9\e985034ec72653db87b499c9205d999ffd1dfe9c
 S
 #src/main/java/org/example/Pair.java,5\e\5e16ef023846d64edff65ea07f9e6128d2587a03
-Y
-)src/main/java/org/example/ClientInfo.java,7\b\7b9e9700b20d4b7d7c98253361a154935b0131ef
 ]
 -src/main/java/org/example/MessageHandler.java,2\a\2aedb1127eeacd09f5aa6fa073768e9eeb41ad5b
-V
-&src/main/java/org/example/Protocol.txt,9\c\9ce48e3eb1b93ac1f981dcb751bfe3ec6959723e
 Y
 )src/main/java/org/example/Visualiser.java,2\9\29167df0688534454d3389e852104a1395450fe2
-_
-/src/main/java/org/example/VisualiserServer.java,7\5\75c36b1ac003f1ae7ba9b39bb87d764aabb844df
 T
 $src/main/java/org/example/Track.java,e\0\e05b7e8a7425f541a0e46aabaa9e42fed9eb05b4
-^
-.src/main/java/org/example/StraightSegment.java,3\4\34142a95650306951c4b29f758491fa98958ee16
 T
 $src/main/java/org/example/Train.java,3\5\358b4d474964e75eac247cd2b90779abd797f23a
 V
@@ -55,8 +45,6 @@ X
 (src/main/java/org/example/Processor.java,c\4\c473d7ca2e2f6f951c88b1e598902b50771748ae
 [
 +src/main/java/org/example/LoggerConfig.java,f\7\f7dd432092a502c8e35d0c574bc11e935a6987bd
-Å
-Q.idea/sonarlint/securityhotspotstore/0/b/0ba1b9c7a4878802f938e331cc2d8a042087ec6b,a\b\abe25e851ee828e40a94fcb1c1be6f78ff7a04cf
 w
 G.idea/sonarlint/issuestore/4/4/442292b8a7efeabbe4cc176709b833b1792140ec,8\6\863e0292fd7e9b3e74dafd6cc01f73ba76346482
 ]
@@ -99,15 +87,11 @@ Q.idea/sonarlint/securityhotspotstore/6/e/6ecd6000a7b6f4a2884412ff19f74193ed0896
 Å
 Q.idea/sonarlint/securityhotspotstore/e/f/ef8b3d88bbba1c6bd772918cf28cd89b6bf0e81a,d\6\d63808e3267dd10cc6f6b4a463a5cbefb99d0247
 Å
-Q.idea/sonarlint/securityhotspotstore/7/5/75c36b1ac003f1ae7ba9b39bb87d764aabb844df,d\3\d3b2f2d59a4d804598d39ef1c4a89e7422b07bb6
-Å
 Q.idea/sonarlint/securityhotspotstore/c/7/c75fc5d0f8d9ce815ddf24c2e58fd2775070dde0,d\f\dfc4911cb9656d27bf1afa301bc4aedd9a2c94d2
 Å
 Q.idea/sonarlint/securityhotspotstore/c/a/ca008ce1ad5125494d92c1098a582d3287b5d915,6\e\6e01ce944dfd2a66374f8c54a348eb6f8086fe21
 w
 G.idea/sonarlint/issuestore/a/0/a04cdc1b813999384ef385ac5191cbe69e844545,9\4\94128cd527e2754c4854d51e9016b847b756dd4f
-Å
-Q.idea/sonarlint/securityhotspotstore/3/4/34142a95650306951c4b29f758491fa98958ee16,c\c\cc484fbd7fa85cc4b0c3de036f6e9f8fb655efb8
 Å
 Q.idea/sonarlint/securityhotspotstore/4/5/450cf9bead5a07b20d141721ea7909385b5bb3ee,f\b\fbfb47a2cffe46f57f228ab751c7dbaaac4f86b4
 w
@@ -151,15 +135,9 @@ Q.idea/sonarlint/securityhotspotstore/a/5/a5cc2925ca8258af241be7e5b0381edf302663
 Å
 Q.idea/sonarlint/securityhotspotstore/f/4/f43106079a85985f45b824a2f103dec0d66973cd,a\7\a7444b7372392c29c2e16752fb0e1eff2bc77105
 Å
-Q.idea/sonarlint/securityhotspotstore/9/c/9ce48e3eb1b93ac1f981dcb751bfe3ec6959723e,0\e\0e30b8e9d8322d883ee43ce40a3494d2f1962941
-Å
 Q.idea/sonarlint/securityhotspotstore/f/7/f7dd432092a502c8e35d0c574bc11e935a6987bd,2\3\235505398bb8cd28abb0280716f5c798b4c1fdda
 Å
-Q.idea/sonarlint/securityhotspotstore/7/b/7b9e9700b20d4b7d7c98253361a154935b0131ef,7\9\791d5d37f8e0426d2b4eaee01ec0bc9b89749bc9
-Å
 Q.idea/sonarlint/securityhotspotstore/d/d/dd7b3350c29c49497756c7f32c69a3bed18b1cba,b\3\b31df9b2b9cdd37f5ca3f5303feabf564eeaaf4e
-w
-G.idea/sonarlint/issuestore/9/c/9ce48e3eb1b93ac1f981dcb751bfe3ec6959723e,8\f\8f67c067fb9580ffeb87a20beb4a898c33e0b225
 Å
 Q.idea/sonarlint/securityhotspotstore/b/b/bbf202272a96de5cd6b6828ffdc55fb3ce45289c,4\8\4863281891d32ef796d6f680d78cb100e7c940be
 Å
@@ -700,3 +678,5 @@ w
 G.idea/sonarlint/issuestore/7/8/783bea10a54b3852357d0375a90851e4760a63bc,0\e\0e7dcb8d6bea9b59d73e210d37cf71700a41c85d
 w
 G.idea/sonarlint/issuestore/f/c/fc7cae03603d86677b5b5d9d92ba066fa89b79d9,3\3\331c81a8d43f9a08bbcbf2c5bb2249127efe1ff5
+]
+-src/main/java/org/example/ReceiveMessage.java,2\f\2f983decdfb727dcb6264a2451f5d54aebf3d582

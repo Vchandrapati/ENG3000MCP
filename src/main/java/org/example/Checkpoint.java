@@ -2,19 +2,10 @@ package org.example;
 
 import java.awt.*;
 
-public class Checkpoint implements Constants {
-    static double distance;
-    private Point pos;
-
-    public Checkpoint(double distance) {
-        this.distance = distance;
-    }
+public class Checkpoint {
+    private final Point pos;
 
     public Checkpoint(Point pos) {
-        this.pos = pos;
-    }
-
-    public void setPos(Point pos) {
         this.pos = pos;
     }
 

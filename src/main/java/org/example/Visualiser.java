@@ -14,7 +14,6 @@ import java.util.logging.Logger;
 
 public class Visualiser extends JPanel implements Constants {
     private static final Logger logger = Logger.getLogger(Visualiser.class.getName());
-    private static final double TIME_INTERVAL = SCALE / FRAME_RATE;
     volatile boolean running = true;
     Thread runThread;
     Track track;
@@ -42,6 +41,7 @@ public class Visualiser extends JPanel implements Constants {
             logger.info("Successfully stopped visualiser");
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Issue stopping visualiser", e);
+            Thread.currentThread().interrupt();
         }
     }
 

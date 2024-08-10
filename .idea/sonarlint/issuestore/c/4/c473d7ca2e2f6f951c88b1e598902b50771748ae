@@ -1,6 +1,7 @@
 
-t
-java:S2142'"^Either re-interrupt this method or rethrow the "InterruptedException" that can be caught here.(ä ¹€
-t
-java:S21423"^Either re-interrupt this method or rethrow the "InterruptedException" that can be caught here.(ä ¹€
-E	java:S106J"+Replace this use of System.out by a logger.(ñÃØÿÿÿÿÿ
+u
+java:S1135;"2Complete the task associated to this TODO comment.(…ïœ†8»¡—“2J$50f17ca4-729d-4f18-8de0-64fdcf787032
+i
+java:S1068"&Remove this unused "db" private field.(’ù¯ˆ8ª¦ÉØ“2J$36548735-345e-46f0-b85a-7581d19bdbae
+m
+java:S1068"*Remove this unused "server" private field.(ÁºÒŞ8«¦ÉØ“2J$471441fb-5028-431f-bfb6-70ef2788cf1b
