@@ -21,12 +21,12 @@ public class App {
         public Display() {
             setupWindow();
             Track track = new Track(W / 2, H / 2, 200, 80);
-            Database db = Database.getInstance(track);
+            Database db = Database.getInstance();
 
             Visualiser visualiser = new Visualiser(W, H, track);
             visualiser.updateCheckpoints(10);
             add(visualiser);
-            Server server = new Server(db);
+            Server server = new Server();
 
             Processor processor = Processor.getInstance(db, server);
             processor.start();

@@ -1,7 +1,3 @@
 
-Ä
-java:S1186-"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(şÅçÖ8ç€‡â“2J$bcf98598-c63d-4630-a013-beee0bb9238c
-x
-java:S1172"5Remove these unused method parameters "client", "db".(êÎ˜8ù€‡â“2J$f680a1af-abda-4591-aa3b-faa78fa0d343
-Š
-java:S1172-"GRemove these unused method parameters "recieveMessage", "client", "db".(şÅçÖ8ú€‡â“2J$40edc07d-b930-46cd-ba9a-c5e3cdf7deef
+n
+java:S1068	"&Remove this unused "db" private field.(æÿ ×üÿÿÿÿ8Óªœï—2J$66cfa6dc-19f4-4b54-a003-85a0f9f54745

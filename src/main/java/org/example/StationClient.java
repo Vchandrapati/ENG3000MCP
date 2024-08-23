@@ -13,10 +13,11 @@ public class StationClient extends Client {
     }
 
     public void readWrapper() {
-        while(running) {
+        while (running) {
             String input = readMessage();
-            if(!input.isEmpty()) {
-
+            if (input != null && !input.isEmpty()) {
+                // Use MessageHandler to process the message
+                messageHandler.handleMessage(input);
             }
         }
     }

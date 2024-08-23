@@ -14,6 +14,7 @@ public abstract class Client {
     protected PrintWriter output;
     protected BufferedReader input;
     protected String lastMessage = "";
+    protected MessageHandler messageHandler;
     protected String id;
     protected volatile boolean running = true;
 
@@ -23,6 +24,7 @@ public abstract class Client {
             this.output = new PrintWriter(clientSocket.getOutputStream(), true);
             this.input = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             this.id = id;
+            messageHandler = new MessageHandler();
         } catch (IOException e) {
             logger.log(Level.SEVERE, "Failed to start client IO", e);
         }

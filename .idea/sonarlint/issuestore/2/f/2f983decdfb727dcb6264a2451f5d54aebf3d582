@@ -1,0 +1,12 @@
+
+–
+java:S1104
+"SMake message a static final constant or non-public and provide accessors if needed.(ÕÃØ·8ÅÎéà“2J$4a65e72a-8617-4e23-bae7-c7c4f4ce9b25
+
+java:S1104"UMake timestamp a static final constant or non-public and provide accessors if needed.(£ú£ıÿÿÿÿ8ÆÎéà“2J$833ea82d-c46c-4a85-a59c-3d2d0de8989b
+•
+java:S1104"RMake status a static final constant or non-public and provide accessors if needed.(œ©²ÿ8ÆÎéà“2J$caecc595-7f9d-475d-a236-c23ad5dea362
+p
+java:S1068"(Remove this unused "port" private field.(ß³†ÿÿÿÿÿ8ÛÔà“2J$f1abb090-bb9d-4ab0-8e04-2f3e7415841a
+i
+java:S1068"&Remove this unused "ip" private field.(ŞáïÈ8ÛÔà“2J$589be08d-2736-4d63-b603-0cadf06b8d9c

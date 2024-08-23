@@ -1,19 +1,6 @@
 
-
-java:S2629Q"7Use the built-in formatting to construct this argument.(Å‚ÊŒøÿÿÿÿ8 ½”—“2J$0260b868-cb4e-4a66-a0c2-45d3df6de44c
-g
-java:S2629S"$Invoke method(s) only conditionally.(ªê¼Ú8Ñ—”“2J$740e39ff-318d-4ca0-8689-90b129fc488f
+	java:S112>"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8…¤ùî—2J$db71ff76-77bd-492a-af9e-45f448bc6dbe
 ‡
-java:S2095_"DUse try-with-resources or close this "Socket" in a "finally" clause.(»˜…¥8×—”“2J$ad4ceb68-c88b-4e26-a3c2-c44d5d03ee95
-¥
-java:S1450"bRemove the "manageClientRunning" field and declare it as a local variable in the relevant methods.( Ûûò8Í‘•“2J$ec9bdfc9-8343-4ecd-ab2e-9c3fe8f72848
-~	java:S125"<This block of commented-out lines of code should be removed.(Ì—»›8Ä„”•“2J$762421fc-b0e7-475e-9578-9f21ae06c6a5
-ƒ	java:S125-"<This block of commented-out lines of code should be removed.(ÀÚıèşÿÿÿÿ8‹â“•“2J$4adef529-6a54-4ac5-8d2b-92b7a5d971e2
-ƒ	java:S125i"<This block of commented-out lines of code should be removed.(‹ÙÏÌüÿÿÿÿ8ˆÍ‘•“2J$c1355806-86c9-4e81-a08a-257a1c189984
-„	java:S125‰"<This block of commented-out lines of code should be removed.(è‘”ùÿÿÿÿ8¡Ñ”•“2J$2da4b8d5-c7d5-4bcd-9ce3-6a8f93d13e3c
-z
-java:S1068"7Remove this unused "manageClientRunning" private field.( Ûûò8ŒÍ‘•“2J$755a999d-2668-4e77-b64a-b64f5c4f60b5
-z
-java:S1068"2Remove this unused "messageHandler" private field.(Ô„âıÿÿÿÿ8ŒÍ‘•“2J$0bc7073b-feb0-4cf4-820a-272e543bb69e
-n
-java:S1068 "&Remove this unused "db" private field.(‚¤í·şÿÿÿÿ8ŒÍ‘•“2J$02c81034-53a2-42fd-90ff-eaff80f896e5
+java:S2095F"DUse try-with-resources or close this "Socket" in a "finally" clause.(»˜…¥8‹¤ùî—2J$97dc8fda-9307-4a50-b481-c1bbf975590d
+|
+java:S1068"4Remove this unused "messageGenerator" private field.(»Ÿç ÿÿÿÿÿ8’¤ùî—2J$b00663ab-b695-4389-befa-f3df54901c15

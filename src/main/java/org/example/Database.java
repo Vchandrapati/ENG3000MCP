@@ -13,15 +13,14 @@ public class Database {
     private List<Station> stations;
     private static Database instance;
 
-    public Database(Track track) {
-        this.track = track;
+    private Database() {
         trains = new HashMap<>();
         stations = new ArrayList<>();
     }
 
-    public static synchronized Database getInstance(Track track) {
+    public static synchronized Database getInstance() {
         if(instance == null)
-            instance = new Database(track);
+            instance = new Database();
 
         return instance;
     }
