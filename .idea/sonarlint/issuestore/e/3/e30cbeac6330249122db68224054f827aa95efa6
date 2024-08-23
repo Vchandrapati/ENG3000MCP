@@ -1,9 +1,9 @@
 
-‘	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(–ŽÏÊúÿÿÿÿJ$1242bb8f-535d-474a-89eb-a3970a37a348
+‘	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(–ŽÏÊúÿÿÿÿJ$882e8d8a-49e3-43f3-8466-9ad55c02ebb2
 á
-java:S6548	"˜A Singleton implementation was detected. Make sure the use of the Singleton pattern is required and the implementation is the right one for the context.(Ñ°Ù®þÿÿÿÿ8Ä´®î—2J$763b1b94-6c56-4c71-bf30-4a7b989c7981
+java:S6548	"˜A Singleton implementation was detected. Make sure the use of the Singleton pattern is required and the implementation is the right one for the context.(Ñ°Ù®þÿÿÿÿ8Ä´®î—2J$17e536bb-0899-40de-964c-b7373db6b693
 n
-java:S11357"2Complete the task associated to this TODO comment.(…ïœ†J$a02ab002-3f65-495d-afab-3243a488e159
+java:S11357"2Complete the task associated to this TODO comment.(…ïœ†J$415d8fa9-720d-4b8f-873c-72ace1ca00d4
 k
 java:S1068
-"*Remove this unused "logger" private field.(¿Ê¢ÄúÿÿÿÿJ$3a981ba2-b31f-4ef8-9777-a652c059006a
+"*Remove this unused "logger" private field.(¿Ê¢ÄúÿÿÿÿJ$50935479-36d4-432c-94f0-abf9486a11b6

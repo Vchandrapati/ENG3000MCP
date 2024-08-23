@@ -12,20 +12,12 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- * Singleton instance that maintains a lookup table for clients.
- * The table maps client connection details (IP and port) to corresponding component information.
- * Uses the {@link Pair} class to store and manage client connection details and component information.
- */
-
 public class Server implements Constants {
     private static final Logger logger = Logger.getLogger(Server.class.getName());
     private final List<Client> clients = new CopyOnWriteArrayList<>();
     private ServerSocket serverSocket;
     private volatile boolean connectionListener;
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-    private final MessageGenerator messageGenerator = new MessageGenerator();
-
 
     public Server() {
         connectionListener = true;

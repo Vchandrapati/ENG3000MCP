@@ -1,12 +1,12 @@
 
 –
 java:S1104
-"SMake message a static final constant or non-public and provide accessors if needed.(ÕÃØ·8ÅÎéà“2J$91d5c422-e012-4c87-8f86-5735563b6ce2
+"SMake message a static final constant or non-public and provide accessors if needed.(ÕÃØ·8ÅÎéà“2J$3cb80b36-983a-441d-8c14-fb903c0e7904
 
-java:S1104"UMake timestamp a static final constant or non-public and provide accessors if needed.(£ú£ıÿÿÿÿ8ÆÎéà“2J$936899dc-155b-45af-a7c6-c1f6723c63dd
+java:S1104"UMake timestamp a static final constant or non-public and provide accessors if needed.(£ú£ıÿÿÿÿ8ÆÎéà“2J$46f99fda-98ed-4df9-a6fa-3cb68e9fb82f
 •
-java:S1104"RMake status a static final constant or non-public and provide accessors if needed.(œ©²ÿ8ÆÎéà“2J$4dc7eecd-0c69-488a-be09-0ac0d3d087e2
+java:S1104"RMake status a static final constant or non-public and provide accessors if needed.(œ©²ÿ8ÆÎéà“2J$74e66b85-3b49-4de2-9b80-88578104cb24
 p
-java:S1068"(Remove this unused "port" private field.(ß³†ÿÿÿÿÿ8ÛÔà“2J$b9c356b1-3d10-4c6c-b1c5-58371f606f71
+java:S1068"(Remove this unused "port" private field.(ß³†ÿÿÿÿÿ8ÛÔà“2J$e02c5fe1-24e2-4707-bab3-f329c05ea33e
 i
-java:S1068"&Remove this unused "ip" private field.(ŞáïÈ8ÛÔà“2J$c4501203-0421-464b-b18d-0a5fd770b828
+java:S1068"&Remove this unused "ip" private field.(ŞáïÈ8ÛÔà“2J$c828eca7-8c10-40a8-862c-e2e61f30bd94

@@ -13,7 +13,6 @@ public abstract class Client {
     protected Socket clientSocket;
     protected PrintWriter output;
     protected BufferedReader input;
-    protected String lastMessage = "";
     protected MessageHandler messageHandler;
     protected String id;
     protected volatile boolean running = true;

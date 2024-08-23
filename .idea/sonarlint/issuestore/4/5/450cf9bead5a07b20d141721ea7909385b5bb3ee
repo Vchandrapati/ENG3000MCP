@@ -1,6 +1,4 @@
 
-	java:S112>"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8…¤ùî—2J$db71ff76-77bd-492a-af9e-45f448bc6dbe
+	java:S1126"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8…¤ùî—2J$6a7738dd-2b1e-43a9-a9f6-19bb9b13e4f1
 ‡
-java:S2095F"DUse try-with-resources or close this "Socket" in a "finally" clause.(»˜…¥8‹¤ùî—2J$97dc8fda-9307-4a50-b481-c1bbf975590d
-|
-java:S1068"4Remove this unused "messageGenerator" private field.(»Ÿç ÿÿÿÿÿ8’¤ùî—2J$b00663ab-b695-4389-befa-f3df54901c15
+java:S2095>"DUse try-with-resources or close this "Socket" in a "finally" clause.(»˜…¥8‹¤ùî—2J$9bfa0a8f-ede0-4d62-a43e-dac1d5bc23ba

@@ -6,7 +6,6 @@ import java.util.logging.Logger;
 public class MessageHandler {
     private static final Logger logger = Logger.getLogger(MessageHandler.class.getName());
     private static final ObjectMapper objectMapper = new ObjectMapper();
-    private static final Database db = Database.getInstance();
     public void handleMessage(String message) {
         try {
             RecieveMessage recieveMessage = objectMapper.readValue(message, RecieveMessage.class);

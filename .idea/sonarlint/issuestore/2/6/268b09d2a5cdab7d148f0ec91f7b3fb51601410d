@@ -1,0 +1,13 @@
+
+p
+java:S1128"(Remove this unused import 'javax.swing'.(Ìí¿Üüÿÿÿÿ8ÔãŒğ—2J$eb06c3c4-cfb8-47f5-b429-74f6ac4660fc
+h
+java:S1128"%Remove this unused import 'java.awt'.(ï´µ©8ÔãŒğ—2J$6b1d704e-3f89-41d1-a8ef-26a0c5bd98c9
+|
+java:S1128"9Remove this unused import 'java.awt.event.WindowAdapter'.(­ˆàÛ8ÔãŒğ—2J$67ee1f5d-7007-4d2e-863e-e9e4a517f8ed
+
+java:S1128"7Remove this unused import 'java.awt.event.WindowEvent'.(Àø®Ãÿÿÿÿÿ8ÔãŒğ—2J$3958c33c-babb-43f9-a4ef-40018736c7d2
+w
+java:S1128"4Remove this unused import 'java.util.logging.Level'.(…µÛ¶8ÔãŒğ—2J$e85a373e-de38-4f6d-bde4-e1150ecdc748
+x
+java:S1128"5Remove this unused import 'java.util.logging.Logger'.(ƒ¥óš8ÔãŒğ—2J$6d6f83ca-a9d4-47d8-8100-554eb90832ad
