@@ -3,10 +3,19 @@ package org.example;
 import java.net.Socket;
 
 public class StationClient extends Client {
+    private volatile Integer location;
+    private volatile Status status;
 
-    public StationClient(Socket clientSocket, String id) {
-        super(clientSocket, id);
+    private enum Status {
+        Alive,
+        Dead
     }
+
+    public StationClient(Socket clientSocket, String id, Integer loc) {
+        super(clientSocket, id);
+        location = loc;
+    }
+
     @Override
     public void start() {
         new Thread(this::readWrapper).start();
@@ -20,5 +29,9 @@ public class StationClient extends Client {
                 messageHandler.handleMessage(input);
             }
         }
+    }
+
+    public Integer getLocation() {
+        return location;
     }
 }

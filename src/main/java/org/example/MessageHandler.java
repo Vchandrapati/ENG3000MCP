@@ -6,6 +6,8 @@ import java.util.logging.Logger;
 public class MessageHandler {
     private static final Logger logger = Logger.getLogger(MessageHandler.class.getName());
     private static final ObjectMapper objectMapper = new ObjectMapper();
+    private static Database db = Database.getInstance();
+
     public void handleMessage(String message) {
         try {
             RecieveMessage recieveMessage = objectMapper.readValue(message, RecieveMessage.class);
@@ -35,7 +37,8 @@ public class MessageHandler {
             case "KILL":
                 // Handle immediate stop command
                 logger.info("Received KILL command from Blade Runner: " + recieveMessage.clientID);
-                // Implement stop logic here
+                TrainClient tr = db.getTrain(recieveMessage.clientID);
+                tr.changeStatusToDead();
                 break;
             default:
                 logger.warning("Unknown Blade Runner message: " + recieveMessage.message);

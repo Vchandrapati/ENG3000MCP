@@ -33,12 +33,13 @@ public class Server implements Constants {
 
     private void connectionListener() {
         new Thread(() -> {
-            while (connectionListener){
+            while (connectionListener) {
                 try {
                     Socket clientSocket = serverSocket.accept();
                     InetAddress clientAddress = clientSocket.getInetAddress();
                     int clientPort = clientSocket.getPort();
-                    String clientType = ClientTable.getInstance().getComponent(clientAddress.getHostAddress(), clientPort);
+                    String clientType = ClientTable.getInstance().getComponent(clientAddress.getHostAddress(),
+                            clientPort);
 
                     if (clientType != null) {
                         Client client = createClient(clientType, clientAddress, clientPort);
@@ -46,7 +47,8 @@ public class Server implements Constants {
                         client.start(); // Start the client's read thread
                         logger.info("Accepted and started client: " + clientType);
                     } else {
-                        logger.warning("Unknown client connection: " + clientAddress.getHostAddress() + ":" + clientPort);
+                        logger.warning(
+                                "Unknown client connection: " + clientAddress.getHostAddress() + ":" + clientPort);
                         clientSocket.close(); // Close the connection if not recognized
                     }
 
@@ -56,14 +58,16 @@ public class Server implements Constants {
             }
         }).start();
     }
-    private static Client createClient(String clientType, InetAddress clientAddress, int clientPort) throws IOException {
+
+    private static Client createClient(String clientType, InetAddress clientAddress, int clientPort)
+            throws IOException {
         String componentType = clientType.split(" ")[0];
 
         Socket newClientSocket = new Socket(clientAddress, clientPort);
-        return switch(componentType) {
-            case "LED" -> new CheckpointClient(newClientSocket, clientType);
+        return switch (componentType) {
+            case "LED" -> new CheckpointClient(newClientSocket, clientType, null);// null harcode
             case "BR" -> new TrainClient(newClientSocket, clientType);
-            case "ST" -> new StationClient(newClientSocket, clientType);
+            case "ST" -> new StationClient(newClientSocket, clientType, null);// null harcode
             default -> throw new IOException(clientType);
         };
     }
@@ -71,17 +75,17 @@ public class Server implements Constants {
     private void startStatusScheduler() {
         scheduler.scheduleAtFixedRate(() -> {
             for (Client client : clients) {
-                String statusMessage = MessageGenerator.generateStatusMessage(client.id, client.id, System.currentTimeMillis());
-                client.sendMessage(statusMessage);  // Send status request message
+                String statusMessage = MessageGenerator.generateStatusMessage(client.id, client.id,
+                        System.currentTimeMillis());
+                client.sendMessage(statusMessage); // Send status request message
             }
         }, 0, 2, TimeUnit.SECONDS);
     }
 
-
     // Closes the active threads safely
     public void stop() {
         try {
-            if(serverSocket != null) {
+            if (serverSocket != null) {
                 connectionListener = false;
                 serverSocket.close();
             }
@@ -91,4 +95,3 @@ public class Server implements Constants {
         }
     }
 }
-
