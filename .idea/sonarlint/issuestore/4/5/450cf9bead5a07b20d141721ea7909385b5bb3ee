@@ -1,4 +1,2 @@
 
-	java:S1126"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8…¤ùî—2J$6a7738dd-2b1e-43a9-a9f6-19bb9b13e4f1
-‡
-java:S2095>"DUse try-with-resources or close this "Socket" in a "finally" clause.(»˜…¥8‹¤ùî—2J$9bfa0a8f-ede0-4d62-a43e-dac1d5bc23ba
+	java:S1126"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8°¢ÇÈš2J$0082c235-de95-4553-aab3-1888db88c648

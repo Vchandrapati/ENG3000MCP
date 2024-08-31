@@ -1,5 +1,6 @@
 package org.example;
 
+import java.net.InetAddress;
 import java.net.Socket;
 
 public class TrainClient extends Client {
@@ -11,8 +12,8 @@ public class TrainClient extends Client {
         Dead
     }
 
-    public TrainClient(Socket clientSocket, String id) {
-        super(clientSocket, id);
+    public TrainClient(InetAddress clientAddress, int clientPort, String id) {
+        super(clientAddress, clientPort, id);
     }
 
     @Override
