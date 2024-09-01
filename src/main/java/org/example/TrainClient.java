@@ -16,21 +16,6 @@ public class TrainClient extends Client {
         super(clientAddress, clientPort, id);
     }
 
-    @Override
-    public void start() {
-        new Thread(this::readWrapper).start();
-    }
-
-    public void readWrapper() {
-        while (running) {
-            String input = readMessage();
-            if (input != null && !input.isEmpty()) {
-                // Use MessageHandler to process the message
-                messageHandler.handleMessage(input);
-            }
-        }
-    }
-
     public Integer getZone() {
         return zone;
     }

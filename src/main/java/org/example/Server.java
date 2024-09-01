@@ -39,23 +39,34 @@ public class Server implements Constants {
 
                     InetAddress clientAddress = recievePacket.getAddress();
                     int clientPort = recievePacket.getPort();
-                    String clientType = ClientTable.getInstance().getComponent(clientAddress.getHostAddress(), clientPort);
+                    Client client = findClient(clientAddress, clientPort);
 
-                    if (clientType != null) {
-                        Client client = createClient(clientType, clientAddress, clientPort);
-                        clients.add(client);
-                        client.start(); // Start the client's read thread
-                        logger.info("Accepted and started client: " + clientType);
+                    if (client != null) {
+                        client.processPacket(recievePacket);
+                        logger.info("Packet processed for client: " + client.id);
                     } else {
-                        logger.warning("Unknown client connection: " + clientAddress.getHostAddress() + ":" + clientPort);
+                        String clientType = ClientTable.getInstance().getComponent(clientAddress.getHostAddress(), clientPort);
+                        Client newClient = createClient(clientType, clientAddress, clientPort);
+                        clients.add(newClient);
+                        newClient.processPacket(recievePacket);
+                        logger.info("New client created and packet processed for client: " + newClient.id);
                     }
-
                 } catch (IOException e) {
-                    throw new RuntimeException(e);
+                    logger.log(Level.SEVERE, "Error receiving or processing packet", e);
                 }
             }
         }).start();
     }
+
+    private Client findClient(InetAddress clientAddress, int clientPort) {
+        for (Client client : clients) {
+            if (client.clientAddress.equals(clientAddress) && client.clientPort == clientPort)
+                return client;
+        }
+
+        return null;
+    }
+
     private static Client createClient(String clientType, InetAddress clientAddress, int clientPort) throws IOException {
         String componentType = clientType.split(" ")[0];
 

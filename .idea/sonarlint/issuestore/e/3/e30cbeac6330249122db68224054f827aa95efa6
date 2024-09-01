@@ -1,0 +1,48 @@
+
+t
+java:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(ˆ›˜Åşÿÿÿÿ
+o
+java:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(™Ç–
+t
+java:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(ÊÕæÖûÿÿÿÿ
+>
+java:S5411,"(Use a primitive boolean expression here.(›ûÅò
+F
+java:S3416"+Update this logger to use "Database.class".(“Ò¦“şÿÿÿÿ
+r
+java:S3077"WUse a thread-safe type; adding "volatile" is not enough to make this field thread-safe.(„£­äüÿÿÿÿ
+m
+java:S3077"WUse a thread-safe type; adding "volatile" is not enough to make this field thread-safe.(¹ôÓü
+r
+java:S3077"WUse a thread-safe type; adding "volatile" is not enough to make this field thread-safe.(ºÌ–™øÿÿÿÿ
+r
+java:S3077"WUse a thread-safe type; adding "volatile" is not enough to make this field thread-safe.(µ²Ÿ¹ÿÿÿÿÿ
+:
+java:S3010"$Remove this assignment of "running".(Üğ‚¾
+>
+java:S3010"#Remove this assignment of "trains".(ˆ›˜Åşÿÿÿÿ
+;
+java:S3010"%Remove this assignment of "stations".(™Ç–
+C
+java:S3010"(Remove this assignment of "checkpoints".(ÊÕæÖûÿÿÿÿ
+t
+java:S21421"^Either re-interrupt this method or rethrow the "InterruptedException" that can be caught here.(ä ¹€
+Q	java:S1252"<This block of commented-out lines of code should be removed.(†€éˆ
+L
+java:S26968"6Make the enclosing method "static" or remove this set.(¡µ‚ 
+t
+java:S2142@"^Either re-interrupt this method or rethrow the "InterruptedException" that can be caught here.(ä ¹€
+H
+java:S1135A"2Complete the task associated to this TODO comment.(‡ñÅ¼
+G
+java:S1602c",Remove useless curly braces around statement(›ş°ñûÿÿÿÿ
+G
+java:S1602m",Remove useless curly braces around statement(›ş°ñûÿÿÿÿ
+G
+java:S1602w",Remove useless curly braces around statement(›ş°ñûÿÿÿÿ
+S
+java:S1128"8Remove this unused import 'java.util.concurrent.Future'.(á¬øíıÿÿÿÿ
+R
+java:S1128"<Remove this unused import 'java.util.concurrent.FutureTask'.(Éü¡ó
+E
+java:S1068"*Remove this unused "logger" private field.(“Ò¦“şÿÿÿÿ

@@ -32,18 +32,11 @@ public abstract class Client {
         }
     }
 
-    public abstract void start();
-
-    public String readMessage() {
-        byte[] buffer = new byte[1024];
-        DatagramPacket recievePacket = new DatagramPacket(buffer, buffer.length);
-        try {
-            clientSocket.receive(recievePacket);
-            return new String(recievePacket.getData(), 0, recievePacket.getLength());
-        } catch (IOException e) {
-            logger.log(Level.SEVERE, String.format("Failed to read input of client %d", id), e);
+    public void processPacket(DatagramPacket packet) {
+        String message = new String(packet.getData(), 0, packet.getLength());
+        if (!message.isEmpty()) {
+            messageHandler.handleMessage(message);
         }
-        return null;
     }
 
     public void sendMessage(String message) {

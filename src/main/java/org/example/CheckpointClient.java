@@ -18,20 +18,6 @@ public class CheckpointClient extends Client {
         status = Status.Alive;
     }
 
-    @Override
-    public void start() {
-        new Thread(this::readWrapper).start();
-    }
-
-    public void readWrapper() {
-        while (running) {
-            String input = readMessage();
-            if (!input.isEmpty()) {
-
-            }
-        }
-    }
-
     public Integer getLocation() {
         return location;
     }
