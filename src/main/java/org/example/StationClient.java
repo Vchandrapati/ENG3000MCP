@@ -20,4 +20,14 @@ public class StationClient extends Client {
     public Integer getLocation() {
         return location;
     }
+
+    public void sendDoorMessage(boolean doorOpen) {
+        String message = MessageGenerator.generateDoorMessage("station", id, System.currentTimeMillis(), doorOpen);
+        sendMessage(message);
+    }
+
+    public void sendIRLEDMessage(boolean LEDOn) {
+        String message = MessageGenerator.generateIRLEDMessage("station", id, System.currentTimeMillis(), LEDOn);
+        sendMessage(message);
+    }
 }

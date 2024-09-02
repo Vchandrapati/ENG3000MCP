@@ -14,7 +14,7 @@ public class MessageHandler {
 
             // Handle based on the client type
             switch (recieveMessage.clientType) {
-                case "blade_runner":
+                case "ccp":
                     handleBladeRunnerMessage(recieveMessage);
                     break;
                 case "station":
@@ -28,17 +28,29 @@ public class MessageHandler {
         }
     }
 
+    public void handleChekcpointMessage(String message) {
+        switch (message) {
+            case "trip":
+                // Code here when trip occurs
+                break;
+            case "ok":
+                // Code here as response to ok
+                break;
+            default:
+                logger.severe("Failed to handle checkpoint message: " + message);
+                break;
+        }
+    }
+
     private void handleBladeRunnerMessage(RecieveMessage recieveMessage) {
         switch (recieveMessage.message) {
-            case "AKIN":
-                // Acknowledge initialization
-                logger.info("Received AKIN message from Blade Runner: " + recieveMessage.clientID);
+            case "CCIN":
+                // Start connection stuff
+                logger.info("Received CCIN message from Blade Runner: " + recieveMessage.clientID);
                 break;
-            case "KILL":
-                // Handle immediate stop command
-                logger.info("Received KILL command from Blade Runner: " + recieveMessage.clientID);
-                TrainClient tr = db.getTrain(recieveMessage.clientID);
-                tr.changeStatusToDead();
+            case "STAT":
+                // Handle stat cmd
+                logger.info("Received STAT command from Blade Runner: " + recieveMessage.clientID);
                 break;
             default:
                 logger.warning("Unknown Blade Runner message: " + recieveMessage.message);

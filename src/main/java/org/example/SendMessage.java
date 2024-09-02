@@ -20,16 +20,21 @@ public class SendMessage {
     @JsonProperty("door_direction")
     private String doorDirection;
 
-    // Constructors, Getters, and Setters
-    public SendMessage() {}
+    private String action;
 
-    public SendMessage(String clientType, String message, String clientID, Long timestamp, String status, String doorDirection) {
+    // Constructors, Getters, and Setters
+    public SendMessage() {
+    }
+
+    public SendMessage(String clientType, String message, String clientID, Long timestamp, String status,
+            String doorDirection, String action) {
         this.clientType = clientType;
         this.message = message;
         this.clientID = clientID;
         this.timestamp = timestamp;
         this.status = status;
         this.doorDirection = doorDirection;
+        this.action = action;
     }
 
     public String getClientType() {
@@ -78,5 +83,13 @@ public class SendMessage {
 
     public void setDoorDirection(String doorDirection) {
         this.doorDirection = doorDirection;
+    }
+
+    public String getAction() {
+        return action;
+    }
+
+    public void setAction(String action) {
+        this.action = action;
     }
 }

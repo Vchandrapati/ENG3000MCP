@@ -1,5 +1,6 @@
 package org.example;
 
+import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.Socket;
 
@@ -20,5 +21,17 @@ public class CheckpointClient extends Client {
 
     public Integer getLocation() {
         return location;
+    }
+
+    public void sendStatus() {
+        sendMessage("status");
+    }
+
+    @Override
+    public void processPacket(DatagramPacket packet) {
+        String message = new String(packet.getData(), 0, packet.getLength());
+        if (!message.isEmpty()) {
+            messageHandler.handleChekcpointMessage(message);
+        }
     }
 }

@@ -27,4 +27,19 @@ public class TrainClient extends Client {
     public void changeStatusToAlive() {
         status = Status.Alive;
     }
+
+    public void sendExecuteMessage(int speed) {
+        String message = MessageGenerator.generateExecuteMessage("ccp", id, System.currentTimeMillis(), speed);
+        sendMessage(message);
+    }
+
+    public void sendAcknowledgeMessage() {
+        String message = MessageGenerator.generateAcknowledgesMessage("ccp", id, System.currentTimeMillis());
+        sendMessage(message);
+    }
+
+    public void sendDorrMessage(boolean doorOpen) {
+        String message = MessageGenerator.generateDoorMessage("ccp", id, System.currentTimeMillis(), doorOpen);
+        sendMessage(message);
+    }
 }
