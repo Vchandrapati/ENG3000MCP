@@ -16,6 +16,7 @@ public class RecieveMessage {
     public String doorStatus;
     @JsonProperty("connection_info")
     public ConnectionInfo connectionInfo;
+    public Integer zone;
 
     public static class ConnectionInfo {
         private int port;
