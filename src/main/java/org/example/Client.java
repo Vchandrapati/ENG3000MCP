@@ -15,8 +15,8 @@ public abstract class Client {
     private static final Logger logger = Logger.getLogger(Client.class.getName());
     protected DatagramSocket clientSocket;
     protected MessageHandler messageHandler;
-    protected InetAddress clientAddress;
-    protected int clientPort;
+    public InetAddress clientAddress;
+    public int clientPort;
     protected String id;
     protected volatile boolean running = true;
 

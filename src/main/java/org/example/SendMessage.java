@@ -7,16 +7,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class SendMessage {
     @JsonProperty("client_type")
     private String clientType;
-
     private String message;
-
     @JsonProperty("client_id")
     private String clientID;
-
     private Long timestamp;
-
     private String status;
-
     @JsonProperty("door_direction")
     private String doorDirection;
 

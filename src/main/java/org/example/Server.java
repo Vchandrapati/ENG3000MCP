@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 
 public class Server implements Constants {
     private static final Logger logger = Logger.getLogger(Server.class.getName());
-    private final List<Client> clients = new CopyOnWriteArrayList<>();
+    public final List<Client> clients = new CopyOnWriteArrayList<>();
     private DatagramSocket serverSocket;
     private volatile boolean connectionListener;
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);

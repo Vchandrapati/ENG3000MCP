@@ -1,5 +1,7 @@
 
-¡	java:S115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(åá–øøÿÿÿÿ8ö²ÁÈš2J$2979ffdf-da4f-4441-8f59-3b3c37875399
-œ	java:S115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(ªçë8ö²ÁÈš2J$9cadae95-a0e2-49b8-8d54-f8bb4e00820a
+¡	java:S115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(åá–øøÿÿÿÿ8ö²ÁÈš2J$90a22c90-2a2d-408f-a46f-767e49556eb3
+œ	java:S115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(ªçë8ö²ÁÈš2J$c4d40ec3-851c-4139-ac82-460a6f79d6ca
+I
+java:S1128",Remove this unused import 'java.net.Socket'.(­‡àú8ĞÍÍ‡›2
 l
-java:S1068"*Remove this unused "status" private field.(ûËÍ 8ü²ÁÈš2J$d72c9f04-caa3-4e9c-83d3-442cedb1f4a0
+java:S1068"*Remove this unused "status" private field.(ûËÍ 8ü²ÁÈš2J$7585d916-243c-467e-8aaf-a64a3795f6c2
