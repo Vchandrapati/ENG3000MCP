@@ -35,13 +35,14 @@ public class ServerTest {
         String message = "Test message";
         byte[] buffer = message.getBytes();
         DatagramPacket sendPacket = new DatagramPacket(buffer, buffer.length, InetAddress.getByName("localhost"), PORT);
-        clientSocket.send(sendPacket);  // Simulate sending the packet to the server
+        clientSocket.send(sendPacket); // Simulate sending the packet to the server
 
         // Wait briefly to ensure the server processes the packet
         Thread.sleep(500);
 
         // Assert
         assertEquals(1, server.clients.size());
+        System.out.println("here");
         Client client = server.clients.getFirst();
         assertNotNull(client);
         assertEquals(clientAddress, client.clientAddress);
