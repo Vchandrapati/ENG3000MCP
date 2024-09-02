@@ -1275,3 +1275,9 @@ M
 src/test/java/ServerTest.java,c\0\c08453015dea4979f7d5c6a51f331ad167b39a49
 S
 #src/main/java/org/example/Pair.java,5\e\5e16ef023846d64edff65ea07f9e6128d2587a03
+[
++src/main/java/org/example/LoggerConfig.java,f\7\f7dd432092a502c8e35d0c574bc11e935a6987bd
+N
+src/test/java/MessageTest.java,2\9\29b3b4d119d64443cf46ccd93b348e3896a2a14d
+P
+ src/test/java/ProcessorTest.java,2\f\2fee1ea752c6bee111d5ce8e4782e0341568909e

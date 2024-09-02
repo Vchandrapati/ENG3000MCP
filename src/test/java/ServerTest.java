@@ -42,7 +42,7 @@ public class ServerTest {
 
         // Assert
         assertEquals(1, server.clients.size());
-        Client client = server.clients.get(0);
+        Client client = server.clients.getFirst();
         assertNotNull(client);
         assertEquals(clientAddress, client.clientAddress);
         assertEquals(clientPort, client.clientPort);
@@ -72,7 +72,6 @@ public class ServerTest {
 
     @Test
     void testStatusScheduler() throws Exception {
-        // Arrange
         Client client = new TrainClient(InetAddress.getByName("localhost"), 2000, "BR 69");
         server.clients.add(client);
 

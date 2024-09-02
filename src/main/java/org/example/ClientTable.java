@@ -33,7 +33,8 @@ public class ClientTable implements Constants {
             lookupTable.put(String.format("%s %d",ip, port), component);
         }
 
-        lookupTable.put(String.format("127.0.0.1 %d",2000), "BR 69"); // Test Client
+        lookupTable.put(String.format("127.0.0.1 %d", 2000), "BR 69"); // Test Client
+        lookupTable.put(String.format("127.0.0.1 %d", 3000), "BR 79"); // Test Client
 
         // Stations
         for (int i = 1; i <= 8; i++) {
