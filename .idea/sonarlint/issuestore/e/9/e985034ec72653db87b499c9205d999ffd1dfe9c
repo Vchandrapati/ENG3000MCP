@@ -1,3 +1,6 @@
 
+
+java:S1192"FDefine a constant instead of duplicating this literal "%s %d" 4 times.(‹îã‹ÿÿÿÿÿ8ºŞ‡›2J$969ee3c2-e8f2-4be8-944e-3f621749c270
 Ü
-java:S6548"˜A Singleton implementation was detected. Make sure the use of the Singleton pattern is required and the implementation is the right one for the context.(”’Ä8àÚ•ƒ“2J$7ba1fea6-d984-4fc3-b23e-0fc0babaa7f8
+java:S6548
+"˜A Singleton implementation was detected. Make sure the use of the Singleton pattern is required and the implementation is the right one for the context.(”’Ä8ÛŞ‡›2J$35868590-988e-44c2-8e91-7b5d5a6cf837

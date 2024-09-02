@@ -2,7 +2,6 @@ package org.example;
 
 import java.net.DatagramPacket;
 import java.net.InetAddress;
-import java.net.Socket;
 
 public class CheckpointClient extends Client {
     private volatile Integer location;

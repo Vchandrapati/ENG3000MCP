@@ -6,11 +6,9 @@ import java.util.Map;
 /**
  * Singleton instance that maintains a lookup table for clients.
  * The table maps client connection details (IP and port) to corresponding component information.
- * Uses the {@link Pair} class to store and manage client connection details and component information.
  */
 public class ClientTable implements Constants {
-    // Pair of IP, Port and pair of IP and Port as well as Component ID all predefined
-    private final Map<Pair<String, Integer>, String> lookupTable = new HashMap<>();
+    private final Map<String, String> lookupTable = new HashMap<>();
     private static ClientTable instance;
 
     private ClientTable() {
@@ -24,7 +22,7 @@ public class ClientTable implements Constants {
             String ip = String.format(DOMAIN, 50 + i);
             int port = 5000 + i;
             String component = String.format("LED %d", i);
-            lookupTable.put(new Pair<>(ip, port), component);
+            lookupTable.put(String.format("%s %d",ip, port), component);
         }
 
         // Bladerunners
@@ -32,15 +30,18 @@ public class ClientTable implements Constants {
             String ip = String.format(DOMAIN, 100 + i);
             int port = 3000 + i;
             String component = String.format("BR %d", i);
-            lookupTable.put(new Pair<>(ip, port), component);
+            lookupTable.put(String.format("%s %d",ip, port), component);
         }
+
+        lookupTable.put(String.format("127.0.0.1 %d", 2000), "BR 69"); // Test Client
+        lookupTable.put(String.format("127.0.0.1 %d", 3000), "BR 79"); // Test Client
 
         // Stations
         for (int i = 1; i <= 8; i++) {
             String ip = String.format(DOMAIN, 200 + i);
             int port = 4000 + i;
             String component = String.format("ST %d", i);
-            lookupTable.put(new Pair<>(ip, port), component);
+            lookupTable.put(String.format("%s %d",ip, port), component);
         }
     }
 
@@ -52,6 +53,6 @@ public class ClientTable implements Constants {
     }
 
     public String getComponent(String ip, int port) {
-        return lookupTable.get(new Pair<>(ip, port));
+        return lookupTable.get(String.format("%s %d",ip, port));
     }
 }

@@ -1265,3 +1265,19 @@ Q.idea/sonarlint/securityhotspotstore/b/9/b952ba679e52c398a5b95123b7bc6a728b44f6
 Q.idea/sonarlint/securityhotspotstore/b/9/b9664308c08c9f03286229439a472bf3c9f2c5a2,4\b\4b6a8a5d1c2b4d4d876a878f77595c57233f74b9
 Å
 Q.idea/sonarlint/securityhotspotstore/f/7/f7e72fc8183c08da31101433eb203b46c56c7eb0,2\d\2d18554de54cb6c2405205e7ce58ee65f3e8d9d5
+R
+"src/main/java/org/example/App.java,2\6\268b09d2a5cdab7d148f0ec91f7b3fb51601410d
+Z
+*src/main/java/org/example/ClientTable.java,e\9\e985034ec72653db87b499c9205d999ffd1dfe9c
+7
+pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec
+M
+src/test/java/ServerTest.java,c\0\c08453015dea4979f7d5c6a51f331ad167b39a49
+S
+#src/main/java/org/example/Pair.java,5\e\5e16ef023846d64edff65ea07f9e6128d2587a03
+[
++src/main/java/org/example/LoggerConfig.java,f\7\f7dd432092a502c8e35d0c574bc11e935a6987bd
+N
+src/test/java/MessageTest.java,2\9\29b3b4d119d64443cf46ccd93b348e3896a2a14d
+P
+ src/test/java/ProcessorTest.java,2\f\2fee1ea752c6bee111d5ce8e4782e0341568909e
