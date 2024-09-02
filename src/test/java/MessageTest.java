@@ -67,4 +67,9 @@ public class MessageTest {
     void testDatabaseUpdate() throws Exception {
 
     }
+
+    @Test // Test that the message from checkpoint is correctly read and updated
+    void testCheckpointMessage() throws Exception {
+
+    }
 }

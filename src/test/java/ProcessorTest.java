@@ -35,8 +35,23 @@ public class ProcessorTest {
         clientSocket.close();
     }
 
-    @Test // Test message fields are serialised correctly
-    void testMessageGenerator() throws Exception {
+    @Test // Test trains distance are maintained 1 block
+    void testTrainDistance() throws Exception {
+
+    }
+
+    @Test // Test processor identifies collisions and stops them
+    void testCollissionDetection() throws Exception {
+
+    }
+
+    @Test // Test processor identifies malfunctioning trains
+    void testBrokenTrain() throws Exception {
+
+    }
+
+    @Test // Test processor correctly reads database updates simultaneously
+    void testDatabaaseUpdate() throws Exception {
 
     }
 }
