@@ -19,7 +19,7 @@ public class MessageGenerator {
     public static String generateStatusMessage(String clientType, String clientID, Long timestamp) {
         SendMessage message = new SendMessage();
         message.clientType = clientType;
-        message.message = "AKIN";
+        message.message = "STAT";
         message.clientID = clientID;
         message.timestamp = timestamp;
 
@@ -29,7 +29,7 @@ public class MessageGenerator {
     public static String generateExecuteMessage(String clientType, String clientID, Long timestamp, int speed) {
         SendMessage message = new SendMessage();
         message.clientType = clientType;
-        message.message = "AKIN";
+        message.message = "EXEC";
         message.clientID = clientID;
         message.timestamp = timestamp;
 
@@ -51,7 +51,7 @@ public class MessageGenerator {
     public static String generateDoorMessage(String clientType, String clientID, Long timestamp, boolean doorOpen) {
         SendMessage message = new SendMessage();
         message.clientType = clientType;
-        message.message = "AKIN";
+        message.message = "DOOR";
         message.clientID = clientID;
         message.timestamp = timestamp;
 
@@ -67,7 +67,7 @@ public class MessageGenerator {
     public static String generateIRLEDMessage(String clientType, String clientID, Long timestamp, boolean on) {
         SendMessage message = new SendMessage();
         message.clientType = clientType;
-        message.message = "AKIN";
+        message.message = "IRLD";
         message.clientID = clientID;
         message.timestamp = timestamp;
 
