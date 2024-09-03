@@ -10,6 +10,7 @@ public class MessageHandler {
     private static final ObjectMapper objectMapper = new ObjectMapper();
     private static Database db = Database.getInstance();
 
+    // Handles messages from CCPs and stations
     public void handleMessage(String message) {
         try {
             RecieveMessage recieveMessage = objectMapper.readValue(message, RecieveMessage.class);
@@ -30,6 +31,7 @@ public class MessageHandler {
         }
     }
 
+    // Handles all checkpoint messages
     public void handleCheckpointMessage(String message) {
         String[] msg = message.split(" ");
         CheckpointClient client = db.getCheckpoint(msg[0]);
@@ -50,6 +52,7 @@ public class MessageHandler {
 
     private void handleCCPMessage(RecieveMessage recieveMessage) {
         TrainClient client = db.getTrain(recieveMessage.clientID);
+        // Different behaviour based on what the message command is
         switch (recieveMessage.message) {
             case "CCIN":
                 client.sendAcknowledgeMessage();
@@ -66,6 +69,7 @@ public class MessageHandler {
 
     private void handleStationMessage(RecieveMessage recieveMessage) {
         StationClient client = db.getStation(recieveMessage.clientID);
+        // Different behaviour based on what the message command is
         switch (recieveMessage.message) {
             case "DOOR":
                 client.updateStatus(recieveMessage.status.toUpperCase());
