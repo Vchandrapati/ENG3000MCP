@@ -9,7 +9,6 @@ public class MessageHandler {
     private static final Logger logger = Logger.getLogger(MessageHandler.class.getName());
     private static final ObjectMapper objectMapper = new ObjectMapper();
     private static Database db = Database.getInstance();
-
     // Handles messages from CCPs and stations
     public void handleMessage(String message) {
         try {

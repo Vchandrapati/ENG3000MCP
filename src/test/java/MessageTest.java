@@ -151,7 +151,6 @@ public class MessageTest {
 
         // Convert the received data to a SendMessage object
         String receivedJson = new String(receivePacket.getData(), 0, receivePacket.getLength());
-        receivedJson = receivedJson.replaceAll("[^\\x20-\\x7E]", " ");
         SendMessage receivedMessage = objectMapper.readValue(receivedJson, SendMessage.class);
 
         // Validate the response
