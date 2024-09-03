@@ -3,11 +3,14 @@ package org.example;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+//A class which generates messages of only the required fields based on the interface document
 public class MessageGenerator {
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
     public static String generateAcknowledgesMessage(String clientType, String clientID, Long timestamp) {
         SendMessage message = new SendMessage();
+        // Defines the clientType, message, ID and timestamp to be packaged into a JSON
+        // to be sent over. Other functions in this class are similar.
         message.clientType = clientType;
         message.message = "AKIN";
         message.clientID = clientID;
@@ -19,7 +22,7 @@ public class MessageGenerator {
     public static String generateStatusMessage(String clientType, String clientID, Long timestamp) {
         SendMessage message = new SendMessage();
         message.clientType = clientType;
-        message.message = "AKIN";
+        message.message = "STAT";
         message.clientID = clientID;
         message.timestamp = timestamp;
 
@@ -29,7 +32,7 @@ public class MessageGenerator {
     public static String generateExecuteMessage(String clientType, String clientID, Long timestamp, int speed) {
         SendMessage message = new SendMessage();
         message.clientType = clientType;
-        message.message = "AKIN";
+        message.message = "EXEC";
         message.clientID = clientID;
         message.timestamp = timestamp;
 
@@ -51,7 +54,7 @@ public class MessageGenerator {
     public static String generateDoorMessage(String clientType, String clientID, Long timestamp, boolean doorOpen) {
         SendMessage message = new SendMessage();
         message.clientType = clientType;
-        message.message = "AKIN";
+        message.message = "DOOR";
         message.clientID = clientID;
         message.timestamp = timestamp;
 
@@ -67,7 +70,7 @@ public class MessageGenerator {
     public static String generateIRLEDMessage(String clientType, String clientID, Long timestamp, boolean on) {
         SendMessage message = new SendMessage();
         message.clientType = clientType;
-        message.message = "AKIN";
+        message.message = "IRLD";
         message.clientID = clientID;
         message.timestamp = timestamp;
 
