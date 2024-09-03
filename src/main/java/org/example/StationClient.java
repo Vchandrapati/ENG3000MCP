@@ -29,11 +29,17 @@ public class StationClient extends Client {
         return location;
     }
 
+    // For sending a message about updating the status of the door
+    // True: Door is open
+    // False: Door is closed
     public void sendDoorMessage(boolean doorOpen) {
         String message = MessageGenerator.generateDoorMessage("station", id, System.currentTimeMillis(), doorOpen);
         sendMessage(message);
     }
 
+    // To tell the station what the status of the LED should be
+    // True: LED is on
+    // False: LED is off
     public void sendIRLEDMessage(boolean LEDOn) {
         String message = MessageGenerator.generateIRLEDMessage("station", id, System.currentTimeMillis(), LEDOn);
         sendMessage(message);

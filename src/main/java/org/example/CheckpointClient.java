@@ -24,6 +24,7 @@ public class CheckpointClient extends Client {
         return location;
     }
 
+    // Uses an alternate process packet method as the messages are strings
     @Override
     public void processPacket(DatagramPacket packet) {
         String message = new String(packet.getData(), 0, packet.getLength());
