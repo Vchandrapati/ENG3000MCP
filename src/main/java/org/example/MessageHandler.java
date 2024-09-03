@@ -15,7 +15,7 @@ public class MessageHandler {
             // Handle based on the client type
             switch (recieveMessage.clientType) {
                 case "ccp":
-                    handleBladeRunnerMessage(recieveMessage);
+                    handleCCPMessage(recieveMessage);
                     break;
                 case "station":
                     handleStationMessage(recieveMessage);
@@ -28,7 +28,7 @@ public class MessageHandler {
         }
     }
 
-    public void handleChekcpointMessage(String message) {
+    public void handleCheckpointMessage(String message) {
         switch (message) {
             case "trip":
                 // Code here when trip occurs
@@ -42,14 +42,15 @@ public class MessageHandler {
         }
     }
 
-    private void handleBladeRunnerMessage(RecieveMessage recieveMessage) {
+    private void handleCCPMessage(RecieveMessage recieveMessage) {
+        TrainClient client = db.getTrain(recieveMessage.clientID);
         switch (recieveMessage.message) {
             case "CCIN":
-                // Start connection stuff
+                client.sendAcknowledgeMessage();
                 logger.info("Received CCIN message from Blade Runner: " + recieveMessage.clientID);
                 break;
             case "STAT":
-                // Handle stat cmd
+                client.updateStatus(recieveMessage.status.toUpperCase());
                 logger.info("Received STAT command from Blade Runner: " + recieveMessage.clientID);
                 break;
             default:
@@ -58,15 +59,15 @@ public class MessageHandler {
     }
 
     private void handleStationMessage(RecieveMessage recieveMessage) {
+        StationClient client = db.getStation(recieveMessage.clientID);
         switch (recieveMessage.message) {
-            case "STIN":
-                // Handle station initialization
+            case "DOOR":
+                client.updateStatus(recieveMessage.status.toUpperCase());
                 logger.info("Received STIN message from Station: " + recieveMessage.clientID);
                 break;
             case "STAT":
                 // Handle station status update
                 logger.info("Received STAT message from Station: " + recieveMessage.clientID);
-                // Update database or other logic
                 break;
             default:
                 logger.warning("Unknown Station message: " + recieveMessage.message);

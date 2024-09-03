@@ -1,30 +1,25 @@
 package org.example;
 
 import java.util.HashMap;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.Future;
-import java.util.concurrent.FutureTask;
-import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.*;
 import java.util.logging.Logger;
 
 public class Database implements Runnable {
     private static final Logger logger = Logger.getLogger(Server.class.getName());
     private static volatile Database db;
-
     private BlockingQueue<Runnable> taskQueue;
-
-    private static volatile HashMap<String, TrainClient> trains;
-    private static volatile HashMap<String, StationClient> stations;
-    private static volatile HashMap<String, CheckpointClient> checkpoints;
+    private static ConcurrentHashMap<String, TrainClient> trains;
+    private static ConcurrentHashMap<String, StationClient> stations;
+    private static ConcurrentHashMap<String, CheckpointClient> checkpoints;
 
     private static Boolean running = false;
 
     private Database() {
         running = true;
 
-        trains = new HashMap<String, TrainClient>();
-        stations = new HashMap<String, StationClient>();
-        checkpoints = new HashMap<String, CheckpointClient>();
+        trains = new ConcurrentHashMap<>();
+        stations = new ConcurrentHashMap<>();
+        checkpoints = new ConcurrentHashMap<>();
 
         taskQueue = new LinkedBlockingQueue<>();
 
@@ -33,9 +28,9 @@ public class Database implements Runnable {
     }
 
     public static synchronized Database getInstance() {
-        if (db == null) {
-            return new Database();
-        }
+        if (db == null)
+            db =  new Database();
+
         return db;
     }
 
@@ -45,24 +40,24 @@ public class Database implements Runnable {
             try {
                 Runnable task = taskQueue.take();
                 task.run();
-
             } catch (InterruptedException e) {
-                // e.printStackTrace();
+                Thread.currentThread().interrupt();
+                break;
             }
         }
     }
 
-    public void stutdown() {
+    public void shutdown() {
         running = false;
-        submitTask(() -> {
-        });
+        Thread.currentThread().interrupt();
     }
 
     private void submitTask(Runnable r) {
         try {
             taskQueue.put(r);
         } catch (InterruptedException e) {
-            // TODO: handle exception
+            Thread.currentThread().interrupt();
+            logger.severe("Task submission interrupted.");
         }
     }
 
@@ -70,7 +65,7 @@ public class Database implements Runnable {
         submitTask(() -> {
             TrainClient prevValue = trains.putIfAbsent(id, tr);
             if (prevValue != null) {
-                // Log
+                logger.warning("Attempted to add duplicate train with id: " + id);
             }
         });
     }
@@ -79,7 +74,7 @@ public class Database implements Runnable {
         submitTask(() -> {
             StationClient prevValue = stations.putIfAbsent(id, st);
             if (prevValue != null) {
-                // Log
+                logger.warning("Attempted to add duplicate station with id: " + id);
             }
         });
     }
@@ -88,39 +83,46 @@ public class Database implements Runnable {
         submitTask(() -> {
             CheckpointClient prevValue = checkpoints.putIfAbsent(id, ch);
             if (prevValue != null) {
-                // Log
+                logger.warning("Attempted to add duplicate checkpoint with id: " + id);
             }
         });
     }
 
     public TrainClient getTrain(String id) {
         final TrainClient[] result = new TrainClient[1];
-
-        submitTask(() -> {
-            result[0] = trains.get(id);
-        });
-
+        submitTask(() -> result[0] = trains.get(id));
         return result[0];
     }
 
     public StationClient getStation(String id) {
         final StationClient[] result = new StationClient[1];
-
-        submitTask(() -> {
-            result[0] = stations.get(id);
-        });
-
+        submitTask(() -> result[0] = stations.get(id));
         return result[0];
     }
 
     public CheckpointClient getCheckpoint(String id) {
         final CheckpointClient[] result = new CheckpointClient[1];
-
-        submitTask(() -> {
-            result[0] = checkpoints.get(id);
-        });
-
+        submitTask(() -> result[0] = checkpoints.get(id));
         return result[0];
     }
 
+    public CheckpointClient getHit() {
+        for (CheckpointClient checkpoint : checkpoints.values()) {
+            if (checkpoint.isTripped()) {
+                return checkpoint;
+            }
+        }
+
+        return null;
+    }
+
+    public int getTrainCount() {
+        return trains.size();
+    }
+    public int getStationCount() {
+        return stations.size();
+    }
+    public int getCheckpointCount() {
+        return checkpoints.size();
+    }
 }

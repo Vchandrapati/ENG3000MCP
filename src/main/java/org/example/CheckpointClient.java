@@ -4,8 +4,9 @@ import java.net.DatagramPacket;
 import java.net.InetAddress;
 
 public class CheckpointClient extends Client {
-    private volatile Integer location;
-    private volatile Status status;
+    private Integer location;
+    private Status status;
+    private boolean tripped;
 
     private enum Status {
         Alive,
@@ -16,21 +17,35 @@ public class CheckpointClient extends Client {
         super(clientAddress, clientPort, id);
         location = 0;
         status = Status.Alive;
+        this.tripped = false;
     }
 
     public Integer getLocation() {
         return location;
     }
 
-    public void sendStatus() {
-        sendMessage("status");
-    }
-
     @Override
     public void processPacket(DatagramPacket packet) {
         String message = new String(packet.getData(), 0, packet.getLength());
         if (!message.isEmpty()) {
-            messageHandler.handleChekcpointMessage(message);
+            messageHandler.handleCheckpointMessage(message);
         }
+    }
+
+    @Override
+    public void registerClient() {
+        Database.getInstance().addCheckpoint(this.id, this);
+    }
+
+    public void setTripped() {
+        this.tripped = true;
+    }
+
+    public void reset() {
+        this.tripped = false;
+    }
+
+    public boolean isTripped() {
+        return tripped;
     }
 }

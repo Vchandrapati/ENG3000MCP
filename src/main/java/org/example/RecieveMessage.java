@@ -12,14 +12,4 @@ public class RecieveMessage {
     public String clientID;
     public Long timestamp;
     public String status;
-    @JsonProperty("door_status")
-    public String doorStatus;
-    @JsonProperty("connection_info")
-    public ConnectionInfo connectionInfo;
-    public Integer zone;
-
-    public static class ConnectionInfo {
-        private int port;
-        private String ip;
-    }
 }

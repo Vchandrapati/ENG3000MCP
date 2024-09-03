@@ -8,40 +8,40 @@ public class MessageGenerator {
 
     public static String generateAcknowledgesMessage(String clientType, String clientID, Long timestamp) {
         SendMessage message = new SendMessage();
-        message.setClientType(clientType);
-        message.setMessage("AKIN");
-        message.setClientID(clientID);
-        message.setTimestamp(timestamp);
+        message.clientType = clientType;
+        message.message = "AKIN";
+        message.clientID = clientID;
+        message.timestamp = timestamp;
 
         return convertToJson(message);
     }
 
     public static String generateStatusMessage(String clientType, String clientID, Long timestamp) {
         SendMessage message = new SendMessage();
-        message.setClientType(clientType);
-        message.setMessage("STAT");
-        message.setClientID(clientID);
-        message.setTimestamp(timestamp);
+        message.clientType = clientType;
+        message.message = "AKIN";
+        message.clientID = clientID;
+        message.timestamp = timestamp;
 
         return convertToJson(message);
     }
 
     public static String generateExecuteMessage(String clientType, String clientID, Long timestamp, int speed) {
         SendMessage message = new SendMessage();
-        message.setClientType(clientType);
-        message.setMessage("EXEC");
-        message.setClientID(clientID);
-        message.setTimestamp(timestamp);
+        message.clientType = clientType;
+        message.message = "AKIN";
+        message.clientID = clientID;
+        message.timestamp = timestamp;
 
         switch (speed) {
             case 1:
-                message.setAction("SLOW");
+                message.action = "SLOW";
                 break;
             case 0:
-                message.setAction("STOP");
+                message.action = "STOP";
                 break;
             default:
-                message.setAction("FAST");
+                message.action = "FAST";
                 break;
         }
 
@@ -50,47 +50,35 @@ public class MessageGenerator {
 
     public static String generateDoorMessage(String clientType, String clientID, Long timestamp, boolean doorOpen) {
         SendMessage message = new SendMessage();
-        message.setClientType(clientType);
-        message.setMessage("DOOR");
-        message.setClientID(clientID);
-        message.setTimestamp(timestamp);
+        message.clientType = clientType;
+        message.message = "AKIN";
+        message.clientID = clientID;
+        message.timestamp = timestamp;
 
         if (doorOpen) {
-            message.setAction("OPEN");
+            message.action = "OPEN";
         } else {
-            message.setAction("CLOSE");
+            message.action = "CLOSE";
         }
 
         return convertToJson(message);
     }
 
-    public static String generateIRLEDMessage(String clientType, String clientID, Long timestamp, boolean IROn) {
+    public static String generateIRLEDMessage(String clientType, String clientID, Long timestamp, boolean on) {
         SendMessage message = new SendMessage();
-        message.setClientType(clientType);
-        message.setMessage("IRLD");
-        message.setClientID(clientID);
-        message.setTimestamp(timestamp);
+        message.clientType = clientType;
+        message.message = "AKIN";
+        message.clientID = clientID;
+        message.timestamp = timestamp;
 
-        if (IROn) {
-            message.setAction("ON");
+        if (on) {
+            message.action = "ON";
         } else {
-            message.setAction("OFF");
+            message.action = "OFF";
         }
 
         return convertToJson(message);
 
-    }
-
-    // not used anymore ig?
-    public static String generateKillMessage(String clientType, String clientID, Long timestamp) {
-        SendMessage message = new SendMessage();
-        message.setClientType(clientType);
-        message.setMessage("KILL");
-        message.setClientID(clientID);
-        message.setTimestamp(timestamp);
-
-        // return convertToJson(message);
-        return null;
     }
 
     private static String convertToJson(SendMessage message) {

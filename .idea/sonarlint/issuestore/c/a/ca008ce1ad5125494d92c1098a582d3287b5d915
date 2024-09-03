@@ -1,18 +1,13 @@
 
 ¡
-java:S1104"YMake clientAddress a static final constant or non-public and provide accessors if needed.(¹¤Ý€øÿÿÿÿ8®ÇÛëš2J$fd48eb08-e2c7-40ae-b153-98e0dea095ff
+java:S1104"YMake clientAddress a static final constant or non-public and provide accessors if needed.(¹¤Ý€øÿÿÿÿ8Å«Ù³›2J$7acb8caa-1652-4830-8fb0-b7a8504b4408
 ž
-java:S1104"VMake clientPort a static final constant or non-public and provide accessors if needed.(¥žæªüÿÿÿÿ8¯ÇÛëš2J$5fe76cde-051d-4995-ac4b-a823bfad7cb5
+java:S1104"VMake clientPort a static final constant or non-public and provide accessors if needed.(¥žæªüÿÿÿÿ8Å«Ù³›2J$20597a82-5d49-4d4d-8cce-fa8819bc092f
 f
-java:S26298"$Invoke method(s) only conditionally.(œÞ‡Y8™‰¾Èš2J$e64055ff-30f9-4d2b-be30-c3f546045193
+java:S26297"$Invoke method(s) only conditionally.(œÞ‡Y8Å«Ù³›2J$afc77310-5e0c-458d-92a0-a3368d54015d
+|
+java:S4719!"9Replace charset name argument with StandardCharsets.UTF_8(Å‰ÖÐ8Ï«Ù³›2J$013f07a5-6189-439a-9409-267d336fcc7b
 l
-java:S22758"*An 'int' is expected rather than a String.(œÞ‡Y8¤‰¾Èš2J$f81def2b-cbf1-4f0e-b8c4-3fbc48f26546
-v
-java:S1128"3Remove this unused import 'java.io.BufferedReader'.(€é²Å8È‚’†›2J$d5a2aff3-4569-4f17-9d35-1fe2ce067248
-y
-java:S1128"6Remove this unused import 'java.io.InputStreamReader'.(ãˆÎÉ8È‚’†›2J$98394d27-c251-48f2-a356-a7b79bdfeee9
-s
-java:S1128"0Remove this unused import 'java.io.PrintWriter'.(ÓÞÏÛ8È‚’†›2J$fc052af4-179e-41da-851a-0331d936f047
+java:S22757"*An 'int' is expected rather than a String.(œÞ‡Y8Ó«Ù³›2J$8872f080-e14e-4ade-a7f3-57b75dfda750
 o
-java:S1128
-",Remove this unused import 'java.net.Socket'.(­‡àú8È‚’†›2J$326e4524-3623-44cd-aec3-1e5575e0d31e
+java:S1128",Remove this unused import 'java.net.Socket'.(­‡àú8´•Ø·›2J$5389ac9d-f088-4504-87ef-0eedb01b6c42

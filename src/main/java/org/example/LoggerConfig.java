@@ -12,7 +12,7 @@ public class LoggerConfig {
 
 
             // Create a FileHandler for logging to a file
-            FileHandler fileHandler = new FileHandler("app.log", true);
+            FileHandler fileHandler = new FileHandler("app.txt", true);
             fileHandler.setLevel(Level.ALL);
             fileHandler.setFormatter(new SimpleFormatter());
 

@@ -21,7 +21,7 @@ public class ClientTable implements Constants {
         for (int i = 1; i <= 20; i++) {
             String ip = String.format(DOMAIN, 50 + i);
             int port = 5000 + i;
-            String component = String.format("LED %d", i);
+            String component = String.format("LED%d", i);
             lookupTable.put(String.format("%s %d",ip, port), component);
         }
 
@@ -29,18 +29,18 @@ public class ClientTable implements Constants {
         for (int i = 1; i <= 32; i++) {
             String ip = String.format(DOMAIN, 100 + i);
             int port = 3000 + i;
-            String component = String.format("BR %d", i);
+            String component = String.format("BR%d", i);
             lookupTable.put(String.format("%s %d",ip, port), component);
         }
 
-        lookupTable.put(String.format("127.0.0.1 %d", 2000), "BR 69"); // Test Client
-        lookupTable.put(String.format("127.0.0.1 %d", 3000), "BR 79"); // Test Client
+        lookupTable.put(String.format("127.0.0.1 %d", 2000), "BR69"); // Test Client
+        lookupTable.put(String.format("127.0.0.1 %d", 3000), "BR79"); // Test Client
 
         // Stations
         for (int i = 1; i <= 8; i++) {
             String ip = String.format(DOMAIN, 200 + i);
             int port = 4000 + i;
-            String component = String.format("ST %d", i);
+            String component = String.format("ST%d", i);
             lookupTable.put(String.format("%s %d",ip, port), component);
         }
     }

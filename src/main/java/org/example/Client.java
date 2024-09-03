@@ -1,9 +1,6 @@
 package org.example;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
@@ -12,7 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public abstract class Client {
-    private static final Logger logger = Logger.getLogger(Client.class.getName());
+    protected static final Logger logger = Logger.getLogger(Client.class.getName());
     protected DatagramSocket clientSocket;
     protected MessageHandler messageHandler;
     public InetAddress clientAddress;
@@ -32,16 +29,17 @@ public abstract class Client {
         }
     }
 
-    public void processPacket(DatagramPacket packet) {
-        String message = new String(packet.getData(), 0, packet.getLength());
+    public void processPacket(DatagramPacket packet) throws UnsupportedEncodingException {
+        String message = new String(packet.getData(), 0, packet.getLength(), "UTF-8");
         if (!message.isEmpty()) {
+            message = message.replaceAll("[^\\x20-\\x7E]", " ");
             messageHandler.handleMessage(message);
         }
     }
 
     public void sendMessage(String message) {
         try {
-            byte[] buffer = message.getBytes();
+            byte[] buffer = new byte[message.length()];
             DatagramPacket sendPacket = new DatagramPacket(buffer, buffer.length, clientAddress, clientPort);
             clientSocket.send(sendPacket);
         } catch (Exception e) {
@@ -59,4 +57,6 @@ public abstract class Client {
             logger.log(Level.SEVERE, "Failed to close client", e);
         }
     }
+
+    public abstract void registerClient();
 }

@@ -9,8 +9,6 @@ U
 %src/main/java/org/example/Client.java,c\a\ca008ce1ad5125494d92c1098a582d3287b5d915
 \
 ,src/main/java/org/example/StationClient.java,6\d\6d2e3c01f1113886131523a407f0a71558671ec9
-Y
-)src/main/java/org/example/TestClient.java,a\e\aed93eb4bcbcf77b9feee53f9f9bfcd1d097928f
 Z
 *src/main/java/org/example/TrainClient.java,e\b\eb46a7bc80dc4c0d36a492403cfd814a8d3f3684
 _
@@ -1273,11 +1271,19 @@ Z
 pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec
 M
 src/test/java/ServerTest.java,c\0\c08453015dea4979f7d5c6a51f331ad167b39a49
-S
-#src/main/java/org/example/Pair.java,5\e\5e16ef023846d64edff65ea07f9e6128d2587a03
 [
 +src/main/java/org/example/LoggerConfig.java,f\7\f7dd432092a502c8e35d0c574bc11e935a6987bd
 N
 src/test/java/MessageTest.java,2\9\29b3b4d119d64443cf46ccd93b348e3896a2a14d
 P
  src/test/java/ProcessorTest.java,2\f\2fee1ea752c6bee111d5ce8e4782e0341568909e
+X
+(src/main/java/org/example/Constants.java,6\3\63520f4c1f031bdac0939465440ce70d95b01cc4
+Z
+*src/main/java/org/example/SystemState.java,e\7\e7adf125dd7394ba2202fe94f4c6901be48258bf
+[
++src/main/java/org/example/StartupState.java,3\3\33df6e49c0049b5344e9fbe1452523adc50b1ae5
+X
+(src/main/java/org/example/StateData.java,2\e\2e36d9d0a5790c781ca5a0a829d0326b1ee61b2c
+a
+1src/main/java/org/example/SystemStateManager.java,d\0\d0e0c9e2f880315fba91b05196bd7998ccd38a80

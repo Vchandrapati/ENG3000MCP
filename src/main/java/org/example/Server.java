@@ -22,7 +22,7 @@ public class Server implements Constants {
         try {
             serverSocket = new DatagramSocket(PORT);
             connectionListener();
-            startStatusScheduler();
+
             logger.info("Server completed startup and listnening on PORT: " + PORT);
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Error starting up server", e);
@@ -47,6 +47,7 @@ public class Server implements Constants {
                     } else {
                         String clientType = ClientTable.getInstance().getComponent(clientAddress.getHostAddress(), clientPort);
                         Client newClient = createClient(clientType, clientAddress, clientPort);
+                        newClient.registerClient();
                         clients.add(newClient);
                         newClient.processPacket(recievePacket);
                         logger.info("New client created and packet processed for client: " + newClient.id);
@@ -70,15 +71,17 @@ public class Server implements Constants {
     private static Client createClient(String clientType, InetAddress clientAddress, int clientPort) throws IOException {
         String componentType = clientType.split(" ")[0];
 
-        return switch(componentType) {
-            case "LED" -> new CheckpointClient(clientAddress, clientPort, clientType);
-            case "BR" -> new TrainClient(clientAddress, clientPort, clientType);
-            case "ST" -> new StationClient(clientAddress, clientPort, clientType);
-            default -> throw new IOException(clientType);
-        };
+        if (componentType.contains("LED"))
+            return new CheckpointClient(clientAddress, clientPort, clientType);
+        else if (componentType.contains("BR"))
+            return new TrainClient(clientAddress, clientPort, clientType);
+        else if (componentType.contains("ST"))
+            return new StationClient(clientAddress, clientPort, clientType);
+        else
+            throw new IOException(clientType);
     }
 
-    private void startStatusScheduler() {
+    public void startStatusScheduler() {
         scheduler.scheduleAtFixedRate(() -> {
             for (Client client : clients) {
                 String statusMessage = MessageGenerator.generateStatusMessage(client.id, client.id, System.currentTimeMillis());

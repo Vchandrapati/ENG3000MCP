@@ -1,5 +1,5 @@
 
-¡	java:S115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(åá–øøÿÿÿÿ8Ë½ÃÈš2J$c298460c-bd95-4006-a693-793f29956df5
-œ	java:S115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(ªçë8Ë½ÃÈš2J$8cda9adf-3789-46f1-a310-9468b0a98c1a
+—
+java:S1450	"URemove the "status" field and declare it as a local variable in the relevant methods.(ûËÍ 8«œ³›2J$84f82962-90d2-4b29-84de-427f602eabcb
 l
-java:S1068"*Remove this unused "status" private field.(ûËÍ 8Ñ½ÃÈš2J$1c469d83-63da-4132-9b15-ff2e412d4ed3
+java:S1068	"*Remove this unused "status" private field.(ûËÍ 8«œ³›2J$ab904eef-dd03-4288-9ecf-5f384317425a

@@ -28,15 +28,7 @@ public class MessageTest {
     public void setUp() throws Exception {
         server = new Server();
         clientSocket = new DatagramSocket(2000, InetAddress.getByName("localhost"));
-
-        String message = "Test message";
-        byte[] buffer = message.getBytes();
-        DatagramPacket sendPacket = new DatagramPacket(buffer, buffer.length, InetAddress.getByName("localhost"), PORT);
-        clientSocket.send(sendPacket);
-
-        // Second client for testing
         clientSocket2 = new DatagramSocket(3000, InetAddress.getByName("localhost"));
-        clientSocket2.send(sendPacket);
     }
 
     @AfterEach
@@ -47,7 +39,7 @@ public class MessageTest {
 
     @Test // Test message fields are serialised correctly
     void testCCPMessageGenerator() throws Exception {
-        InetAddress clientAddress = InetAddress.getByName("localhost");
+        InetAddress clientAddress = InetAddress.getLoopbackAddress();
         int clientPort = 2000;
 
         TrainClient tc = new TrainClient(clientAddress, clientPort, "BR01");
@@ -81,7 +73,7 @@ public class MessageTest {
         TrainClient tc = new TrainClient(clientAddress, clientPort, "BR01");
         tc.sendExecuteMessage(2);
 
-        Thread.sleep(500);
+        Thread.sleep(1000);
 
         buffer = new byte[1024];
         packet = new DatagramPacket(buffer, buffer.length);
@@ -135,7 +127,37 @@ public class MessageTest {
 
     @Test // Test that the message is parsed correctly and states are changed
     void testMessageParsing() throws Exception {
+        // Prepare the CCIN message
+        RecieveMessage message = new RecieveMessage();
+        message.clientType = "ccp";
+        message.message = "CCIN";
+        message.clientID = "BR69";
+        message.timestamp = System.currentTimeMillis();
 
+        String jsonMessage = convertToJson(message);
+        byte[] buffer = jsonMessage.getBytes("UTF-8");
+        System.out.println(jsonMessage);
+
+        // Send the CCIN message to the server
+        DatagramPacket sendPacket = new DatagramPacket(buffer, buffer.length, InetAddress.getByName("localhost"), PORT);
+        clientSocket.send(sendPacket);
+
+        Thread.sleep(1000);
+
+        // Prepare to receive the AKIN response
+        byte[] receiveBuffer = new byte[1024];
+        DatagramPacket receivePacket = new DatagramPacket(receiveBuffer, receiveBuffer.length);
+        clientSocket.receive(receivePacket);
+
+        // Convert the received data to a SendMessage object
+        String receivedJson = new String(receivePacket.getData(), 0, receivePacket.getLength());
+        receivedJson = receivedJson.replaceAll("[^\\x20-\\x7E]", " ");
+        SendMessage receivedMessage = objectMapper.readValue(receivedJson, SendMessage.class);
+
+        // Validate the response
+        assertEquals("ccp", receivedMessage.getClientType());
+        assertEquals("BR69", receivedMessage.getClientID());
+        assertEquals("AKIN", receivedMessage.getMessage());
     }
 
     @Test // Test that the message is parsed into database correctly
