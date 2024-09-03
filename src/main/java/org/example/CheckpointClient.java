@@ -5,6 +5,7 @@ import java.net.InetAddress;
 
 public class CheckpointClient extends Client {
     private Integer location;
+    protected Integer intID;
     private Status status;
     private boolean tripped;
 
@@ -16,10 +17,16 @@ public class CheckpointClient extends Client {
     public CheckpointClient(InetAddress clientAddress, int clientPort, String id) {
         super(clientAddress, clientPort, id);
         location = 0;
+        String idString = id.substring(2);
+        intID = Integer.parseInt(idString);
         status = Status.Alive;
         this.tripped = false;
     }
 
+    public Integer getIntID(){
+        return intID;
+    }
+    
     public Integer getLocation() {
         return location;
     }

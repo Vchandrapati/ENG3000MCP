@@ -35,9 +35,11 @@ public class MessageHandler {
     public void handleCheckpointMessage(String message) {
         String[] msg = message.split(" ");
         CheckpointClient client = db.getCheckpoint(msg[0]);
+        Processor processor = new Processor();
         switch (message) {
             case "trip":
                 client.setTripped();
+                processor.sensorTripped(client.getIntID());
                 break;
             case "ok":
                 if (Arrays.stream(msg).anyMatch(s -> s.equals("ERR"))) {
