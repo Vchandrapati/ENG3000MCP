@@ -38,6 +38,8 @@ public class MessageHandler {
             case "ok":
                 // Code here as response to ok
                 break;
+            case "notok":
+                break;
             default:
                 logger.severe("Failed to handle checkpoint message: " + message);
                 break;
