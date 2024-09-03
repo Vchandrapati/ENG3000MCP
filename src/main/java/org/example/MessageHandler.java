@@ -1,6 +1,8 @@
 package org.example;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.util.Arrays;
 import java.util.logging.Logger;
 
 public class MessageHandler {
@@ -31,12 +33,16 @@ public class MessageHandler {
 
     // Handles all checkpoint messages
     public void handleCheckpointMessage(String message) {
+        String[] msg = message.split(" ");
+        CheckpointClient client = db.getCheckpoint(msg[0]);
         switch (message) {
             case "trip":
-                // Code here when trip occurs
+                client.setTripped();
                 break;
             case "ok":
-                // Code here as response to ok
+                if (Arrays.stream(msg).anyMatch(s -> s.equals("ERR"))) {
+                    //TODO
+                }
                 break;
             case "notok":
                 break;

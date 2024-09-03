@@ -1,6 +1,8 @@
 
-˜	java:S117%"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Í¯œÓşÿÿÿÿ8ıóò±›2J$129d2b2d-3eb5-4847-aa51-6df6f272eeb8
+˜	java:S117%"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Í¯œÓşÿÿÿÿ8ıóò±›2J$1cac161e-9fd7-410f-9f13-9db2d576a18d
 ˜
-java:S1450"URemove the "status" field and declare it as a local variable in the relevant methods.(¦Ëº™8€îô·›2J$6ce75dcb-b55c-4078-a2a5-d4a640060e6b
+java:S1450"URemove the "status" field and declare it as a local variable in the relevant methods.(¦Ëº™8€îô·›2J$6aa67e9a-f800-474b-9fe6-e9b4a40311db
+I
+java:S1128",Remove this unused import 'java.net.Socket'.(­‡àú8°‘»›2
 m
-java:S1068"*Remove this unused "status" private field.(¦Ëº™8ü²ÁÈš2J$d8811e4b-efe5-4ee7-b1a7-3c248e873826
+java:S1068"*Remove this unused "status" private field.(¦Ëº™8ü²ÁÈš2J$38e8b8be-8b00-4b0d-a588-332d0ac93772
