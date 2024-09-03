@@ -1,21 +1,26 @@
 
 k
-java:S5411'"(Use a primitive boolean expression here.(›ûÅò8ª‹†º›2J$736e1252-5c51-41bb-ae56-7e9ade0d1f34
+java:S5411*"(Use a primitive boolean expression here.(›ûÅò8ó­¼›2J$0037e826-33bc-4b30-a641-c27007db2cdd
 s
-java:S3416"+Update this logger to use "Database.class".(“Ò¦“şÿÿÿÿ8¯‹†º›2J$d47b0954-f643-492f-8839-6f1e86da0ccf
+java:S3416	"+Update this logger to use "Database.class".(“Ò¦“şÿÿÿÿ8ø­¼›2J$e39252a5-efb9-4a28-b3af-177c2ccc9517
 á
-java:S6548"˜A Singleton implementation was detected. Make sure the use of the Singleton pattern is required and the implementation is the right one for the context.(ıûÅåùÿÿÿÿ8°‹†º›2J$1d100665-9322-4cf4-92fa-9af6b32fb93b
+java:S6548"˜A Singleton implementation was detected. Make sure the use of the Singleton pattern is required and the implementation is the right one for the context.(ıûÅåùÿÿÿÿ8ù­¼›2J$42a736c4-2c2c-42a5-94f9-0711b3ad6db5
 Ÿ
-java:S3077	"WUse a thread-safe type; adding "volatile" is not enough to make this field thread-safe.(„£­äüÿÿÿÿ8°‹†º›2J$f44983b4-2b6b-4a1c-ae1e-9cdcc7203c31
+java:S3077
+"WUse a thread-safe type; adding "volatile" is not enough to make this field thread-safe.(„£­äüÿÿÿÿ8ù­¼›2J$f6279204-52f9-4f7a-9817-065d7275e14a
 g
-java:S3010"$Remove this assignment of "running".(Üğ‚¾8²‹†º›2J$6d743901-78a3-4972-9c70-c4a715e4e274
+java:S3010"$Remove this assignment of "running".(Üğ‚¾8ú­¼›2J$38e8969a-c767-4d3c-8081-b1946c490cfb
 f
-java:S3010"#Remove this assignment of "trains".(¦¯§œ8²‹†º›2J$81946e15-e6eb-4d56-89ed-98575d7ec116
+java:S3010"#Remove this assignment of "trains".(¦¯§œ8ú­¼›2J$e5c772aa-2887-4966-97de-821d7e05d2c4
 h
-java:S3010"%Remove this assignment of "stations".(¥ÚËİ8²‹†º›2J$a4cea67f-fad7-48df-836a-d06f821d10a0
+java:S3010"%Remove this assignment of "stations".(¥ÚËİ8ú­¼›2J$a9d7b901-1241-4830-a307-4af67a12f657
 p
-java:S3010"(Remove this assignment of "checkpoints".(Óëºäüÿÿÿÿ8²‹†º›2J$b043a5a7-745b-4c7b-92af-29ef858e1e26
+java:S3010"(Remove this assignment of "checkpoints".(Óëºäüÿÿÿÿ8ú­¼›2J$644c869a-8e18-4b13-b0fd-c4c78f829906
+r
+java:S3010"*Remove this assignment of "trainBlockMap".(ù·‰³ûÿÿÿÿ8ú­¼›2J$4960dea8-121f-4bd4-a213-6b03cc93bebd
 y
-java:S26963"6Make the enclosing method "static" or remove this set.(¡µ‚ 8¶‹†º›2J$3e4eeb06-1b52-4e74-8eb5-df9bfc86ba41
-P
-java:S1128".Remove this unused import 'java.util.HashMap'.(™˜”€ùÿÿÿÿ8ôç²»›2
+java:S26966"6Make the enclosing method "static" or remove this set.(¡µ‚ 8ÿ­¼›2J$f5853b29-63a8-42a1-969d-8d58098b45e9
+¨
+java:S2175„"dA "ConcurrentHashMap<String, CheckpointClient>" cannot contain a "int" in a "CheckpointClient" type.(ğÍ£ë8¨ü¼›2J$b646c5cf-a42f-4e23-b18f-88ec2e490c77
+v
+java:S1128".Remove this unused import 'java.util.HashMap'.(™˜”€ùÿÿÿÿ8•Ã­¼›2J$5097fc2c-8db0-41f6-905e-0d6957f8c763

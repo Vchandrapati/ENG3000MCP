@@ -1,6 +1,7 @@
 package org.example;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.*;
 import java.util.logging.Logger;
 
@@ -11,6 +12,7 @@ public class Database implements Runnable {
     private static ConcurrentHashMap<String, TrainClient> trains;
     private static ConcurrentHashMap<String, StationClient> stations;
     private static ConcurrentHashMap<String, CheckpointClient> checkpoints;
+    private static ConcurrentHashMap<String, Integer> trainBlockMap;
 
     private static Boolean running = false;
 
@@ -20,6 +22,7 @@ public class Database implements Runnable {
         trains = new ConcurrentHashMap<>();
         stations = new ConcurrentHashMap<>();
         checkpoints = new ConcurrentHashMap<>();
+        trainBlockMap = new ConcurrentHashMap<>();
 
         taskQueue = new LinkedBlockingQueue<>();
 
@@ -114,6 +117,29 @@ public class Database implements Runnable {
         }
 
         return null;
+    }
+
+    public void updateTrainBlock(String traindId, int newBlock) {
+        submitTask(() -> trainBlockMap.put(traindId, newBlock));
+    }
+
+    public void getTrainblock(String traindId) {
+        submitTask(() -> trainBlockMap.get(traindId));
+    }
+
+    public boolean isBlockOccupied(int blockId) {
+        final boolean[] result = new boolean[1];
+        submitTask(() -> result[0] = checkpoints.containsValue(blockId));
+        return result[0];
+    }
+
+    public String getLastTrainInBlock(int blockId) {
+        return trainBlockMap.entrySet()
+                .stream()
+                .filter(entry -> entry.getValue().equals(blockId))
+                .map(Map.Entry::getKey)
+                .reduce((first, second) -> second)
+                .orElse(null);
     }
 
     public int getTrainCount() {

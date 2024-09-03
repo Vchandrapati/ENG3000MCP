@@ -1,5 +1,9 @@
 
 —
-java:S1450	"URemove the "status" field and declare it as a local variable in the relevant methods.(ûËÍ 8«œ³›2J$84f82962-90d2-4b29-84de-427f602eabcb
+java:S1450	"URemove the "status" field and declare it as a local variable in the relevant methods.(ûËÍ 8«œ³›2J$156cf597-ca62-4e40-9447-060530478e84
+I
+java:S1128",Remove this unused import 'java.net.Socket'.(­‡àú8è§Û»›2
+R
+java:S1128"5Remove this unused import 'java.util.logging.Logger'.(ƒ¥óš8ê§Û»›2
 l
-java:S1068	"*Remove this unused "status" private field.(ûËÍ 8«œ³›2J$ab904eef-dd03-4288-9ecf-5f384317425a
+java:S1068	"*Remove this unused "status" private field.(ûËÍ 8«œ³›2J$132cedcf-9a6b-4a38-9f64-1e6e7b22f4c4
