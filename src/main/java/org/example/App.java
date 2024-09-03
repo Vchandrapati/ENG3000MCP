@@ -26,6 +26,5 @@ public class App {
         systemStateManager.setState(SystemState.RUNNING);
         server.startStatusScheduler();
         logger.info("System is now in RUNNING mode.");
-
     }
 }

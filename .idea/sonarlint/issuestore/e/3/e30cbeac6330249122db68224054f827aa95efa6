@@ -1,19 +1,21 @@
 
 k
-java:S5411'"(Use a primitive boolean expression here.(›ûÅò8ª‹†º›2J$c4fad363-e210-4255-8956-337c18dd1938
+java:S5411'"(Use a primitive boolean expression here.(›ûÅò8ª‹†º›2J$736e1252-5c51-41bb-ae56-7e9ade0d1f34
 s
-java:S3416"+Update this logger to use "Database.class".(“Ò¦“þÿÿÿÿ8¯‹†º›2J$31856657-cb4b-48b9-a5db-e212fe6e7bf3
+java:S3416"+Update this logger to use "Database.class".(“Ò¦“þÿÿÿÿ8¯‹†º›2J$d47b0954-f643-492f-8839-6f1e86da0ccf
 á
-java:S6548"˜A Singleton implementation was detected. Make sure the use of the Singleton pattern is required and the implementation is the right one for the context.(ýûÅåùÿÿÿÿ8°‹†º›2J$24f7b645-e4d2-4d90-848c-2db532a88804
+java:S6548"˜A Singleton implementation was detected. Make sure the use of the Singleton pattern is required and the implementation is the right one for the context.(ýûÅåùÿÿÿÿ8°‹†º›2J$1d100665-9322-4cf4-92fa-9af6b32fb93b
 Ÿ
-java:S3077	"WUse a thread-safe type; adding "volatile" is not enough to make this field thread-safe.(„£­äüÿÿÿÿ8°‹†º›2J$a7e3567b-c5c0-4b2f-8638-abcddd28750a
+java:S3077	"WUse a thread-safe type; adding "volatile" is not enough to make this field thread-safe.(„£­äüÿÿÿÿ8°‹†º›2J$f44983b4-2b6b-4a1c-ae1e-9cdcc7203c31
 g
-java:S3010"$Remove this assignment of "running".(Üð‚¾8²‹†º›2J$6c0de919-687d-4305-a4c6-0031683dd036
+java:S3010"$Remove this assignment of "running".(Üð‚¾8²‹†º›2J$6d743901-78a3-4972-9c70-c4a715e4e274
 f
-java:S3010"#Remove this assignment of "trains".(¦¯§œ8²‹†º›2J$18eb4936-ebc8-48f2-b64a-7290231efde7
+java:S3010"#Remove this assignment of "trains".(¦¯§œ8²‹†º›2J$81946e15-e6eb-4d56-89ed-98575d7ec116
 h
-java:S3010"%Remove this assignment of "stations".(¥ÚËÝ8²‹†º›2J$55a7ca5d-0a25-4b8d-a9e2-f8e155877d29
+java:S3010"%Remove this assignment of "stations".(¥ÚËÝ8²‹†º›2J$a4cea67f-fad7-48df-836a-d06f821d10a0
 p
-java:S3010"(Remove this assignment of "checkpoints".(Óëºäüÿÿÿÿ8²‹†º›2J$5459eb75-17f0-45f1-a0c1-0417a7f77780
+java:S3010"(Remove this assignment of "checkpoints".(Óëºäüÿÿÿÿ8²‹†º›2J$b043a5a7-745b-4c7b-92af-29ef858e1e26
 y
-java:S26963"6Make the enclosing method "static" or remove this set.(¡µ‚ 8¶‹†º›2J$7fee456b-1645-4807-b571-fe1a169ca585
+java:S26963"6Make the enclosing method "static" or remove this set.(¡µ‚ 8¶‹†º›2J$3e4eeb06-1b52-4e74-8eb5-df9bfc86ba41
+P
+java:S1128".Remove this unused import 'java.util.HashMap'.(™˜”€ùÿÿÿÿ8ôç²»›2
