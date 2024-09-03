@@ -54,10 +54,10 @@ public class MessageTest {
         String message = new String(packet.getData(), 0, packet.getLength());
         SendMessage recieveMessage = objectMapper.readValue(message, SendMessage.class);
 
-        assertEquals(recieveMessage.getClientType(), "ccp");
-        assertEquals(recieveMessage.getClientID(), "BR01");
-        assertEquals(recieveMessage.getMessage(), "EXEC");
-        assertEquals(recieveMessage.getAction(), "FAST");
+        assertEquals(recieveMessage.clientType, "ccp");
+        assertEquals(recieveMessage.clientID, "BR01");
+        assertEquals(recieveMessage.message, "EXEC");
+        assertEquals(recieveMessage.action, "FAST");
     }
 
     @Test // Test invalid messages dont crash system
@@ -82,10 +82,10 @@ public class MessageTest {
         String message = new String(packet.getData(), 0, packet.getLength());
         SendMessage recieveMessage = objectMapper.readValue(message, SendMessage.class);
 
-        assertEquals(recieveMessage.getClientType(), "ccp");
-        assertEquals(recieveMessage.getClientID(), "BR01");
-        assertEquals(recieveMessage.getMessage(), "EXEC");
-        assertEquals(recieveMessage.getAction(), "FAST");
+        assertEquals(recieveMessage.clientType, "ccp");
+        assertEquals(recieveMessage.clientID, "BR01");
+        assertEquals(recieveMessage.message, "EXEC");
+        assertEquals(recieveMessage.action, "FAST");
     }
 
     @Test // Test multiple trains recieving messages at once doesnt block system
@@ -155,9 +155,9 @@ public class MessageTest {
         SendMessage receivedMessage = objectMapper.readValue(receivedJson, SendMessage.class);
 
         // Validate the response
-        assertEquals("ccp", receivedMessage.getClientType());
-        assertEquals("BR69", receivedMessage.getClientID());
-        assertEquals("AKIN", receivedMessage.getMessage());
+        assertEquals("ccp", receivedMessage.clientType);
+        assertEquals("BR69", receivedMessage.clientID);
+        assertEquals("AKIN", receivedMessage.message);
     }
 
     @Test // Test that the message is parsed into database correctly
