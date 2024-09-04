@@ -29,7 +29,11 @@ public class StartupState {
                 return true;
             }
 
-            currentTrainInfo = new CurrentTrainInfo(db.getTrain(String.valueOf(currentTrain)));
+            TrainClient tr = null;
+            while(tr == null){
+                tr = db.getTrain("BR0"+currentTrain);
+            }
+            currentTrainInfo = new CurrentTrainInfo(tr);
         }
         return false;
     }
@@ -61,6 +65,10 @@ public class StartupState {
         }
 
         private void sendTrainToNextCheckpoint() {
+            if(train == null) {
+                System.out.println();
+            }
+            System.out.println("Sending train to move to " + currentTrainInfo.train.id);
             long tempTime = System.currentTimeMillis();
             String message = MessageGenerator.generateExecuteMessage("ccp", train.id, tempTime, 1);
             train.sendMessage(message);

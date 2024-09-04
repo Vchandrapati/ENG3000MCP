@@ -9,7 +9,7 @@ public class Database implements Runnable {
     private static final Logger logger = Logger.getLogger(Server.class.getName());
     private static volatile Database db;
     private BlockingQueue<Runnable> taskQueue;
-    private static ConcurrentHashMap<String, TrainClient> trains;
+    public static ConcurrentHashMap<String, TrainClient> trains;
     private static ConcurrentHashMap<String, StationClient> stations;
     private static ConcurrentHashMap<String, CheckpointClient> checkpoints;
     private static ConcurrentHashMap<String, Integer> trainBlockMap;

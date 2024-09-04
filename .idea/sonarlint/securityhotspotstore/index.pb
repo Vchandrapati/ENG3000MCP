@@ -1283,11 +1283,11 @@ Z
 *src/main/java/org/example/SystemState.java,e\7\e7adf125dd7394ba2202fe94f4c6901be48258bf
 [
 +src/main/java/org/example/StartupState.java,3\3\33df6e49c0049b5344e9fbe1452523adc50b1ae5
-X
-(src/main/java/org/example/StateData.java,2\e\2e36d9d0a5790c781ca5a0a829d0326b1ee61b2c
 a
 1src/main/java/org/example/SystemStateManager.java,d\0\d0e0c9e2f880315fba91b05196bd7998ccd38a80
 7
 app.txt,1\8\18edd137736f7e3d8c40b453be3c380ae86f2ce8
 X
 (src/main/java/org/example/Processor.java,c\4\c473d7ca2e2f6f951c88b1e598902b50771748ae
+R
+"src/test/java/StartupProtocol.java,e\c\eceedd742e6f28e51f167f30a49ca98ebfa1c369

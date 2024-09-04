@@ -36,12 +36,27 @@ public class ClientTable implements Constants {
         lookupTable.put(String.format("127.0.0.1 %d", 2000), "BR69"); // Test Client
         lookupTable.put(String.format("127.0.0.1 %d", 3000), "BR79"); // Test Client
 
+        createTestClients();
+
         // Stations
         for (int i = 1; i <= 8; i++) {
             String ip = String.format(DOMAIN, 200 + i);
             int port = 4000 + i;
             String component = String.format("ST%d", i);
             lookupTable.put(String.format("%s %d",ip, port), component);
+        }
+    }
+
+    private void createTestClients() {
+        for(int i = 1; i <= 5; i++) {
+            //blade runner
+            lookupTable.put(String.format("127.0.0.1 %d", 3000 + i), "br"+i); // Test Client
+            //station
+            lookupTable.put(String.format("127.0.0.1 %d", 4000 + i), "st"+i); // Test Client
+        }
+        //checkpoints
+        for(int i = 1; i <= 10; i++) {
+            lookupTable.put(String.format("127.0.0.1 %d", 5000 + i), "c"+i); // Test Client
         }
     }
 
