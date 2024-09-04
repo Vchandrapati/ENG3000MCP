@@ -23,6 +23,7 @@ public class Processor {
         //check if current block is already occupied and stop if it is(SHOULD NEVER BE THE CASE)
         if(db.isBlockOccupied(sensor)){
             t.sendExecuteMessage(STOP);
+            t.updateStatus("STOPPED");
         }
 
         //check if block in front is occupied and stop if it is
@@ -33,6 +34,7 @@ public class Processor {
 
         if(db.isBlockOccupied(checkNextBlock)){
             t.sendExecuteMessage(STOP);
+            t.updateStatus("STOPPED");
         }     
 
         //get che

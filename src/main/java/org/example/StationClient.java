@@ -4,7 +4,7 @@ import java.net.InetAddress;
 import java.net.Socket;
 
 public class StationClient extends Client {
-    private volatile Integer location;
+    public Integer location;
     private volatile DoorStatus status;
 
     private enum DoorStatus {

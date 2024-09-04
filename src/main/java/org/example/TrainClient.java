@@ -26,6 +26,10 @@ public class TrainClient extends Client {
         return zone;
     }
 
+    public String getStatus() {
+        return status.toString();
+    }
+
     public void updateStatus(String newStatus) {
         try {
             status = Status.valueOf(newStatus);
