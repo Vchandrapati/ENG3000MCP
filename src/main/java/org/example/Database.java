@@ -13,6 +13,7 @@ public class Database implements Runnable {
     private static ConcurrentHashMap<String, StationClient> stations;
     private static ConcurrentHashMap<String, CheckpointClient> checkpoints;
     private static ConcurrentHashMap<String, Integer> trainBlockMap;
+    private static ConcurrentHashMap<String, Integer> stationLocations;
 
     private static Boolean running = false;
 
@@ -23,6 +24,7 @@ public class Database implements Runnable {
         stations = new ConcurrentHashMap<>();
         checkpoints = new ConcurrentHashMap<>();
         trainBlockMap = new ConcurrentHashMap<>();
+        stationLocations = new ConcurrentHashMap<>();
 
         taskQueue = new LinkedBlockingQueue<>();
 
