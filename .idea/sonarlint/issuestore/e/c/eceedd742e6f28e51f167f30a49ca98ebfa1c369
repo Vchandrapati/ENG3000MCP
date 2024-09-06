@@ -1,9 +1,9 @@
 
 ×
-java:S3577"Rename class "StartupProtocol" to match the regular expression: '^((Test|IT)[a-zA-Z0-9_]+|[A-Z][a-zA-Z0-9_]*(Test|Tests|TestCase|IT|ITCase))$'(ÔÓ“”ûÿÿÿÿ8’Ô›2J$b5b281c6-d604-4362-92c9-ebe865de99ee
+java:S3577"Rename class "StartupProtocol" to match the regular expression: '^((Test|IT)[a-zA-Z0-9_]+|[A-Z][a-zA-Z0-9_]*(Test|Tests|TestCase|IT|ITCase))$'(ÔÓ“”ûÿÿÿÿ8’Ô›2J$2efe63fd-2029-4096-ae1f-4ad7657eae39
 f
-java:S5786"Remove this 'public' modifier.(ÔÓ“”ûÿÿÿÿ8’Ô›2J$c704dc70-1417-4390-883e-aa878854657a
+java:S5786"Remove this 'public' modifier.(ÔÓ“”ûÿÿÿÿ8’Ô›2J$c5c292b9-7571-412b-808f-4ebf570ef339
 u
-java:S34155"2Change this assertion to not compare two literals.(¦ç¶˜8Óë•Ô›2J$dccf5abf-cf50-416b-9f9c-fd6cfee81cc7
+java:S34155"2Change this assertion to not compare two literals.(¦ç¶˜8Óë•Ô›2J$6938725e-1173-407f-b09a-c2201351ae35
 
-java:S58635"KReplace this assertion to not have the same actual and expected expression.(¦ç¶˜8Ôë•Ô›2J$134b0305-566e-4f3e-b5df-8b9d785e7cb1
+java:S58635"KReplace this assertion to not have the same actual and expected expression.(¦ç¶˜8Ôë•Ô›2J$f80a68d2-558c-4899-95bf-f6c270c3cb13

@@ -1,8 +1,8 @@
 
 
-java:S1192$"MDefine a constant instead of duplicating this literal "127.0.0.1 %d" 5 times.(Çåªå8ôÀ©Ó›2J$89db79e5-faef-45f5-819b-9b90e9939df3
+java:S1192$"MDefine a constant instead of duplicating this literal "127.0.0.1 %d" 5 times.(Çåªå8ôÀ©Ó›2J$baf6130a-4a60-45c2-85e3-7f079cf596b1
 
-java:S1192"FDefine a constant instead of duplicating this literal "%s %d" 4 times.(‹îã‹ÿÿÿÿÿ8ßí§Ó›2J$ede39ba6-f654-42fb-b9bb-ad52482c58d4
+java:S1192"FDefine a constant instead of duplicating this literal "%s %d" 4 times.(‹îã‹ÿÿÿÿÿ8ßí§Ó›2J$4844c615-a573-4f14-b3ed-74e550022e3d
 Ü
 java:S6548
-"˜A Singleton implementation was detected. Make sure the use of the Singleton pattern is required and the implementation is the right one for the context.(”’Ä8öí§Ó›2J$388dd5fd-940f-4d6d-8413-d8d7b9a94588
+"˜A Singleton implementation was detected. Make sure the use of the Singleton pattern is required and the implementation is the right one for the context.(”’Ä8öí§Ó›2J$303068e8-315f-4cb3-a4f6-38c71a376913
