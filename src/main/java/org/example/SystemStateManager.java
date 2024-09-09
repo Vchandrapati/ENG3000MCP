@@ -7,10 +7,11 @@ public class SystemStateManager {
     private SystemState currentState;
     private SystemStateInterface currentStateConcrete;
 
+    private long timeWaited = System.currentTimeMillis();
+
     //Initial state
     private SystemStateManager() {
-        currentState = SystemState.STARTUP;
-        currentStateConcrete = new StartupState();
+        setState(SystemState.STARTUP);
     }
 
     public static synchronized SystemStateManager getInstance() {
@@ -27,6 +28,7 @@ public class SystemStateManager {
         }
 
         this.currentState = newState;
+
         if(newState == SystemState.STARTUP) currentStateConcrete = new StartupState();
         else if(newState == SystemState.RESTARTUP) currentStateConcrete = new RestartupState();
         else if(newState == SystemState.RUNNING) currentStateConcrete = new RunningState();
@@ -47,7 +49,6 @@ public class SystemStateManager {
 
     //If it is time for the current state to run its performs its operation, otherwise checkChange
     public synchronized void run() {
-        long timeWaited = System.currentTimeMillis();
         long timeToWait = currentStateConcrete.getTimeToWait();
 
         if(System.currentTimeMillis() - timeWaited >= timeToWait) {
