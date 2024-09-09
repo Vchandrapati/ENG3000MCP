@@ -53,7 +53,12 @@ public class Server implements Constants {
                         logger.info("New client created and packet processed for client: " + newClient.id);
                     }
                 } catch (IOException e) {
-                    logger.log(Level.SEVERE, "Error receiving or processing packet", e);
+                    if(connectionListener == false) {
+                        logger.info("Closing server mid listening");
+                    }
+                    else {
+                        logger.log(Level.SEVERE, "Error receiving or processing packet", e);
+                    }
                 }
             }
         }).start();
@@ -92,13 +97,13 @@ public class Server implements Constants {
 
 
     // Closes the active threads safely
-    public void stop() {
+    public void shutdown() {
         try {
             if(serverSocket != null) {
                 connectionListener = false;
                 serverSocket.close();
+                scheduler.shutdown();
             }
-            logger.info("Server shutdown successfully");
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Error shutting down server", e);
         }

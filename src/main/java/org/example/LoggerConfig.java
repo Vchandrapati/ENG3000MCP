@@ -9,11 +9,11 @@ public class LoggerConfig {
         Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
         // Remove default console handler to avoid duplicate logs
-        Logger rootLogger = Logger.getLogger("");
-        Handler[] handlers = rootLogger.getHandlers();
-        if (handlers[0] instanceof ConsoleHandler) {
-            rootLogger.removeHandler(handlers[0]);
-        }
+        //Logger rootLogger = Logger.getLogger("");
+        // Handler[] handlers = rootLogger.getHandlers();
+        // if (handlers[0] instanceof ConsoleHandler) {
+        //     rootLogger.removeHandler(handlers[0]);
+        // }
 
         try {
             // Create a console handler

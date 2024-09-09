@@ -1,7 +1,6 @@
 package org.example;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.*;
 import java.util.logging.Logger;
 
@@ -13,6 +12,10 @@ public class Database {
     private final ConcurrentHashMap<String, CheckpointClient> checkpoints;
     private final ConcurrentHashMap<String, Integer> trainBlockMap;
     private final ExecutorService executor;
+
+    private int maxTrainAmount = 5;
+    private int maxStationAmount = 10;
+    private int maxCheckpointAmount = 10;
 
     private Database() {
         trains = new ConcurrentHashMap<>();
@@ -28,6 +31,11 @@ public class Database {
             db = new Database();
 
         return db;
+    }
+
+    //shutdowns the database thread
+    public void shutdown() {
+        executor.shutdown();
     }
 
     public void addTrain(String id, TrainClient tr) {
@@ -81,6 +89,7 @@ public class Database {
         return executor.submit(() -> trainBlockMap.containsValue(blockId));
     }
 
+
     public Future<String> getLastTrainInBlock(int blockId) {
         return executor.submit(() -> trainBlockMap.entrySet()
                 .stream()
@@ -88,6 +97,26 @@ public class Database {
                 .map(Map.Entry::getKey)
                 .reduce((first, second) -> second)
                 .orElse(null));
+    }
+
+    public Future<List<TrainClient>> getTrains() {
+        return executor.submit(() -> {
+            List<TrainClient> list = new ArrayList<>();
+            trains.forEach((K, V) -> list.add(V));
+            return list;
+        });
+    }
+
+
+    //returns a tripped checkpoint
+    public Future<CheckpointClient> getLastTrip() {
+        return executor.submit(() -> {
+            CheckpointClient[] trippedCheckpoint = new CheckpointClient[1];
+            checkpoints.forEach((K,V) -> {
+                if(V.isTripped()) trippedCheckpoint[0] = V;
+            });
+            return trippedCheckpoint[0];
+        });
     }
 
     public Integer getTrainCount() {
@@ -100,5 +129,32 @@ public class Database {
 
     public Integer getCheckpointCount() {
         return checkpoints.size();
+    }
+
+
+    //Sets and Gets for max BR,ST and CH amounts
+
+    public void setMaxBR(Integer amount) {
+        this.maxTrainAmount = amount;
+    }
+
+    public void setMaxST(Integer amount) {
+        this.maxStationAmount = amount;
+    }
+
+    public void setMaxCH(Integer amount) {
+        this.maxCheckpointAmount = amount;
+    }
+
+    public int getMaxBR() {
+        return this.maxTrainAmount;
+    }
+
+    public int getMaxST() {
+        return this.maxStationAmount;
+    }
+
+    public int getMaxCH() {
+        return this.maxCheckpointAmount;
     }
 }

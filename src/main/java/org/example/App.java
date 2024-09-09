@@ -1,30 +1,38 @@
 package org.example;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 public class App {
+    private static Server server;
+    private volatile static boolean isRunning = true;
+
     public static void main(String[] args) {
         LoggerConfig.setupLogger();
-        Logger logger = Logger.getLogger(App.class.getName());
-        Server server = new Server();
-        SystemStateManager systemStateManager = SystemStateManager.getInstance();
+        new CommandHandler();
+    }
 
-        StartupState startupState = new StartupState();
-        boolean startupComplete = false;
+    //For running the program without the terminal
+    public static void mainTest() {
+        LoggerConfig.setupLogger();
+        start();
+    }
 
-        while (!startupComplete) {
-            startupComplete = startupState.performOperation();
+    //shutsdown entire program
+    public static void shutdown() {
+        server.shutdown();
+        Database.getInstance().shutdown();
+        isRunning = false;
+    }
 
-            try {
-                Thread.sleep(1000); // Wait for a short time before checking again
-            } catch (InterruptedException e) {
-                logger.log(Level.SEVERE, "Startup process interrupted", e);
+    //starts entire program
+    public static void start() {
+        Thread mainThread = new Thread(() -> {
+            SystemStateManager systemStateManager = SystemStateManager.getInstance();
+            server = new Server();
+            server.startStatusScheduler();
+            //main loop for program
+            while(isRunning) {
+                systemStateManager.run();
             }
-        }
-
-        systemStateManager.setState(SystemState.RUNNING);
-        server.startStatusScheduler();
-        logger.info("System is now in RUNNING mode.");
+        });
+        mainThread.start();
     }
 }
