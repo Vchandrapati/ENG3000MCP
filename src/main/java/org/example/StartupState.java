@@ -7,19 +7,33 @@ import java.util.*;
 public class StartupState implements SystemStateInterface {
     //State for startup, maps all train locations to a zone
 
-    private static long timeToWait = 500;
-    private static SystemState nextState = SystemState.RUNNING;
-    private static long timeout = 10000;
+    //Milliseconds
+    private static long trainStartupTimeout = 10000;
+    private static long timeBetweenRunning = 500;
+    private static long startupConnectionTimePeriod = 600000;
+    private static long timeOnStart = System.currentTimeMillis();
 
+    //Next state to be performed after this one is completed, if not interrupted
+    private static SystemState nextState = SystemState.RUNNING;
+
+    //max amount of trains, checkpoints and stations that will be on the track
     private final Database db = Database.getInstance();
     private int maxTrains = db.getMaxBR();
-    private int maxStations = db.getMaxCH();
-    private int maxCheckpoints = db.getMaxST();
+    private int maxStations = db.getMaxST();
+    private int maxCheckpoints = db.getMaxCH();
 
     private int currentTrain = 0;
+    //Holds the information for processing the current train
     private CurrentTrainInfo currentTrainInfo = null;
+
     private boolean startMapping = false;
+
+    //Holds each trainclient currently connected to the server
     private List<TrainClient> trains;
+
+    //flag is starting early before 10 minute timer or before all supposed to be clients have joined
+    private static boolean startEarly = false;
+
 
     public boolean performOperation() {
         // Check if the required number of trains, stations, and checkpoints are connected
@@ -30,21 +44,26 @@ public class StartupState implements SystemStateInterface {
         if(startMapping) {
             return startMapping(); // Start mapping process once all clients are connected
         }
-        // Wait until all required clients are connected
-        else if(curTrains == maxTrains && curStations == maxStations && curCheckpoints == maxCheckpoints) {
-            startMapping = true;
-            try {
-                // Retrieve the trains using Future.get(), which blocks until the result is available
-                Future<List<TrainClient>> futureTrains = db.getTrains();
-                trains = futureTrains.get();
-            } catch (InterruptedException | ExecutionException e) {
-                // Handle exceptions from Future.get()
-                logger.severe("Error retrieving train from database: " + e.getMessage());
-            }
-
+        //Waits until it is the right time to start the startup sequence
+        if( (curTrains == maxTrains && curStations == maxStations && curCheckpoints == maxCheckpoints) || //If all clients have connected
+            (System.currentTimeMillis() - timeOnStart >= startupConnectionTimePeriod) || //If the timeout of 10 minutes has occured
+            (startEarly)) //If prompted to start early through the console
+            {
+                try {
+                    // Retrieve the trains using Future.get(), which blocks until the result is available
+                    Future<List<TrainClient>> futureTrains = db.getTrains();
+                    trains = futureTrains.get();
+                    if(trains != null && trains.size() > 0) startMapping = true; 
+                    else logger.info("Did not find any trains");
+                } catch (InterruptedException | ExecutionException e) {
+                    // Handle exceptions from Future.get()
+                    logger.severe("Error retrieving train from database: " + e.getMessage());
+                }
         }
         return false;
     }
+
+
 
     //maps the current train
     private boolean startMapping() {
@@ -60,8 +79,12 @@ public class StartupState implements SystemStateInterface {
         return false;
     }
 
+    public static void startEarly() {
+        startEarly = true;
+    }
+
     public long getTimeToWait() {
-        return StartupState.timeToWait;
+        return StartupState.timeBetweenRunning;
     }
 
     public SystemState getNextState() {
@@ -81,7 +104,7 @@ public class StartupState implements SystemStateInterface {
         private boolean process() {
             if (!hasSent) {
                 sendTrainToNextCheckpoint();
-            } else if (System.currentTimeMillis() - timeSinceSent > timeout) {
+            } else if (System.currentTimeMillis() - timeSinceSent > trainStartupTimeout) {
                 retrySending();
             } else {
                 CheckpointClient hitClient = null;
@@ -106,9 +129,9 @@ public class StartupState implements SystemStateInterface {
         //Send speed message to the current train
         private void sendTrainToNextCheckpoint() {
             if(train == null) {
-                System.out.println();
+                return;
             }
-            System.out.println("Sending train to move to " + currentTrainInfo.train.id);
+            logger.info("Sending train to move to " + currentTrainInfo.train.id);
             long tempTime = System.currentTimeMillis();
             String message = MessageGenerator.generateExecuteMessage("ccp", train.id, tempTime, 1);
             train.sendMessage(message);
