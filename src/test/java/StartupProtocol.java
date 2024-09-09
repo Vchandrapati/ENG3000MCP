@@ -1,45 +1,34 @@
-import org.example.Client;
-import org.example.Server;
-import org.example.TrainClient;
-import org.example.Database;
-import org.example.App;
 import org.junit.jupiter.api.*;
-import org.example.CheckpointClient;
+import org.junit.platform.commons.logging.Logger;
 import org.example.*;
 
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.util.ArrayList;
 import java.util.*;
+
+import java.util.logging.Level;
 
 import static org.example.Constants.PORT;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.example.LoggerConfig.*;
+
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.extension.TestWatcher;
 
 public class StartupProtocol {
-    private Server server;
-    private List<DatagramSocket> clients = new ArrayList<>();
-
-    private Database db = Database.getInstance();
-
-
 
     @BeforeEach
     public void setUp() throws Exception {
+        Database db = Database.getInstance();
         for (int i = 1; i <= 5; i++) {
-//            DatagramSocket br = new DatagramSocket(3000 + i, InetAddress.getByName("localhost"));
-//            DatagramSocket st = new DatagramSocket(4000 + i, InetAddress.getByName("localhost"));
-//            clients.add(br);
-//            clients.add(st);
             db.addTrain("BR0"+i, new TrainClient(InetAddress.getByName("localhost"),1, "BR0"+i));
-            db.addStation("st"+i, new StationClient(InetAddress.getByName("localhost"),1, "st"+i));
         }
         for (int i = 1; i <= 10; i++) {
-            db.addCheckpoint("ch"+i, new CheckpointClient(InetAddress.getByName("localhost"),1, "ch"+i));
-//            DatagramSocket ch = new DatagramSocket(5000 + i, InetAddress.getByName("localhost"));
-//            clients.add(ch);
+            db.addStation("ST0"+i, new StationClient(InetAddress.getByName("localhost"),1, "ST0"+i));
+            db.addCheckpoint("CH0"+i, new CheckpointClient(InetAddress.getByName("localhost"),1, "CH0"+i));
         }
-        App.main(null);
+        
     }
 
     @AfterEach
@@ -49,11 +38,18 @@ public class StartupProtocol {
 
     @Test
     void test1() throws Exception {
+        App.main(null);
+        long time = System.currentTimeMillis();
+        while(App.isRunning) {
+            if(System.currentTimeMillis() - time >= 10000) {
 
-        assertEquals(1, 1);
-        //assertEquals("br1", db.getTrain("br1"));
-        System.out.println("gooer");
-
+            }
+        }
+        //need tripped sensor to work properly to test
+        //TODO
+        
+        //assertEquals(1, 1);
+        //assertEquals("BR01", db.getTrain("BR01"));
     }
 
 }
