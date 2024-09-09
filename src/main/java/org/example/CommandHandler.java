@@ -10,6 +10,7 @@ public class CommandHandler implements Runnable{
     private static final List<String> commands;
     private static final Logger logger = Logger.getLogger(CommandHandler.class.getName());
     private volatile static boolean isRunning = true;
+    private boolean startedStartup = false;
     private Thread commandThread;
     private Database db = Database.getInstance();
 
@@ -80,6 +81,28 @@ public class CommandHandler implements Runnable{
                 App.shutdown();
                 return true;
             case "start":
+                if(!startedStartup) StartupState.startEarly();
+                else throw new InvalidCommandException("Has already been used");
+                return true;
+            default:
+                return false;
+        }
+    }
+
+
+    //does not work, only here if needed again later
+    private boolean deprecatedCommands(String command, String input) throws InvalidCommandException {
+        switch(command) {
+            case "":
+                return false;
+            case "help":
+                help();
+                return true;
+            case "quit":
+                isRunning = false;
+                App.shutdown();
+                return true;
+            case "start":
                 App.start();
                 return true;
             case "add brmax":
@@ -95,6 +118,8 @@ public class CommandHandler implements Runnable{
                 return false;
         }
     }
+
+
 
     //processes getting and parsing the number to add the current add command
     private int add(String input) throws InvalidCommandException{
