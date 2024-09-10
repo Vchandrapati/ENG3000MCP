@@ -13,7 +13,8 @@ public class Processor {
 
     // this needs to get updated every time vikil sends sensor trip
     public void sensorTripped(int sensorTripped) throws InterruptedException, ExecutionException{
-        StartupState.trippedSensor(sensorTripped);
+        if(SystemStateManager.getInstance().getState() == SystemState.STARTUP)
+            StartupState.trippedSensor(sensorTripped);
         handleTrainSpeed(sensorTripped);
     }
 
