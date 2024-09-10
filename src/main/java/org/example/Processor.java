@@ -1,6 +1,5 @@
 package org.example;
 
-import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
@@ -18,14 +17,8 @@ public class Processor {
     }
 
     public void handleTrainSpeed(int sensor) throws InterruptedException, ExecutionException {
-        Future<String> trainIDFuture = db.getLastTrainInBlock(sensor-1);
-
-        while(!trainIDFuture.isDone()) {
-            System.out.println("Waiting...");
-            Thread.sleep(300);
-        }
+        String trainID = db.getLastTrainInBlock(sensor-1).get();
         
-        String trainID = trainIDFuture.get();
         TrainClient t = db.getTrain(trainID).get();
         db.updateTrainBlock(trainID, sensor);
 
@@ -58,14 +51,7 @@ public class Processor {
 
     public void checkForTraffic(int block) throws InterruptedException, ExecutionException{
         //check if block is occupied, if it is rerun handle Train speed for that traun
-        Future<Boolean> isBockOccFuture = db.isBlockOccupied(block);
-
-        while(!isBockOccFuture.isDone()) {
-            System.out.println("Waiting...");
-            Thread.sleep(300);
-        }
-
-        if(isBockOccFuture.get()){
+        if(db.isBlockOccupied(block).get()){
             //+1 because handleTrainSpeed gets the train behind the sensor being passed
             handleTrainSpeed(block + 1);
         } 
