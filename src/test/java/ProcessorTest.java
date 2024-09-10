@@ -28,8 +28,6 @@ public class ProcessorTest {
 
     @BeforeEach
     public void setUp() throws Exception {
-        server = new Server();
-
         t1.updateStatus("STARTED");
         t2.updateStatus("STARTED");
         t3.updateStatus("STARTED");
@@ -45,21 +43,27 @@ public class ProcessorTest {
         db.updateTrainBlock("BR03", 7);
         db.updateTrainBlock("BR04", 8);
 
+        System.out.println("hi");
+        server = new Server();
+
+        assertEquals(1, 1);
+        p.sensorTripped(5);
+
+        
+        System.out.println("hi");
+        assertEquals(t1.getStatus(), "STOPPED");
+        System.out.println("bye");
     }
 
     @AfterEach
     public void tearDown() {
-        server.stop();
         clientSocket.close();
     }
 
     @Test // Test trains distance are maintained 1 block
-    void testTrainDistance() throws Exception {
-        p.sensorTripped(5);
-
-        System.out.println("hi");
-        assertEquals(t1.getStatus(), "STOPPED");
-        System.out.println("bye");
+    public void testTrainDistance() throws Exception{
+        
+        
     }
 
     @Test // Test processor identifies collisions and stops them
