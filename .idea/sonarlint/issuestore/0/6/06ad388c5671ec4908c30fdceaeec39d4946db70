@@ -1,0 +1,25 @@
+
+]
+java:S1854"BRemove this useless assignment to local variable "curCheckpoints".(»íâşÿÿÿÿ
+Z
+java:S1854"?Remove this useless assignment to local variable "curStations".(ÎîºÄıÿÿÿÿ
+S
+java:S1854"=Remove this useless assignment to local variable "curTrains".(¼Ô‹ü
+D
+java:S1481".Remove this unused "curTrains" local variable.(¼Ô‹ü
+K
+java:S1481"0Remove this unused "curStations" local variable.(ÎîºÄıÿÿÿÿ
+N
+java:S1481"3Remove this unused "curCheckpoints" local variable.(»íâşÿÿÿÿ
+1
+java:S3626,"Remove this redundant jump.(ûÁİ…
+A
+java:S1068"+Remove this unused "timeout" private field.(¸•å©
+H
+java:S1068"-Remove this unused "maxTrains" private field.(øò’Àıÿÿÿÿ
+J
+java:S1068"/Remove this unused "maxStations" private field.(ÜÈ«çıÿÿÿÿ
+M
+java:S1068"2Remove this unused "maxCheckpoints" private field.(½ç¡…ùÿÿÿÿ
+K
+java:S1068"0Remove this unused "currentTrain" private field.(È¿”ıÿÿÿÿÿ

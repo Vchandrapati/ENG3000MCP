@@ -1,0 +1,15 @@
+
+p
+java:S1450"URemove the "trains" field and declare it as a local variable in the relevant methods.(Óè®µúÿÿÿÿ
+t
+java:S2142"^Either re-interrupt this method or rethrow the "InterruptedException" that can be caught here.(üŸ´Â
+N
+java:S3400)"9Remove this method and declare a constant for this value.(¸®Ã'
+H
+java:S1135("2Complete the task associated to this TODO comment.(…ïœ†
+1
+java:S36268"Remove this redundant jump.(ûÁÝ…
+A
+java:S1068"+Remove this unused "timeout" private field.(¸•å©
+E
+java:S1068"*Remove this unused "trains" private field.(Óè®µúÿÿÿÿ
