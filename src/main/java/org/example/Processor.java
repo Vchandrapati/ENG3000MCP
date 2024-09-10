@@ -19,7 +19,9 @@ public class Processor {
         if(SystemStateManager.getInstance().getState() == SystemState.STARTUP) {
             StartupState.trippedSensor(sensorTripped);
         }
+        else {
             handleTrainSpeed(sensorTripped);
+        }
     }
 
     public void handleTrainSpeed(int sensor) {

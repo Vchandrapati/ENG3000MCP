@@ -6,6 +6,7 @@ public class StartupState implements SystemStateInterface {
     private static long trainStartupTimeout = 15000; //15 seconds
     private static long timeBetweenRunning = 500;
     private static long startupConnectionTimePeriod = 600000; //ten minutes
+    //private static long startupConnectionTimePeriod = 10000; //10 seconds for testing version
     private long timeOnStart = System.currentTimeMillis();
 
     //Next state to be performed after this one is completed, if not interrupted
@@ -55,8 +56,12 @@ public class StartupState implements SystemStateInterface {
                 (System.currentTimeMillis() - timeOnStart >= startupConnectionTimePeriod) || //If the timeout of 10 minutes has occured
                 (startEarly)) //If prompted to start early through the console
         {
+            logger.info("Mapping conditions met, trying to grab trains");
             trains = db.getTrains().get();
-            if(trains != null && trains.size() > 0) startMapping = true;
+            if(trains != null && trains.size() > 0) {
+                maxTrains = trains.size();
+                startMapping = true;
+            }
         }
     }
 

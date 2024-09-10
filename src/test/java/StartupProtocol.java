@@ -14,11 +14,11 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.example.LoggerConfig.*;
 
 public class StartupProtocol {
+    Database db = Database.getInstance();
 
     @BeforeEach
     public void setUp() throws Exception {
-        Database db = Database.getInstance();
-        for (int i = 1; i <= 5; i++) {
+        for (int i = 1; i <= 4; i++) {
             db.addTrain("BR0"+i, new TrainClient(InetAddress.getByName("localhost"),1, "BR0"+i));
         }
         for (int i = 1; i <= 10; i++) {
@@ -34,11 +34,56 @@ public class StartupProtocol {
     }
 
     @Test
-    void test1() throws Exception {
+    void testAllClientsConnect() throws Exception {
+        db.addTrain("BR0"+5, new TrainClient(InetAddress.getByName("localhost"),1, "BR0"+5));
         App.main(null);
         long time = System.currentTimeMillis();
         Processor p = new Processor();
         int count = 1;
+        while(App.isRunning) {
+            if(System.currentTimeMillis() - time >= 2000 && count < 6) {
+                time = System.currentTimeMillis();
+                p.sensorTripped(count);
+                count++;
+            }
+            if(count == 6) {
+                Thread.sleep(10000);
+                break;
+            }
+        }
+        App.shutdown();
+    }
+
+    @Test
+    void testTimeoutStart() throws Exception {
+        App.main(null);
+        long time = System.currentTimeMillis();
+        Processor p = new Processor();
+        int count = 1;
+        Thread.sleep(12000);
+        while(App.isRunning) {
+            if(System.currentTimeMillis() - time >= 2000 && count < 6) {
+                time = System.currentTimeMillis();
+                p.sensorTripped(count);
+                count++;
+            }
+            if(count == 6) {
+                Thread.sleep(10000);
+                break;
+            }
+        }
+        App.shutdown();
+    }
+
+    @Test
+    void testEarlyStart() throws Exception {
+        App.main(null);
+        long time = System.currentTimeMillis();
+        Processor p = new Processor();
+        int count = 1;
+        Thread.sleep(5000);
+        StartupState.startEarly();
+
         while(App.isRunning) {
             if(System.currentTimeMillis() - time >= 2000 && count < 6) {
                 time = System.currentTimeMillis();
