@@ -6,6 +6,7 @@ public class SystemStateManager {
     //holds the current state and the current state concrete implmenetation
     private SystemState currentState;
     private SystemStateInterface currentStateConcrete;
+    private boolean completedStartup = false;
 
     private long timeWaited = System.currentTimeMillis();
 
@@ -27,9 +28,10 @@ public class SystemStateManager {
             return;
         }
 
+        currentStateConcrete.reset();
         this.currentState = newState;
 
-        if(newState == SystemState.STARTUP) currentStateConcrete = new StartupState();
+        if(newState == SystemState.STARTUP && !completedStartup) currentStateConcrete = new StartupState();
         else if(newState == SystemState.RESTARTUP) currentStateConcrete = new RestartupState();
         else if(newState == SystemState.RUNNING) currentStateConcrete = new RunningState();
         else currentStateConcrete = new EmergencyState();
@@ -39,6 +41,13 @@ public class SystemStateManager {
     public synchronized SystemState getState() {
         return this.currentState;
     }
+
+    public void trippedSensor(int trippedSensor) {
+        
+    }
+
+    //For emergency state, message handler can check if a status has not been responded 
+    // or other issue to do SystemStateManager.setState(SystemState.Emergency)
 
     //Checks to see if the system needs to change states
     private synchronized void checkChange() {
@@ -53,7 +62,10 @@ public class SystemStateManager {
 
         if(System.currentTimeMillis() - timeWaited >= timeToWait) {
             //if the current state returns true, means it has finished and will be changed to its next appropriate state
-            if(currentStateConcrete.performOperation()) setState(currentStateConcrete.getNextState());
+            if(currentStateConcrete.performOperation()) {
+                if(currentState == SystemState.STARTUP) completedStartup = true;
+                setState(currentStateConcrete.getNextState());
+            }
             timeWaited = System.currentTimeMillis();
         }
         else {

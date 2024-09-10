@@ -16,5 +16,10 @@ public class RunningState implements SystemStateInterface{
     public SystemState getNextState() {
         return SystemState.EMERGENCY;
     }
+
+    @Override
+    public void reset() {
+        return;
+    }
     
 }

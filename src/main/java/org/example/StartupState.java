@@ -5,13 +5,11 @@ import java.util.concurrent.Future;
 import java.util.*;
 
 public class StartupState implements SystemStateInterface {
-    //State for startup, maps all train locations to a zone
-
-    //Milliseconds
-    private static long trainStartupTimeout = 10000;
-    private static long timeBetweenRunning = 500;
-    private static long startupConnectionTimePeriod = 600000;
-    private static long timeOnStart = System.currentTimeMillis();
+    //All time units in milliseconds
+    private static long trainStartupTimeout = 10000; 
+    private static long timeBetweenRunning = 500; 
+    private static long startupConnectionTimePeriod = 600000; //ten minutes
+    private long timeOnStart = System.currentTimeMillis();
 
     //Next state to be performed after this one is completed, if not interrupted
     private static SystemState nextState = SystemState.RUNNING;
@@ -34,35 +32,36 @@ public class StartupState implements SystemStateInterface {
     //flag is starting early before 10 minute timer or before all supposed to be clients have joined
     private static boolean startEarly = false;
 
+    //private static 
 
+    @Override
     public boolean performOperation() {
         // Check if the required number of trains, stations, and checkpoints are connected
         int curTrains = db.getTrainCount();
         int curStations = db.getStationCount();
         int curCheckpoints = db.getCheckpointCount();
 
-        if(startMapping) {
-            return startMapping(); // Start mapping process once all clients are connected
-        }
-        //Waits until it is the right time to start the startup sequence
-        if( (curTrains == maxTrains && curStations == maxStations && curCheckpoints == maxCheckpoints) || //If all clients have connected
-            (System.currentTimeMillis() - timeOnStart >= startupConnectionTimePeriod) || //If the timeout of 10 minutes has occured
-            (startEarly)) //If prompted to start early through the console
-            {
-                try {
-                    // Retrieve the trains using Future.get(), which blocks until the result is available
-                    Future<List<TrainClient>> futureTrains = db.getTrains();
-                    trains = futureTrains.get();
-                    if(trains != null && trains.size() > 0) startMapping = true; 
-                    else logger.info("Did not find any trains");
-                } catch (InterruptedException | ExecutionException e) {
-                    // Handle exceptions from Future.get()
-                    logger.severe("Error retrieving train from database: " + e.getMessage());
-                }
+        //if the program has started mapping
+        if(startMapping) return startMapping(); // Start mapping process once all clients are connected
+        //else check if ready to map and return false
+        try {
+            checkReadyToMap(curTrains, curStations, curCheckpoints);
+        } catch (Exception e) {
+            logger.info("Error retrieving trains info from database");
         }
         return false;
     }
 
+    //checks if mapping is ready to occur
+    private void checkReadyToMap(int curTrains, int curStations, int curCheckpoints) throws Exception {
+        if( (curTrains == maxTrains && curStations == maxStations && curCheckpoints == maxCheckpoints) || //If all clients have connected
+        (System.currentTimeMillis() - timeOnStart >= startupConnectionTimePeriod) || //If the timeout of 10 minutes has occured
+        (startEarly)) //If prompted to start early through the console
+        {
+            trains = db.getTrains().get();
+            if(trains != null && trains.size() > 0) startMapping = true; 
+        }
+    }
 
 
     //maps the current train
@@ -83,12 +82,23 @@ public class StartupState implements SystemStateInterface {
         startEarly = true;
     }
 
+    public static void trippedSensor(int checkpoint) {
+
+    }
+
+    @Override
     public long getTimeToWait() {
         return StartupState.timeBetweenRunning;
     }
 
+    @Override
     public SystemState getNextState() {
         return StartupState.nextState;
+    }
+
+    @Override
+    public void reset() {
+        StartupState.startEarly = false;
     }
 
     private class CurrentTrainInfo {

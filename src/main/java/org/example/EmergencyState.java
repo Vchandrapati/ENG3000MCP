@@ -43,14 +43,17 @@ public class EmergencyState implements SystemStateInterface {
 
     @Override
     public long getTimeToWait() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getTimeToWait'");
+        return timeToWait;
     }
 
     @Override
     public SystemState getNextState() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getNextState'");
+        return nextState;
+    }
+
+    @Override
+    public void reset() {
+        return;
     }
         
 }

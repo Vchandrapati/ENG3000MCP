@@ -8,4 +8,5 @@ public interface SystemStateInterface {
     public boolean performOperation();
     public long getTimeToWait();
     public SystemState getNextState();
+    public void reset();
 }

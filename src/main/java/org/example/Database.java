@@ -89,7 +89,6 @@ public class Database {
         return executor.submit(() -> trainBlockMap.containsValue(blockId));
     }
 
-
     public Future<String> getLastTrainInBlock(int blockId) {
         return executor.submit(() -> trainBlockMap.entrySet()
                 .stream()
@@ -99,6 +98,7 @@ public class Database {
                 .orElse(null));
     }
 
+    //gets the list of connected trains
     public Future<List<TrainClient>> getTrains() {
         return executor.submit(() -> {
             List<TrainClient> list = new ArrayList<>();
@@ -106,7 +106,6 @@ public class Database {
             return list;
         });
     }
-
 
     //returns a tripped checkpoint
     public Future<CheckpointClient> getLastTrip() {
@@ -119,6 +118,8 @@ public class Database {
         });
     }
 
+
+    //Gets for current client size
     public Integer getTrainCount() {
         return trains.size();
     }
@@ -132,7 +133,7 @@ public class Database {
     }
 
 
-    //Sets and Gets for max BR,ST and CH amounts
+    //Sets and Gets for max BR, ST and CH amounts
 
     public void setMaxBR(Integer amount) {
         this.maxTrainAmount = amount;

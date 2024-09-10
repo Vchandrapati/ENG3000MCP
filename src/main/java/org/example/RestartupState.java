@@ -38,4 +38,9 @@ public class RestartupState implements SystemStateInterface {
     public SystemState getNextState() {
         return RestartupState.nextState;
     }
+
+    @Override
+    public void reset() {
+        return;
+    }
 }
