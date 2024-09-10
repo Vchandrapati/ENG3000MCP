@@ -4,15 +4,16 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 public class Processor {
-
     int trainCount = 5;
     int checkPointCount = 10;
     int sensorAmount = 10;
     int STOP = 0;
     Database db = Database.getInstance();
 
+
     // this needs to get updated every time vikil sends sensor trip
     public void sensorTripped(int sensorTripped) throws InterruptedException, ExecutionException{
+        StartupState.trippedSensor(sensorTripped);
         handleTrainSpeed(sensorTripped);
     }
 

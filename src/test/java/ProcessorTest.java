@@ -46,13 +46,7 @@ public class ProcessorTest {
         System.out.println("hi");
         server = new Server();
 
-        assertEquals(1, 1);
-        p.sensorTripped(5);
-
-        
-        System.out.println("hi");
-        assertEquals(t1.getStatus(), "STOPPED");
-        System.out.println("bye");
+      
     }
 
     @AfterEach
@@ -62,7 +56,13 @@ public class ProcessorTest {
 
     @Test // Test trains distance are maintained 1 block
     public void testTrainDistance() throws Exception{
+        assertEquals(1, 1);
+        p.sensorTripped(5);
+
         
+        System.out.println("hi");
+        assertEquals(t1.getStatus(), "STOPPED");
+        System.out.println("bye");
         
     }
 
