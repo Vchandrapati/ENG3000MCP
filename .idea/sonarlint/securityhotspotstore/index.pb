@@ -1297,3 +1297,13 @@ R
 -src/main/java/org/example/CommandHandler.java,d\f\dff72021ba4f059216dfcd69775e4f682cbc685e
 ]
 -src/main/java/org/example/RestartupState.java,0\6\06ad388c5671ec4908c30fdceaeec39d4946db70
+Å
+Q.idea/sonarlint/securityhotspotstore/d/f/dff72021ba4f059216dfcd69775e4f682cbc685e,c\d\cdb01ca80533e5c8f0d65f2a2310508328403f62
+Å
+Q.idea/sonarlint/securityhotspotstore/0/6/06ad388c5671ec4908c30fdceaeec39d4946db70,5\4\54846b173011c9855e4a8d4f92521394284ed277
+Å
+Q.idea/sonarlint/securityhotspotstore/c/2/c2c50a5fdeec942080ab12f6948ba1e8dffd03c0,b\1\b11e83490a49e8ef142c637442591844ee24f982
+c
+3src/main/java/org/example/SystemStateInterface.java,0\9\095a587e434c5d018bb0c0b84fe23681dc68f422
+[
++src/main/java/org/example/RunningState.java,2\3\23ef5d477a19199728c0ad28541234d00f789aeb

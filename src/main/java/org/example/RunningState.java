@@ -42,5 +42,5 @@ public class RunningState implements SystemStateInterface{
     public void reset() {
         return;
     }
-    
+
 }

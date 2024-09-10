@@ -1,7 +1,7 @@
 
-
-java:S1186-"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(ÑÒˆ¢8ÿ©ŠÙ2
+Ä
+java:S11863"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(ÑÒˆ¢8ÿ©ŠÙ2J$4a2d564e-fb5a-47f3-920d-5988f7e7f9dc
 Ü
-java:S6548"˜A Singleton implementation was detected. Make sure the use of the Singleton pattern is required and the implementation is the right one for the context.(¶ŞûÓ8®¯­º›2J$78fe9a25-bb9c-46f1-8a7a-3fee166b44b9
-O
-java:S11356"2Complete the task associated to this TODO comment.(…ïœ†8†ªŠÙ2
+java:S6548"˜A Singleton implementation was detected. Make sure the use of the Singleton pattern is required and the implementation is the right one for the context.(¶ŞûÓ8®¯­º›2J$90812652-7daf-48ca-b550-220d3656a088
+u
+java:S1135<"2Complete the task associated to this TODO comment.(…ïœ†8†ªŠÙ2J$5fc37c1f-0a30-45f7-ae72-17a6d622c906

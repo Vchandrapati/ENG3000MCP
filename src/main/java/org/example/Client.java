@@ -48,7 +48,6 @@ public abstract class Client {
 
     public void close() {
         try {
-            running = false;
             if (clientSocket != null)
                 clientSocket.close();
             logger.info(String.format("Connection to client %d closed", id));

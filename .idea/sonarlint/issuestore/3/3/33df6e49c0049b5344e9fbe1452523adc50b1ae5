@@ -1,7 +1,7 @@
 
-‹
-java:S2259N"CA "NullPointerException" could be thrown; "train" is nullable here.(äŒÀÀüÿÿÿÿ8”ñ²Ş2J$dd9791f6-96e9-4bdf-b2cd-23c23d707f26
 |
-java:S3516"9Refactor this method to not always return the same value.(¬¸¤¤8”ñ²Ş2J$489744f9-1033-4dfb-a4de-87b54c476da8
-r	java:S106J"+Replace this use of System.out by a logger.(ªÓ¼áşÿÿÿÿ8šñ²Ş2J$9ab06bf3-36a4-477a-8d58-3f9737837b67
-r	java:S106L"+Replace this use of System.out by a logger.(±§Ãúùÿÿÿÿ8šñ²Ş2J$1226ebd1-a716-4550-b712-ee6b42360144
+java:S3516q"9Refactor this method to not always return the same value.(’óí8Ùìœß2J$0b49a20f-cacb-4a98-a04a-47189ce93f8f
+y
+java:S2696d"6Make the enclosing method "static" or remove this set.(üğ»Û8åìœß2J$6310d6d6-ab98-4995-b203-a745fbe5194b
+~
+java:S2696y"6Make the enclosing method "static" or remove this set.(‹ù°ñüÿÿÿÿ8çìœß2J$97fa4d30-213f-4107-ae29-73477cb64594

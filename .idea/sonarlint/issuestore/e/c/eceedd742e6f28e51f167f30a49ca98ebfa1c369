@@ -1,9 +1,7 @@
 
 ×
-java:S3577"Rename class "StartupProtocol" to match the regular expression: '^((Test|IT)[a-zA-Z0-9_]+|[A-Z][a-zA-Z0-9_]*(Test|Tests|TestCase|IT|ITCase))$'(ÔÓ“”ûÿÿÿÿ8’Ô›2J$2efe63fd-2029-4096-ae1f-4ad7657eae39
+java:S3577"Rename class "StartupProtocol" to match the regular expression: '^((Test|IT)[a-zA-Z0-9_]+|[A-Z][a-zA-Z0-9_]*(Test|Tests|TestCase|IT|ITCase))$'(ÔÓ“”ûÿÿÿÿ8’Ô›2J$7bc4d9dc-a248-4abe-93b2-9cb0b9b4af19
 f
-java:S5786"Remove this 'public' modifier.(ÔÓ“”ûÿÿÿÿ8’Ô›2J$c5c292b9-7571-412b-808f-4ebf570ef339
-u
-java:S34155"2Change this assertion to not compare two literals.(¦ç¶˜8Óë•Ô›2J$6938725e-1173-407f-b09a-c2201351ae35
-
-java:S58635"KReplace this assertion to not have the same actual and expected expression.(¦ç¶˜8Ôë•Ô›2J$f80a68d2-558c-4899-95bf-f6c270c3cb13
+java:S5786"Remove this 'public' modifier.(ÔÓ“”ûÿÿÿÿ8’Ô›2J$86059f5c-c826-4bc9-9cdc-07649a2c0795
+g
+java:S29251"$Remove this use of "Thread.sleep()".(ø¸¼8êÜ¢ß2J$1596702d-3ce8-4752-8513-068729ed7050

@@ -25,7 +25,7 @@ public class StartupProtocol {
             db.addStation("ST0"+i, new StationClient(InetAddress.getByName("localhost"),1, "ST0"+i));
             db.addCheckpoint("CH0"+i, new CheckpointClient(InetAddress.getByName("localhost"),1, "CH0"+i));
         }
-        
+
     }
 
     @AfterEach

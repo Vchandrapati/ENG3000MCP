@@ -1,46 +1,103 @@
 package org.example;
+import java.util.*;
 
-public class StartupState {
-    private final Database db = Database.getInstance();
-    private int maxTrains = 5;
-    private int maxStations = 5;
-    private int maxCheckpoints = 10;
+public class StartupState implements SystemStateInterface {
+    //All time units in milliseconds
+    private static long trainStartupTimeout = 15000; //15 seconds
+    private static long timeBetweenRunning = 500;
+    private static long startupConnectionTimePeriod = 600000; //ten minutes
+    private long timeOnStart = System.currentTimeMillis();
+
+    //Next state to be performed after this one is completed, if not interrupted
+    private static SystemState nextState = SystemState.RUNNING;
+
+    //max amount of trains, checkpoints and stations that will be on the track
+    private int maxTrains = db.getMaxBR();
+    private int maxStations = db.getMaxST();
+    private int maxCheckpoints = db.getMaxCH();
+
     private int currentTrain = 0;
+    //Holds the information for processing the current train
     private CurrentTrainInfo currentTrainInfo = null;
 
+    private boolean startMapping = false;
+
+    //Holds each trainclient currently connected to the server
+    private List<TrainClient> trains;
+
+    //flag is starting early before 10 minute timer or before all supposed to be clients have joined
+    private static boolean startEarly = false;
+
+    //queue of tripped sensor blocks
+    private static int lastTrippedBlock = -1;
+
+    @Override
     public boolean performOperation() {
         // Check if the required number of trains, stations, and checkpoints are connected
         int curTrains = db.getTrainCount();
         int curStations = db.getStationCount();
         int curCheckpoints = db.getCheckpointCount();
 
-        // Wait until all required clients are connected
-        if (curTrains == maxTrains && curStations == maxStations && curCheckpoints == maxCheckpoints) {
-            return startMapping(); // Start mapping process once all clients are connected
+        //if the program has started mapping
+        if(startMapping) return startMapping(); // Start mapping process once all clients are connected
+        //else check if ready to map and return false
+        try {
+            checkReadyToMap(curTrains, curStations, curCheckpoints);
+        } catch (Exception e) {
+            logger.warning("Failed to grab trains from database");
         }
-
         return false;
     }
 
+    //checks if mapping is ready to occur
+    private void checkReadyToMap(int curTrains, int curStations, int curCheckpoints) throws Exception {
+        if( (curTrains == maxTrains && curStations == maxStations && curCheckpoints == maxCheckpoints) || //If all clients have connected
+                (System.currentTimeMillis() - timeOnStart >= startupConnectionTimePeriod) || //If the timeout of 10 minutes has occured
+                (startEarly)) //If prompted to start early through the console
+        {
+            trains = db.getTrains().get();
+            if(trains != null && trains.size() > 0) startMapping = true;
+        }
+    }
+
+
+    //maps the current train
     private boolean startMapping() {
-        if (currentTrainInfo == null || currentTrainInfo.process()) {
+        if(currentTrainInfo == null) {
+            currentTrainInfo = new CurrentTrainInfo(trains.get(currentTrain));
+        }
+        else if(currentTrainInfo.process()) {
             currentTrain++;
-            if (currentTrain > maxTrains) {
+            if (currentTrain > maxTrains - 1) {
+                logger.info("All trains mapped proceeding to running state! ");
                 return true;
             }
-
-            TrainClient tr = null;
-            while(tr == null){
-                try {
-                    tr = db.getTrain("BR0"+currentTrain).get();
-                } catch (Exception e) {
-                    e.getMessage();
-                }
-
-            }
-            currentTrainInfo = new CurrentTrainInfo(tr);
+            currentTrainInfo = new CurrentTrainInfo(trains.get(currentTrain));
         }
         return false;
+    }
+
+    public static void startEarly() {
+        startEarly = true;
+    }
+
+    public static void trippedSensor(int checkpoint) {
+        lastTrippedBlock = checkpoint;
+    }
+
+    @Override
+    public long getTimeToWait() {
+        return StartupState.timeBetweenRunning;
+    }
+
+    @Override
+    public SystemState getNextState() {
+        return StartupState.nextState;
+    }
+
+    @Override
+    public void reset() {
+        StartupState.startEarly = false;
     }
 
     private class CurrentTrainInfo {
@@ -52,28 +109,28 @@ public class StartupState {
             this.train = train;
         }
 
+        //Processes the current train to move to next checkpoint, keeps trying until it reaches
         private boolean process() {
             if (!hasSent) {
-                sendTrainToNextCheckpoint();
-            } else if (System.currentTimeMillis() - timeSinceSent > 5000) {
+                sendTrainToNextCheckpoint("");
+            } else if (System.currentTimeMillis() - timeSinceSent > trainStartupTimeout) {
                 retrySending();
             } else {
-                CheckpointClient hitClient = db.getHit();
-                if (hitClient != null) {
-                    stopTrainAtCheckpoint(hitClient);
-                    hitClient.reset();
+                if(lastTrippedBlock != -1) {
+                    stopTrainAtCheckpoint(lastTrippedBlock);
+                    lastTrippedBlock = -1;
                     return true;
                 }
             }
-
             return false;
         }
 
-        private void sendTrainToNextCheckpoint() {
+        //Send speed message to the current train
+        private void sendTrainToNextCheckpoint(String retry) {
             if(train == null) {
-                System.out.println();
+                return;
             }
-            System.out.println("Sending train to move to " + currentTrainInfo.train.id);
+            logger.info(retry + " Moving " + currentTrainInfo.train.id );
             long tempTime = System.currentTimeMillis();
             String message = MessageGenerator.generateExecuteMessage("ccp", train.id, tempTime, 1);
             train.sendMessage(message);
@@ -81,16 +138,19 @@ public class StartupState {
             hasSent = true;
         }
 
-        private void stopTrainAtCheckpoint(CheckpointClient hitClient) {
+        //Tells the current train to stop when a checkpoint has been detected
+        private void stopTrainAtCheckpoint(int zone) {
+            logger.info("Train " + currentTrainInfo.train.id + " has been mapped to zone " + zone);
             String message = MessageGenerator.generateExecuteMessage("ccp", train.id, System.currentTimeMillis(), 0);
             train.sendMessage(message);
-            train.changeZone(hitClient.getLocation());
+            train.changeZone(zone);
             hasSent = true;
         }
 
+        //If the current train has not responded after timeout time then retry
         private void retrySending() {
-            hasSent = false; // Retry sending the message if no response within 10 seconds
-            sendTrainToNextCheckpoint();
+            hasSent = false;
+            sendTrainToNextCheckpoint("Retry");
         }
     }
 }
