@@ -1,10 +1,9 @@
 package org.example;
 
 import java.net.InetAddress;
-import java.net.Socket;
 
 public class StationClient extends Client {
-    public Integer location;
+    private static Integer location;
     private volatile DoorStatus status;
 
     private enum DoorStatus {
@@ -14,7 +13,6 @@ public class StationClient extends Client {
 
     public StationClient(InetAddress clientAddress, int clientPort, String id) {
         super(clientAddress, clientPort, id);
-        location = 0;
     }
 
     public void updateStatus(String newStatus) {
@@ -40,8 +38,8 @@ public class StationClient extends Client {
     // To tell the station what the status of the LED should be
     // True: LED is on
     // False: LED is off
-    public void sendIRLEDMessage(boolean LEDOn) {
-        String message = MessageGenerator.generateIRLEDMessage("station", id, System.currentTimeMillis(), LEDOn);
+    public void sendIRLEDMessage(boolean on) {
+        String message = MessageGenerator.generateIRLEDMessage("station", id, System.currentTimeMillis(), on);
         sendMessage(message);
     }
 

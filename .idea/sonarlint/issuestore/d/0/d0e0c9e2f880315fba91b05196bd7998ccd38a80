@@ -1,3 +1,7 @@
 
+
+java:S1186-"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(ÑÒˆ¢8ÿ©ŠÙ2
 Ü
-java:S6548"˜A Singleton implementation was detected. Make sure the use of the Singleton pattern is required and the implementation is the right one for the context.(¶ŞûÓ8®¯­º›2J$d80ccc5c-ecfe-4e0e-ac63-77c8a6fe14f3
+java:S6548"˜A Singleton implementation was detected. Make sure the use of the Singleton pattern is required and the implementation is the right one for the context.(¶ŞûÓ8®¯­º›2J$78fe9a25-bb9c-46f1-8a7a-3fee166b44b9
+O
+java:S11356"2Complete the task associated to this TODO comment.(…ïœ†8†ªŠÙ2

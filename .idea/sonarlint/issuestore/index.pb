@@ -1291,3 +1291,9 @@ X
 (src/main/java/org/example/Processor.java,c\4\c473d7ca2e2f6f951c88b1e598902b50771748ae
 R
 "src/test/java/StartupProtocol.java,e\c\eceedd742e6f28e51f167f30a49ca98ebfa1c369
+]
+-src/main/java/org/example/EmergencyState.java,c\2\c2c50a5fdeec942080ab12f6948ba1e8dffd03c0
+]
+-src/main/java/org/example/CommandHandler.java,d\f\dff72021ba4f059216dfcd69775e4f682cbc685e
+]
+-src/main/java/org/example/RestartupState.java,0\6\06ad388c5671ec4908c30fdceaeec39d4946db70

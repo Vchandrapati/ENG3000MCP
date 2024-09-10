@@ -4,7 +4,6 @@ import java.io.*;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -15,7 +14,7 @@ public abstract class Client {
     public InetAddress clientAddress;
     public int clientPort;
     protected String id;
-    protected volatile boolean running = true;
+    private volatile boolean statReturned = false;
 
     protected Client(InetAddress clientAddress, int clientPort, String id) {
         try {
@@ -59,4 +58,12 @@ public abstract class Client {
     }
 
     public abstract void registerClient();
+
+    public boolean lastStatReturned() {
+        return statReturned;
+    }
+
+    public void setStatReturned(boolean statReturned) {
+        this.statReturned = statReturned;
+    }
 }

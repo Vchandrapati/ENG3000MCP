@@ -1,5 +1,7 @@
 
 ‹
-java:S2259I"CA "NullPointerException" could be thrown; "train" is nullable here.(äŒÀÀüÿÿÿÿ8ò¹½Õ›2J$197d32f7-a474-4728-b184-a36839d6545b
-r	java:S106E"+Replace this use of System.out by a logger.(ªÓ¼áşÿÿÿÿ8÷¹½Õ›2J$f945e554-d03d-433c-b8db-74bf83ad060b
-r	java:S106G"+Replace this use of System.out by a logger.(±§Ãúùÿÿÿÿ8÷¹½Õ›2J$0aba691b-529e-48df-abcf-c175ec6d0bac
+java:S2259N"CA "NullPointerException" could be thrown; "train" is nullable here.(äŒÀÀüÿÿÿÿ8”ñ²Ş2J$dd9791f6-96e9-4bdf-b2cd-23c23d707f26
+|
+java:S3516"9Refactor this method to not always return the same value.(¬¸¤¤8”ñ²Ş2J$489744f9-1033-4dfb-a4de-87b54c476da8
+r	java:S106J"+Replace this use of System.out by a logger.(ªÓ¼áşÿÿÿÿ8šñ²Ş2J$9ab06bf3-36a4-477a-8d58-3f9737837b67
+r	java:S106L"+Replace this use of System.out by a logger.(±§Ãúùÿÿÿÿ8šñ²Ş2J$1226ebd1-a716-4550-b712-ee6b42360144

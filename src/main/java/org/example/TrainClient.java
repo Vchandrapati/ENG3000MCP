@@ -1,8 +1,6 @@
 package org.example;
 
 import java.net.InetAddress;
-import java.net.Socket;
-import java.util.logging.Logger;
 
 public class TrainClient extends Client {
     private volatile Integer zone;

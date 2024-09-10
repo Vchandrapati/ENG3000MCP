@@ -1,5 +1,6 @@
 
-¡	java:S115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(åá–øøÿÿÿÿ8õÆ¸›2J$d314e917-a5f5-4f99-9118-a9cd69574870
-œ	java:S115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(ªçë8õÆ¸›2J$e720f412-283e-46ff-b94e-6eae01462575
-m
-java:S1068"*Remove this unused "status" private field.(¡Ò8õÆ¸›2J$21b1a986-60ce-4214-9d22-7524ba6ccfcb
+a
+java:S1128"DRemove this unused import 'java.util.concurrent.ExecutionException'.(¡£ØÍ8ó’ŠÙ2
+G
+java:S1068
+"*Remove this unused "status" private field.(¡Ò8ö’ŠÙ2

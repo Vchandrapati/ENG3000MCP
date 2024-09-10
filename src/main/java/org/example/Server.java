@@ -3,10 +3,8 @@ package org.example;
 import java.io.IOException;
 import java.net.*;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+import java.util.Map;
+import java.util.concurrent.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -16,6 +14,8 @@ public class Server implements Constants {
     private DatagramSocket serverSocket;
     private volatile boolean connectionListener;
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+    private final long TIMEOUT = 5000;
+    private final int STAT_INTERVAL = 2;
 
     public Server() {
         connectionListener = true;
@@ -88,13 +88,25 @@ public class Server implements Constants {
 
     public void startStatusScheduler() {
         scheduler.scheduleAtFixedRate(() -> {
+            long sendTime = System.currentTimeMillis();
             for (Client client : clients) {
+                client.setStatReturned(false);
                 String statusMessage = MessageGenerator.generateStatusMessage(client.id, client.id, System.currentTimeMillis());
                 client.sendMessage(statusMessage);  // Send status request message
             }
-        }, 0, 2, TimeUnit.SECONDS);
+
+            scheduler.schedule(() -> checkForMissingResponse(sendTime), TIMEOUT, TimeUnit.MILLISECONDS);
+        }, 0, STAT_INTERVAL, TimeUnit.SECONDS);
     }
 
+    private void checkForMissingResponse(long sendTime) {
+        clients.forEach(client -> {
+            if (!client.lastStatReturned())
+                logger.severe(String.format("No STAT response from %s sent at %d", client.id, sendTime));
+
+            SystemStateManager.getInstance().setState(SystemState.EMERGENCY);
+        });
+    }
 
     // Closes the active threads safely
     public void shutdown() {

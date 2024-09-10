@@ -3,12 +3,13 @@ package org.example;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.Arrays;
+import java.util.concurrent.ExecutionException;
 import java.util.logging.Logger;
 
 public class MessageHandler {
     private static final Logger logger = Logger.getLogger(MessageHandler.class.getName());
     private static final ObjectMapper objectMapper = new ObjectMapper();
-    private static Database db = Database.getInstance();
+    private static final Database db = Database.getInstance();
     // Handles messages from CCPs and stations
     public void handleMessage(String message) {
         try {
@@ -23,7 +24,7 @@ public class MessageHandler {
                     handleStationMessage(recieveMessage);
                     break;
                 default:
-                    logger.warning("Unknown client type: " + recieveMessage.clientType);
+                    logger.warning(String.format("Unknown client type: %s", recieveMessage.clientType));
             }
         } catch (Exception e) {
             logger.severe("Failed to handle message: " + e.getMessage());
@@ -33,11 +34,16 @@ public class MessageHandler {
     // Handles all checkpoint messages
     public void handleCheckpointMessage(String message) {
         String[] msg = message.split(" ");
-        CheckpointClient client = db.getCheckpoint(msg[0]);
+        CheckpointClient client = null;
+        try {
+            client = db.getCheckpoint(msg[0]).get();
+        } catch (Exception e) {
+            logger.severe(String.format("Error getting client: %s", e.getMessage()));
+        }
+
         Processor processor = new Processor();
         switch (message) {
             case "trip":
-                client.setTripped();
                 processor.sensorTripped(client.getIntID());
                 break;
             case "ok":
@@ -53,8 +59,8 @@ public class MessageHandler {
         }
     }
 
-    private void handleCCPMessage(RecieveMessage recieveMessage) {
-        TrainClient client = db.getTrain(recieveMessage.clientID);
+    private void handleCCPMessage(RecieveMessage recieveMessage) throws ExecutionException, InterruptedException {
+        TrainClient client = db.getTrain(recieveMessage.clientID).get();
         // Different behaviour based on what the message command is
         switch (recieveMessage.message) {
             case "CCIN":
@@ -63,6 +69,7 @@ public class MessageHandler {
                 break;
             case "STAT":
                 client.updateStatus(recieveMessage.status.toUpperCase());
+                client.setStatReturned(true);
                 logger.info("Received STAT command from Blade Runner: " + recieveMessage.clientID);
                 break;
             default:
@@ -70,8 +77,8 @@ public class MessageHandler {
         }
     }
 
-    private void handleStationMessage(RecieveMessage recieveMessage) {
-        StationClient client = db.getStation(recieveMessage.clientID);
+    private void handleStationMessage(RecieveMessage recieveMessage) throws ExecutionException, InterruptedException {
+        StationClient client = db.getStation(recieveMessage.clientID).get();
         // Different behaviour based on what the message command is
         switch (recieveMessage.message) {
             case "DOOR":
@@ -79,7 +86,7 @@ public class MessageHandler {
                 logger.info("Received STIN message from Station: " + recieveMessage.clientID);
                 break;
             case "STAT":
-                // Handle station status update
+                client.setStatReturned(true);
                 logger.info("Received STAT message from Station: " + recieveMessage.clientID);
                 break;
             default:

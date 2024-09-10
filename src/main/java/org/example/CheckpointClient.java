@@ -2,16 +2,17 @@ package org.example;
 
 import java.net.DatagramPacket;
 import java.net.InetAddress;
+import java.util.concurrent.ExecutionException;
 
 public class CheckpointClient extends Client {
-    private Integer location;
+    private final Integer location;
     protected Integer intID;
     private Status status;
     private boolean tripped;
 
     private enum Status {
-        Alive,
-        Dead
+        ALIVE,
+        DEAD
     }
 
     public CheckpointClient(InetAddress clientAddress, int clientPort, String id) {
@@ -19,7 +20,7 @@ public class CheckpointClient extends Client {
         location = 0;
         String idString = id.substring(2);
         intID = Integer.parseInt(idString);
-        status = Status.Alive;
+        status = Status.ALIVE;
         this.tripped = false;
     }
 

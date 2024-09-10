@@ -1,5 +1,7 @@
 
+“	java:S117i"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ë³Äø8½ªŠÙ2J$c6993ec0-73e7-4256-a26d-74a5a6df3f59
+“	java:S117i"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ë³Äø8½ªŠÙ2J$eb45d789-9934-44de-9f12-c63f3250c51b
+“	java:S117r"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(³Œ›Â8¾ªŠÙ2J$d02e9933-4644-4685-8aa8-9e6bc4e9c5ea
+“	java:S117r"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(³Œ›Â8¾ªŠÙ2J$16dbe5ec-a8ce-4bc7-814f-a0bf23d86d61
 á
-java:S6548"˜A Singleton implementation was detected. Make sure the use of the Singleton pattern is required and the implementation is the right one for the context.(Ñ°Ù®şÿÿÿÿ8ù­¼›2J$e0ed9399-e038-4bd4-b035-735616bad0f1
-v
-java:S1128".Remove this unused import 'java.util.HashMap'.(™˜”€ùÿÿÿÿ8ÏÄœ¨œ2J$63024703-0ce6-487a-ade9-11ab14f3ff4b
+java:S6548"˜A Singleton implementation was detected. Make sure the use of the Singleton pattern is required and the implementation is the right one for the context.(Ñ°Ù®şÿÿÿÿ8ÇªŠÙ2J$bdbe1c42-0a97-4d7e-bf0b-a7f575997fcf
