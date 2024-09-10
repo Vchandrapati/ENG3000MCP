@@ -19,9 +19,7 @@ public class Processor {
         if(SystemStateManager.getInstance().getState() == SystemState.STARTUP) {
             StartupState.trippedSensor(sensorTripped);
         }
-        else {
             handleTrainSpeed(sensorTripped);
-        }
     }
 
     public void handleTrainSpeed(int sensor) {
@@ -30,12 +28,9 @@ public class Processor {
 
             TrainClient t = db.getTrain(trainID).get();
             db.updateTrainBlock(trainID, sensor);
+            t.changeZone(sensor);
+            t.updateStatus("STARTED");
 
-            //check if current block is already occupied and stop if it is(SHOULD NEVER BE THE CASE)
-            if (db.isBlockOccupied(sensor).get()) {
-                t.sendExecuteMessage(STOP);
-                t.updateStatus("STOPPED");
-            }
 
             //check if block in front is occupied and stop if it is
             int checkNextBlock = (sensor + 1) % 11;
@@ -62,7 +57,7 @@ public class Processor {
 
 
     public void checkForTraffic(int block) throws InterruptedException, ExecutionException{
-        //check if block is occupied, if it is rerun handle Train speed for that traun
+        //check if block is occupied, if it is rerun handle Train speed for that train
         if(db.isBlockOccupied(block).get()){
             //+1 because handleTrainSpeed gets the train behind the sensor being passed
             handleTrainSpeed(block + 1);
