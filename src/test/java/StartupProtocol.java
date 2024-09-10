@@ -13,9 +13,6 @@ import static org.example.Constants.PORT;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.example.LoggerConfig.*;
 
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.api.extension.TestWatcher;
-
 public class StartupProtocol {
 
     @BeforeEach
@@ -40,16 +37,20 @@ public class StartupProtocol {
     void test1() throws Exception {
         App.main(null);
         long time = System.currentTimeMillis();
+        Processor p = new Processor();
+        int count = 1;
         while(App.isRunning) {
-            if(System.currentTimeMillis() - time >= 10000) {
-
+            if(System.currentTimeMillis() - time >= 2000 && count < 6) {
+                time = System.currentTimeMillis();
+                p.sensorTripped(count);
+                count++;
+            }
+            if(count == 6) {
+                Thread.sleep(10000);
+                break;
             }
         }
-        //need tripped sensor to work properly to test
-        //TODO
-        
-        //assertEquals(1, 1);
-        //assertEquals("BR01", db.getTrain("BR01"));
+        App.shutdown();
     }
 
 }

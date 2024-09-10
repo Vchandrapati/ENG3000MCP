@@ -1,7 +1,11 @@
 package org.example;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class SystemStateManager {
     private static SystemStateManager instance;
+    private static final Logger logger = Logger.getLogger(SystemStateManager.class.getName());
 
     //holds the current state and the current state concrete implmenetation
     private SystemState currentState;
@@ -28,13 +32,15 @@ public class SystemStateManager {
             return;
         }
 
-        currentStateConcrete.reset();
+        if(currentStateConcrete != null )currentStateConcrete.reset();
         this.currentState = newState;
 
         if(newState == SystemState.STARTUP && !completedStartup) currentStateConcrete = new StartupState();
         else if(newState == SystemState.RESTARTUP) currentStateConcrete = new RestartupState();
         else if(newState == SystemState.RUNNING) currentStateConcrete = new RunningState();
         else currentStateConcrete = new EmergencyState();
+
+        logger.info("Changing to system state " + newState);
     }
 
     //gets current state
@@ -43,7 +49,7 @@ public class SystemStateManager {
     }
 
     public void trippedSensor(int trippedSensor) {
-        
+
     }
 
     //For emergency state, message handler can check if a status has not been responded 

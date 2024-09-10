@@ -1,12 +1,9 @@
 package org.example;
-
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
 import java.util.*;
 
 public class StartupState implements SystemStateInterface {
     //All time units in milliseconds
-    private static long trainStartupTimeout = 10000; 
+    private static long trainStartupTimeout = 15000; //15 seconds
     private static long timeBetweenRunning = 500; 
     private static long startupConnectionTimePeriod = 600000; //ten minutes
     private long timeOnStart = System.currentTimeMillis();
@@ -15,7 +12,6 @@ public class StartupState implements SystemStateInterface {
     private static SystemState nextState = SystemState.RUNNING;
 
     //max amount of trains, checkpoints and stations that will be on the track
-    private final Database db = Database.getInstance();
     private int maxTrains = db.getMaxBR();
     private int maxStations = db.getMaxST();
     private int maxCheckpoints = db.getMaxCH();
@@ -32,7 +28,8 @@ public class StartupState implements SystemStateInterface {
     //flag is starting early before 10 minute timer or before all supposed to be clients have joined
     private static boolean startEarly = false;
 
-    //private static 
+    //queue of tripped sensor blocks
+    private static int lastTrippedBlock = -1;
 
     @Override
     public boolean performOperation() {
@@ -47,7 +44,7 @@ public class StartupState implements SystemStateInterface {
         try {
             checkReadyToMap(curTrains, curStations, curCheckpoints);
         } catch (Exception e) {
-            logger.info("Error retrieving trains info from database");
+            logger.warning("Failed to grab trains from database");
         }
         return false;
     }
@@ -71,9 +68,11 @@ public class StartupState implements SystemStateInterface {
         }
         else if(currentTrainInfo.process()) {
             currentTrain++;
-            if (currentTrain > maxTrains) {
+            if (currentTrain > maxTrains - 1) {
+                logger.info("All trains mapped proceeding to running state! ");
                 return true;
             }
+            currentTrainInfo = new CurrentTrainInfo(trains.get(currentTrain));
         }
         return false;
     }
@@ -83,7 +82,7 @@ public class StartupState implements SystemStateInterface {
     }
 
     public static void trippedSensor(int checkpoint) {
-
+        lastTrippedBlock = checkpoint;
     }
 
     @Override
@@ -113,35 +112,25 @@ public class StartupState implements SystemStateInterface {
         //Processes the current train to move to next checkpoint, keeps trying until it reaches
         private boolean process() {
             if (!hasSent) {
-                sendTrainToNextCheckpoint();
+                sendTrainToNextCheckpoint("");
             } else if (System.currentTimeMillis() - timeSinceSent > trainStartupTimeout) {
                 retrySending();
             } else {
-                CheckpointClient hitClient = null;
-                try {
-                    // Retrieve the tripped Client using Future.get(), which blocks until the result is available
-                    Future<CheckpointClient> hitClientFuture = db.getLastTrip();
-                    hitClient = hitClientFuture.get();
-                } catch (InterruptedException | ExecutionException e) {
-                    // Handle exceptions from Future.get()
-                    logger.severe("Error retrieving train from database: " + e.getMessage());
-                }
-                if (hitClient != null) {
-                    stopTrainAtCheckpoint(hitClient);
-                    hitClient.reset();
+                if(lastTrippedBlock != -1) {
+                    stopTrainAtCheckpoint(lastTrippedBlock);
+                    lastTrippedBlock = -1;
                     return true;
                 }
             }
-
             return false;
         }
 
         //Send speed message to the current train
-        private void sendTrainToNextCheckpoint() {
+        private void sendTrainToNextCheckpoint(String retry) {
             if(train == null) {
                 return;
             }
-            logger.info("Sending train to move to " + currentTrainInfo.train.id);
+            logger.info(retry + " Moving " + currentTrainInfo.train.id );
             long tempTime = System.currentTimeMillis();
             String message = MessageGenerator.generateExecuteMessage("ccp", train.id, tempTime, 1);
             train.sendMessage(message);
@@ -150,17 +139,18 @@ public class StartupState implements SystemStateInterface {
         }
 
         //Tells the current train to stop when a checkpoint has been detected
-        private void stopTrainAtCheckpoint(CheckpointClient hitClient) {
+        private void stopTrainAtCheckpoint(int zone) {
+            logger.info("Train " + currentTrainInfo.train.id + " has been mapped to zone " + zone);
             String message = MessageGenerator.generateExecuteMessage("ccp", train.id, System.currentTimeMillis(), 0);
             train.sendMessage(message);
-            train.changeZone(hitClient.getLocation());
+            train.changeZone(zone);
             hasSent = true;
         }
 
         //If the current train has not responded after timeout time then retry
         private void retrySending() {
             hasSent = false;
-            sendTrainToNextCheckpoint();
+            sendTrainToNextCheckpoint("Retry");
         }
     }
 }
