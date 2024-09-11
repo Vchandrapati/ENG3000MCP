@@ -41,7 +41,12 @@ public class TrainClient extends Client {
     // 1: Slow
     // 2+: Fast
     public void sendExecuteMessage(int speed) {
-        String message = MessageGenerator.generateExecuteMessage("ccp", id, System.currentTimeMillis(), speed);
+        String message = MessageGenerator.generateExecuteMessage("ccp", id, System.currentTimeMillis(), /*
+                                                                                                         * Will need to
+                                                                                                         * change this
+                                                                                                         * to comply
+                                                                                                         * with the Enum
+                                                                                                         */speed);
         sendMessage(message);
     }
 
