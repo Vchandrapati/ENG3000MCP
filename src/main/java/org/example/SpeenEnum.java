@@ -1,4 +1,4 @@
-package org;
+package org.example;
 
 enum SpeenEnum {
     FAST,

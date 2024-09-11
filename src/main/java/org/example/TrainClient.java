@@ -40,7 +40,7 @@ public class TrainClient extends Client {
     // 0: Stop
     // 1: Slow
     // 2+: Fast
-    public void sendExecuteMessage(int speed) {
+    public void sendExecuteMessage(SpeenEnum speed) {
         String message = MessageGenerator.generateExecuteMessage("ccp", id, System.currentTimeMillis(), /*
                                                                                                          * Will need to
                                                                                                          * change this
