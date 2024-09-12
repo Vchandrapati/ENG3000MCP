@@ -51,7 +51,7 @@ public class SystemStateManager {
     }
 
     public boolean needsTrip(int trippedSensor) {
-        if(currentState == SystemState.STARTUP || currentState == SystemState.STARTUP) {
+        if(currentState == SystemState.STARTUP || currentState == SystemState.RESTARTUP) {
             lastTrip = trippedSensor;
             return true;
         }

@@ -29,7 +29,6 @@ public class RestartupState implements SystemStateInterface {
                 logger.warning("Failed to grab unresponsive trains from database");
             }
         }
-
         return false;
     }
 

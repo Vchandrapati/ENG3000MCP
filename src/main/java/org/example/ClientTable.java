@@ -17,37 +17,52 @@ public class ClientTable implements Constants {
 
     // IP and Port ranges are predefined for every component
     private void initializeLookupTable() {
-        // LEDs
-        for (int i = 1; i <= 20; i++) {
-            String ip = String.format(DOMAIN, 50 + i);
-            int port = 5000 + i;
-            String component = String.format("LED%d", i);
-            lookupTable.put(String.format("%s %d",ip, port), component);
-        }
+        createLEDS();
+        createBladerunners();
+        createStations();
+        createTestClients();
+    }
 
+    private void createLEDS() {
+        // LEDs
+        // for (int i = 1; i <= 20; i++) {
+        //     String ip = String.format(DOMAIN, 50 + i);
+        //     int port = 5000 + i;
+        //     String component = String.format("LED%d", i);
+        //     lookupTable.put(String.format("%s %d",ip, port), component);
+        // }
+    }
+
+    private void createBladerunners() {
         // Bladerunners
-        for (int i = 1; i <= 32; i++) {
-            String ip = String.format(DOMAIN, 100 + i);
+        for (int i = 0; i < 256 ; i++) {
+            String ip = String.format(DOMAIN, i);
             int port = 3000 + i;
             String component = String.format("BR%d", i);
             lookupTable.put(String.format("%s %d",ip, port), component);
         }
 
-        lookupTable.put(String.format("127.0.0.1 %d", 2000), "BR69"); // Test Client
-        lookupTable.put(String.format("127.0.0.1 %d", 3000), "BR79"); // Test Client
+        //for (int i = 1; i <= 20; i++) {
+          //  String ip = String.format(DOMAIN, 50 + i);
+           // int port = 5000 + i;
+           // String component = String.format("LED%d", i);
+            //lookupTable.put(String.format("%s %d",ip, port), component);
+        //}
+    }
 
-        createTestClients();
-
+    private void createStations() {
         // Stations
-        for (int i = 1; i <= 8; i++) {
-            String ip = String.format(DOMAIN, 200 + i);
-            int port = 4000 + i;
-            String component = String.format("ST%d", i);
-            lookupTable.put(String.format("%s %d",ip, port), component);
-        }
+        // for (int i = 1; i <= 8; i++) {
+        //     String ip = String.format(DOMAIN, 200 + i);
+        //     int port = 4000 + i;
+        //     String component = String.format("ST%d", i);
+        //     lookupTable.put(String.format("%s %d",ip, port), component);
+        // }
     }
 
     private void createTestClients() {
+        lookupTable.put(String.format("127.0.0.1 %d", 2000), "BR69"); // Test Client
+        lookupTable.put(String.format("127.0.0.1 %d", 3000), "BR79"); // Test Client
         for(int i = 1; i <= 5; i++) {
             //blade runner
             lookupTable.put(String.format("127.0.0.1 %d", 3000 + i), "br"+i); // Test Client

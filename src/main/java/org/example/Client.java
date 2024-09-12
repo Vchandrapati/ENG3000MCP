@@ -38,7 +38,7 @@ public abstract class Client {
 
     public void sendMessage(String message) {
         try {
-            byte[] buffer = new byte[message.length()];
+            byte[] buffer = message.getBytes();
             DatagramPacket sendPacket = new DatagramPacket(buffer, buffer.length, clientAddress, clientPort);
             clientSocket.send(sendPacket);
         } catch (Exception e) {

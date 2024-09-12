@@ -13,7 +13,7 @@ import static org.example.Constants.PORT;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.example.LoggerConfig.*;
 
-public class StartupProtocol {
+public class TestingStates {
     Database db = Database.getInstance();
 
     @BeforeEach
@@ -34,28 +34,7 @@ public class StartupProtocol {
     }
 
     @Test
-    void testAllClientsConnect() throws Exception {
-        db.addTrain("BR0"+5, new TrainClient(InetAddress.getByName("localhost"),1, "BR0"+5));
-        App.main(null);
-        long time = System.currentTimeMillis();
-        Processor p = new Processor();
-        int count = 1;
-        while(App.isRunning) {
-            if(System.currentTimeMillis() - time >= 2000 && count < 6) {
-                time = System.currentTimeMillis();
-                p.sensorTripped(count);
-                count++;
-            }
-            if(count == 6) {
-                Thread.sleep(10000);
-                break;
-            }
-        }
-        App.shutdown();
-    }
-
-    @Test
-    void testTimeoutStart() throws Exception {
+    void testStartupTimeoutStart() throws Exception {
         App.main(null);
         long time = System.currentTimeMillis();
         Processor p = new Processor();
@@ -76,7 +55,7 @@ public class StartupProtocol {
     }
 
     @Test
-    void testEarlyStart() throws Exception {
+    void testEarlyStartup() throws Exception {
         App.main(null);
         long time = System.currentTimeMillis();
         Processor p = new Processor();
@@ -94,6 +73,31 @@ public class StartupProtocol {
             //     Thread.sleep(10000);
             //     break;
             // }
+        }
+        App.shutdown();
+    }
+
+    @Test
+    void RestartupTest() throws Exception {
+        App.main(null);
+        long time = System.currentTimeMillis();
+        Processor p = new Processor();
+        int count = 1;
+        Thread.sleep(5000);
+        StartupState.startEarly();
+
+        while(App.isRunning) {
+            if(System.currentTimeMillis() - time >= 2000) {
+                time = System.currentTimeMillis();
+                p.sensorTripped(count);
+                count++;
+            }
+            if(count == 6) {
+                 Thread.sleep(3000);
+                 db.TESTING("BR99", new TrainClient(InetAddress.getByName("localhost"),1, "BR99"));
+                 count++;
+            }
+            if(count == 10) break;
         }
         App.shutdown();
     }

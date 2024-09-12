@@ -179,4 +179,11 @@ public class Database {
     public int getMaxCH() {
         return this.maxCheckpointAmount;
     }
+
+    //triggers restartup
+    public void TESTING(String name, TrainClient tr) {
+        addTrain(name, tr);
+        addUnresponsiveClient(name);
+        SystemStateManager.getInstance().setState(SystemState.RESTARTUP);
+    }
 }
