@@ -1,7 +1,6 @@
 package org.example;
 
 import java.util.*;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class CommandHandler implements Runnable{
@@ -12,17 +11,14 @@ public class CommandHandler implements Runnable{
     private volatile static boolean isRunning = true;
     private boolean startedStartup = false;
     private Thread commandThread;
-    private Database db = Database.getInstance();
 
     //Set of commands
     static {
         commands = new ArrayList<>();
-        commands.add("start");
+        commands.add("start startup");
         commands.add("quit");
-        commands.add("add brmax");
-        commands.add("add stmax");
-        commands.add("add chmax");
         commands.add("help");
+        commands.add("start running");
         //For adding syntax is "add brmax x" where x is the number to add
     }
 
@@ -59,18 +55,8 @@ public class CommandHandler implements Runnable{
 
     //takes an input string and executes its command, if invalid throw exception
     private boolean isValid(String input) throws InvalidCommandException {
-
-        //Gets a substring of the command
-        String command = "";
-        for (String string : commands) {
-            if(input.contains(string)) {
-                command = string;
-                break;
-            }
-        }
-
         //using the substring find the command
-        switch(command) {
+        switch(input) {
             case "":
                 return false;
             case "help":
@@ -80,60 +66,16 @@ public class CommandHandler implements Runnable{
                 isRunning = false;
                 App.shutdown();
                 return true;
-            case "start":
+            case "start startup":
                 if(!startedStartup) StartupState.startEarly();
                 else throw new InvalidCommandException("Has already been used");
                 return true;
-            default:
-                return false;
-        }
-    }
-
-
-    //does not work, only here if needed again later
-    private boolean deprecatedCommands(String command, String input) throws InvalidCommandException {
-        switch(command) {
-            case "":
-                return false;
-            case "help":
-                help();
-                return true;
-            case "quit":
-                isRunning = false;
-                App.shutdown();
-                return true;
-            case "start":
-                App.start();
-                return true;
-            case "add brmax":
-                db.setMaxBR(add(input));
-                return true;
-            case "add stmax":
-                db.setMaxBR(add(input));
-                return true;
-            case "add chmax":
-                 db.setMaxBR(add(input));
+            case "start running":
+                if(!startedStartup) SystemStateManager.getInstance().setState(SystemState.RUNNING);
+                else throw new InvalidCommandException("Has already been used");
                 return true;
             default:
-                return false;
-        }
-    }
-
-
-
-    //processes getting and parsing the number to add the current add command
-    private int add(String input) throws InvalidCommandException{
-        try {
-            String[] tokens = input.split(" ");
-            if (tokens.length != 3) {
-                throw new InvalidCommandException("Missing argument for adding");
-            }
-            else {
-                int amount = Integer.parseInt(tokens[2]);
-                return amount;
-            }
-        } catch (Exception e) {
-            throw new InvalidCommandException("Error handling command");
+                throw new InvalidCommandException("Invalid command");
         }
     }
 

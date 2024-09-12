@@ -9,6 +9,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Server implements Constants {
+
+    private static final Database db = Database.getInstance();
     private static final Logger logger = Logger.getLogger(Server.class.getName());
     public final List<Client> clients = new CopyOnWriteArrayList<>();
     private DatagramSocket serverSocket;
@@ -101,10 +103,14 @@ public class Server implements Constants {
 
     private void checkForMissingResponse(long sendTime) {
         clients.forEach(client -> {
-            if (!client.lastStatReturned())
+            boolean hasFailed = false;
+            if (!client.lastStatReturned()) {
                 logger.severe(String.format("No STAT response from %s sent at %d", client.id, sendTime));
-
-            SystemStateManager.getInstance().setState(SystemState.EMERGENCY);
+                hasFailed = true;
+                //if a train is unresponsive
+                if(client.id.contains("BR")) db.addUnresponsiveClient(client.id);
+            }
+            if(hasFailed) SystemStateManager.getInstance().setState(SystemState.EMERGENCY);
         });
     }
 

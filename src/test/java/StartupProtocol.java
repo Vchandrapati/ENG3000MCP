@@ -90,10 +90,10 @@ public class StartupProtocol {
                 p.sensorTripped(count);
                 count++;
             }
-            if(count == 6) {
-                Thread.sleep(10000);
-                break;
-            }
+            // if(count == 6) {
+            //     Thread.sleep(10000);
+            //     break;
+            // }
         }
         App.shutdown();
     }

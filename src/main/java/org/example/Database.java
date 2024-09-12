@@ -11,6 +11,8 @@ public class Database {
     private final ConcurrentHashMap<String, StationClient> stations;
     private final ConcurrentHashMap<String, CheckpointClient> checkpoints;
     private final ConcurrentHashMap<String, Integer> trainBlockMap;
+    //list of unresponsive trains, because all unrespovive client reconnection is handled by server, only need trains for restartup
+    private final List<String> unresponsiveClients; 
     private final ExecutorService executor;
 
     private int maxTrainAmount = 5;
@@ -22,6 +24,7 @@ public class Database {
         stations = new ConcurrentHashMap<>();
         checkpoints = new ConcurrentHashMap<>();
         trainBlockMap = new ConcurrentHashMap<>();
+        unresponsiveClients = new CopyOnWriteArrayList<>();
 
         executor = Executors.newCachedThreadPool();
     }
@@ -36,6 +39,24 @@ public class Database {
     //shutdowns the database thread
     public void shutdown() {
         executor.shutdown();
+    }
+
+    public void addUnresponsiveClient(String id) {
+        executor.submit(() -> {
+            unresponsiveClients.add(id);
+        });
+    }
+
+    //gets all unresponsive train clients, resets it after being grabbed
+    public Future<List<TrainClient>> getUnresposiveClient() {
+        return executor.submit(() -> {
+            List<TrainClient> trainClients = new CopyOnWriteArrayList<>();
+            for (String string : unresponsiveClients) {
+                trainClients.add(this.getTrain(string).get());
+            }   
+            this.unresponsiveClients.clear();
+            return trainClients;
+        });
     }
 
     public void addTrain(String id, TrainClient tr) {

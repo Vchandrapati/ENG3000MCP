@@ -3,7 +3,7 @@ package org.example;
 import java.util.logging.Logger;
 
 public interface SystemStateInterface {
-    static final Logger logger = Logger.getLogger(CommandHandler.class.getName());
+    static final Logger logger = Logger.getLogger(SystemStateInterface.class.getName());
     final Database db = Database.getInstance();
 
     public boolean performOperation();

@@ -16,12 +16,8 @@ public class Processor {
 
     // this needs to get updated every time vikil sends sensor trip
     public void sensorTripped(int sensorTripped) {
-        if(SystemStateManager.getInstance().getState() == SystemState.STARTUP) {
-            StartupState.trippedSensor(sensorTripped);
-        }
-        else {
+        if(!SystemStateManager.getInstance().needsTrip(sensorTripped)) 
             handleTrainSpeed(sensorTripped);
-        }
     }
 
     public void handleTrainSpeed(int sensor) {
@@ -41,7 +37,7 @@ public class Processor {
             }
 
             if (db.isBlockOccupied(checkNextBlock).get()) {
-                t.sendExecuteMessage(STOP);
+                t.sendExecuteMessage(SpeenEnum.STOP);
                 t.updateStatus("STOPPED");
             }
 

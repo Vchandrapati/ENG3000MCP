@@ -5,6 +5,9 @@ import java.util.*;
 public class RunningState implements SystemStateInterface{
     private boolean allRunning = false;
 
+    private static SystemState nextState = SystemState.RUNNING;
+    private static long timeBetweenRunning = 500;
+
     @Override
     public boolean performOperation() {
         if(!allRunning) {
@@ -22,7 +25,7 @@ public class RunningState implements SystemStateInterface{
         if(trains != null && trains.size() > 0) {
             allRunning = true;
             for (TrainClient trainClient : trains) {
-                trainClient.sendExecuteMessage(1);
+                trainClient.sendExecuteMessage(SpeenEnum.SLOW);
             }
             logger.info("All Trains are now moving at speed 1");
         }
@@ -30,17 +33,17 @@ public class RunningState implements SystemStateInterface{
 
     @Override
     public long getTimeToWait() {
-        return 1000;
+        return timeBetweenRunning;
     }
 
     @Override
     public SystemState getNextState() {
-        return SystemState.EMERGENCY;
+        return nextState;
     }
 
     @Override
     public void reset() {
-        return;
+        allRunning = false;
     }
 
 }

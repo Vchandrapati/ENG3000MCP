@@ -12,6 +12,8 @@ public class SystemStateManager {
     private SystemStateInterface currentStateConcrete;
     private boolean completedStartup = false;
 
+    private int lastTrip = -1;
+
     private long timeWaited = System.currentTimeMillis();
 
     //Initial state
@@ -33,7 +35,7 @@ public class SystemStateManager {
         }
 
         if(currentStateConcrete != null )currentStateConcrete.reset();
-        this.currentState = newState;
+        currentState = newState;
 
         if(newState == SystemState.STARTUP && !completedStartup) currentStateConcrete = new StartupState();
         else if(newState == SystemState.RESTARTUP) currentStateConcrete = new RestartupState();
@@ -45,11 +47,21 @@ public class SystemStateManager {
 
     //gets current state
     public synchronized SystemState getState() {
-        return this.currentState;
+        return currentState;
     }
 
-    public void trippedSensor(int trippedSensor) {
+    public boolean needsTrip(int trippedSensor) {
+        if(currentState == SystemState.STARTUP || currentState == SystemState.STARTUP) {
+            lastTrip = trippedSensor;
+            return true;
+        }
+        return false;
+    }
 
+    public int getLastTrip() {
+        int tempTrip = lastTrip;
+        lastTrip = -1;
+        return tempTrip;
     }
 
     //For emergency state, message handler can check if a status has not been responded 
@@ -62,7 +74,7 @@ public class SystemStateManager {
         //if so change to emergency state
     }
 
-    //If it is time for the current state to run its performs its operation, otherwise checkChange
+    //If it is time for the current state to run its perform its operation, otherwise checkChange
     public synchronized void run() {
         long timeToWait = currentStateConcrete.getTimeToWait();
 
