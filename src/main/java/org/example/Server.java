@@ -101,6 +101,9 @@ public class Server implements Constants {
         }, 0, STAT_INTERVAL, TimeUnit.SECONDS);
     }
 
+
+    //Checks if a client has not responded to a STAT message in 2 seconds, if so go to emergency
+    //If a train client has gone rogue, add that to the unresponsive client list in the database
     private void checkForMissingResponse(long sendTime) {
         clients.forEach(client -> {
             boolean hasFailed = false;

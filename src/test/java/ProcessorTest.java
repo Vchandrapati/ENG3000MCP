@@ -1,4 +1,6 @@
 import org.example.Server;
+import org.example.SystemState;
+import org.example.SystemStateManager;
 import org.example.TrainClient;
 import org.example.Database;
 import org.example.Processor;
@@ -29,6 +31,9 @@ public class ProcessorTest {
 
     @BeforeEach
     public void setUp() throws Exception {
+
+        SystemStateManager.getInstance().setState(SystemState.RUNNING);
+
         t1.updateStatus("STARTED");
         t2.updateStatus("STARTED");
         t3.updateStatus("STARTED");

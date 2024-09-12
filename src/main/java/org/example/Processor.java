@@ -49,7 +49,8 @@ public class Processor {
             //as train is moving out of block, check if previous block was being held up by current train
             checkForTraffic(blockBeforeTrainsOriginalLocation);
         } catch (Exception e) {
-            logger.severe("Item does not exist in database " + e.getMessage());
+            logger.severe("No train in zone before " + e.getMessage());
+            SystemStateManager.getInstance().setState(SystemState.EMERGENCY);
         }
     }
 
