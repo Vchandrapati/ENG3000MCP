@@ -1,10 +1,10 @@
 package org.example;
 
 import java.util.List;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
+import java.util.logging.Logger;
 
 public class EmergencyState implements SystemStateInterface {
+    private static final Logger logger = Logger.getLogger(EmergencyState.class.getName());
     //Sends stop to all trains
     //TO BE COMPLETED
 
@@ -23,15 +23,7 @@ public class EmergencyState implements SystemStateInterface {
         }
         else {
             startedStopping = true;
-            try {
-                // Retrieve the trains using Future.get(), which blocks until the result is available
-                Future<List<TrainClient>> futureTrains = db.getTrains();
-                trains = futureTrains.get();
-            } catch (InterruptedException | ExecutionException e) {
-                // Handle exceptions from Future.get()
-                logger.severe("Error retrieving train from database: " + e.getMessage());
-            }
-
+            List<TrainClient> trains = db.getTrains();
         }
         return false;
     }

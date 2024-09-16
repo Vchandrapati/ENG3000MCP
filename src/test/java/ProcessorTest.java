@@ -52,7 +52,7 @@ public class ProcessorTest {
         //db.updateTrainBlock("BR03", 7);
         //db.updateTrainBlock("BR04", 8);
 
-        server = new Server();
+        server = Server.getInstance();
 
       
     }
@@ -65,14 +65,12 @@ public class ProcessorTest {
     public void testTrainDistance() throws Exception{
         p.sensorTripped(5);
 
-        System.out.println(db.getLastTrainInBlock(5).get());
+        System.out.println(db.getLastTrainInBlock(5));
 
         assertEquals(t1.getStatus(), "STOPPED");
         assertEquals(t2.getStatus(), "STARTED");
         assertEquals(t3.getStatus(), "STARTED");
         assertEquals(t4.getStatus(), "STARTED");
-
-        
     }
 
     @Test // Test processor identifies collisions and stops them

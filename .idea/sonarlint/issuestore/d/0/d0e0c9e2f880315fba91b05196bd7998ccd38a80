@@ -1,7 +1,11 @@
 
-Ä
-java:S11863"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(ÑÒˆ¢8ÿ©ŠÙ2J$4a2d564e-fb5a-47f3-920d-5988f7e7f9dc
+
+java:S26299"7Use the built-in formatting to construct this argument.(ÖÛæøÿÿÿÿ8æ®è­Ÿ2J$1b3fd17f-5f2c-4e3e-9b5a-2ef2566c7ac4
+¢
+java:S1450"_Remove the "completedStartup" field and declare it as a local variable in the relevant methods.(†ºš›8Óé­Ÿ2J$7733ba85-04e4-4454-bc3d-e9804caf50db
 Ü
-java:S6548"˜A Singleton implementation was detected. Make sure the use of the Singleton pattern is required and the implementation is the right one for the context.(¶ŞûÓ8®¯­º›2J$90812652-7daf-48ca-b550-220d3656a088
+java:S6548"˜A Singleton implementation was detected. Make sure the use of the Singleton pattern is required and the implementation is the right one for the context.(¶ŞûÓ8ì®è­Ÿ2J$85404e57-0e86-42ee-9511-bef969278f22
 u
-java:S1135<"2Complete the task associated to this TODO comment.(…ïœ†8†ªŠÙ2J$5fc37c1f-0a30-45f7-ae72-17a6d622c906
+java:S1135T"2Complete the task associated to this TODO comment.(…ïœ†8ï®è­Ÿ2J$ec298a43-f347-4fbb-bc3f-487366b43f72
+w
+java:S1068"4Remove this unused "completedStartup" private field.(†ºš›8•Óé­Ÿ2J$a959cf9d-0687-4d94-baa0-1fa99484e064

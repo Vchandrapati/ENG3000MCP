@@ -23,8 +23,6 @@ _
 -.idea/sonarlint/securityhotspotstore/index.pb,8\8\88a9255124c95bdc913197c120a8d560edc59c8e
 Z
 *src/main/java/org/example/SendMessage.java,9\4\948f489c39dd752773a4b966be32393266256bd7
-]
--src/main/java/org/example/RecieveMessage.java,5\6\561944a985d852a9d203b459bd7c5e5d353d381d
 Å
 Q.idea/sonarlint/securityhotspotstore/1/1/111654fe445d55379ae3a0d80d5edea5a42b9468,8\d\8d59d75f623d3d42a2c598d91db2e4f4f1b84c3c
 w
@@ -1289,8 +1287,6 @@ a
 app.txt,1\8\18edd137736f7e3d8c40b453be3c380ae86f2ce8
 X
 (src/main/java/org/example/Processor.java,c\4\c473d7ca2e2f6f951c88b1e598902b50771748ae
-R
-"src/test/java/StartupProtocol.java,e\c\eceedd742e6f28e51f167f30a49ca98ebfa1c369
 ]
 -src/main/java/org/example/EmergencyState.java,c\2\c2c50a5fdeec942080ab12f6948ba1e8dffd03c0
 ]
@@ -1307,3 +1303,13 @@ c
 3src/main/java/org/example/SystemStateInterface.java,0\9\095a587e434c5d018bb0c0b84fe23681dc68f422
 [
 +src/main/java/org/example/RunningState.java,2\3\23ef5d477a19199728c0ad28541234d00f789aeb
+X
+(src/main/java/org/example/SpeedEnum.java,a\0\a09e3500301f434566eb9a080301ebce4bf3214c
+_
+/src/main/java/org/example/CurrentTrainInfo.java,c\5\c534e172753f4f591385702b73e70f2ab1c292f6
+[
++src/main/java/org/example/MappingState.java,5\9\59bdfe364042f34f73ee4fa1d99a16c7e3251f76
+]
+-src/main/java/org/example/ReceiveMessage.java,2\f\2f983decdfb727dcb6264a2451f5d54aebf3d582
+M
+src/test/java/TestClient.java,4\f\4f0aef1ac65062fc507ad3f42788a2fa78cc273d

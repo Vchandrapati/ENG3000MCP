@@ -2,75 +2,105 @@ package org.example;
 
 import java.io.IOException;
 import java.net.*;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Manages network communication with clients over UDP.
+ * It handles incoming packets, maintains a list of connected clients,
+ * and schedules status checks.
+ *
+ * <p>Utilises the Singleton pattern to ensure only one instance of the Server exists.
+ * It also implements the {@link Constants} interface for configuration.
+ */
 public class Server implements Constants {
-
     private static final Database db = Database.getInstance();
     private static final Logger logger = Logger.getLogger(Server.class.getName());
-    public final List<Client> clients = new CopyOnWriteArrayList<>();
+    public final Map<InetAddress, Client> clients = new ConcurrentHashMap<>();
     private DatagramSocket serverSocket;
     private volatile boolean connectionListener;
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-    private final long TIMEOUT = 5000;
-    private final int STAT_INTERVAL = 2;
+    private static final long TIMEOUT = 5000;
+    private static final int BUFFER_SIZE = 1024;
+    private static final int STAT_INTERVAL_SECONDS = 2;
 
-    public Server() {
+    private Server() {
         connectionListener = true;
         try {
             serverSocket = new DatagramSocket(PORT);
-            connectionListener();
+            startConnectionListener();
 
-            logger.info("Server completed startup and listnening on PORT: " + PORT);
+            logger.info("Server completed startup and listening on PORT: " + PORT);
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Error starting up server", e);
         }
     }
 
+    /**
+     * Holder class for implementing the Singleton pattern.
+     */
+    private static class Holder {
+        private static final Server INSTANCE = new Server();
+    }
+
+    /**
+     * Returns the singleton instance of the Server.
+     *
+     * @return the singleton Server instance
+     */
+    public static Server getInstance() {
+        return Holder.INSTANCE;
+    }
+
+    private void startConnectionListener() {
+        Thread listenerThread = new Thread(this::connectionListener, "Server-ConnectionListener");
+        listenerThread.start();
+    }
+
+    /**
+     * Listens for incoming UDP packets and processes them.
+     * If a client is recognized, processes the packet with the existing client.
+     * Otherwise, creates a new client instance and registers it.
+     */
     private void connectionListener() {
-        new Thread(() -> {
-            byte[] buffer = new byte[1024];
-            while (connectionListener){
-                try {
-                    DatagramPacket recievePacket = new DatagramPacket(buffer, buffer.length);
-                    serverSocket.receive(recievePacket);
+        while (connectionListener){
+            try {
+                DatagramPacket receivePacket = new DatagramPacket(new byte[BUFFER_SIZE], BUFFER_SIZE);
+                serverSocket.receive(receivePacket);
 
-                    InetAddress clientAddress = recievePacket.getAddress();
-                    int clientPort = recievePacket.getPort();
-                    Client client = findClient(clientAddress, clientPort);
+                InetAddress clientAddress = receivePacket.getAddress();
+                int clientPort = receivePacket.getPort();
+                Client client = findClient(clientAddress, clientPort);
 
-                    if (client != null) {
-                        client.processPacket(recievePacket);
-                        logger.info("Packet processed for client: " + client.id);
-                    } else {
-                        String clientType = ClientTable.getInstance().getComponent(clientAddress.getHostAddress(), clientPort);
-                        Client newClient = createClient(clientType, clientAddress, clientPort);
-                        newClient.registerClient();
-                        clients.add(newClient);
-                        newClient.processPacket(recievePacket);
-                        logger.info("New client created and packet processed for client: " + newClient.id);
-                    }
-                } catch (IOException e) {
-                    if(connectionListener == false) {
-                        logger.info("Closing server mid listening");
-                    }
-                    else {
-                        logger.log(Level.SEVERE, "Error receiving or processing packet", e);
-                    }
+                if (client != null) {
+                    client.processPacket(receivePacket);
+                    logger.info("Packet processed for client: " + client.id);
+                } else {
+                    // Checks if client exists in the whitelist
+                    String clientType = ClientTable.getInstance().getComponent(clientAddress.getHostAddress(), clientPort);
+                    Client newClient = createClient(clientType, clientAddress, clientPort);
+                    newClient.registerClient();
+                    clients.put(clientAddress, newClient);
+                    newClient.processPacket(receivePacket);
+                    logger.info("New client created and packet processed for client: " + newClient.id);
+                }
+            } catch (IOException e) {
+                if(!connectionListener) {
+                    logger.log(Level.SEVERE,"Unexpected error in connection listner", e);
+                }
+                else {
+                    logger.log(Level.SEVERE, "Error receiving or processing packet", e);
                 }
             }
-        }).start();
+        }
     }
 
     private Client findClient(InetAddress clientAddress, int clientPort) {
-        for (Client client : clients) {
-            if (client.clientAddress.equals(clientAddress) && client.clientPort == clientPort)
-                return client;
-        }
+        Client ret = clients.get(clientAddress);
+        if (ret.getClientPort() == clientPort)
+            return ret;
 
         return null;
     }
@@ -91,30 +121,45 @@ public class Server implements Constants {
     public void startStatusScheduler() {
         scheduler.scheduleAtFixedRate(() -> {
             long sendTime = System.currentTimeMillis();
-            for (Client client : clients) {
+            for (Client client : clients.values()) {
                 client.setStatReturned(false);
                 String statusMessage = MessageGenerator.generateStatusMessage(client.id, client.id, System.currentTimeMillis());
                 client.sendMessage(statusMessage);  // Send status request message
             }
 
             scheduler.schedule(() -> checkForMissingResponse(sendTime), TIMEOUT, TimeUnit.MILLISECONDS);
-        }, 0, STAT_INTERVAL, TimeUnit.SECONDS);
+        }, 0, STAT_INTERVAL_SECONDS, TimeUnit.SECONDS);
     }
 
 
-    //Checks if a client has not responded to a STAT message in 2 seconds, if so go to emergency
-    //If a train client has gone rogue, add that to the unresponsive client list in the database
+    /**
+     * Checks for clients that have not responded to a status request sent within a timeframe.
+     * If a client has not responded, logs an error and updates the system state to EMERGENCY.
+     * For unresponsive train clients, adds them to the unresponsive client list in the database.
+     *
+     * @param sendTime the time the status request was sent
+     */
     private void checkForMissingResponse(long sendTime) {
-        clients.forEach(client -> {
+        clients.values().forEach(client -> {
             boolean hasFailed = false;
             if (!client.lastStatReturned()) {
-                logger.severe(String.format("No STAT response from %s sent at %d", client.id, sendTime));
+                logger.severe(String.format("No STAT response from %s sent at %d", client.getId(), sendTime));
                 hasFailed = true;
                 //if a train is unresponsive
-                if(client.id.contains("BR")) db.addUnresponsiveClient(client.id);
+                if(client.getId().contains("BR")) db.addUnresponsiveClient(client.getId());
             }
             if(hasFailed) SystemStateManager.getInstance().setState(SystemState.EMERGENCY);
         });
+    }
+
+    public void sendMessageToClient(Client client, String message) {
+        try {
+            byte[] buffer = message.getBytes();
+            DatagramPacket sendPacket = new DatagramPacket(buffer, buffer.length, client.getClientAddress(), client.getClientPort());
+            serverSocket.send(sendPacket);
+        } catch (IOException e) {
+            logger.log(Level.SEVERE, "Failed to send message to client " + client.getId(), e);
+        }
     }
 
     // Closes the active threads safely

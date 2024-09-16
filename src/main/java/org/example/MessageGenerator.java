@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import java.time.Instant;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
@@ -12,7 +11,7 @@ import java.time.format.DateTimeFormatter;
 
 public class MessageGenerator {
     private static final ObjectMapper objectMapper = new ObjectMapper();
-    private static final Logger logger = Logger.getLogger(Server.class.getName());
+    private static final Logger logger = Logger.getLogger(MessageGenerator.class.getName());
 
     public static String generateAcknowledgesMessage(String clientType, String clientID, Long timestamp) {
         SendMessage message = new SendMessage();
@@ -34,31 +33,13 @@ public class MessageGenerator {
         return convertToJson(message);
     }
 
-    public static String generateExecuteMessage(String clientType, String clientID, Long timestamp, SpeenEnum speed) {
+    public static String generateExecuteMessage(String clientType, String clientID, Long timestamp, SpeedEnum speed) {
         SendMessage message = new SendMessage();
         message.clientType = clientType;
         message.message = "EXEC";
         message.clientID = clientID;
         message.timestamp = convertToProperTime(timestamp);
-
-        switch (speed) {
-            case SLOW:
-                message.action = "SLOW";
-                break;
-            case STOP:
-                message.action = "STOP";
-                break;
-            case FAST:
-                message.action = "FAST";
-                break;
-            case STOPNEXTSTATION:
-                message.action = "Undefined rn (STOPNEXTSTATION)";
-                break;
-            default:
-                message.action = "STOP";
-                logger.log(Level.WARNING, "No speed defined set to STOP");
-                break;
-        }
+        message.action = speed.toString();
 
         return convertToJson(message);
     }
@@ -107,8 +88,8 @@ public class MessageGenerator {
         try {
             return objectMapper.writeValueAsString(message);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
-            return null;
+            logger.log(Level.SEVERE, "Failed to convert message to JSON", e);
+            return "{}";  // Return an empty JSON object as a fallback
         }
     }
 }

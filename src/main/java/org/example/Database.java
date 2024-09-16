@@ -1,189 +1,130 @@
 package org.example;
 
 import java.util.*;
-import java.util.concurrent.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
 
 public class Database {
     private static final Logger logger = Logger.getLogger(Database.class.getName());
-    private static volatile Database db;
     private final ConcurrentHashMap<String, TrainClient> trains;
     private final ConcurrentHashMap<String, StationClient> stations;
     private final ConcurrentHashMap<String, CheckpointClient> checkpoints;
     private final ConcurrentHashMap<String, Integer> trainBlockMap;
-    //list of unresponsive trains, because all unrespovive client reconnection is handled by server, only need trains for restartup
-    private final List<String> unresponsiveClients; 
-    private final ExecutorService executor;
-
-    private int maxTrainAmount = 5;
-    private int maxStationAmount = 10;
-    private int maxCheckpointAmount = 10;
+    private final Set<String> unresponsiveClients;
 
     private Database() {
         trains = new ConcurrentHashMap<>();
         stations = new ConcurrentHashMap<>();
         checkpoints = new ConcurrentHashMap<>();
         trainBlockMap = new ConcurrentHashMap<>();
-        unresponsiveClients = new CopyOnWriteArrayList<>();
-
-        executor = Executors.newCachedThreadPool();
+        unresponsiveClients = ConcurrentHashMap.newKeySet();
     }
 
-    public static synchronized Database getInstance() {
-        if (db == null)
-            db = new Database();
-
-        return db;
+    /**
+     * Holder class for implementing the Singleton pattern.
+     */
+    private static class Holder {
+        private static final Database INSTANCE = new Database();
     }
 
-    //shutdowns the database thread
-    public void shutdown() {
-        executor.shutdown();
+    /**
+     * Returns the singleton instance of the Server.
+     *
+     * @return the singleton Server instance
+     */
+    public static Database getInstance() {
+        return Holder.INSTANCE;
     }
 
     public void addUnresponsiveClient(String id) {
-        executor.submit(() -> {
-            unresponsiveClients.add(id);
-        });
+        unresponsiveClients.add(id);
     }
 
-    //gets all unresponsive train clients, resets it after being grabbed
-    public Future<List<TrainClient>> getUnresposiveClient() {
-        return executor.submit(() -> {
-            List<TrainClient> trainClients = new CopyOnWriteArrayList<>();
-            for (String string : unresponsiveClients) {
-                trainClients.add(this.getTrain(string).get());
-            }   
-            this.unresponsiveClients.clear();
-            return trainClients;
-        });
+    public List<TrainClient> getUnresponsiveClients() {
+        List<TrainClient> trainClients = new ArrayList<>();
+        for (String id : unresponsiveClients) {
+            TrainClient client = trains.get(id);
+            if (client != null) {
+                trainClients.add(client);
+            }
+        }
+
+        return trainClients;
+    }
+
+    public void clearUnresponsiveClients() {
+        unresponsiveClients.clear();
     }
 
     public void addTrain(String id, TrainClient tr) {
-        executor.submit(() -> {
-            TrainClient prevValue = trains.putIfAbsent(id, tr);
-            if (prevValue != null) {
-                logger.warning("Attempted to add duplicate train with id: " + id);
-            }
-        });
+        TrainClient prevValue = trains.putIfAbsent(id, tr);
+        if (prevValue != null) {
+            String message = "Attempted to add duplicate train with id: " + id;
+            logger.warning(message);
+            throw new IllegalArgumentException(message);
+        }
     }
 
     public void addStation(String id, StationClient st) {
-        executor.submit(() -> {
-            StationClient prevValue = stations.putIfAbsent(id, st);
-            if (prevValue != null) {
-                logger.warning("Attempted to add duplicate station with id: " + id);
-            }
-        });
+        StationClient prevValue = stations.putIfAbsent(id, st);
+        if (prevValue != null) {
+            String message = "Attempted to add duplicate station with id: " + id;
+            logger.warning(message);
+            throw new IllegalArgumentException(message);
+        }
     }
 
     public void addCheckpoint(String id, CheckpointClient ch) {
-        executor.submit(() -> {
-            CheckpointClient prevValue = checkpoints.putIfAbsent(id, ch);
-            if (prevValue != null) {
-                logger.warning("Attempted to add duplicate checkpoint with id: " + id);
-            }
-        });
+        CheckpointClient prevValue = checkpoints.putIfAbsent(id, ch);
+        if (prevValue != null) {
+            String message = "Attempted to add duplicate checkpoint with id: " + id;
+            logger.warning(message);
+            throw new IllegalArgumentException(message);
+        }
     }
 
-    public Future<TrainClient> getTrain(String id) {
-        return executor.submit(() -> trains.get(id));
+    public TrainClient getTrain(String id) {
+        return trains.get(id);
     }
 
-    public Future<StationClient> getStation(String id) {
-        return executor.submit(() -> stations.get(id));
+    public StationClient getStation(String id) {
+        return stations.get(id);
     }
 
-    public Future<CheckpointClient> getCheckpoint(String id) {
-        return executor.submit(() -> checkpoints.get(id));
+    public CheckpointClient getCheckpoint(String id) {
+        return checkpoints.get(id);
     }
 
-    public void updateTrainBlock(String traindId, int newBlock) {
-        executor.submit(() -> trainBlockMap.put(traindId, newBlock));
+    public void updateTrainBlock(String trainId, int newBlock) {
+        trainBlockMap.put(trainId, newBlock);
     }
 
-    public void getTrainblock(String traindId) {
-        executor.submit(() -> trainBlockMap.get(traindId));
+    public boolean isBlockOccupied(int blockId) {
+        return trainBlockMap.containsValue(blockId);
     }
 
-    public Future<Boolean> isBlockOccupied(int blockId) {
-        return executor.submit(() -> trainBlockMap.containsValue(blockId));
-    }
-
-    public Future<String> getLastTrainInBlock(int blockId) {
-        return executor.submit(() -> trainBlockMap.entrySet()
+    public String getLastTrainInBlock(int blockId) {
+        return trainBlockMap.entrySet()
                 .stream()
                 .filter(entry -> entry.getValue().equals(blockId))
                 .map(Map.Entry::getKey)
                 .reduce((first, second) -> second)
-                .orElse(null));
+                .orElse(null);
     }
 
-    //gets the list of connected trains
-    public Future<List<TrainClient>> getTrains() {
-        return executor.submit(() -> {
-            List<TrainClient> list = new ArrayList<>();
-            trains.forEach((K, V) -> list.add(V));
-            return list;
-        });
+    public List<TrainClient> getTrains() {
+        return new ArrayList<>(trains.values());
     }
 
-    //returns a tripped checkpoint
-    public Future<CheckpointClient> getLastTrip() {
-        return executor.submit(() -> {
-            CheckpointClient[] trippedCheckpoint = new CheckpointClient[1];
-            checkpoints.forEach((K,V) -> {
-                if(V.isTripped()) trippedCheckpoint[0] = V;
-            });
-            return trippedCheckpoint[0];
-        });
-    }
-
-
-    //Gets for current client size
-    public Integer getTrainCount() {
+    public int getTrainCount() {
         return trains.size();
     }
 
-    public Integer getStationCount() {
+    public int getStationCount() {
         return stations.size();
     }
 
-    public Integer getCheckpointCount() {
+    public int getCheckpointCount() {
         return checkpoints.size();
-    }
-
-
-    //Sets and Gets for max BR, ST and CH amounts
-
-    public void setMaxBR(Integer amount) {
-        this.maxTrainAmount = amount;
-    }
-
-    public void setMaxST(Integer amount) {
-        this.maxStationAmount = amount;
-    }
-
-    public void setMaxCH(Integer amount) {
-        this.maxCheckpointAmount = amount;
-    }
-
-    public int getMaxBR() {
-        return this.maxTrainAmount;
-    }
-
-    public int getMaxST() {
-        return this.maxStationAmount;
-    }
-
-    public int getMaxCH() {
-        return this.maxCheckpointAmount;
-    }
-
-    //triggers restartup
-    public void TESTING(String name, TrainClient tr) {
-        addTrain(name, tr);
-        addUnresponsiveClient(name);
-        SystemStateManager.getInstance().setState(SystemState.RESTARTUP);
     }
 }

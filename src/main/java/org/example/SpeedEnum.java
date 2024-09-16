@@ -1,6 +1,6 @@
 package org.example;
 
-enum SpeenEnum {
+public enum SpeedEnum {
     FAST,
     SLOW,
     STOP,

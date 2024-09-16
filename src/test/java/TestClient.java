@@ -4,19 +4,8 @@ import java.io.*;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import java.util.*;
-
-import org.example.Client;
-import org.example.MessageHandler;
-
-import static org.example.Client.*;
-import static org.example.MessageGenerator.*;
-import static org.example.MessageHandler.*;
-import static org.example.RecieveMessage.*;
-import static org.example.Constants.*;
 
 public class TestClient {
     List<Client> clients;

@@ -5,7 +5,6 @@ import java.net.InetAddress;
 public class StationClient extends Client {
     private static Integer location;
     private volatile DoorStatus status;
-
     private enum DoorStatus {
         OPEN,
         CLOSE
