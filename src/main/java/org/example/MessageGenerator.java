@@ -11,7 +11,7 @@ import java.time.format.DateTimeFormatter;
 
 public class MessageGenerator {
     private static final ObjectMapper objectMapper = new ObjectMapper();
-    private static final Logger logger = Logger.getLogger(MessageGenerator.class.getName());
+    static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     public static String generateAcknowledgesMessage(String clientType, String clientID, Long timestamp) {
         SendMessage message = new SendMessage();

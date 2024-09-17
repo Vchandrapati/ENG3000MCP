@@ -5,7 +5,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.logging.Logger;
 
 public class Processor {
-    private static final Logger logger = Logger.getLogger(Processor.class.getName());
+    private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private static final Database db = Database.getInstance();
     private static final int TOTAL_BLOCKS = db.getCheckpointCount();
     public void sensorTripped(int sensorTripped) {

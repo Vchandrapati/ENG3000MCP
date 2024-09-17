@@ -7,7 +7,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.logging.Logger;
 
 public class MessageHandler {
-    private static final Logger logger = Logger.getLogger(MessageHandler.class.getName());
+    private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private static final ObjectMapper objectMapper = new ObjectMapper();
     private static final Database db = Database.getInstance();
     // Handles messages from CCPs and stations

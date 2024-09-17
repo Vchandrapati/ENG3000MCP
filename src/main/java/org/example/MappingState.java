@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 public abstract class MappingState implements SystemStateInterface{
-    protected static final Logger logger = Logger.getLogger(MappingState.class.getName());
+    protected static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     // All time units in milliseconds
     protected static final long TRAIN_MAPPING_TIMEOUT = 15_000; // 15 seconds

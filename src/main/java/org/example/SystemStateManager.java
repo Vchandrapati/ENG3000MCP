@@ -7,9 +7,9 @@ import java.util.logging.Logger;
 
 public class SystemStateManager {
     private static volatile SystemStateManager instance;
-    private static final Logger logger = Logger.getLogger(SystemStateManager.class.getName());
+    private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
-    //holds the current state and the current state concrete implnetation
+    //holds the current state and the current state concrete implementation
     private SystemState currentState;
     private SystemStateInterface currentStateConcrete;
     private boolean completedStartup = false;
@@ -32,13 +32,10 @@ public class SystemStateManager {
     }
 
     public static SystemStateManager getInstance() {
-        if (instance == null) {
-            synchronized (SystemStateManager.class) {
-                if (instance == null) {
-                    instance = new SystemStateManager();
-                }
-            }
-        }
+        if (instance == null)
+            instance = new SystemStateManager();
+
+
         return instance;
     }
 

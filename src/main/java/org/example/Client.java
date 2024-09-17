@@ -6,7 +6,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.logging.Logger;
 
 public abstract class Client {
-    protected static final Logger logger = Logger.getLogger(Client.class.getName());
+    protected static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     protected MessageHandler messageHandler;
     private InetAddress clientAddress;
     private int clientPort;

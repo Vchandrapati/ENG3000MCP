@@ -2,9 +2,9 @@ package org.example;
 
 import java.net.InetAddress;
 
-public class StationClient extends Client {
-    private static Integer location;
+public class StationClient extends CheckpointClient {
     private volatile DoorStatus status;
+
     private enum DoorStatus {
         OPEN,
         CLOSE
@@ -23,7 +23,7 @@ public class StationClient extends Client {
     }
 
     public Integer getLocation() {
-        return location;
+        return super.getLocation();
     }
 
     // For sending a message about updating the status of the door

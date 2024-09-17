@@ -4,7 +4,7 @@ import java.util.*;
 import java.util.logging.Logger;
 
 public class RunningState implements SystemStateInterface {
-    private static final Logger logger = Logger.getLogger(RunningState.class.getName());
+    private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private boolean allRunning = false;
     private static final SystemState nextState = SystemState.RUNNING;
     private static long timeBetweenRunning = 500;

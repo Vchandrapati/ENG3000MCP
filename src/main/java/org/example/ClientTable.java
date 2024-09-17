@@ -46,7 +46,7 @@ public class ClientTable implements Constants {
         for (int i = 1; i <= 20; i++) {
             String ip = String.format(DOMAIN, 50 + i);
             int port = 5000 + i;
-            String component = String.format("LED%d", i);
+            String component = String.format("BR%d", i);
             lookupTable.put(String.format("%s %d",ip, port), component);
         }
     }

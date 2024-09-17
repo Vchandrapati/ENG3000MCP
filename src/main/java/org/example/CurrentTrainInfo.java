@@ -3,7 +3,7 @@ package org.example;
 import java.util.logging.Logger;
 
 public class CurrentTrainInfo {
-    static final Logger logger = Logger.getLogger(CurrentTrainInfo.class.getName());
+    static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private final TrainClient train;
     private boolean hasSent;
     private long timeSinceSent;

@@ -5,7 +5,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
 
 public class Database {
-    private static final Logger logger = Logger.getLogger(Database.class.getName());
+    private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private final ConcurrentHashMap<String, TrainClient> trains;
     private final ConcurrentHashMap<String, StationClient> stations;
     private final ConcurrentHashMap<String, CheckpointClient> checkpoints;
@@ -52,6 +52,9 @@ public class Database {
         return trainClients;
     }
 
+    public Map<String, Integer> getTrainBlockMap() {
+        return new HashMap<>(trainBlockMap);
+    }
     public void clearUnresponsiveClients() {
         unresponsiveClients.clear();
     }

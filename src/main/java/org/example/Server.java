@@ -15,9 +15,9 @@ import java.util.logging.Logger;
  * <p>Utilises the Singleton pattern to ensure only one instance of the Server exists.
  * It also implements the {@link Constants} interface for configuration.
  */
-public class Server implements Constants {
+public class Server implements Constants, Runnable {
     private static final Database db = Database.getInstance();
-    private static final Logger logger = Logger.getLogger(Server.class.getName());
+    private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     public final Map<InetAddress, Client> clients = new ConcurrentHashMap<>();
     private DatagramSocket serverSocket;
     private volatile boolean connectionListener;
@@ -30,8 +30,6 @@ public class Server implements Constants {
         connectionListener = true;
         try {
             serverSocket = new DatagramSocket(PORT);
-            startConnectionListener();
-
             logger.info("Server completed startup and listening on PORT: " + PORT);
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Error starting up server", e);
@@ -43,6 +41,17 @@ public class Server implements Constants {
      */
     private static class Holder {
         private static final Server INSTANCE = new Server();
+
+        static {
+            Thread serverThread = new Thread(INSTANCE, "Server-Thread");
+            serverThread.start();
+        }
+    }
+
+    @Override
+    public void run() {
+        startConnectionListener();
+        startStatusScheduler();
     }
 
     /**

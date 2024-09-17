@@ -1313,3 +1313,17 @@ _
 -src/main/java/org/example/ReceiveMessage.java,2\f\2f983decdfb727dcb6264a2451f5d54aebf3d582
 M
 src/test/java/TestClient.java,4\f\4f0aef1ac65062fc507ad3f42788a2fa78cc273d
+_
+/src/main/java/org/example/VisualiserScreen.java,e\2\e2e73d2d48b6795b48055dc0494427630a91bb05
+P
+ src/test/java/TestingStates.java,5\b\5be3ecc733cb88382e406ce331946780573a9eb5
+^
+.src/main/java/org/example/VisualiserPanel.java,c\8\c8511f2a7808ecdf7d0d43b56a5627d10e1bc4bf
+[
++src/main/java/org/example/ScreenLogger.java,e\3\e38c5e558ba1a38063e4e48b7596584a9606d1fd
+_
+/src/main/java/org/example/ScreenLogHandler.java,6\9\6929a07a05fe1553a46eda8b3a27ac39dc9c4859
+7
+app.log,a\0\a04cdc1b813999384ef385ac5191cbe69e844545
+9
+	app.log.1,3\9\398e6e9d5b215e31b826d8fae29594287ad3d9b3

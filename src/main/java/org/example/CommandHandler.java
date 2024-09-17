@@ -1,18 +1,22 @@
 package org.example;
 
 import java.util.*;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
  * Handles commands from the console given by the user
  */
-public class CommandHandler implements Runnable{
+public class CommandHandler implements Runnable {
     private static final Set<String> commands;
-    private static final Logger logger = Logger.getLogger(CommandHandler.class.getName());
+    private Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private static volatile boolean isRunning = true;
     private boolean startedStartup = false;
     private Thread commandThread;
+    private BlockingQueue<String> commandQueue = new LinkedBlockingQueue<>();
+
     //Set of commands
     static {
         commands = new HashSet<>();
@@ -23,7 +27,7 @@ public class CommandHandler implements Runnable{
     }
 
     public CommandHandler() {
-        commandThread = new Thread(this);
+        commandThread = new Thread(this, "CommandHandler-Thread");
         commandThread.start();
     }
     
@@ -32,11 +36,11 @@ public class CommandHandler implements Runnable{
     public void run() {
         logger.info("MCP online, please input a command, type help to see a list of commands");
 
-
         while(isRunning) {
-            try (Scanner scanner = new Scanner(System.in);) {
-                //tries to get console input
-                String input = scanner.nextLine();
+            try {
+                //tries to get command from queue if exists
+                String input = commandQueue.take();
+
                 //if valid processes the command and prints to console
                 if (commands.contains(input)) {
                     executeCommand(input);
@@ -50,6 +54,15 @@ public class CommandHandler implements Runnable{
             } catch (Exception e) {
                 logger.severe("An unexpected error occurred: " + e.getMessage());
             }
+        }
+    }
+
+    public void processInput(String input) {
+        try {
+            commandQueue.put(input); // Submit the command to the queue
+        } catch (InterruptedException e) {
+            logger.severe("Failed to submit command: " + e.getMessage());
+            Thread.currentThread().interrupt(); // Restore interrupted status
         }
     }
 

@@ -1,21 +1,19 @@
 
 |
-java:S3516"9Refactor this method to not always return the same value.(¬¸¤¤8ç³È°Ÿ2J$814393e2-7bf5-4e9a-98cc-3292fa456a2e
+java:S3516"9Refactor this method to not always return the same value.(¬¸¤¤8ç³È°Ÿ2J$704b73e7-1153-4ed7-a913-278bfe06816c
 }
-java:S1854":Remove this useless assignment to local variable "trains".(ëø‘®8è³È°Ÿ2J$4c7fad4e-831d-4322-a99c-71a524bcb5a7
+java:S1854":Remove this useless assignment to local variable "trains".(ëø‘®8è³È°Ÿ2J$18cb1be4-55a8-445e-b503-e4cb12a7025d
 }
-java:S1117":Rename "trains" which hides the field declared at line 17.(ëø‘®8¦É°Ÿ2J$6aa2e054-dbdf-4848-abd9-6d2f381bf400
+java:S1117":Rename "trains" which hides the field declared at line 17.(ëø‘®8¦É°Ÿ2J$0ce4a92b-8ccc-47e6-a50d-a7d7fafbbcc4
 n
-java:S1481"+Remove this unused "trains" local variable.(ëø‘®8¦É°Ÿ2J$74ae6206-0c05-4db5-b266-b29d1c9c97bb
+java:S1481"+Remove this unused "trains" local variable.(ëø‘®8¦É°Ÿ2J$612d04dc-f474-4607-80fa-e0e19554a254
 {
-java:S3400!"9Remove this method and declare a constant for this value.(¸®Ã'8é³È°Ÿ2J$00fbd6df-515a-492e-8e1b-630969a82c36
+java:S3400!"9Remove this method and declare a constant for this value.(¸®Ã'8é³È°Ÿ2J$68f0cabe-fe23-40f6-bd9b-feacc67074dd
 u
-java:S1135 "2Complete the task associated to this TODO comment.(…ïœ†8é³È°Ÿ2J$94f08885-1248-41ff-9f3c-36dca11f5cfc
+java:S1135 "2Complete the task associated to this TODO comment.(…ïœ†8é³È°Ÿ2J$03fb67d1-2b72-419e-8a25-071425d13512
 ^
-java:S36260"Remove this redundant jump.(ûÁİ…8ê³È°Ÿ2J$4342c278-e31a-4a2f-96fc-b3c19cfeb5d1
-m
-java:S1068"*Remove this unused "logger" private field.(³àßÍ8ê³È°Ÿ2J$1fcb3744-aec5-489b-91a3-fd773c395514
+java:S36260"Remove this redundant jump.(ûÁİ…8ê³È°Ÿ2J$b87d83dd-e0f1-497b-8a11-84308cd12249
 n
-java:S1068"+Remove this unused "timeout" private field.(¸•å©8ê³È°Ÿ2J$b057080e-0b7c-4f06-a4fc-82388ca4160f
+java:S1068"+Remove this unused "timeout" private field.(¸•å©8ê³È°Ÿ2J$484fb376-e97c-463b-97f6-fa9ada840abc
 r
-java:S1068"*Remove this unused "trains" private field.(Óè®µúÿÿÿÿ8ê³È°Ÿ2J$48e8e7eb-17f7-431e-a304-79ebfc99955b
+java:S1068"*Remove this unused "trains" private field.(Óè®µúÿÿÿÿ8ê³È°Ÿ2J$baeeadd8-f25c-4b16-be16-03aca23a242e

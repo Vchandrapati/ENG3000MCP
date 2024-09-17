@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 public class EmergencyState implements SystemStateInterface {
-    private static final Logger logger = Logger.getLogger(EmergencyState.class.getName());
+    Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     //Sends stop to all trains
     //TO BE COMPLETED
 
