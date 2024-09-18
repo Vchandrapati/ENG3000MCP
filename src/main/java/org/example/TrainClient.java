@@ -69,7 +69,7 @@ public class TrainClient extends Client {
 
     @Override
     public void registerClient() {
-        Database.getInstance().addClient(this.id, this, super.getClientAddress(), id);
+        Database.getInstance().addClient(this.id, this, super.getClientAddress(), super.getClientPort() + "");
         logger.info("Added new train to database: " + Database.getInstance().getTrainCount());
 
     }

@@ -110,7 +110,8 @@ public class Server implements Constants, Runnable {
                     client.processPacket(receivePacket);
                     logger.info("Packet processed for client: " + client.id);
                 } else {
-                    String message = new String(receivePacket.getData(), 0, receivePacket.getLength(),
+                    String message = new String(receivePacket.getData(), 0,
+                            receivePacket.getLength(),
                             StandardCharsets.UTF_8);
                     MessageHandler mg = new MessageHandler();
                     mg.handleInitialise(message, clientAddress, clientPort);
@@ -123,13 +124,7 @@ public class Server implements Constants, Runnable {
     }
 
     private Client findClient(InetAddress clientAddress, int clientPort) {
-        List<Client> clients = db.getClients();
-        if (clients.isEmpty())
-            return null;
-
-        Optional<Client> client = clients.stream()
-                .filter(c -> c.getClientPort() == clientPort && c.getClientAddress() == clientAddress).findFirst();
-        return client.orElse(null);
+        return db.getClient(clientAddress, clientPort + "");
     }
 
     public void startStatusScheduler() {

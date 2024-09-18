@@ -1,7 +1,7 @@
 package org.example;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-
+import java.net.InetAddress;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.net.*;
@@ -58,13 +58,19 @@ public class MessageHandler {
     }
 
     private void handleCCPMessage(ReceiveMessage receiveMessage) {
-        TrainClient client = (TrainClient) db.getClient(receiveMessage.clientID);
+        TrainClient client;
 
+        switch (receiveMessage.message) {
+            case "STAT":
+                client = (TrainClient) db.getClient(receiveMessage.clientID);
+                client.updateStatus(receiveMessage.status.toUpperCase());
+                client.setStatReturned(true);
+                client.setStatSent(true);
+                logger.log(Level.INFO, "Received STAT message from Blade Runner: {0}", receiveMessage.clientID);
+                break;
+        }
         if (receiveMessage.message.equals("STAT")) {
-            client.updateStatus(receiveMessage.status.toUpperCase());
-            client.setStatReturned(true);
-            client.setStatSent(true);
-            logger.log(Level.INFO, "Received CCIN message from Blade Runner: {0}", receiveMessage.clientID);
+
         } else {
             logger.log(Level.WARNING, "Unknown Blade Runner message: {0}", receiveMessage.message);
         }
@@ -87,19 +93,28 @@ public class MessageHandler {
         }
     }
 
+    // Deprecated - Eugene
     public void handleInitialise(String message, InetAddress ip, int port) {
         try {
             ReceiveMessage receiveMessage = objectMapper.readValue(message, ReceiveMessage.class);
             // Handle based on the client type
-            if (receiveMessage.clientType.equals("ccp")) {
-                TrainClient client = new TrainClient(ip, port, receiveMessage.clientID);
-                client.id = receiveMessage.clientID;
-                client.registerClient();
-                client.sendAcknowledgeMessage();
-                logger.log(Level.INFO, "Received CCIN message from CCP and created new client: {0}",
-                        receiveMessage.clientID);
-            } else
-                logger.log(Level.INFO, "Unknown client type: {0}", receiveMessage.clientType);
+            switch (receiveMessage.clientType) {
+                case "ccp":
+                    if (receiveMessage.message.equals("STAT")) {
+                        break;
+                    }
+                    TrainClient client = new TrainClient(ip, port, receiveMessage.clientID);
+                    client.id = receiveMessage.clientID;
+                    client.registerClient();
+                    client.sendAcknowledgeMessage();
+                    logger.log(Level.INFO, "Received CCIN message from CCP and created new client: {0}",
+                            receiveMessage.clientID);
+                    break;
+
+                default:
+                    logger.log(Level.INFO, "Unknown client type: {0}", receiveMessage.clientType);
+                    break;
+            }
 
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Failed to handle message: {0}", e.getMessage());

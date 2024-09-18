@@ -50,6 +50,6 @@ public class StationClient extends CheckpointClient {
 
     @Override
     public void registerClient() {
-        Database.getInstance().addClient(this.id, this, super.getClientAddress(), id);
+        Database.getInstance().addClient(this.id, this, super.getClientAddress(), super.getClientPort() + "");
     }
 }

@@ -122,6 +122,19 @@ public class Database {
         return clients.get(id);
     }
 
+    // For Vikil
+    public Client getClient(InetAddress clientAddress, String clientPort) {
+        if (clientAddress == null || clientPort == null) {
+            return null;
+        }
+        String key = clientKeys.get(clientAddress + clientPort);
+
+        if (key == null) {
+            return null;
+        }
+        return clients.get(key);
+    }
+
     public void addClientToUnresponsive(String id) {
         unresponsiveClients.add(id);
     }
