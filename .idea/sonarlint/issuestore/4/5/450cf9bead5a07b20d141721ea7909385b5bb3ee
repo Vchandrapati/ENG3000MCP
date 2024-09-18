@@ -1,9 +1,9 @@
 
-™	java:S116"RRename this field "TIMEOUT" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(À•úÿÿÿÿ8©”ÛŞ2J$6f5e62af-0eb7-4491-ac59-e89262bb9eca
-š	java:S116"XRename this field "STAT_INTERVAL" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¥ÍÃ—8©”ÛŞ2J$227ab1da-dfad-4444-a6bb-0ebe46d44aac
-i
-java:S1170"!Make this final field static too.(À•úÿÿÿÿ8©”ÛŞ2J$e32a294d-48ce-493f-9033-3b594744986a
-d
-java:S1170"!Make this final field static too.(¥ÍÃ—8©”ÛŞ2J$8bc1e024-7851-45a5-9c57-841d2c8cdeec
-o
-java:S11258"'Remove the unnecessary boolean literal.(§ÏâŞøÿÿÿÿ8¯”ÛŞ2J$6cc00eb0-fa94-4cd1-a377-be6d69c60953
+z
+java:S2629X"7Use the built-in formatting to construct this argument.(¼ßÙ—8œ®®®Ÿ2J$d3cc07f4-d281-4e46-8a53-2b44a2bea1c1
+z
+java:S2629`"7Use the built-in formatting to construct this argument.(Şòñ8œ®®®Ÿ2J$e1dce059-a800-4bc0-b3db-9188fe06e29b
+Ü
+java:S6548"˜A Singleton implementation was detected. Make sure the use of the Singleton pattern is required and the implementation is the right one for the context.(ğ»¢­8½ÕËÑŸ2J$df38b586-0aa3-426c-8fab-51505707af3e
+}
+java:S3457ª"4Lambda should be used to defer string concatenation.(±Ùèªûÿÿÿÿ8š¯É 2J$5f29ffe3-6830-496f-9dae-ba57d86ebda0

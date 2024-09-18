@@ -1,19 +1,13 @@
 package org.example;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.util.logging.*;
 
 public class LoggerConfig {
 
-    public static void setupLogger() {
+    public static void setupLogger(JTextArea logArea) {
         Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-
-        // Remove default console handler to avoid duplicate logs
-        //Logger rootLogger = Logger.getLogger("");
-        // Handler[] handlers = rootLogger.getHandlers();
-        // if (handlers[0] instanceof ConsoleHandler) {
-        //     rootLogger.removeHandler(handlers[0]);
-        // }
 
         try {
             // Create a console handler
@@ -26,14 +20,20 @@ public class LoggerConfig {
             fileHandler.setLevel(Level.ALL);
             fileHandler.setFormatter(new SimpleFormatter());
 
+            // Create the custom LogTextAreaHandler
+            ScreenLogHandler textAreaHandler = new ScreenLogHandler(logArea);
+            textAreaHandler.setLevel(Level.ALL);
+
+            // Remove default handlers
+            logger.setUseParentHandlers(false);
+
             // Add handlers to the logger
             logger.addHandler(consoleHandler);
             logger.addHandler(fileHandler);
+            logger.addHandler(textAreaHandler);
 
             // Set the logger level to ALL to log everything
             logger.setLevel(Level.ALL);
-            logger.setUseParentHandlers(false);
-
         } catch (IOException e) {
             logger.log(Level.SEVERE, "Failed to initialize logger handler.", e);
         }

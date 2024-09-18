@@ -1,11 +1,12 @@
 package org.example;
 
 import java.util.*;
+import java.util.logging.Logger;
 
-public class RunningState implements SystemStateInterface{
+public class RunningState implements SystemStateInterface {
+    private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private boolean allRunning = false;
-
-    private static SystemState nextState = SystemState.RUNNING;
+    private static final SystemState nextState = SystemState.RUNNING;
     private static long timeBetweenRunning = 500;
 
     @Override
@@ -20,17 +21,19 @@ public class RunningState implements SystemStateInterface{
         return false;
     }
 
-    private void moveAllTrains() throws Exception {
-        List<TrainClient> trains = db.getTrains().get();
-        if(trains != null && trains.size() > 0) {
-            allRunning = true;
-            for (TrainClient trainClient : trains) {
-                trainClient.sendExecuteMessage(SpeenEnum.SLOW);
+    private void moveAllTrains() {
+        try {
+            List<TrainClient> trains = Database.getInstance().getTrains();
+            if(trains != null && !trains.isEmpty()) {
+                allRunning = true;
+                for (TrainClient trainClient : trains) {
+                    trainClient.sendExecuteMessage(SpeedEnum.SLOW);
+                }
+                logger.info("All Trains are now moving at speed 1");
             }
-            logger.info("All Trains are now moving at speed 1");
-        }
-        else {
-            logger.info("No trains connected!");
+        } catch (Exception e) {
+            logger.severe("Failed to move trains: " + e.getMessage());
+            SystemStateManager.getInstance().setState(SystemState.EMERGENCY);
         }
     }
 

@@ -1,59 +1,72 @@
 package org.example;
 
 import java.util.List;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
+import java.util.logging.Logger;
+import java.util.concurrent.*;
 
 public class EmergencyState implements SystemStateInterface {
-    //Sends stop to all trains
-    //TO BE COMPLETED
 
-    private static long timeToWait = 500;
-    private static SystemState nextState = SystemState.RESTARTUP;
-    private static long timeout = 10000;
+    protected static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
-    private Database db = Database.getInstance();
-    private boolean startedStopping = false;
-    private List<TrainClient> trains = null;
+    // All time units in milliseconds
+    protected static final long EMERGENCY_TIMEOUT = 300000; // 5 minutes
+    protected static final long TIME_BETWEEN_RUNNING = 1000; 
+
+    protected final Database db = Database.getInstance();
+
+    private static BlockingQueue<String> clientMessageQueue = new LinkedBlockingQueue<>();
+
+    protected static boolean startedStopping = false;
+    protected static List<TrainClient> trains = null;
 
     @Override
     public boolean performOperation() {
         if(startedStopping) {
-            return haveAllStopped();
+            return checkIfAllReconnected();
         }
         else {
-            startedStopping = true;
-            try {
-                // Retrieve the trains using Future.get(), which blocks until the result is available
-                Future<List<TrainClient>> futureTrains = db.getTrains();
-                trains = futureTrains.get();
-            } catch (InterruptedException | ExecutionException e) {
-                // Handle exceptions from Future.get()
-                logger.severe("Error retrieving train from database: " + e.getMessage());
+            List<TrainClient> trains = db.getTrains();
+            if(trains != null && !trains.isEmpty()) {
+                startedStopping = true;
+                stopAllTrains();
             }
-
+            else {
+                logger.warning("Finding no trains in database");
+            }
         }
         return false;
     }
 
-    private boolean haveAllStopped() {
-        //TODO
+    private boolean checkIfAllReconnected() {
         return false;
+    }
+
+    public static void addMessage(String id) {
+        clientMessageQueue.add(id);
+    }
+
+    //tells each train to stop at next station
+    private void stopAllTrains() {
+
+        for (TrainClient trainClient : trains) {
+            trainClient.sendExecuteMessage(SpeedEnum.STOPNEXTSTATION);
+        }
     }
 
     @Override
     public long getTimeToWait() {
-        return timeToWait;
+        return TIME_BETWEEN_RUNNING;
     }
 
     @Override
     public SystemState getNextState() {
-        return nextState;
+        if(SystemStateManager.getInstance().hasCompletedStartup()) return SystemState.RESTARTUP;
+        return SystemState.STARTUP;
     }
 
     @Override
     public void reset() {
-        return;
+        startedStopping = false;
+        trains = null;
     }
-        
 }

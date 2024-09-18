@@ -2,7 +2,6 @@ package org.example;
 
 import java.net.DatagramPacket;
 import java.net.InetAddress;
-import java.util.concurrent.ExecutionException;
 
 public class CheckpointClient extends Client {
     private final Integer location;
@@ -32,13 +31,10 @@ public class CheckpointClient extends Client {
         return location;
     }
 
-    // Uses an alternate process packet method as the messages are strings
     @Override
-    public void processPacket(DatagramPacket packet) {
-        String message = new String(packet.getData(), 0, packet.getLength());
-        if (!message.isEmpty()) {
-            messageHandler.handleCheckpointMessage(message);
-        }
+    public void sendStatusMessage(String id, Long timestamp) {
+        String message = MessageGenerator.generateStatusMessage("ccp", id, System.currentTimeMillis());
+        sendMessage(message, "STAT");
     }
 
     @Override

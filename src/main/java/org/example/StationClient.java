@@ -2,8 +2,7 @@ package org.example;
 
 import java.net.InetAddress;
 
-public class StationClient extends Client {
-    private static Integer location;
+public class StationClient extends CheckpointClient {
     private volatile DoorStatus status;
 
     private enum DoorStatus {
@@ -24,7 +23,7 @@ public class StationClient extends Client {
     }
 
     public Integer getLocation() {
-        return location;
+        return super.getLocation();
     }
 
     // For sending a message about updating the status of the door
@@ -32,7 +31,7 @@ public class StationClient extends Client {
     // False: Door is closed
     public void sendDoorMessage(boolean doorOpen) {
         String message = MessageGenerator.generateDoorMessage("station", id, System.currentTimeMillis(), doorOpen);
-        sendMessage(message);
+        sendMessage(message, "DOOR");
     }
 
     // To tell the station what the status of the LED should be
@@ -40,7 +39,13 @@ public class StationClient extends Client {
     // False: LED is off
     public void sendIRLEDMessage(boolean on) {
         String message = MessageGenerator.generateIRLEDMessage("station", id, System.currentTimeMillis(), on);
-        sendMessage(message);
+        sendMessage(message, "IRLED");
+    }
+
+    @Override
+    public void sendStatusMessage(String id, Long timestamp) {
+        String message = MessageGenerator.generateStatusMessage("ccp", id, System.currentTimeMillis());
+        sendMessage(message, "STAT");
     }
 
     @Override
