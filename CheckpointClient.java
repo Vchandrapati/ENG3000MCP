@@ -1,12 +1,6 @@
 
 import java.io.IOException;
 import java.net.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class CheckpointClient {
 
@@ -77,42 +71,36 @@ public class CheckpointClient {
 
     // Sends an initialise connection message
     public void sendInitialiseConnectionMsg(Integer num) {
-        try {
-            byte[] buffer = ("{\"client_type\":\"checkpoint\", \"message\":\"CCIN\", \"client_id\":\"CP01\", \"timestamp\":\"2019-09-07T15:50+00Z\", \"location\":\""
-                    + num + "\"}")
-                    .getBytes();
-            DatagramPacket sendPacket = new DatagramPacket(buffer, buffer.length, sendAddress, sendPort);
-            socket.send(sendPacket);
-            System.out.println("Port: " + myPort + " Sent CCIN at: " + System.currentTimeMillis());
-        } catch (Exception e) {
-            System.out.println("Failed to send packet");
-        }
+        byte[] buffer = ("{\"client_type\":\"checkpoint\", \"message\":\"CCIN\", \"client_id\":\"" + myID
+                + "\", \"timestamp\":\"2019-09-07T15:50+00Z\", \"location\":\""
+                + num + "\"}")
+                .getBytes();
+        sendMsg(buffer);
     }
 
     // Sends a stat message
     public void sendStatMsg() {
-        try {
-            byte[] buffer = ("{\"client_type\":\"checkpoint\", \"message\":\"STAT\", \"client_id\":\"" + myID
-                    + "\", \"timestamp\":\"2019-09-07T15:50+00Z\", \"status\":\"ON\"}").getBytes();
-            DatagramPacket sendPacket = new DatagramPacket(buffer, buffer.length, sendAddress, sendPort);
-            socket.send(sendPacket);
-            System.out.println(myID + " Sent Stat at: " + System.currentTimeMillis());
-        } catch (Exception e) {
-            System.out.println("Failed to send packet");
-        }
+        byte[] buffer = ("{\"client_type\":\"checkpoint\", \"message\":\"STAT\", \"client_id\":\"" + myID
+                + "\", \"timestamp\":\"2019-09-07T15:50+00Z\", \"status\":\"ON\"}").getBytes();
+        sendMsg(buffer);
     }
 
     // Sends a stat message
     public void sendTRIPMsg() {
+        byte[] buffer = ("{\"client_type\":\"checkpoint\", \"message\":\"TRIP\", \"client_id\":\"" + myID
+                + "\", \"timestamp\":\"2019-09-07T15:50+00Z\", \"status\":\"ERR\"}").getBytes();
+        sendMsg(buffer);
+    }
+
+    public void sendMsg(byte[] buffer) {
         try {
-            byte[] buffer = ("{\"client_type\":\"checkpoint\", \"message\":\"TRIP\", \"client_id\":\"" + myID
-                    + "\", \"timestamp\":\"2019-09-07T15:50+00Z\", \"status\":\"ERR\"}").getBytes();
             DatagramPacket sendPacket = new DatagramPacket(buffer, buffer.length, sendAddress, sendPort);
             socket.send(sendPacket);
-            System.out.println(myID + " Sent Trip at: " + System.currentTimeMillis());
+            System.out.println(myID + " Sent msg " + new String(buffer));
         } catch (Exception e) {
             System.out.println("Failed to send packet");
         }
+
     }
 
 }

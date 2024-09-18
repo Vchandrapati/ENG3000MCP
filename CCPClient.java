@@ -1,12 +1,6 @@
 
 import java.io.IOException;
 import java.net.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class CCPClient {
 
@@ -85,28 +79,28 @@ public class CCPClient {
 
     // Sends an initialise connection message
     public void sendInitialiseConnectionMsg() {
-        try {
-            byte[] buffer = ("{\"client_type\":\"ccp\", \"message\":\"CCIN\", \"client_id\":\"" + myID + "\", \"timestamp\":\"2019-09-07T15:50+00Z\"}")
-                    .getBytes();
-            DatagramPacket sendPacket = new DatagramPacket(buffer, buffer.length, sendAddress, sendPort);
-            socket.send(sendPacket);
-            System.out.println("Port: " + myPort + " Sent CCIN " + new String(buffer));
-        } catch (Exception e) {
-            System.out.println("Failed to send packet");
-        }
+        byte[] buffer = ("{\"client_type\":\"ccp\", \"message\":\"CCIN\", \"client_id\":\"" + myID
+                + "\", \"timestamp\":\"2019-09-07T15:50+00Z\"}")
+                .getBytes();
+        sendMsg(buffer);
     }
 
     // Sends a stat message
     public void sendStatMsg() {
+        byte[] buffer = ("{\"client_type\":\"ccp\", \"message\":\"STAT\", \"client_id\":\"" + myID
+                + "\", \"timestamp\":\"2019-09-07T15:50+00Z\", \"status\":\"ON\"}").getBytes();
+        sendMsg(buffer);
+    }
+
+    public void sendMsg(byte[] buffer) {
         try {
-            byte[] buffer = ("{\"client_type\":\"ccp\", \"message\":\"STAT\", \"client_id\":\"" + myID
-                    + "\", \"timestamp\":\"2019-09-07T15:50+00Z\", \"status\":\"ON\"}").getBytes();
             DatagramPacket sendPacket = new DatagramPacket(buffer, buffer.length, sendAddress, sendPort);
             socket.send(sendPacket);
-            System.out.println(myID + " Sent Stat " + new String(buffer) + " msg sent");
+            System.out.println(myID + " Sent msg " + new String(buffer));
         } catch (Exception e) {
             System.out.println("Failed to send packet");
         }
+
     }
 
 }

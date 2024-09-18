@@ -18,35 +18,36 @@ public class App {
 
         Integer port = 6666;
         InetAddress add = null;
-        Integer global = 0;
+        Integer CCPglobal = 0;
+        Integer Checkglobal = 0;
         try {
-                
-            add = InetAddress.getByName("10.20.30.193");
+
+            add = InetAddress.getByName("localhost");
             for (int i = 0; i < numCCPClinets; i++) {
                 // Starts every CCP off messageing to this adddress
                 String ID = "";
-                
-                if(i < 10){
+
+                if (i < 10) {
                     ID = "BR0" + (i + 1);
-                }else{
+                } else {
                     ID = "BR" + (i + 1);
                 }
 
-                CCPclients.add(new CCPClient(5001 + global, add, port, ID));
-                global++;
+                CCPclients.add(new CCPClient(5001 + CCPglobal, add, port, ID));
+                CCPglobal++;
             }
 
             for (int i = 0; i < numcheckClinets; i++) {
                 // Starts every client off messageing to this adddress
                 String ID = "";
-                
-                if(i < 10){
-                    ID = "CP0" + i + 1;
-                }else{
-                    ID = "CP" + i + 1;
+
+                if (i < 10) {
+                    ID = "CP0" + (i + 1);
+                } else {
+                    ID = "CP" + (i + 1);
                 }
-                Checkclients.add(new CheckpointClient(3001 + global, add, port, ID));
-                global++;
+                Checkclients.add(new CheckpointClient(3001 + Checkglobal, add, port, ID));
+                Checkglobal++;
             }
 
         } catch (Exception e) {
@@ -77,16 +78,30 @@ public class App {
 
             }
 
-            if(inputs.length == 1 && inputs[0].equals("ccp")){
+            if (inputs.length == 1 && inputs[0].equals("ccp")) {
                 String ID = "";
-                if(global < 10){
-                    ID = "BR0" + (global + 1);
-                }else{
-                    ID = "BR" + (global + 1);
+                if (CCPglobal < 10) {
+                    ID = "BR0" + (CCPglobal + 1);
+                } else {
+                    ID = "BR" + (CCPglobal + 1);
                 }
-                CCPclients.add(new CCPClient(5001 + global, add, port, ID));
+                CCPclients.add(new CCPClient(5001 + CCPglobal, add, port, ID));
                 CCPclients.get(CCPclients.size() - 1).sendInitialiseConnectionMsg();
-                global++;
+                CCPglobal++;
+                numCCPClinets++;
+            }
+
+            if (inputs.length == 1 && inputs[0].equals("cp")) {
+                String ID = "";
+                if (Checkglobal < 10) {
+                    ID = "CP0" + (Checkglobal + 1);
+                } else {
+                    ID = "CP" + (Checkglobal + 1);
+                }
+                Checkclients.add(new CheckpointClient(3001 + Checkglobal, add, port, ID));
+                Checkclients.get(Checkclients.size() - 1).sendInitialiseConnectionMsg(Checkclients.size() - 1);
+                Checkglobal++;
+                numcheckClinets++;
             }
 
             if (input.equals("q")) {
