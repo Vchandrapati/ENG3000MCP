@@ -1,0 +1,1904 @@
+Sept 18, 2024 10:03:42 PM org.example.SystemStateManager setState
+INFO: Changing to system state STARTUP
+Sept 18, 2024 10:03:42 PM org.example.Server <init>
+INFO: Server completed startup and listening on PORT: 6666
+Sept 18, 2024 10:03:52 PM org.example.Server sendMessageToClient
+INFO: Sent ACK to client: CP01
+Sept 18, 2024 10:03:52 PM org.example.MessageHandler handleInitialise
+INFO: Received CHIN message from Checkpoint and created new client: CP01
+Sept 18, 2024 10:03:52 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Initialising
+Sept 18, 2024 10:03:52 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP01
+Sept 18, 2024 10:03:52 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP01
+Sept 18, 2024 10:03:57 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP01
+Sept 18, 2024 10:03:57 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP01
+Sept 18, 2024 10:04:02 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP01
+Sept 18, 2024 10:04:02 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP01
+Sept 18, 2024 10:04:07 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP01
+Sept 18, 2024 10:04:07 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP01
+Sept 18, 2024 10:04:12 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP01
+Sept 18, 2024 10:04:12 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP01
+Sept 18, 2024 10:04:17 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP01
+Sept 18, 2024 10:04:17 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP01
+Sept 18, 2024 10:04:22 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP01
+Sept 18, 2024 10:04:22 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP01
+Sept 18, 2024 10:04:27 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP01
+Sept 18, 2024 10:04:27 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP01
+Sept 18, 2024 10:04:32 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP01
+Sept 18, 2024 10:04:32 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP01
+Sept 18, 2024 10:04:37 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP01
+Sept 18, 2024 10:04:37 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP01
+Sept 18, 2024 10:04:42 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP01
+Sept 18, 2024 10:04:42 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP01
+Sept 18, 2024 10:04:47 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP01
+Sept 18, 2024 10:04:47 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP01
+Sept 18, 2024 10:04:52 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP01
+Sept 18, 2024 10:04:52 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP01
+Sept 18, 2024 10:04:57 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP01
+Sept 18, 2024 10:04:57 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP01
+Sept 18, 2024 10:05:02 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP01
+Sept 18, 2024 10:05:02 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP01
+Sept 18, 2024 10:05:44 PM org.example.SystemStateManager setState
+INFO: Changing to system state STARTUP
+Sept 18, 2024 10:05:44 PM org.example.Server <init>
+INFO: Server completed startup and listening on PORT: 6666
+Sept 18, 2024 10:05:48 PM org.example.Server sendMessageToClient
+INFO: Sent ACK to client: CP01
+Sept 18, 2024 10:05:48 PM org.example.MessageHandler handleInitialise
+INFO: Received CHIN message from Checkpoint and created new client: CP01
+Sept 18, 2024 10:05:48 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Initialising
+Sept 18, 2024 10:05:49 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP01
+Sept 18, 2024 10:05:49 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP01
+Sept 18, 2024 10:05:54 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP01
+Sept 18, 2024 10:05:54 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP01
+Sept 18, 2024 10:05:59 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP01
+Sept 18, 2024 10:05:59 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP01
+Sept 18, 2024 10:06:04 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP01
+Sept 18, 2024 10:06:04 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP01
+Sept 18, 2024 10:06:09 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP01
+Sept 18, 2024 10:06:09 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP01
+Sept 18, 2024 10:06:14 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP01
+Sept 18, 2024 10:06:14 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP01
+Sept 18, 2024 10:06:19 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP01
+Sept 18, 2024 10:06:19 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP01
+Sept 18, 2024 10:06:24 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP01
+Sept 18, 2024 10:06:24 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP01
+Sept 18, 2024 10:06:29 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP01
+Sept 18, 2024 10:06:29 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP01
+Sept 18, 2024 10:06:34 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP01
+Sept 18, 2024 10:06:34 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP01
+Sept 18, 2024 10:07:47 PM org.example.SystemStateManager setState
+INFO: Changing to system state STARTUP
+Sept 18, 2024 10:07:47 PM org.example.Server <init>
+INFO: Server completed startup and listening on PORT: 6666
+Sept 18, 2024 10:07:56 PM org.example.TrainClient registerClient
+INFO: Added new train to database: 1
+Sept 18, 2024 10:07:56 PM org.example.Server sendMessageToClient
+INFO: Sent ACK to client: BR01
+Sept 18, 2024 10:07:56 PM org.example.MessageHandler handleInitialise
+INFO: Received CCIN message from CCP and created new client: BR01
+Sept 18, 2024 10:07:56 PM org.example.MessageHandler handleCCPMessage
+INFO: Initialising
+Sept 18, 2024 10:07:56 PM org.example.TrainClient registerClient
+INFO: Added new train to database: 2
+Sept 18, 2024 10:07:56 PM org.example.Server sendMessageToClient
+INFO: Sent ACK to client: BR02
+Sept 18, 2024 10:07:56 PM org.example.MessageHandler handleInitialise
+INFO: Received CCIN message from CCP and created new client: BR02
+Sept 18, 2024 10:07:56 PM org.example.MessageHandler handleCCPMessage
+INFO: Initialising
+Sept 18, 2024 10:07:56 PM org.example.TrainClient registerClient
+INFO: Added new train to database: 3
+Sept 18, 2024 10:07:56 PM org.example.Server sendMessageToClient
+INFO: Sent ACK to client: BR03
+Sept 18, 2024 10:07:56 PM org.example.MessageHandler handleInitialise
+INFO: Received CCIN message from CCP and created new client: BR03
+Sept 18, 2024 10:07:56 PM org.example.MessageHandler handleCCPMessage
+INFO: Initialising
+Sept 18, 2024 10:07:56 PM org.example.TrainClient registerClient
+INFO: Added new train to database: 4
+Sept 18, 2024 10:07:56 PM org.example.Server sendMessageToClient
+INFO: Sent ACK to client: BR04
+Sept 18, 2024 10:07:56 PM org.example.MessageHandler handleInitialise
+INFO: Received CCIN message from CCP and created new client: BR04
+Sept 18, 2024 10:07:56 PM org.example.MessageHandler handleCCPMessage
+INFO: Initialising
+Sept 18, 2024 10:07:56 PM org.example.TrainClient registerClient
+INFO: Added new train to database: 5
+Sept 18, 2024 10:07:56 PM org.example.Server sendMessageToClient
+INFO: Sent ACK to client: BR05
+Sept 18, 2024 10:07:56 PM org.example.MessageHandler handleInitialise
+INFO: Received CCIN message from CCP and created new client: BR05
+Sept 18, 2024 10:07:56 PM org.example.MessageHandler handleCCPMessage
+INFO: Initialising
+Sept 18, 2024 10:07:56 PM org.example.Server sendMessageToClient
+INFO: Sent ACK to client: CP01
+Sept 18, 2024 10:07:56 PM org.example.MessageHandler handleInitialise
+INFO: Received CHIN message from Checkpoint and created new client: CP01
+Sept 18, 2024 10:07:56 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Initialising
+Sept 18, 2024 10:07:56 PM org.example.Server sendMessageToClient
+INFO: Sent ACK to client: CP02
+Sept 18, 2024 10:07:56 PM org.example.MessageHandler handleInitialise
+INFO: Received CHIN message from Checkpoint and created new client: CP02
+Sept 18, 2024 10:07:56 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Initialising
+Sept 18, 2024 10:07:56 PM org.example.Server sendMessageToClient
+INFO: Sent ACK to client: CP03
+Sept 18, 2024 10:07:56 PM org.example.MessageHandler handleInitialise
+INFO: Received CHIN message from Checkpoint and created new client: CP03
+Sept 18, 2024 10:07:56 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Initialising
+Sept 18, 2024 10:07:56 PM org.example.Server sendMessageToClient
+INFO: Sent ACK to client: CP04
+Sept 18, 2024 10:07:56 PM org.example.MessageHandler handleInitialise
+INFO: Received CHIN message from Checkpoint and created new client: CP04
+Sept 18, 2024 10:07:56 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Initialising
+Sept 18, 2024 10:07:56 PM org.example.Server sendMessageToClient
+INFO: Sent ACK to client: CP05
+Sept 18, 2024 10:07:56 PM org.example.MessageHandler handleInitialise
+INFO: Received CHIN message from Checkpoint and created new client: CP05
+Sept 18, 2024 10:07:56 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Initialising
+Sept 18, 2024 10:07:56 PM org.example.Server sendMessageToClient
+INFO: Sent ACK to client: CP06
+Sept 18, 2024 10:07:56 PM org.example.MessageHandler handleInitialise
+INFO: Received CHIN message from Checkpoint and created new client: CP06
+Sept 18, 2024 10:07:56 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Initialising
+Sept 18, 2024 10:07:56 PM org.example.Server sendMessageToClient
+INFO: Sent ACK to client: CP07
+Sept 18, 2024 10:07:56 PM org.example.MessageHandler handleInitialise
+INFO: Received CHIN message from Checkpoint and created new client: CP07
+Sept 18, 2024 10:07:56 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Initialising
+Sept 18, 2024 10:07:56 PM org.example.Server sendMessageToClient
+INFO: Sent ACK to client: CP08
+Sept 18, 2024 10:07:56 PM org.example.MessageHandler handleInitialise
+INFO: Received CHIN message from Checkpoint and created new client: CP08
+Sept 18, 2024 10:07:56 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Initialising
+Sept 18, 2024 10:07:56 PM org.example.Server sendMessageToClient
+INFO: Sent ACK to client: CP09
+Sept 18, 2024 10:07:56 PM org.example.MessageHandler handleInitialise
+INFO: Received CHIN message from Checkpoint and created new client: CP09
+Sept 18, 2024 10:07:56 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Initialising
+Sept 18, 2024 10:07:56 PM org.example.Server sendMessageToClient
+INFO: Sent ACK to client: CP010
+Sept 18, 2024 10:07:56 PM org.example.MessageHandler handleInitialise
+INFO: Received CHIN message from Checkpoint and created new client: CP010
+Sept 18, 2024 10:07:56 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Initialising
+Sept 18, 2024 10:07:57 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP09
+Sept 18, 2024 10:07:57 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP09
+Sept 18, 2024 10:07:57 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR05
+Sept 18, 2024 10:07:57 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP08
+Sept 18, 2024 10:07:57 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR04
+Sept 18, 2024 10:07:57 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR05
+Sept 18, 2024 10:07:57 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP07
+Sept 18, 2024 10:07:57 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP08
+Sept 18, 2024 10:07:57 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR03
+Sept 18, 2024 10:07:57 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR04
+Sept 18, 2024 10:07:57 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP06
+Sept 18, 2024 10:07:57 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP07
+Sept 18, 2024 10:07:57 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR02
+Sept 18, 2024 10:07:57 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR03
+Sept 18, 2024 10:07:57 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP05
+Sept 18, 2024 10:07:57 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP06
+Sept 18, 2024 10:07:57 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR01
+Sept 18, 2024 10:07:57 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR02
+Sept 18, 2024 10:07:57 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP04
+Sept 18, 2024 10:07:57 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP05
+Sept 18, 2024 10:07:57 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP03
+Sept 18, 2024 10:07:57 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR01
+Sept 18, 2024 10:07:57 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP02
+Sept 18, 2024 10:07:57 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP04
+Sept 18, 2024 10:07:57 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP01
+Sept 18, 2024 10:07:57 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP03
+Sept 18, 2024 10:07:57 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP010
+Sept 18, 2024 10:07:57 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP02
+Sept 18, 2024 10:07:57 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP01
+Sept 18, 2024 10:07:57 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP010
+Sept 18, 2024 10:08:02 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP09
+Sept 18, 2024 10:08:02 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP09
+Sept 18, 2024 10:08:02 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR05
+Sept 18, 2024 10:08:02 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR05
+Sept 18, 2024 10:08:02 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP08
+Sept 18, 2024 10:08:02 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP08
+Sept 18, 2024 10:08:02 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR04
+Sept 18, 2024 10:08:02 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR04
+Sept 18, 2024 10:08:02 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP07
+Sept 18, 2024 10:08:02 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP07
+Sept 18, 2024 10:08:02 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR03
+Sept 18, 2024 10:08:02 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR03
+Sept 18, 2024 10:08:02 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP06
+Sept 18, 2024 10:08:02 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP06
+Sept 18, 2024 10:08:02 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR02
+Sept 18, 2024 10:08:02 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR02
+Sept 18, 2024 10:08:02 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP05
+Sept 18, 2024 10:08:02 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP05
+Sept 18, 2024 10:08:02 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR01
+Sept 18, 2024 10:08:02 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR01
+Sept 18, 2024 10:08:02 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP04
+Sept 18, 2024 10:08:02 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP04
+Sept 18, 2024 10:08:02 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP03
+Sept 18, 2024 10:08:02 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP03
+Sept 18, 2024 10:08:02 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP02
+Sept 18, 2024 10:08:02 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP02
+Sept 18, 2024 10:08:02 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP01
+Sept 18, 2024 10:08:02 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP01
+Sept 18, 2024 10:08:02 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP010
+Sept 18, 2024 10:08:02 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP010
+Sept 18, 2024 10:08:07 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP09
+Sept 18, 2024 10:08:07 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP09
+Sept 18, 2024 10:08:07 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR05
+Sept 18, 2024 10:08:07 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR05
+Sept 18, 2024 10:08:07 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP08
+Sept 18, 2024 10:08:07 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP08
+Sept 18, 2024 10:08:07 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR04
+Sept 18, 2024 10:08:07 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR04
+Sept 18, 2024 10:08:07 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP07
+Sept 18, 2024 10:08:07 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP07
+Sept 18, 2024 10:08:07 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR03
+Sept 18, 2024 10:08:07 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR03
+Sept 18, 2024 10:08:07 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP06
+Sept 18, 2024 10:08:07 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP06
+Sept 18, 2024 10:08:07 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR02
+Sept 18, 2024 10:08:07 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR02
+Sept 18, 2024 10:08:07 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP05
+Sept 18, 2024 10:08:07 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP05
+Sept 18, 2024 10:08:07 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR01
+Sept 18, 2024 10:08:07 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR01
+Sept 18, 2024 10:08:07 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP04
+Sept 18, 2024 10:08:07 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP04
+Sept 18, 2024 10:08:07 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP03
+Sept 18, 2024 10:08:07 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP03
+Sept 18, 2024 10:08:07 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP02
+Sept 18, 2024 10:08:07 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP02
+Sept 18, 2024 10:08:07 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP01
+Sept 18, 2024 10:08:07 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP01
+Sept 18, 2024 10:08:07 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP010
+Sept 18, 2024 10:08:07 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP010
+Sept 18, 2024 10:08:12 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP09
+Sept 18, 2024 10:08:12 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP09
+Sept 18, 2024 10:08:12 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR05
+Sept 18, 2024 10:08:12 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR05
+Sept 18, 2024 10:08:12 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP08
+Sept 18, 2024 10:08:12 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP08
+Sept 18, 2024 10:08:12 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR04
+Sept 18, 2024 10:08:12 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR04
+Sept 18, 2024 10:08:12 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP07
+Sept 18, 2024 10:08:12 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP07
+Sept 18, 2024 10:08:12 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR03
+Sept 18, 2024 10:08:12 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR03
+Sept 18, 2024 10:08:12 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP06
+Sept 18, 2024 10:08:12 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP06
+Sept 18, 2024 10:08:12 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR02
+Sept 18, 2024 10:08:12 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR02
+Sept 18, 2024 10:08:12 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP05
+Sept 18, 2024 10:08:12 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP05
+Sept 18, 2024 10:08:12 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR01
+Sept 18, 2024 10:08:12 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR01
+Sept 18, 2024 10:08:12 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP04
+Sept 18, 2024 10:08:12 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP04
+Sept 18, 2024 10:08:12 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP03
+Sept 18, 2024 10:08:12 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP03
+Sept 18, 2024 10:08:12 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP02
+Sept 18, 2024 10:08:12 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP02
+Sept 18, 2024 10:08:12 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP01
+Sept 18, 2024 10:08:12 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP01
+Sept 18, 2024 10:08:12 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP010
+Sept 18, 2024 10:08:12 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP010
+Sept 18, 2024 10:08:17 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP09
+Sept 18, 2024 10:08:17 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP09
+Sept 18, 2024 10:08:17 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR05
+Sept 18, 2024 10:08:17 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR05
+Sept 18, 2024 10:08:17 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP08
+Sept 18, 2024 10:08:17 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP08
+Sept 18, 2024 10:08:17 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR04
+Sept 18, 2024 10:08:17 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR04
+Sept 18, 2024 10:08:17 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP07
+Sept 18, 2024 10:08:17 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP07
+Sept 18, 2024 10:08:17 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR03
+Sept 18, 2024 10:08:17 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR03
+Sept 18, 2024 10:08:17 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP06
+Sept 18, 2024 10:08:17 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP06
+Sept 18, 2024 10:08:17 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR02
+Sept 18, 2024 10:08:17 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR02
+Sept 18, 2024 10:08:17 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP05
+Sept 18, 2024 10:08:17 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP05
+Sept 18, 2024 10:08:17 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR01
+Sept 18, 2024 10:08:17 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR01
+Sept 18, 2024 10:08:17 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP04
+Sept 18, 2024 10:08:17 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP04
+Sept 18, 2024 10:08:17 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP03
+Sept 18, 2024 10:08:17 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP03
+Sept 18, 2024 10:08:17 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP02
+Sept 18, 2024 10:08:17 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP02
+Sept 18, 2024 10:08:17 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP01
+Sept 18, 2024 10:08:17 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP01
+Sept 18, 2024 10:08:17 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP010
+Sept 18, 2024 10:08:17 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP010
+Sept 18, 2024 10:08:22 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP09
+Sept 18, 2024 10:08:22 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR05
+Sept 18, 2024 10:08:22 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP09
+Sept 18, 2024 10:08:22 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP08
+Sept 18, 2024 10:08:22 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR05
+Sept 18, 2024 10:08:22 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR04
+Sept 18, 2024 10:08:22 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP08
+Sept 18, 2024 10:08:22 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP07
+Sept 18, 2024 10:08:22 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR04
+Sept 18, 2024 10:08:22 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR03
+Sept 18, 2024 10:08:22 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP07
+Sept 18, 2024 10:08:22 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP06
+Sept 18, 2024 10:08:22 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR03
+Sept 18, 2024 10:08:22 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR02
+Sept 18, 2024 10:08:22 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP06
+Sept 18, 2024 10:08:22 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP05
+Sept 18, 2024 10:08:22 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR02
+Sept 18, 2024 10:08:22 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR01
+Sept 18, 2024 10:08:22 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP05
+Sept 18, 2024 10:08:22 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP04
+Sept 18, 2024 10:08:22 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR01
+Sept 18, 2024 10:08:22 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP03
+Sept 18, 2024 10:08:22 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP04
+Sept 18, 2024 10:08:22 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP02
+Sept 18, 2024 10:08:22 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP03
+Sept 18, 2024 10:08:22 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP01
+Sept 18, 2024 10:08:22 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP02
+Sept 18, 2024 10:08:22 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP010
+Sept 18, 2024 10:08:22 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP01
+Sept 18, 2024 10:08:22 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP010
+Sept 18, 2024 10:08:27 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP09
+Sept 18, 2024 10:08:27 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR05
+Sept 18, 2024 10:08:27 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP09
+Sept 18, 2024 10:08:27 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP08
+Sept 18, 2024 10:08:27 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR05
+Sept 18, 2024 10:08:27 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR04
+Sept 18, 2024 10:08:27 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP08
+Sept 18, 2024 10:08:27 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP07
+Sept 18, 2024 10:08:27 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR04
+Sept 18, 2024 10:08:27 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR03
+Sept 18, 2024 10:08:27 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP07
+Sept 18, 2024 10:08:27 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP06
+Sept 18, 2024 10:08:27 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR03
+Sept 18, 2024 10:08:27 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR02
+Sept 18, 2024 10:08:27 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP06
+Sept 18, 2024 10:08:27 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP05
+Sept 18, 2024 10:08:27 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR02
+Sept 18, 2024 10:08:27 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR01
+Sept 18, 2024 10:08:27 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP05
+Sept 18, 2024 10:08:27 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP04
+Sept 18, 2024 10:08:27 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR01
+Sept 18, 2024 10:08:27 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP03
+Sept 18, 2024 10:08:27 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP04
+Sept 18, 2024 10:08:27 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP02
+Sept 18, 2024 10:08:27 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP03
+Sept 18, 2024 10:08:27 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP01
+Sept 18, 2024 10:08:27 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP02
+Sept 18, 2024 10:08:27 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP010
+Sept 18, 2024 10:08:27 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP01
+Sept 18, 2024 10:08:27 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP010
+Sept 18, 2024 10:08:32 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP09
+Sept 18, 2024 10:08:32 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP09
+Sept 18, 2024 10:08:32 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR05
+Sept 18, 2024 10:08:32 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR05
+Sept 18, 2024 10:08:32 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP08
+Sept 18, 2024 10:08:32 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR04
+Sept 18, 2024 10:08:32 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP08
+Sept 18, 2024 10:08:32 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP07
+Sept 18, 2024 10:08:32 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR04
+Sept 18, 2024 10:08:32 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR03
+Sept 18, 2024 10:08:32 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP07
+Sept 18, 2024 10:08:32 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP06
+Sept 18, 2024 10:08:32 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR03
+Sept 18, 2024 10:08:32 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP06
+Sept 18, 2024 10:08:32 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR02
+Sept 18, 2024 10:08:32 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP05
+Sept 18, 2024 10:08:32 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR01
+Sept 18, 2024 10:08:32 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR02
+Sept 18, 2024 10:08:32 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP04
+Sept 18, 2024 10:08:32 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP05
+Sept 18, 2024 10:08:32 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP03
+Sept 18, 2024 10:08:32 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR01
+Sept 18, 2024 10:08:32 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP02
+Sept 18, 2024 10:08:32 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP04
+Sept 18, 2024 10:08:32 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP01
+Sept 18, 2024 10:08:32 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP03
+Sept 18, 2024 10:08:32 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP010
+Sept 18, 2024 10:08:32 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP02
+Sept 18, 2024 10:08:32 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP01
+Sept 18, 2024 10:08:32 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP010
+Sept 18, 2024 10:08:37 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP09
+Sept 18, 2024 10:08:37 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR05
+Sept 18, 2024 10:08:37 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP09
+Sept 18, 2024 10:08:37 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP08
+Sept 18, 2024 10:08:37 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR05
+Sept 18, 2024 10:08:37 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR04
+Sept 18, 2024 10:08:37 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP08
+Sept 18, 2024 10:08:37 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP07
+Sept 18, 2024 10:08:37 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR04
+Sept 18, 2024 10:08:37 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR03
+Sept 18, 2024 10:08:37 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP07
+Sept 18, 2024 10:08:37 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP06
+Sept 18, 2024 10:08:37 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR03
+Sept 18, 2024 10:08:37 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR02
+Sept 18, 2024 10:08:37 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP06
+Sept 18, 2024 10:08:37 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP05
+Sept 18, 2024 10:08:37 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR01
+Sept 18, 2024 10:08:37 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR02
+Sept 18, 2024 10:08:37 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP04
+Sept 18, 2024 10:08:37 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP05
+Sept 18, 2024 10:08:37 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP03
+Sept 18, 2024 10:08:37 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR01
+Sept 18, 2024 10:08:37 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP02
+Sept 18, 2024 10:08:37 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP04
+Sept 18, 2024 10:08:37 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP01
+Sept 18, 2024 10:08:37 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP03
+Sept 18, 2024 10:08:37 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP010
+Sept 18, 2024 10:08:37 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP02
+Sept 18, 2024 10:08:37 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP01
+Sept 18, 2024 10:08:37 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP010
+Sept 18, 2024 10:08:42 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP09
+Sept 18, 2024 10:08:42 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR05
+Sept 18, 2024 10:08:42 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP09
+Sept 18, 2024 10:08:42 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP08
+Sept 18, 2024 10:08:42 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR05
+Sept 18, 2024 10:08:42 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR04
+Sept 18, 2024 10:08:42 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP08
+Sept 18, 2024 10:08:42 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP07
+Sept 18, 2024 10:08:42 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR04
+Sept 18, 2024 10:08:42 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR03
+Sept 18, 2024 10:08:42 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP07
+Sept 18, 2024 10:08:42 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP06
+Sept 18, 2024 10:08:42 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR03
+Sept 18, 2024 10:08:42 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR02
+Sept 18, 2024 10:08:42 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP06
+Sept 18, 2024 10:08:42 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP05
+Sept 18, 2024 10:08:42 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR02
+Sept 18, 2024 10:08:42 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR01
+Sept 18, 2024 10:08:42 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP05
+Sept 18, 2024 10:08:42 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP04
+Sept 18, 2024 10:08:42 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR01
+Sept 18, 2024 10:08:42 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP03
+Sept 18, 2024 10:08:42 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP04
+Sept 18, 2024 10:08:42 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP02
+Sept 18, 2024 10:08:42 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP03
+Sept 18, 2024 10:08:42 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP01
+Sept 18, 2024 10:08:42 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP02
+Sept 18, 2024 10:08:42 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP010
+Sept 18, 2024 10:08:42 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP01
+Sept 18, 2024 10:08:42 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP010
+Sept 18, 2024 10:08:47 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP09
+Sept 18, 2024 10:08:47 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR05
+Sept 18, 2024 10:08:47 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP09
+Sept 18, 2024 10:08:47 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP08
+Sept 18, 2024 10:08:47 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR05
+Sept 18, 2024 10:08:47 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR04
+Sept 18, 2024 10:08:47 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP08
+Sept 18, 2024 10:08:47 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP07
+Sept 18, 2024 10:08:47 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR04
+Sept 18, 2024 10:08:47 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR03
+Sept 18, 2024 10:08:47 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP07
+Sept 18, 2024 10:08:47 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP06
+Sept 18, 2024 10:08:47 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR03
+Sept 18, 2024 10:08:47 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR02
+Sept 18, 2024 10:08:47 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP06
+Sept 18, 2024 10:08:47 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP05
+Sept 18, 2024 10:08:47 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR02
+Sept 18, 2024 10:08:47 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR01
+Sept 18, 2024 10:08:47 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP05
+Sept 18, 2024 10:08:47 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP04
+Sept 18, 2024 10:08:47 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR01
+Sept 18, 2024 10:08:47 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP03
+Sept 18, 2024 10:08:47 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP04
+Sept 18, 2024 10:08:47 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP02
+Sept 18, 2024 10:08:47 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP03
+Sept 18, 2024 10:08:47 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP01
+Sept 18, 2024 10:08:47 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP02
+Sept 18, 2024 10:08:47 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP010
+Sept 18, 2024 10:08:47 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP01
+Sept 18, 2024 10:08:47 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP010
+Sept 18, 2024 10:08:52 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP09
+Sept 18, 2024 10:08:52 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR05
+Sept 18, 2024 10:08:52 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP09
+Sept 18, 2024 10:08:52 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR05
+Sept 18, 2024 10:08:52 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP08
+Sept 18, 2024 10:08:52 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP08
+Sept 18, 2024 10:08:52 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR04
+Sept 18, 2024 10:08:52 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR04
+Sept 18, 2024 10:08:52 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP07
+Sept 18, 2024 10:08:52 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP07
+Sept 18, 2024 10:08:52 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR03
+Sept 18, 2024 10:08:52 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR03
+Sept 18, 2024 10:08:52 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP06
+Sept 18, 2024 10:08:52 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP06
+Sept 18, 2024 10:08:52 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR02
+Sept 18, 2024 10:08:52 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP05
+Sept 18, 2024 10:08:52 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR02
+Sept 18, 2024 10:08:52 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR01
+Sept 18, 2024 10:08:52 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP05
+Sept 18, 2024 10:08:52 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP04
+Sept 18, 2024 10:08:52 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR01
+Sept 18, 2024 10:08:52 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP03
+Sept 18, 2024 10:08:52 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP04
+Sept 18, 2024 10:08:52 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP02
+Sept 18, 2024 10:08:52 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP03
+Sept 18, 2024 10:08:52 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP02
+Sept 18, 2024 10:08:52 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP01
+Sept 18, 2024 10:08:52 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP01
+Sept 18, 2024 10:08:52 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP010
+Sept 18, 2024 10:08:52 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP010
+Sept 18, 2024 10:08:57 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP09
+Sept 18, 2024 10:08:57 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR05
+Sept 18, 2024 10:08:57 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP09
+Sept 18, 2024 10:08:57 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP08
+Sept 18, 2024 10:08:57 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR05
+Sept 18, 2024 10:08:57 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR04
+Sept 18, 2024 10:08:57 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP08
+Sept 18, 2024 10:08:57 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP07
+Sept 18, 2024 10:08:57 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR04
+Sept 18, 2024 10:08:57 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR03
+Sept 18, 2024 10:08:57 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP07
+Sept 18, 2024 10:08:57 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP06
+Sept 18, 2024 10:08:57 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR03
+Sept 18, 2024 10:08:57 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR02
+Sept 18, 2024 10:08:57 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP06
+Sept 18, 2024 10:08:57 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP05
+Sept 18, 2024 10:08:57 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR02
+Sept 18, 2024 10:08:57 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR01
+Sept 18, 2024 10:08:57 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP05
+Sept 18, 2024 10:08:57 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP04
+Sept 18, 2024 10:08:57 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR01
+Sept 18, 2024 10:08:57 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP03
+Sept 18, 2024 10:08:57 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP04
+Sept 18, 2024 10:08:57 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP02
+Sept 18, 2024 10:08:57 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP03
+Sept 18, 2024 10:08:57 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP01
+Sept 18, 2024 10:08:57 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP02
+Sept 18, 2024 10:08:57 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP010
+Sept 18, 2024 10:08:57 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP01
+Sept 18, 2024 10:08:57 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP010
+Sept 18, 2024 10:09:02 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP09
+Sept 18, 2024 10:09:02 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR05
+Sept 18, 2024 10:09:02 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP09
+Sept 18, 2024 10:09:02 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP08
+Sept 18, 2024 10:09:02 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR05
+Sept 18, 2024 10:09:02 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR04
+Sept 18, 2024 10:09:02 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP08
+Sept 18, 2024 10:09:02 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP07
+Sept 18, 2024 10:09:02 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR04
+Sept 18, 2024 10:09:02 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR03
+Sept 18, 2024 10:09:02 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP07
+Sept 18, 2024 10:09:02 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP06
+Sept 18, 2024 10:09:02 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR03
+Sept 18, 2024 10:09:02 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR02
+Sept 18, 2024 10:09:02 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP06
+Sept 18, 2024 10:09:02 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP05
+Sept 18, 2024 10:09:02 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR02
+Sept 18, 2024 10:09:02 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR01
+Sept 18, 2024 10:09:02 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP05
+Sept 18, 2024 10:09:02 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP04
+Sept 18, 2024 10:09:02 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR01
+Sept 18, 2024 10:09:02 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP03
+Sept 18, 2024 10:09:02 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP04
+Sept 18, 2024 10:09:02 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP02
+Sept 18, 2024 10:09:02 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP03
+Sept 18, 2024 10:09:02 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP01
+Sept 18, 2024 10:09:02 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP02
+Sept 18, 2024 10:09:02 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP010
+Sept 18, 2024 10:09:02 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP01
+Sept 18, 2024 10:09:02 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP010
+Sept 18, 2024 10:09:07 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP09
+Sept 18, 2024 10:09:07 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR05
+Sept 18, 2024 10:09:07 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP09
+Sept 18, 2024 10:09:07 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP08
+Sept 18, 2024 10:09:07 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR05
+Sept 18, 2024 10:09:07 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR04
+Sept 18, 2024 10:09:07 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP08
+Sept 18, 2024 10:09:07 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP07
+Sept 18, 2024 10:09:07 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR04
+Sept 18, 2024 10:09:07 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR03
+Sept 18, 2024 10:09:07 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP07
+Sept 18, 2024 10:09:07 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP06
+Sept 18, 2024 10:09:07 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR03
+Sept 18, 2024 10:09:07 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR02
+Sept 18, 2024 10:09:07 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP06
+Sept 18, 2024 10:09:07 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP05
+Sept 18, 2024 10:09:07 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR02
+Sept 18, 2024 10:09:07 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR01
+Sept 18, 2024 10:09:07 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP05
+Sept 18, 2024 10:09:07 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP04
+Sept 18, 2024 10:09:07 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR01
+Sept 18, 2024 10:09:07 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP03
+Sept 18, 2024 10:09:07 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP04
+Sept 18, 2024 10:09:07 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP02
+Sept 18, 2024 10:09:07 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP03
+Sept 18, 2024 10:09:07 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP01
+Sept 18, 2024 10:09:07 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP02
+Sept 18, 2024 10:09:07 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP010
+Sept 18, 2024 10:09:07 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP01
+Sept 18, 2024 10:09:07 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP010
+Sept 18, 2024 10:09:12 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP09
+Sept 18, 2024 10:09:12 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR05
+Sept 18, 2024 10:09:12 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP09
+Sept 18, 2024 10:09:12 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP08
+Sept 18, 2024 10:09:12 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR05
+Sept 18, 2024 10:09:12 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR04
+Sept 18, 2024 10:09:12 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP08
+Sept 18, 2024 10:09:12 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP07
+Sept 18, 2024 10:09:12 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR04
+Sept 18, 2024 10:09:12 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR03
+Sept 18, 2024 10:09:12 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP07
+Sept 18, 2024 10:09:12 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP06
+Sept 18, 2024 10:09:12 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR03
+Sept 18, 2024 10:09:12 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR02
+Sept 18, 2024 10:09:12 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP06
+Sept 18, 2024 10:09:12 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP05
+Sept 18, 2024 10:09:12 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR02
+Sept 18, 2024 10:09:12 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR01
+Sept 18, 2024 10:09:12 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP05
+Sept 18, 2024 10:09:12 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP04
+Sept 18, 2024 10:09:12 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR01
+Sept 18, 2024 10:09:12 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP03
+Sept 18, 2024 10:09:12 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP04
+Sept 18, 2024 10:09:12 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP02
+Sept 18, 2024 10:09:12 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP03
+Sept 18, 2024 10:09:12 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP01
+Sept 18, 2024 10:09:12 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP02
+Sept 18, 2024 10:09:12 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP010
+Sept 18, 2024 10:09:12 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP01
+Sept 18, 2024 10:09:12 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP010
+Sept 18, 2024 10:09:17 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP09
+Sept 18, 2024 10:09:17 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR05
+Sept 18, 2024 10:09:17 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP09
+Sept 18, 2024 10:09:17 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP08
+Sept 18, 2024 10:09:17 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR05
+Sept 18, 2024 10:09:17 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR04
+Sept 18, 2024 10:09:17 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP08
+Sept 18, 2024 10:09:17 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP07
+Sept 18, 2024 10:09:17 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR04
+Sept 18, 2024 10:09:17 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR03
+Sept 18, 2024 10:09:17 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP07
+Sept 18, 2024 10:09:17 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP06
+Sept 18, 2024 10:09:17 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR03
+Sept 18, 2024 10:09:17 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR02
+Sept 18, 2024 10:09:17 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP06
+Sept 18, 2024 10:09:17 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP05
+Sept 18, 2024 10:09:17 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR02
+Sept 18, 2024 10:09:17 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR01
+Sept 18, 2024 10:09:17 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP05
+Sept 18, 2024 10:09:17 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP04
+Sept 18, 2024 10:09:17 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR01
+Sept 18, 2024 10:09:17 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP03
+Sept 18, 2024 10:09:17 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP04
+Sept 18, 2024 10:09:17 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP02
+Sept 18, 2024 10:09:17 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP03
+Sept 18, 2024 10:09:17 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP01
+Sept 18, 2024 10:09:17 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP02
+Sept 18, 2024 10:09:17 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP010
+Sept 18, 2024 10:09:17 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP01
+Sept 18, 2024 10:09:17 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP010
+Sept 18, 2024 10:09:22 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP09
+Sept 18, 2024 10:09:22 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR05
+Sept 18, 2024 10:09:22 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP09
+Sept 18, 2024 10:09:22 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP08
+Sept 18, 2024 10:09:22 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR05
+Sept 18, 2024 10:09:22 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR04
+Sept 18, 2024 10:09:22 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP08
+Sept 18, 2024 10:09:22 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP07
+Sept 18, 2024 10:09:22 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR04
+Sept 18, 2024 10:09:22 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR03
+Sept 18, 2024 10:09:22 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP07
+Sept 18, 2024 10:09:22 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP06
+Sept 18, 2024 10:09:22 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR03
+Sept 18, 2024 10:09:22 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR02
+Sept 18, 2024 10:09:22 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP06
+Sept 18, 2024 10:09:22 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP05
+Sept 18, 2024 10:09:22 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR02
+Sept 18, 2024 10:09:22 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR01
+Sept 18, 2024 10:09:22 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP05
+Sept 18, 2024 10:09:22 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP04
+Sept 18, 2024 10:09:22 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR01
+Sept 18, 2024 10:09:22 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP03
+Sept 18, 2024 10:09:22 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP04
+Sept 18, 2024 10:09:22 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP02
+Sept 18, 2024 10:09:22 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP03
+Sept 18, 2024 10:09:22 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP01
+Sept 18, 2024 10:09:22 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP02
+Sept 18, 2024 10:09:22 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP010
+Sept 18, 2024 10:09:22 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP01
+Sept 18, 2024 10:09:22 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP010
+Sept 18, 2024 10:09:27 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP09
+Sept 18, 2024 10:09:27 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR05
+Sept 18, 2024 10:09:27 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP09
+Sept 18, 2024 10:09:27 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP08
+Sept 18, 2024 10:09:27 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR05
+Sept 18, 2024 10:09:27 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR04
+Sept 18, 2024 10:09:27 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP08
+Sept 18, 2024 10:09:27 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP07
+Sept 18, 2024 10:09:27 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR04
+Sept 18, 2024 10:09:27 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR03
+Sept 18, 2024 10:09:27 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP07
+Sept 18, 2024 10:09:27 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP06
+Sept 18, 2024 10:09:27 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR03
+Sept 18, 2024 10:09:27 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR02
+Sept 18, 2024 10:09:27 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP06
+Sept 18, 2024 10:09:27 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP05
+Sept 18, 2024 10:09:27 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR02
+Sept 18, 2024 10:09:27 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR01
+Sept 18, 2024 10:09:27 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP05
+Sept 18, 2024 10:09:27 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP04
+Sept 18, 2024 10:09:27 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR01
+Sept 18, 2024 10:09:27 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP03
+Sept 18, 2024 10:09:27 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP04
+Sept 18, 2024 10:09:27 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP02
+Sept 18, 2024 10:09:27 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP03
+Sept 18, 2024 10:09:27 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP01
+Sept 18, 2024 10:09:27 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP02
+Sept 18, 2024 10:09:27 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP010
+Sept 18, 2024 10:09:27 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP01
+Sept 18, 2024 10:09:27 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP010
+Sept 18, 2024 10:09:32 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP09
+Sept 18, 2024 10:09:32 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR05
+Sept 18, 2024 10:09:32 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP09
+Sept 18, 2024 10:09:32 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP08
+Sept 18, 2024 10:09:32 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR05
+Sept 18, 2024 10:09:32 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR04
+Sept 18, 2024 10:09:32 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP08
+Sept 18, 2024 10:09:32 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP07
+Sept 18, 2024 10:09:32 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR04
+Sept 18, 2024 10:09:32 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR03
+Sept 18, 2024 10:09:32 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP07
+Sept 18, 2024 10:09:32 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP06
+Sept 18, 2024 10:09:32 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR03
+Sept 18, 2024 10:09:32 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR02
+Sept 18, 2024 10:09:32 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP06
+Sept 18, 2024 10:09:32 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP05
+Sept 18, 2024 10:09:32 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR02
+Sept 18, 2024 10:09:32 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR01
+Sept 18, 2024 10:09:32 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP05
+Sept 18, 2024 10:09:32 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP04
+Sept 18, 2024 10:09:32 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR01
+Sept 18, 2024 10:09:32 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP03
+Sept 18, 2024 10:09:32 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP04
+Sept 18, 2024 10:09:32 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP02
+Sept 18, 2024 10:09:32 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP03
+Sept 18, 2024 10:09:32 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP01
+Sept 18, 2024 10:09:32 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP02
+Sept 18, 2024 10:09:32 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP010
+Sept 18, 2024 10:09:32 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP01
+Sept 18, 2024 10:09:32 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP010
+Sept 18, 2024 10:09:37 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP09
+Sept 18, 2024 10:09:37 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP09
+Sept 18, 2024 10:09:37 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR05
+Sept 18, 2024 10:09:37 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR05
+Sept 18, 2024 10:09:37 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP08
+Sept 18, 2024 10:09:37 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP08
+Sept 18, 2024 10:09:37 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR04
+Sept 18, 2024 10:09:37 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR04
+Sept 18, 2024 10:09:37 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP07
+Sept 18, 2024 10:09:37 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP07
+Sept 18, 2024 10:09:37 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR03
+Sept 18, 2024 10:09:37 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR03
+Sept 18, 2024 10:09:37 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP06
+Sept 18, 2024 10:09:37 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP06
+Sept 18, 2024 10:09:37 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR02
+Sept 18, 2024 10:09:37 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR02
+Sept 18, 2024 10:09:37 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP05
+Sept 18, 2024 10:09:37 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP05
+Sept 18, 2024 10:09:37 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR01
+Sept 18, 2024 10:09:37 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR01
+Sept 18, 2024 10:09:37 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP04
+Sept 18, 2024 10:09:37 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP04
+Sept 18, 2024 10:09:37 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP03
+Sept 18, 2024 10:09:37 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP03
+Sept 18, 2024 10:09:37 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP02
+Sept 18, 2024 10:09:37 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP02
+Sept 18, 2024 10:09:37 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP01
+Sept 18, 2024 10:09:37 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP01
+Sept 18, 2024 10:09:37 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP010
+Sept 18, 2024 10:09:37 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP010
+Sept 18, 2024 10:09:42 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP09
+Sept 18, 2024 10:09:42 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR05
+Sept 18, 2024 10:09:42 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP09
+Sept 18, 2024 10:09:42 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP08
+Sept 18, 2024 10:09:42 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR05
+Sept 18, 2024 10:09:42 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR04
+Sept 18, 2024 10:09:42 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP08
+Sept 18, 2024 10:09:42 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP07
+Sept 18, 2024 10:09:42 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR04
+Sept 18, 2024 10:09:42 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR03
+Sept 18, 2024 10:09:42 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP07
+Sept 18, 2024 10:09:42 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP06
+Sept 18, 2024 10:09:42 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR03
+Sept 18, 2024 10:09:42 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR02
+Sept 18, 2024 10:09:42 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP06
+Sept 18, 2024 10:09:42 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP05
+Sept 18, 2024 10:09:42 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR02
+Sept 18, 2024 10:09:42 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR01
+Sept 18, 2024 10:09:42 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP05
+Sept 18, 2024 10:09:42 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP04
+Sept 18, 2024 10:09:42 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR01
+Sept 18, 2024 10:09:42 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP03
+Sept 18, 2024 10:09:42 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP04
+Sept 18, 2024 10:09:42 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP02
+Sept 18, 2024 10:09:42 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP03
+Sept 18, 2024 10:09:42 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP01
+Sept 18, 2024 10:09:42 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP02
+Sept 18, 2024 10:09:42 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP010
+Sept 18, 2024 10:09:42 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP01
+Sept 18, 2024 10:09:42 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP010
+Sept 18, 2024 10:09:47 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP09
+Sept 18, 2024 10:09:47 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR05
+Sept 18, 2024 10:09:47 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP09
+Sept 18, 2024 10:09:47 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP08
+Sept 18, 2024 10:09:47 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR05
+Sept 18, 2024 10:09:47 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR04
+Sept 18, 2024 10:09:47 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP08
+Sept 18, 2024 10:09:47 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP07
+Sept 18, 2024 10:09:47 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR04
+Sept 18, 2024 10:09:47 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR03
+Sept 18, 2024 10:09:47 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP07
+Sept 18, 2024 10:09:47 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP06
+Sept 18, 2024 10:09:47 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR03
+Sept 18, 2024 10:09:47 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR02
+Sept 18, 2024 10:09:47 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP06
+Sept 18, 2024 10:09:47 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP05
+Sept 18, 2024 10:09:47 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR02
+Sept 18, 2024 10:09:47 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR01
+Sept 18, 2024 10:09:47 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP05
+Sept 18, 2024 10:09:47 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP04
+Sept 18, 2024 10:09:47 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR01
+Sept 18, 2024 10:09:47 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP03
+Sept 18, 2024 10:09:47 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP04
+Sept 18, 2024 10:09:47 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP02
+Sept 18, 2024 10:09:47 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP03
+Sept 18, 2024 10:09:47 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP01
+Sept 18, 2024 10:09:47 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP02
+Sept 18, 2024 10:09:47 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP010
+Sept 18, 2024 10:09:47 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP01
+Sept 18, 2024 10:09:47 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP010
+Sept 18, 2024 10:09:52 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP09
+Sept 18, 2024 10:09:52 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR05
+Sept 18, 2024 10:09:52 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP09
+Sept 18, 2024 10:09:52 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP08
+Sept 18, 2024 10:09:52 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR05
+Sept 18, 2024 10:09:52 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR04
+Sept 18, 2024 10:09:52 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP08
+Sept 18, 2024 10:09:52 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP07
+Sept 18, 2024 10:09:52 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR04
+Sept 18, 2024 10:09:52 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR03
+Sept 18, 2024 10:09:52 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP07
+Sept 18, 2024 10:09:52 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP06
+Sept 18, 2024 10:09:52 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR03
+Sept 18, 2024 10:09:52 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR02
+Sept 18, 2024 10:09:52 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP06
+Sept 18, 2024 10:09:52 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP05
+Sept 18, 2024 10:09:52 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR02
+Sept 18, 2024 10:09:52 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR01
+Sept 18, 2024 10:09:52 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP05
+Sept 18, 2024 10:09:52 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP04
+Sept 18, 2024 10:09:52 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR01
+Sept 18, 2024 10:09:52 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP03
+Sept 18, 2024 10:09:52 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP04
+Sept 18, 2024 10:09:52 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP02
+Sept 18, 2024 10:09:52 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP03
+Sept 18, 2024 10:09:52 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP01
+Sept 18, 2024 10:09:52 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP02
+Sept 18, 2024 10:09:52 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP010
+Sept 18, 2024 10:09:52 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP01
+Sept 18, 2024 10:09:52 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP010
+Sept 18, 2024 10:09:57 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP09
+Sept 18, 2024 10:09:57 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP09
+Sept 18, 2024 10:09:57 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR05
+Sept 18, 2024 10:09:57 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR05
+Sept 18, 2024 10:09:57 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP08
+Sept 18, 2024 10:09:57 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP08
+Sept 18, 2024 10:09:57 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR04
+Sept 18, 2024 10:09:57 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR04
+Sept 18, 2024 10:09:57 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP07
+Sept 18, 2024 10:09:57 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP07
+Sept 18, 2024 10:09:57 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR03
+Sept 18, 2024 10:09:57 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR03
+Sept 18, 2024 10:09:57 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP06
+Sept 18, 2024 10:09:57 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP06
+Sept 18, 2024 10:09:57 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR02
+Sept 18, 2024 10:09:57 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR02
+Sept 18, 2024 10:09:57 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP05
+Sept 18, 2024 10:09:57 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP05
+Sept 18, 2024 10:09:57 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR01
+Sept 18, 2024 10:09:57 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR01
+Sept 18, 2024 10:09:57 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP04
+Sept 18, 2024 10:09:57 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP04
+Sept 18, 2024 10:09:57 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP03
+Sept 18, 2024 10:09:57 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP03
+Sept 18, 2024 10:09:57 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP02
+Sept 18, 2024 10:09:57 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP02
+Sept 18, 2024 10:09:57 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP01
+Sept 18, 2024 10:09:57 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP01
+Sept 18, 2024 10:09:58 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP010
+Sept 18, 2024 10:09:58 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP010
+Sept 18, 2024 10:10:03 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP09
+Sept 18, 2024 10:10:03 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP09
+Sept 18, 2024 10:10:03 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR05
+Sept 18, 2024 10:10:03 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR05
+Sept 18, 2024 10:10:03 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP08
+Sept 18, 2024 10:10:03 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP08
+Sept 18, 2024 10:10:03 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR04
+Sept 18, 2024 10:10:03 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR04
+Sept 18, 2024 10:10:03 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP07
+Sept 18, 2024 10:10:03 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP07
+Sept 18, 2024 10:10:03 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR03
+Sept 18, 2024 10:10:03 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR03
+Sept 18, 2024 10:10:03 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP06
+Sept 18, 2024 10:10:03 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP06
+Sept 18, 2024 10:10:03 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR02
+Sept 18, 2024 10:10:03 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR02
+Sept 18, 2024 10:10:03 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP05
+Sept 18, 2024 10:10:03 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP05
+Sept 18, 2024 10:10:03 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR01
+Sept 18, 2024 10:10:03 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR01
+Sept 18, 2024 10:10:03 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP04
+Sept 18, 2024 10:10:03 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP04
+Sept 18, 2024 10:10:03 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP03
+Sept 18, 2024 10:10:03 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP03
+Sept 18, 2024 10:10:03 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP02
+Sept 18, 2024 10:10:03 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP02
+Sept 18, 2024 10:10:03 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP01
+Sept 18, 2024 10:10:03 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP01
+Sept 18, 2024 10:10:03 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP010
+Sept 18, 2024 10:10:03 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP010
+Sept 18, 2024 10:10:08 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP09
+Sept 18, 2024 10:10:08 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR05
+Sept 18, 2024 10:10:08 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP09
+Sept 18, 2024 10:10:08 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP08
+Sept 18, 2024 10:10:08 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR05
+Sept 18, 2024 10:10:08 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR04
+Sept 18, 2024 10:10:08 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP08
+Sept 18, 2024 10:10:08 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP07
+Sept 18, 2024 10:10:08 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR04
+Sept 18, 2024 10:10:08 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR03
+Sept 18, 2024 10:10:08 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP07
+Sept 18, 2024 10:10:08 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP06
+Sept 18, 2024 10:10:08 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR03
+Sept 18, 2024 10:10:08 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR02
+Sept 18, 2024 10:10:08 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP06
+Sept 18, 2024 10:10:08 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP05
+Sept 18, 2024 10:10:08 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR02
+Sept 18, 2024 10:10:08 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR01
+Sept 18, 2024 10:10:08 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP05
+Sept 18, 2024 10:10:08 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP04
+Sept 18, 2024 10:10:08 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR01
+Sept 18, 2024 10:10:08 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP03
+Sept 18, 2024 10:10:08 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP04
+Sept 18, 2024 10:10:08 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP02
+Sept 18, 2024 10:10:08 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP03
+Sept 18, 2024 10:10:08 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP01
+Sept 18, 2024 10:10:08 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP02
+Sept 18, 2024 10:10:08 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP010
+Sept 18, 2024 10:10:08 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP01
+Sept 18, 2024 10:10:08 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP010
+Sept 18, 2024 10:10:13 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP09
+Sept 18, 2024 10:10:13 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP09
+Sept 18, 2024 10:10:13 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR05
+Sept 18, 2024 10:10:13 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR05
+Sept 18, 2024 10:10:13 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP08
+Sept 18, 2024 10:10:13 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP08
+Sept 18, 2024 10:10:13 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR04
+Sept 18, 2024 10:10:13 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR04
+Sept 18, 2024 10:10:13 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP07
+Sept 18, 2024 10:10:13 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP07
+Sept 18, 2024 10:10:13 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR03
+Sept 18, 2024 10:10:13 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR03
+Sept 18, 2024 10:10:13 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP06
+Sept 18, 2024 10:10:13 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP06
+Sept 18, 2024 10:10:13 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR02
+Sept 18, 2024 10:10:13 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR02
+Sept 18, 2024 10:10:13 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP05
+Sept 18, 2024 10:10:13 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP05
+Sept 18, 2024 10:10:13 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR01
+Sept 18, 2024 10:10:13 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR01
+Sept 18, 2024 10:10:13 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP04
+Sept 18, 2024 10:10:13 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP04
+Sept 18, 2024 10:10:13 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP03
+Sept 18, 2024 10:10:13 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP03
+Sept 18, 2024 10:10:13 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP02
+Sept 18, 2024 10:10:13 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP02
+Sept 18, 2024 10:10:13 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP01
+Sept 18, 2024 10:10:13 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP01
+Sept 18, 2024 10:10:13 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP010
+Sept 18, 2024 10:10:13 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP010
