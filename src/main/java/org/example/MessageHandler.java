@@ -26,7 +26,7 @@ public class MessageHandler {
                     handleStationMessage(receiveMessage);
                     break;
                 case "checkpoint":
-                    handleCheckpointMessage(receiveMessage);
+                    handleCheckpointMessage(receiveMessage, address, port);
                     break;
                 default:
                     logger.log(Level.WARNING, "Unknown client type: {0}", receiveMessage.clientType);
@@ -36,26 +36,26 @@ public class MessageHandler {
         }
     }
 
-
     // Handles all checkpoint messages
-    public void handleCheckpointMessage(ReceiveMessage message) {
-        CheckpointClient client = (CheckpointClient) db.getClient(message.clientID);
+    public void handleCheckpointMessage(ReceiveMessage receiveMessage, InetAddress address, int port) {
+        CheckpointClient client = (CheckpointClient) db.getClient(receiveMessage.clientID);
 
         Processor processor = new Processor();
-        switch (message.message) {
+        switch (receiveMessage.message) {
             case "TRIP":
                 // location is fucked
-                processor.sensorTripped(Integer.parseInt(message.location));
+                processor.sensorTripped(Integer.parseInt(receiveMessage.location));
                 break;
-            case "STIN":
-                // TODO
+            case "CHIN":
+                handleInitialise(receiveMessage, address, port);
+                logger.log(Level.INFO, "Initialising", receiveMessage.message);
                 break;
             case "STAT":
                 client.setStatReturned(true);
-                logger.log(Level.INFO, "Received STAT command from Checkpoint: {0}", message.clientID);
+                logger.log(Level.INFO, "Received STAT command from Checkpoint: {0}", receiveMessage.clientID);
                 break;
             default:
-                logger.log(Level.SEVERE, "Failed to handle checkpoint message: {0}", message);
+                logger.log(Level.SEVERE, "Failed to handle checkpoint message: {0}", receiveMessage);
                 break;
         }
     }
@@ -63,18 +63,22 @@ public class MessageHandler {
     private void handleCCPMessage(ReceiveMessage receiveMessage, InetAddress address, int port) {
         TrainClient client = (TrainClient) db.getClient(receiveMessage.clientID);
 
-        if(receiveMessage.message.equals("STAT")) {
-            client.updateStatus(receiveMessage.status.toUpperCase());
-            client.setStatReturned(true);
-            client.setStatSent(true);
-            logger.log(Level.INFO, "Received message from Blade Runner: {0}", receiveMessage.clientID);
-        } 
-        else if(receiveMessage.message.equals("CCIN")) {
-            handleInitialise(receiveMessage, address, port);
-            logger.log(Level.INFO, "Initialising", receiveMessage.message);
-        }
-        else {
-            logger.log(Level.WARNING, "Unknown Blade Runner message: {0}", receiveMessage.message);
+        switch (receiveMessage.message) {
+            case "STAT":
+                client.updateStatus(receiveMessage.status.toUpperCase());
+                client.setStatReturned(true);
+                client.setStatSent(true);
+                logger.log(Level.INFO, "Received message from Blade Runner: {0}", receiveMessage.clientID);
+                break;
+
+            case "CCIN":
+                handleInitialise(receiveMessage, address, port);
+                logger.log(Level.INFO, "Initialising", receiveMessage.message);
+                break;
+
+            default:
+                logger.log(Level.WARNING, "Unknown Blade Runner message: {0}", receiveMessage.message);
+                break;
         }
     }
 
@@ -97,15 +101,31 @@ public class MessageHandler {
 
     public void handleInitialise(ReceiveMessage receiveMessage, InetAddress address, int port) {
         try {
-            if (receiveMessage.clientType.equals("ccp")) {
-                TrainClient client = new TrainClient(address, port, receiveMessage.clientID);
-                client.id = receiveMessage.clientID;
-                client.registerClient();
-                client.sendAcknowledgeMessage();
-                logger.log(Level.INFO, "Received CCIN message from CCP and created new client: {0}",
-                        receiveMessage.clientID);
-            } else
-                logger.log(Level.INFO, "Unknown client type: {0}", receiveMessage.clientType);
+            switch (receiveMessage.clientType) {
+                case "ccp":
+                    TrainClient trainClient = new TrainClient(address, port, receiveMessage.clientID);
+                    trainClient.id = receiveMessage.clientID;
+                    trainClient.registerClient();
+                    trainClient.sendAcknowledgeMessage();
+                    logger.log(Level.INFO, "Received CCIN message from CCP and created new client: {0}",
+                            receiveMessage.clientID);
+                    break;
+
+                case "checkpoint":
+                    CheckpointClient checkClient = new CheckpointClient(address, port, receiveMessage.clientID);
+                    checkClient.id = receiveMessage.clientID;
+                    checkClient.registerClient();
+                    checkClient.sendAcknowledgeMessage();
+                    logger.log(Level.INFO, "Received CHIN message from Checkpoint and created new client: {0}",
+                            receiveMessage.clientID);
+
+                    break;
+
+                default:
+                    logger.log(Level.INFO, "Unknown client type: {0}", receiveMessage.clientType);
+                    break;
+
+            }
 
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Failed to handle message: {0}", e.getMessage());

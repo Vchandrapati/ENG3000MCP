@@ -37,6 +37,12 @@ public class CheckpointClient extends Client {
         sendMessage(message, "STAT");
     }
 
+    public void sendAcknowledgeMessage() {
+        String message = MessageGenerator.generateAcknowledgesMessage("checkpoint", id, System.currentTimeMillis());
+        sendMessage(message, "ACK");
+        registered = true;
+    }
+
     @Override
     public void registerClient() {
         Database.getInstance().addClient(this.id, this, super.getClientAddress(), super.getClientPort() + "");

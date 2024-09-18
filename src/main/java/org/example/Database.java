@@ -32,6 +32,8 @@ public class Database {
         allTrains = new HashSet<>();
         unresponsiveClients = new HashSet<>();
         waitingToReconnectTrains = new HashSet<>();
+
+        numberOfCheckpoints = 0;
     }
 
     /**
