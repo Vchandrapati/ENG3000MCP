@@ -12,9 +12,6 @@ public class Database {
     private final ConcurrentHashMap<String, Client> clients;
     private final ConcurrentHashMap<String, Integer> trainBlockMap;
 
-    // Hashmap of key: IP + Port value: client ID
-    private final ConcurrentHashMap<String, String> clientKeys;
-
     // Set of all train client IDs
     private final HashSet<String> allTrains;
     // Set of all unresponsive or "dead" clients
@@ -26,8 +23,6 @@ public class Database {
     private Database() {
         clients = new ConcurrentHashMap<>();
         trainBlockMap = new ConcurrentHashMap<>();
-
-        clientKeys = new ConcurrentHashMap<>();
 
         allTrains = new HashSet<>();
         unresponsiveClients = new HashSet<>();
@@ -115,26 +110,11 @@ public class Database {
         if (id.startsWith("CP")) {
             numberOfCheckpoints.getAndIncrement();
         }
-
-        clientKeys.put(clientAddress + clientPort, id);
     }
 
     // Get any client with this method
     public Client getClient(String id) {
         return clients.get(id);
-    }
-
-    // For Vikil
-    public Client getClient(InetAddress clientAddress, String clientPort) {
-        if (clientAddress == null || clientPort == null) {
-            return null;
-        }
-        String key = clientKeys.get(clientAddress + clientPort);
-
-        if (key == null) {
-            return null;
-        }
-        return clients.get(key);
     }
 
     public void addClientToUnresponsive(String id) {
