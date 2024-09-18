@@ -97,39 +97,19 @@ public class Server implements Constants, Runnable {
         }
     }
 
+    
     private void packetProcessor() {
         while (serverRunning) {
             try {
                 DatagramPacket receivePacket = mailbox.take();
-                InetAddress clientAddress = receivePacket.getAddress();
-                int clientPort = receivePacket.getPort();
-
-                Client client = findClient(clientAddress, clientPort);
-
-                if (client != null) {
-                    client.processPacket(receivePacket);
-                    logger.info("Packet processed for client: " + client.id);
-                } else {
-                    String message = new String(receivePacket.getData(), 0, receivePacket.getLength(),
-                            StandardCharsets.UTF_8);
-                    MessageHandler mg = new MessageHandler();
-                    mg.handleInitialise(message, clientAddress, clientPort);
-                }
+                String message = new String(receivePacket.getData(), 0, receivePacket.getLength(), StandardCharsets.UTF_8);
+                MessageHandler mg = new MessageHandler();
+                mg.handleMessage(message, receivePacket.getAddress(), receivePacket.getPort());
             } catch (Exception e) {
                 // Vikil you should fix this I just temp changed it
                 logger.log(Level.SEVERE, "Error {0}", e);
             }
         }
-    }
-
-    private Client findClient(InetAddress clientAddress, int clientPort) {
-        List<Client> clients = db.getClients();
-        if (clients.isEmpty())
-            return null;
-
-        Optional<Client> client = clients.stream()
-                .filter(c -> c.getClientPort() == clientPort && c.getClientAddress() == clientAddress).findFirst();
-        return client.orElse(null);
     }
 
     public void startStatusScheduler() {

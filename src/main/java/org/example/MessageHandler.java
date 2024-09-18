@@ -1,6 +1,7 @@
 package org.example;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ser.std.InetAddressSerializer;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -12,13 +13,13 @@ public class MessageHandler {
     private static final Database db = Database.getInstance();
 
     // Handles messages from CCPs and stations
-    public void handleMessage(String message) {
+    public void handleMessage(String message, InetAddress address, int port) {
         try {
             ReceiveMessage receiveMessage = objectMapper.readValue(message, ReceiveMessage.class);
             // Handle based on the client type
             switch (receiveMessage.clientType) {
                 case "ccp":
-                    handleCCPMessage(receiveMessage);
+                    handleCCPMessage(receiveMessage, address, port);
                     break;
                 case "station":
                     handleStationMessage(receiveMessage);
@@ -33,6 +34,7 @@ public class MessageHandler {
             logger.log(Level.SEVERE, "Failed to handle message: {0}", e.getMessage());
         }
     }
+
 
     // Handles all checkpoint messages
     public void handleCheckpointMessage(ReceiveMessage message) {
@@ -57,15 +59,20 @@ public class MessageHandler {
         }
     }
 
-    private void handleCCPMessage(ReceiveMessage receiveMessage) {
+    private void handleCCPMessage(ReceiveMessage receiveMessage, InetAddress address, int port) {
         TrainClient client = (TrainClient) db.getClient(receiveMessage.clientID);
 
-        if (receiveMessage.message.equals("STAT")) {
+        if(receiveMessage.message.equals("STAT")) {
             client.updateStatus(receiveMessage.status.toUpperCase());
             client.setStatReturned(true);
             client.setStatSent(true);
-            logger.log(Level.INFO, "Received CCIN message from Blade Runner: {0}", receiveMessage.clientID);
-        } else {
+            logger.log(Level.INFO, "Received message from Blade Runner: {0}", receiveMessage.clientID);
+        } 
+        else if(receiveMessage.message.equals("CCIN")) {
+            handleInitialise(receiveMessage, address, port);
+            logger.log(Level.INFO, "Initialising", receiveMessage.message);
+        }
+        else {
             logger.log(Level.WARNING, "Unknown Blade Runner message: {0}", receiveMessage.message);
         }
     }
@@ -87,12 +94,10 @@ public class MessageHandler {
         }
     }
 
-    public void handleInitialise(String message, InetAddress ip, int port) {
+    public void handleInitialise(ReceiveMessage receiveMessage, InetAddress address, int port) {
         try {
-            ReceiveMessage receiveMessage = objectMapper.readValue(message, ReceiveMessage.class);
-            // Handle based on the client type
             if (receiveMessage.clientType.equals("ccp")) {
-                TrainClient client = new TrainClient(ip, port, receiveMessage.clientID);
+                TrainClient client = new TrainClient(address, port, receiveMessage.clientID);
                 client.id = receiveMessage.clientID;
                 client.registerClient();
                 client.sendAcknowledgeMessage();

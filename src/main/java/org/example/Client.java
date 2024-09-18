@@ -22,14 +22,6 @@ public abstract class Client {
         messageHandler = new MessageHandler();
     }
 
-    public void processPacket(DatagramPacket packet) {
-        String message = new String(packet.getData(), 0, packet.getLength(), StandardCharsets.UTF_8);
-        if (!message.isEmpty()) {
-            message = message.replaceAll("[^\\x20-\\x7E]", " ");
-            messageHandler.handleMessage(message);
-        }
-    }
-
     public void sendMessage(String message, String type) {
         Server.getInstance().sendMessageToClient(this, message, type);
     }

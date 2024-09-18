@@ -2092,3 +2092,635 @@ Caused by: java.nio.channels.AsynchronousCloseException
 
 Sept 18, 2024 8:27:58 PM org.example.CommandHandler run
 SEVERE: An unexpected error occurred: null
+Sept 18, 2024 8:47:48 PM org.example.SystemStateManager setState
+INFO: Changing to system state STARTUP
+Sept 18, 2024 8:47:48 PM org.example.Server <init>
+INFO: Server completed startup and listening on PORT: 6666
+Sept 18, 2024 8:48:45 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 8:48:45 PM org.example.TrainClient registerClient
+INFO: Added new train to database: 1
+Sept 18, 2024 8:48:45 PM org.example.Server sendMessageToClient
+INFO: Sent ACK to client: BR01
+Sept 18, 2024 8:48:45 PM org.example.MessageHandler handleInitialise
+INFO: Received CCIN message from CCP and created new client: BR01
+Sept 18, 2024 8:48:48 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR01
+Sept 18, 2024 8:48:48 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 8:48:48 PM org.example.MessageHandler handleCCPMessage
+INFO: Received CCIN message from Blade Runner: BR01
+Sept 18, 2024 8:48:48 PM org.example.Server packetProcessor
+INFO: Packet processed for client: BR01
+Sept 18, 2024 8:48:53 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR01
+Sept 18, 2024 8:48:53 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 8:48:53 PM org.example.MessageHandler handleCCPMessage
+INFO: Received CCIN message from Blade Runner: BR01
+Sept 18, 2024 8:48:53 PM org.example.Server packetProcessor
+INFO: Packet processed for client: BR01
+Sept 18, 2024 8:48:58 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR01
+Sept 18, 2024 8:48:58 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 8:48:58 PM org.example.MessageHandler handleCCPMessage
+INFO: Received CCIN message from Blade Runner: BR01
+Sept 18, 2024 8:48:58 PM org.example.Server packetProcessor
+INFO: Packet processed for client: BR01
+Sept 18, 2024 8:49:03 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR01
+Sept 18, 2024 8:49:03 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 8:49:03 PM org.example.MessageHandler handleCCPMessage
+INFO: Received CCIN message from Blade Runner: BR01
+Sept 18, 2024 8:49:03 PM org.example.Server packetProcessor
+INFO: Packet processed for client: BR01
+Sept 18, 2024 8:49:08 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR01
+Sept 18, 2024 8:49:08 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 8:49:08 PM org.example.MessageHandler handleCCPMessage
+INFO: Received CCIN message from Blade Runner: BR01
+Sept 18, 2024 8:49:08 PM org.example.Server packetProcessor
+INFO: Packet processed for client: BR01
+Sept 18, 2024 8:49:13 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR01
+Sept 18, 2024 8:49:13 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 8:49:13 PM org.example.MessageHandler handleCCPMessage
+INFO: Received CCIN message from Blade Runner: BR01
+Sept 18, 2024 8:49:13 PM org.example.Server packetProcessor
+INFO: Packet processed for client: BR01
+Sept 18, 2024 8:49:18 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR01
+Sept 18, 2024 8:49:18 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 8:49:18 PM org.example.MessageHandler handleCCPMessage
+INFO: Received CCIN message from Blade Runner: BR01
+Sept 18, 2024 8:49:18 PM org.example.Server packetProcessor
+INFO: Packet processed for client: BR01
+Sept 18, 2024 8:49:29 PM org.example.SystemStateManager setState
+INFO: Changing to system state STARTUP
+Sept 18, 2024 8:49:29 PM org.example.Server <init>
+INFO: Server completed startup and listening on PORT: 6666
+Sept 18, 2024 8:49:38 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 8:49:38 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 8:49:38 PM org.example.TrainClient registerClient
+INFO: Added new train to database: 1
+Sept 18, 2024 8:49:38 PM org.example.Server sendMessageToClient
+INFO: Sent ACK to client: BR01
+Sept 18, 2024 8:49:38 PM org.example.MessageHandler handleInitialise
+INFO: Received CCIN message from CCP and created new client: BR01
+Sept 18, 2024 8:49:38 PM org.example.TrainClient registerClient
+INFO: Added new train to database: 2
+Sept 18, 2024 8:49:38 PM org.example.Server sendMessageToClient
+INFO: Sent ACK to client: BR02
+Sept 18, 2024 8:49:38 PM org.example.MessageHandler handleInitialise
+INFO: Received CCIN message from CCP and created new client: BR02
+Sept 18, 2024 8:49:39 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR02
+Sept 18, 2024 8:49:39 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 8:49:39 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR01
+Sept 18, 2024 8:49:39 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 8:49:39 PM org.example.MessageHandler handleCCPMessage
+INFO: Received CCIN message from Blade Runner: BR02
+Sept 18, 2024 8:49:39 PM org.example.Server packetProcessor
+INFO: Packet processed for client: BR02
+Sept 18, 2024 8:49:39 PM org.example.Database addClient
+WARNING: Attempted to add duplicate client with id: BR01
+Sept 18, 2024 8:49:39 PM org.example.MessageHandler handleInitialise
+SEVERE: Failed to handle message: Attempted to add duplicate client with id: BR01
+Sept 18, 2024 8:49:44 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR02
+Sept 18, 2024 8:49:44 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 8:49:44 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR01
+Sept 18, 2024 8:49:44 PM org.example.Database addClient
+WARNING: Attempted to add duplicate client with id: BR02
+Sept 18, 2024 8:49:44 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 8:49:44 PM org.example.MessageHandler handleInitialise
+SEVERE: Failed to handle message: Attempted to add duplicate client with id: BR02
+Sept 18, 2024 8:49:44 PM org.example.Database addClient
+WARNING: Attempted to add duplicate client with id: BR01
+Sept 18, 2024 8:49:44 PM org.example.MessageHandler handleInitialise
+SEVERE: Failed to handle message: Attempted to add duplicate client with id: BR01
+Sept 18, 2024 8:49:49 PM org.example.Server checkForMissingResponse
+SEVERE: No STAT response from BR02 sent at 1726656584042
+Sept 18, 2024 8:49:49 PM org.example.SystemStateManager setState
+INFO: Changing to system state EMERGENCY
+Sept 18, 2024 8:49:49 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR02
+Sept 18, 2024 8:49:49 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR01
+Sept 18, 2024 8:49:49 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 8:49:49 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 8:49:49 PM org.example.Database addClient
+WARNING: Attempted to add duplicate client with id: BR02
+Sept 18, 2024 8:49:49 PM org.example.MessageHandler handleInitialise
+SEVERE: Failed to handle message: Attempted to add duplicate client with id: BR02
+Sept 18, 2024 8:49:49 PM org.example.Database addClient
+WARNING: Attempted to add duplicate client with id: BR01
+Sept 18, 2024 8:49:49 PM org.example.MessageHandler handleInitialise
+SEVERE: Failed to handle message: Attempted to add duplicate client with id: BR01
+Sept 18, 2024 8:49:54 PM org.example.Server checkForMissingResponse
+SEVERE: No STAT response from BR02 sent at 1726656589053
+Sept 18, 2024 8:49:54 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR02
+Sept 18, 2024 8:49:54 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR01
+Sept 18, 2024 8:49:54 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 8:49:54 PM org.example.Database addClient
+WARNING: Attempted to add duplicate client with id: BR02
+Sept 18, 2024 8:49:54 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 8:49:54 PM org.example.MessageHandler handleInitialise
+SEVERE: Failed to handle message: Attempted to add duplicate client with id: BR02
+Sept 18, 2024 8:49:54 PM org.example.Database addClient
+WARNING: Attempted to add duplicate client with id: BR01
+Sept 18, 2024 8:49:54 PM org.example.MessageHandler handleInitialise
+SEVERE: Failed to handle message: Attempted to add duplicate client with id: BR01
+Sept 18, 2024 8:51:17 PM org.example.SystemStateManager setState
+INFO: Changing to system state STARTUP
+Sept 18, 2024 8:51:17 PM org.example.Server <init>
+INFO: Server completed startup and listening on PORT: 6666
+Sept 18, 2024 8:51:18 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 8:51:18 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 8:51:18 PM org.example.TrainClient registerClient
+INFO: Added new train to database: 1
+Sept 18, 2024 8:51:18 PM org.example.Server sendMessageToClient
+INFO: Sent ACK to client: BR02
+Sept 18, 2024 8:51:18 PM org.example.MessageHandler handleInitialise
+INFO: Received CCIN message from CCP and created new client: BR02
+Sept 18, 2024 8:51:18 PM org.example.TrainClient registerClient
+INFO: Added new train to database: 2
+Sept 18, 2024 8:51:18 PM org.example.Server sendMessageToClient
+INFO: Sent ACK to client: BR03
+Sept 18, 2024 8:51:18 PM org.example.MessageHandler handleInitialise
+INFO: Received CCIN message from CCP and created new client: BR03
+Sept 18, 2024 8:51:22 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR03
+Sept 18, 2024 8:51:22 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 8:51:22 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR02
+Sept 18, 2024 8:51:22 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 8:51:22 PM org.example.MessageHandler handleCCPMessage
+INFO: Received CCIN message from Blade Runner: BR03
+Sept 18, 2024 8:51:22 PM org.example.Server packetProcessor
+INFO: Packet processed for client: BR03
+Sept 18, 2024 8:51:22 PM org.example.Database addClient
+WARNING: Attempted to add duplicate client with id: BR02
+Sept 18, 2024 8:51:22 PM org.example.MessageHandler handleInitialise
+SEVERE: Failed to handle message: Attempted to add duplicate client with id: BR02
+Sept 18, 2024 8:51:55 PM org.example.SystemStateManager setState
+INFO: Changing to system state STARTUP
+Sept 18, 2024 8:51:55 PM org.example.Server <init>
+INFO: Server completed startup and listening on PORT: 6666
+Sept 18, 2024 8:51:57 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 8:51:57 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 8:51:57 PM org.example.TrainClient registerClient
+INFO: Added new train to database: 1
+Sept 18, 2024 8:51:57 PM org.example.Server sendMessageToClient
+INFO: Sent ACK to client: BR01
+Sept 18, 2024 8:51:57 PM org.example.MessageHandler handleInitialise
+INFO: Received CCIN message from CCP and created new client: BR01
+Sept 18, 2024 8:51:57 PM org.example.TrainClient registerClient
+INFO: Added new train to database: 2
+Sept 18, 2024 8:51:57 PM org.example.Server sendMessageToClient
+INFO: Sent ACK to client: BR02
+Sept 18, 2024 8:51:57 PM org.example.MessageHandler handleInitialise
+INFO: Received CCIN message from CCP and created new client: BR02
+Sept 18, 2024 8:52:00 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR02
+Sept 18, 2024 8:52:00 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 8:52:00 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR01
+Sept 18, 2024 8:52:00 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 8:52:00 PM org.example.MessageHandler handleCCPMessage
+INFO: Received CCIN message from Blade Runner: BR02
+Sept 18, 2024 8:52:00 PM org.example.Server packetProcessor
+INFO: Packet processed for client: BR02
+Sept 18, 2024 8:52:00 PM org.example.Database addClient
+WARNING: Attempted to add duplicate client with id: BR01
+Sept 18, 2024 8:52:00 PM org.example.MessageHandler handleInitialise
+SEVERE: Failed to handle message: Attempted to add duplicate client with id: BR01
+Sept 18, 2024 8:52:05 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR02
+Sept 18, 2024 8:52:05 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR01
+Sept 18, 2024 8:52:08 PM org.example.CommandHandler run
+INFO: Command executed: quit
+Sept 18, 2024 8:52:08 PM org.example.Server connectionListener
+SEVERE: Error receiving packet
+java.net.SocketException: Socket closed
+	at java.base/sun.nio.ch.DatagramSocketAdaptor.receive(DatagramSocketAdaptor.java:264)
+	at java.base/java.net.DatagramSocket.receive(DatagramSocket.java:714)
+	at org.example.Server.connectionListener(Server.java:88)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: java.nio.channels.AsynchronousCloseException
+	at java.base/sun.nio.ch.DatagramChannelImpl.endRead(DatagramChannelImpl.java:564)
+	at java.base/sun.nio.ch.DatagramChannelImpl.trustedBlockingReceive(DatagramChannelImpl.java:718)
+	at java.base/sun.nio.ch.DatagramChannelImpl.blockingReceive(DatagramChannelImpl.java:675)
+	at java.base/sun.nio.ch.DatagramSocketAdaptor.receive(DatagramSocketAdaptor.java:241)
+	... 3 more
+
+Sept 18, 2024 8:52:08 PM org.example.CommandHandler run
+SEVERE: An unexpected error occurred: null
+Sept 18, 2024 8:52:10 PM org.example.Server checkForMissingResponse
+SEVERE: No STAT response from BR02 sent at 1726656725185
+Sept 18, 2024 8:52:10 PM org.example.SystemStateManager setState
+INFO: Changing to system state EMERGENCY
+Sept 18, 2024 8:55:08 PM org.example.SystemStateManager setState
+INFO: Changing to system state STARTUP
+Sept 18, 2024 8:55:08 PM org.example.Server <init>
+INFO: Server completed startup and listening on PORT: 6666
+Sept 18, 2024 8:55:16 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 8:55:16 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 8:55:16 PM org.example.TrainClient registerClient
+INFO: Added new train to database: 1
+Sept 18, 2024 8:55:16 PM org.example.Server sendMessageToClient
+INFO: Sent ACK to client: BR01
+Sept 18, 2024 8:55:16 PM org.example.MessageHandler handleInitialise
+INFO: Received CCIN message from CCP and created new client: BR01
+Sept 18, 2024 8:55:16 PM org.example.TrainClient registerClient
+INFO: Added new train to database: 2
+Sept 18, 2024 8:55:16 PM org.example.Server sendMessageToClient
+INFO: Sent ACK to client: BR02
+Sept 18, 2024 8:55:16 PM org.example.MessageHandler handleInitialise
+INFO: Received CCIN message from CCP and created new client: BR02
+Sept 18, 2024 8:55:18 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR02
+Sept 18, 2024 8:55:18 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 8:55:18 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR01
+Sept 18, 2024 8:55:18 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 8:55:18 PM org.example.MessageHandler handleCCPMessage
+INFO: Received CCIN message from Blade Runner: BR02
+Sept 18, 2024 8:55:18 PM org.example.Server packetProcessor
+INFO: Packet processed for client: BR02
+Sept 18, 2024 8:55:18 PM org.example.Database addClient
+WARNING: Attempted to add duplicate client with id: BR01
+Sept 18, 2024 8:55:18 PM org.example.MessageHandler handleInitialise
+SEVERE: Failed to handle message: Attempted to add duplicate client with id: BR01
+Sept 18, 2024 8:59:46 PM org.example.SystemStateManager setState
+INFO: Changing to system state STARTUP
+Sept 18, 2024 8:59:46 PM org.example.Server <init>
+INFO: Server completed startup and listening on PORT: 6666
+Sept 18, 2024 9:00:00 PM org.example.SystemStateManager setState
+INFO: Changing to system state STARTUP
+Sept 18, 2024 9:00:00 PM org.example.Server <init>
+INFO: Server completed startup and listening on PORT: 6666
+Sept 18, 2024 9:00:02 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 9:00:02 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 9:00:02 PM org.example.MessageHandler handleCCPMessage
+WARNING: Unknown Blade Runner message: CCIN
+Sept 18, 2024 9:00:02 PM org.example.MessageHandler handleCCPMessage
+WARNING: Unknown Blade Runner message: CCIN
+Sept 18, 2024 9:09:43 PM org.example.SystemStateManager setState
+INFO: Changing to system state STARTUP
+Sept 18, 2024 9:09:43 PM org.example.Server <init>
+INFO: Server completed startup and listening on PORT: 6666
+Sept 18, 2024 9:09:50 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 9:09:50 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 9:09:50 PM org.example.TrainClient registerClient
+INFO: Added new train to database: 1
+Sept 18, 2024 9:09:50 PM org.example.Server sendMessageToClient
+INFO: Sent ACK to client: BR01
+Sept 18, 2024 9:09:50 PM org.example.MessageHandler handleInitialise
+INFO: Received CCIN message from CCP and created new client: BR01
+Sept 18, 2024 9:09:50 PM org.example.MessageHandler handleCCPMessage
+INFO: Initialising
+Sept 18, 2024 9:09:50 PM org.example.TrainClient registerClient
+INFO: Added new train to database: 2
+Sept 18, 2024 9:09:50 PM org.example.Server sendMessageToClient
+INFO: Sent ACK to client: BR02
+Sept 18, 2024 9:09:50 PM org.example.MessageHandler handleInitialise
+INFO: Received CCIN message from CCP and created new client: BR02
+Sept 18, 2024 9:09:50 PM org.example.MessageHandler handleCCPMessage
+INFO: Initialising
+Sept 18, 2024 9:09:53 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR02
+Sept 18, 2024 9:09:53 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 9:09:53 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR01
+Sept 18, 2024 9:09:53 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 9:09:53 PM org.example.MessageHandler handleCCPMessage
+INFO: Received CCIN message from Blade Runner: BR02
+Sept 18, 2024 9:09:53 PM org.example.MessageHandler handleCCPMessage
+INFO: Received CCIN message from Blade Runner: BR01
+Sept 18, 2024 9:09:58 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR02
+Sept 18, 2024 9:09:58 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 9:09:58 PM org.example.MessageHandler handleCCPMessage
+INFO: Received CCIN message from Blade Runner: BR02
+Sept 18, 2024 9:09:58 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR01
+Sept 18, 2024 9:09:58 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 9:09:58 PM org.example.MessageHandler handleCCPMessage
+INFO: Received CCIN message from Blade Runner: BR01
+Sept 18, 2024 9:10:03 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR02
+Sept 18, 2024 9:10:03 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 9:10:03 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR01
+Sept 18, 2024 9:10:03 PM org.example.MessageHandler handleCCPMessage
+INFO: Received CCIN message from Blade Runner: BR02
+Sept 18, 2024 9:10:03 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 9:10:03 PM org.example.MessageHandler handleCCPMessage
+INFO: Received CCIN message from Blade Runner: BR01
+Sept 18, 2024 9:10:08 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR02
+Sept 18, 2024 9:10:08 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 9:10:08 PM org.example.MessageHandler handleCCPMessage
+INFO: Received CCIN message from Blade Runner: BR02
+Sept 18, 2024 9:10:08 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR01
+Sept 18, 2024 9:10:08 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 9:10:08 PM org.example.MessageHandler handleCCPMessage
+INFO: Received CCIN message from Blade Runner: BR01
+Sept 18, 2024 9:10:13 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR02
+Sept 18, 2024 9:10:13 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 9:10:13 PM org.example.MessageHandler handleCCPMessage
+INFO: Received CCIN message from Blade Runner: BR02
+Sept 18, 2024 9:10:13 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 9:10:13 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR01
+Sept 18, 2024 9:10:13 PM org.example.MessageHandler handleCCPMessage
+INFO: Received CCIN message from Blade Runner: BR01
+Sept 18, 2024 9:10:18 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR02
+Sept 18, 2024 9:10:18 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 9:10:18 PM org.example.MessageHandler handleCCPMessage
+INFO: Received CCIN message from Blade Runner: BR02
+Sept 18, 2024 9:10:18 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR01
+Sept 18, 2024 9:10:18 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 9:10:18 PM org.example.MessageHandler handleCCPMessage
+INFO: Received CCIN message from Blade Runner: BR01
+Sept 18, 2024 9:10:23 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR02
+Sept 18, 2024 9:10:23 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 9:10:23 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR01
+Sept 18, 2024 9:10:23 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 9:10:23 PM org.example.MessageHandler handleCCPMessage
+INFO: Received CCIN message from Blade Runner: BR02
+Sept 18, 2024 9:10:23 PM org.example.MessageHandler handleCCPMessage
+INFO: Received CCIN message from Blade Runner: BR01
+Sept 18, 2024 9:10:28 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR02
+Sept 18, 2024 9:10:28 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 9:10:28 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR01
+Sept 18, 2024 9:10:28 PM org.example.MessageHandler handleCCPMessage
+INFO: Received CCIN message from Blade Runner: BR02
+Sept 18, 2024 9:10:28 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 9:10:28 PM org.example.MessageHandler handleCCPMessage
+INFO: Received CCIN message from Blade Runner: BR01
+Sept 18, 2024 9:11:58 PM org.example.SystemStateManager setState
+INFO: Changing to system state STARTUP
+Sept 18, 2024 9:11:58 PM org.example.Server <init>
+INFO: Server completed startup and listening on PORT: 6666
+Sept 18, 2024 9:12:09 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 9:12:09 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 9:12:09 PM org.example.TrainClient registerClient
+INFO: Added new train to database: 1
+Sept 18, 2024 9:12:09 PM org.example.Server sendMessageToClient
+INFO: Sent ACK to client: BR01
+Sept 18, 2024 9:12:09 PM org.example.MessageHandler handleInitialise
+INFO: Received CCIN message from CCP and created new client: BR01
+Sept 18, 2024 9:12:09 PM org.example.MessageHandler handleCCPMessage
+INFO: Initialising
+Sept 18, 2024 9:12:09 PM org.example.TrainClient registerClient
+INFO: Added new train to database: 2
+Sept 18, 2024 9:12:09 PM org.example.Server sendMessageToClient
+INFO: Sent ACK to client: BR02
+Sept 18, 2024 9:12:09 PM org.example.MessageHandler handleInitialise
+INFO: Received CCIN message from CCP and created new client: BR02
+Sept 18, 2024 9:12:09 PM org.example.MessageHandler handleCCPMessage
+INFO: Initialising
+Sept 18, 2024 9:12:13 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR02
+Sept 18, 2024 9:12:13 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 9:12:13 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR01
+Sept 18, 2024 9:12:13 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 9:12:13 PM org.example.MessageHandler handleCCPMessage
+INFO: Received CCIN message from Blade Runner: BR02
+Sept 18, 2024 9:12:13 PM org.example.MessageHandler handleCCPMessage
+INFO: Received CCIN message from Blade Runner: BR01
+Sept 18, 2024 9:12:18 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR02
+Sept 18, 2024 9:12:18 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 9:12:18 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR01
+Sept 18, 2024 9:12:18 PM org.example.MessageHandler handleCCPMessage
+INFO: Received CCIN message from Blade Runner: BR02
+Sept 18, 2024 9:12:18 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 9:12:18 PM org.example.MessageHandler handleCCPMessage
+INFO: Received CCIN message from Blade Runner: BR01
+Sept 18, 2024 9:12:23 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR02
+Sept 18, 2024 9:12:23 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 9:12:23 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR01
+Sept 18, 2024 9:12:23 PM org.example.MessageHandler handleCCPMessage
+INFO: Received CCIN message from Blade Runner: BR02
+Sept 18, 2024 9:12:23 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 9:12:23 PM org.example.MessageHandler handleCCPMessage
+INFO: Received CCIN message from Blade Runner: BR01
+Sept 18, 2024 9:12:28 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR02
+Sept 18, 2024 9:12:28 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 9:12:28 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR01
+Sept 18, 2024 9:12:28 PM org.example.MessageHandler handleCCPMessage
+INFO: Received CCIN message from Blade Runner: BR02
+Sept 18, 2024 9:12:28 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 9:12:28 PM org.example.MessageHandler handleCCPMessage
+INFO: Received CCIN message from Blade Runner: BR01
+Sept 18, 2024 9:12:33 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 9:12:33 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR02
+Sept 18, 2024 9:12:33 PM org.example.MessageHandler handleCCPMessage
+INFO: Received CCIN message from Blade Runner: BR02
+Sept 18, 2024 9:12:33 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 9:12:33 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR01
+Sept 18, 2024 9:12:33 PM org.example.MessageHandler handleCCPMessage
+INFO: Received CCIN message from Blade Runner: BR01
+Sept 18, 2024 9:12:38 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 9:12:38 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR02
+Sept 18, 2024 9:12:38 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR01
+Sept 18, 2024 9:12:38 PM org.example.MessageHandler handleCCPMessage
+INFO: Received CCIN message from Blade Runner: BR02
+Sept 18, 2024 9:12:38 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 9:12:38 PM org.example.MessageHandler handleCCPMessage
+INFO: Received CCIN message from Blade Runner: BR01
+Sept 18, 2024 9:12:43 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR02
+Sept 18, 2024 9:12:43 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 9:12:43 PM org.example.MessageHandler handleCCPMessage
+INFO: Received CCIN message from Blade Runner: BR02
+Sept 18, 2024 9:12:43 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 9:12:43 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR01
+Sept 18, 2024 9:12:43 PM org.example.MessageHandler handleCCPMessage
+INFO: Received CCIN message from Blade Runner: BR01
+Sept 18, 2024 9:14:26 PM org.example.SystemStateManager setState
+INFO: Changing to system state STARTUP
+Sept 18, 2024 9:14:27 PM org.example.Server <init>
+INFO: Server completed startup and listening on PORT: 6666
+Sept 18, 2024 9:14:33 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 9:14:33 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 9:14:33 PM org.example.TrainClient registerClient
+INFO: Added new train to database: 1
+Sept 18, 2024 9:14:33 PM org.example.Server sendMessageToClient
+INFO: Sent ACK to client: BR01
+Sept 18, 2024 9:14:33 PM org.example.MessageHandler handleInitialise
+INFO: Received CCIN message from CCP and created new client: BR01
+Sept 18, 2024 9:14:33 PM org.example.MessageHandler handleCCPMessage
+INFO: Initialising
+Sept 18, 2024 9:14:33 PM org.example.TrainClient registerClient
+INFO: Added new train to database: 2
+Sept 18, 2024 9:14:33 PM org.example.Server sendMessageToClient
+INFO: Sent ACK to client: BR02
+Sept 18, 2024 9:14:33 PM org.example.MessageHandler handleInitialise
+INFO: Received CCIN message from CCP and created new client: BR02
+Sept 18, 2024 9:14:33 PM org.example.MessageHandler handleCCPMessage
+INFO: Initialising
+Sept 18, 2024 9:14:37 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR02
+Sept 18, 2024 9:14:37 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 9:14:37 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR01
+Sept 18, 2024 9:14:37 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 9:14:37 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR02
+Sept 18, 2024 9:14:37 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR01
+Sept 18, 2024 9:14:42 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR02
+Sept 18, 2024 9:14:42 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 9:14:42 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR01
+Sept 18, 2024 9:14:42 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR02
+Sept 18, 2024 9:14:42 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 9:14:42 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR01
+Sept 18, 2024 9:14:47 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR02
+Sept 18, 2024 9:14:47 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 9:14:47 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR01
+Sept 18, 2024 9:14:47 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 9:14:47 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR02
+Sept 18, 2024 9:14:47 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR01
+Sept 18, 2024 9:14:52 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR02
+Sept 18, 2024 9:14:52 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 9:14:52 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR01
+Sept 18, 2024 9:14:52 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 9:14:52 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR02
+Sept 18, 2024 9:14:52 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR01
+Sept 18, 2024 9:14:57 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR02
+Sept 18, 2024 9:14:57 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 9:14:57 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR01
+Sept 18, 2024 9:14:57 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 9:14:57 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR02
+Sept 18, 2024 9:14:57 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR01
+Sept 18, 2024 9:15:02 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR02
+Sept 18, 2024 9:15:02 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 9:15:02 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: BR01
+Sept 18, 2024 9:15:02 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR02
+Sept 18, 2024 9:15:02 PM org.example.Server connectionListener
+INFO: Packet recieved
+Sept 18, 2024 9:15:02 PM org.example.MessageHandler handleCCPMessage
+INFO: Received message from Blade Runner: BR01
