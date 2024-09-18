@@ -134,6 +134,10 @@ public class Database {
         return unresponsiveClients.contains(id);
     }
 
+    public boolean isUnresponsiveEmpty() {
+        return unresponsiveClients.isEmpty();
+    }
+
     public void addClientToReconnecting(String id) {
         if (!id.startsWith("BR")) {
             logger.log(Level.WARNING, "Attempted to add a non-train to waiting to reconnect: {0}", id);
