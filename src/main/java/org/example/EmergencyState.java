@@ -37,7 +37,13 @@ public class EmergencyState implements SystemStateInterface {
         return false;
     }
 
+    //goes through the stat message queue, if a dead client blahahdhad
     private boolean checkIfAllReconnected() {
+        while(!clientMessageQueue.isEmpty()) {
+            if(db.isClientUnresponsive(clientMessageQueue.poll())) {
+
+            }
+        }
         return false;
     }
 

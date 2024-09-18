@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 public class SystemStateManager {
     private static volatile SystemStateManager instance;
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+    private static final Database db = Database.getInstance();
 
     //holds the current state and the current state concrete implementation
     private SystemState currentState;
@@ -80,8 +81,7 @@ public class SystemStateManager {
     //Takes a string id of a client id
     public void addUnressponsiveClient(String id) {
         ERROR = true;
-        //TODO, have to change this code to be correct
-        //db.addDeadClient(db.getClientById(id));
+        db.addUnresponsiveClient(id);
     }
 
     //For every stat message recieved during emergency mode
