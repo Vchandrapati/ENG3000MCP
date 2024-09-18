@@ -1283,8 +1283,6 @@ Z
 +src/main/java/org/example/StartupState.java,3\3\33df6e49c0049b5344e9fbe1452523adc50b1ae5
 a
 1src/main/java/org/example/SystemStateManager.java,d\0\d0e0c9e2f880315fba91b05196bd7998ccd38a80
-7
-app.txt,1\8\18edd137736f7e3d8c40b453be3c380ae86f2ce8
 X
 (src/main/java/org/example/Processor.java,c\4\c473d7ca2e2f6f951c88b1e598902b50771748ae
 ]
@@ -1319,8 +1317,6 @@ P
  src/test/java/TestingStates.java,5\b\5be3ecc733cb88382e406ce331946780573a9eb5
 ^
 .src/main/java/org/example/VisualiserPanel.java,c\8\c8511f2a7808ecdf7d0d43b56a5627d10e1bc4bf
-[
-+src/main/java/org/example/ScreenLogger.java,e\3\e38c5e558ba1a38063e4e48b7596584a9606d1fd
 _
 /src/main/java/org/example/ScreenLogHandler.java,6\9\6929a07a05fe1553a46eda8b3a27ac39dc9c4859
 7

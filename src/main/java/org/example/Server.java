@@ -19,7 +19,6 @@ import java.util.logging.Logger;
 public class Server implements Constants, Runnable {
     private static final Database db = Database.getInstance();
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-    public final Map<Integer, Client> clients = new ConcurrentHashMap<>();
     private DatagramSocket serverSocket;
     private volatile boolean serverRunning;
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
@@ -106,11 +105,10 @@ public class Server implements Constants, Runnable {
                 if (client != null) {
                     client.processPacket(receivePacket);
                     logger.info("Packet processed for client: " + client.id);
-                } else if (client == null) {
-                    // Checks if client exists in the whitelist
+                } else {
                     String message = new String(receivePacket.getData(), 0, receivePacket.getLength(), StandardCharsets.UTF_8);
                     MessageHandler mg = new MessageHandler();
-                    mg.handleInitilise(message, clientAddress, clientPort);
+                    mg.handleInitialise(message, clientAddress, clientPort);
                 }
             } catch (Exception e) {
                 logger.severe(e.getMessage());
@@ -118,36 +116,18 @@ public class Server implements Constants, Runnable {
         }
     }
     private Client findClient(InetAddress clientAddress, int clientPort) {
-        List<Client> clients = Database.getInstance().getClients();
+        List<Client> clients = db.getClients();
         if (clients.isEmpty()) return null;
 
         Optional<Client> client = clients.stream().filter(c -> c.getClientPort() == clientPort && c.getClientAddress() == clientAddress).findFirst();
-        logger.warning("Address: " + clientAddress + " Port: " + clientPort);
-        logger.warning(client.get() + "");
-        if (!client.isPresent())
-            return null;
-
-        return client.get();
-    }
-
-    private static Client createClient(String clientType, InetAddress clientAddress, int clientPort) throws IOException {
-        String componentType = clientType.split(" ")[0];
-
-        if (componentType.contains("CP"))
-            return new CheckpointClient(clientAddress, clientPort, clientType);
-        else if (componentType.contains("BR"))
-            return new TrainClient(clientAddress, clientPort, clientType);
-        else if (componentType.contains("ST"))
-            return new StationClient(clientAddress, clientPort, clientType);
-        else
-            throw new IOException(clientType);
+        return client.orElse(null);
     }
 
     public void startStatusScheduler() {
         scheduler.scheduleAtFixedRate(() -> {
             long sendTime = System.currentTimeMillis();
             
-            List<Client> clients = Database.getInstance().getClients();
+            List<Client> clients = db.getClients();
             for (Client client : clients) {
                 if (client.isRegistered()) {
                     client.setStatReturned(false);
@@ -156,9 +136,9 @@ public class Server implements Constants, Runnable {
             }
 
             try {
-                Thread.sleep(5000);
-                checkForMissingResponse(sendTime);
-            } catch (Exception e) {
+                Thread.sleep(TIMEOUT);
+                checkForMissingResponse(clients, sendTime);
+            } catch (InterruptedException e) {
                 logger.info("Error waiting for stat");
             }
         }, 0, STAT_INTERVAL_SECONDS, TimeUnit.MILLISECONDS);
@@ -170,20 +150,20 @@ public class Server implements Constants, Runnable {
      * If a client has not responded, logs an error and updates the system state to EMERGENCY.
      * For unresponsive train clients, adds them to the unresponsive client list in the database.
      *
-     * @param sendTime the time the status request was sent
+     * @param clients the list of clients to check
      */
-    private void checkForMissingResponse(long sendTime) {
-        clients.values().forEach(client -> {
+    private void checkForMissingResponse(List<Client> clients, Long sendTime) {
+        for (Client client : clients) {
             boolean hasFailed = false;
-            if (!client.lastStatReturned() && client.isRegistered() && client.lastStatMsgSent()) {
+            if (!client.lastStatReturned() && client.isRegistered() && client.lastStatMSGSent()) {
                 logger.severe(String.format("No STAT response from %s sent at %d", client.getId(), sendTime));
                 hasFailed = true;
+
                 //if a train is unresponsive
                 if(client.getId().contains("BR")) db.addUnresponsiveClient(client.getId());
             }
-
             if(hasFailed) SystemStateManager.getInstance().setState(SystemState.EMERGENCY);
-        });
+        }
     }
 
     public void sendMessageToClient(Client client, String message, String type) {

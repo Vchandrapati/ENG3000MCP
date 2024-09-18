@@ -2,18 +2,16 @@ package org.example;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.logging.Logger;
 
 public class VisualiserScreen extends JFrame {
     private VisualiserPanel trackPanel;
     private JTextField commandInput;
     private JTextArea logArea;
-    Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private CommandHandler commandHandler = new CommandHandler();
     public VisualiserScreen() {
         setTitle("Master Control Protocol");
         setSize(1200, 600);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
         trackPanel = new VisualiserPanel();
@@ -30,7 +28,7 @@ public class VisualiserScreen extends JFrame {
         logArea = new JTextArea();
         logArea.setEditable(false);
         JScrollPane logScroller = new JScrollPane(logArea);
-        logScroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        logScroller.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
         userPanel.add(commandInput, BorderLayout.SOUTH);
         userPanel.add(logScroller, BorderLayout.CENTER);
