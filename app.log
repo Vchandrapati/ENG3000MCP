@@ -1,0 +1,60 @@
+Sept 18, 2024 10:03:18 PM org.example.SystemStateManager setState
+INFO: Changing to system state STARTUP
+Sept 18, 2024 10:03:18 PM org.example.Server <init>
+INFO: Server completed startup and listening on PORT: 6666
+Sept 18, 2024 10:03:27 PM org.example.MessageHandler handleCheckpointMessage
+SEVERE: Failed to handle checkpoint message: org.example.ReceiveMessage@3dcf04c1
+Sept 18, 2024 10:03:27 PM org.example.MessageHandler handleCheckpointMessage
+SEVERE: Failed to handle checkpoint message: org.example.ReceiveMessage@2c08e195
+Sept 18, 2024 10:03:35 PM org.example.SystemStateManager setState
+INFO: Changing to system state STARTUP
+Sept 18, 2024 10:03:35 PM org.example.Server <init>
+INFO: Server completed startup and listening on PORT: 6666
+Sept 18, 2024 10:03:38 PM org.example.MessageHandler handleCheckpointMessage
+SEVERE: Failed to handle checkpoint message: org.example.ReceiveMessage@6efcc838
+Sept 18, 2024 10:04:45 PM org.example.SystemStateManager setState
+INFO: Changing to system state STARTUP
+Sept 18, 2024 10:04:45 PM org.example.Server <init>
+INFO: Server completed startup and listening on PORT: 6666
+Sept 18, 2024 10:04:49 PM org.example.MessageHandler handleCheckpointMessage
+SEVERE: Failed to handle checkpoint message: org.example.ReceiveMessage@28f92cd0
+Sept 18, 2024 10:07:32 PM org.example.SystemStateManager setState
+INFO: Changing to system state STARTUP
+Sept 18, 2024 10:07:32 PM org.example.Server <init>
+INFO: Server completed startup and listening on PORT: 6666
+Sept 18, 2024 10:07:35 PM org.example.Server sendMessageToClient
+INFO: Sent ACK to client: CP01
+Sept 18, 2024 10:07:35 PM org.example.MessageHandler handleInitialise
+INFO: Received CHIN message from Checkpoint and created new client: CP01
+Sept 18, 2024 10:07:35 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Initialising
+Sept 18, 2024 10:07:35 PM org.example.Server sendMessageToClient
+INFO: Sent ACK to client: CP02
+Sept 18, 2024 10:07:35 PM org.example.MessageHandler handleInitialise
+INFO: Received CHIN message from Checkpoint and created new client: CP02
+Sept 18, 2024 10:07:35 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Initialising
+Sept 18, 2024 10:07:37 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP02
+Sept 18, 2024 10:07:37 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP01
+Sept 18, 2024 10:07:37 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP02
+Sept 18, 2024 10:07:37 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP01
+Sept 18, 2024 10:07:42 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP02
+Sept 18, 2024 10:07:42 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP02
+Sept 18, 2024 10:07:42 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP01
+Sept 18, 2024 10:07:42 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP01
+Sept 18, 2024 10:07:47 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP02
+Sept 18, 2024 10:07:47 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP02
+Sept 18, 2024 10:07:47 PM org.example.Server sendMessageToClient
+INFO: Sent STAT to client: CP01
+Sept 18, 2024 10:07:47 PM org.example.MessageHandler handleCheckpointMessage
+INFO: Received STAT command from Checkpoint: CP01
