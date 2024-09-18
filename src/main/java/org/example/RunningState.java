@@ -32,7 +32,7 @@ public class RunningState implements SystemStateInterface {
                 logger.info("All Trains are now moving at speed 1");
             }
         } catch (Exception e) {
-            logger.severe("Failed to move trains: " + e.getMessage());
+            logger.severe("Failed to move trains: " + e);
             SystemStateManager.getInstance().setState(SystemState.EMERGENCY);
         }
     }

@@ -1,23 +1,22 @@
 package org.example;
 
 import java.net.InetAddress;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Logger;
 
 public abstract class Client {
     protected static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-    protected MessageHandler messageHandler;
     private final InetAddress clientAddress;
     private final int clientPort;
-    protected String id;
-    private volatile boolean statReturned = false;
-    private volatile boolean statSent = false;
+    protected final String id;
+    private final AtomicBoolean statReturned = new AtomicBoolean(false);
+    private final AtomicBoolean statSent = new AtomicBoolean(false);
     protected boolean registered = false;
 
     protected Client(InetAddress clientAddress, int clientPort, String id) {
         this.id = id;
         this.clientAddress = clientAddress;
         this.clientPort = clientPort;
-        messageHandler = new MessageHandler();
     }
 
     public void sendMessage(String message, String type) {
@@ -30,22 +29,22 @@ public abstract class Client {
 
     public abstract void registerClient();
 
-    protected abstract void sendStatusMessage(String id, Long timestamp);
+    protected abstract void sendStatusMessage(long timestamp);
 
     public boolean lastStatReturned() {
-        return statReturned;
+        return statReturned.get();
     }
 
     public boolean lastStatMSGSent() {
-        return statSent;
+        return statSent.get();
     }
 
     public void setStatReturned(boolean statReturned) {
-        this.statReturned = statReturned;
+        this.statReturned.set(statReturned);
     }
 
     public void setStatSent(boolean statSent) {
-        this.statSent = statSent;
+        this.statSent.set(statSent);
     }
 
     public InetAddress getClientAddress() {

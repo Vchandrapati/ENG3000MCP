@@ -5,7 +5,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.net.InetAddress;
 
 public class Database {
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
@@ -88,7 +87,7 @@ public class Database {
     }
 
     // Add any client with this method
-    public void addClient(String id, Client client, InetAddress clientAddress, String clientPort) {
+    public void addClient(String id, Client client) {
         // Will attempt to add a client
         // If absent it will happen, however, if it is present the previous client will
         // be handed over

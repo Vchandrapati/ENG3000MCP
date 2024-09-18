@@ -30,7 +30,7 @@ public class MessageHandler {
                     logger.log(Level.WARNING, "Unknown client type: {0}", receiveMessage.clientType);
             }
         } catch (Exception e) {
-            logger.log(Level.SEVERE, "Failed to handle message: {0}", e.getMessage());
+            logger.log(Level.SEVERE, "Failed to handle message", e);
         }
     }
 
@@ -102,7 +102,6 @@ public class MessageHandler {
             switch (receiveMessage.clientType) {
                 case "ccp":
                     TrainClient trainClient = new TrainClient(address, port, receiveMessage.clientID);
-                    trainClient.id = receiveMessage.clientID;
                     trainClient.registerClient();
                     trainClient.sendAcknowledgeMessage();
                     logger.log(Level.INFO, "Received CCIN message from CCP and created new client: {0}",
@@ -111,7 +110,6 @@ public class MessageHandler {
 
                 case "checkpoint":
                     CheckpointClient checkClient = new CheckpointClient(address, port, receiveMessage.clientID);
-                    checkClient.id = receiveMessage.clientID;
                     checkClient.registerClient();
                     checkClient.sendAcknowledgeMessage();
                     logger.log(Level.INFO, "Received CHIN message from Checkpoint and created new client: {0}",
@@ -126,7 +124,7 @@ public class MessageHandler {
             }
 
         } catch (Exception e) {
-            logger.log(Level.SEVERE, "Failed to handle message: {0}", e.getMessage());
+            logger.log(Level.SEVERE, "Failed to handle message", e);
         }
     }
 }

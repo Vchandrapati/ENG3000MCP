@@ -82,22 +82,22 @@ public class SystemStateManager {
 
     //I need you to only send me unresponsive client ids while not in emergency mode,
     //if in emergency mode you will
-    //1) Still send unresponsive client ids but they must be new
+    //1) Still send unresponsive client ids, but they must be new
     //2) All the client ids of stat messages received
 
     //Takes a string id of a client id
-    public void addUnressponsiveClient  (String id) {
+    public void addUnresponsiveClient(String id) {
         error = true;
         db.addUnresponsiveClient(id);
     }
 
-    //For every stat message recieved during emergency mode
+    //For every stat message received during emergency mode
     //Takes a string id of a client id
     public void sendEmergencyPacketClientID(String id) {
         EmergencyState.addMessage(id);
     }
 
-    //Checks to see if the system needs to go to emergency state, if already dont 
+    //Checks to see if the system needs to go to emergency state, if already don't
     private void checkChange() {
         if(error && currentState != SystemState.EMERGENCY)
             setState(SystemState.EMERGENCY);

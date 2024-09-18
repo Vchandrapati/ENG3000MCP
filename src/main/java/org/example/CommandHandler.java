@@ -49,9 +49,9 @@ public class CommandHandler implements Runnable {
                 }
             //if command is invalid throw exception
             } catch (InvalidCommandException e) {
-                logger.severe("Error: " + e.getMessage());
+                logger.severe("Error: " + e);
             } catch (InterruptedException e) {
-                logger.severe("An unexpected error occurred: " + e.getMessage());
+                logger.severe("An unexpected error occurred: " + e);
                 Thread.currentThread().interrupt();
             }
         }
@@ -61,7 +61,7 @@ public class CommandHandler implements Runnable {
         try {
             commandQueue.put(input); // Submit the command to the queue
         } catch (InterruptedException e) {
-            logger.severe("Failed to submit command: " + e.getMessage());
+            logger.severe("Failed to submit command: " + e);
             Thread.currentThread().interrupt(); // Restore interrupted status
         }
     }

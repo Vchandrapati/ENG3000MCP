@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.util.logging.*;
 
 public class LoggerConfig {
+    private LoggerConfig() {
+        throw new IllegalStateException("Utility class");
+    }
 
     public static void setupLogger(JTextArea logArea) {
         Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);

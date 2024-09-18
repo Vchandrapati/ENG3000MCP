@@ -19,13 +19,13 @@ import java.nio.charset.*;
  * exists.
  */
 public class Server implements Runnable {
-    public static final int PORT = 6666;
     private static final Database db = Database.getInstance();
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private DatagramSocket serverSocket;
     private final AtomicBoolean serverRunning;
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
     private final ExecutorService executorService = Executors.newFixedThreadPool(2);
+    public static final int PORT = 6666;
     private static final int TIMEOUT = 5000;
     private static final int BUFFER_SIZE = 1024;
     private static final int STAT_INTERVAL_SECONDS = 5000;
@@ -87,7 +87,7 @@ public class Server implements Runnable {
                 if (receivePacket.getLength() > 0)
                     mailbox.add(receivePacket);
             } catch (IOException e) {
-                logger.log(Level.SEVERE, "Error receiving packet {0}", e.getMessage());
+                logger.log(Level.SEVERE, "Error receiving packet", e);
             }
         }
     }
@@ -117,7 +117,7 @@ public class Server implements Runnable {
             for (Client client : clients) {
                 if (client.isRegistered()) {
                     client.setStatReturned(false);
-                    client.sendStatusMessage(client.id, System.currentTimeMillis());
+                    client.sendStatusMessage(System.currentTimeMillis());
                 }
             }
 
@@ -152,6 +152,7 @@ public class Server implements Runnable {
                 if (client.isTrainClient())
                     db.addUnresponsiveClient(client.getId());
             }
+
             if (hasFailed)
                 SystemStateManager.getInstance().setState(SystemState.EMERGENCY);
         }

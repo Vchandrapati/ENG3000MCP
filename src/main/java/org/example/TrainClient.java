@@ -1,9 +1,11 @@
 package org.example;
 
 import java.net.InetAddress;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.logging.Level;
 
 public class TrainClient extends Client {
-    private volatile Integer zone;
+    private final AtomicInteger zone = new AtomicInteger();
     private volatile Status status;
 
     private enum Status {
@@ -18,10 +20,11 @@ public class TrainClient extends Client {
 
     public TrainClient(InetAddress clientAddress, int clientPort, String id) {
         super(clientAddress, clientPort, id);
+        this.status = Status.ON;
     }
 
     public Integer getZone() {
-        return zone;
+        return zone.get();
     }
 
     public String getStatus() {
@@ -32,7 +35,7 @@ public class TrainClient extends Client {
         try {
             status = Status.valueOf(newStatus);
         } catch (IllegalArgumentException e) {
-            logger.severe(String.format("Tried to assign unknown status: %s for train %s", newStatus, id));
+            logger.log(Level.SEVERE, "Tried to assign unknown status: {0} for train {1}", new Object[]{newStatus, id});
         }
     }
 
@@ -45,16 +48,16 @@ public class TrainClient extends Client {
         sendMessage(message, "EXEC");
     }
 
-    // For sending an acknowledge message to the CCP
+    // For sending an acknowledgment message to the CCP
     public void sendAcknowledgeMessage() {
         String message = MessageGenerator.generateAcknowledgesMessage("ccp", id, System.currentTimeMillis());
         sendMessage(message, "ACK");
         registered = true;
     }
 
-    // For sending an status message to the CCP
+    // For sending a status message to the CCP
     @Override
-    public void sendStatusMessage(String id, Long timestamp) {
+    public void sendStatusMessage(long timestamp) {
         String message = MessageGenerator.generateStatusMessage("ccp", id, System.currentTimeMillis());
         sendMessage(message, "STAT");
     }
@@ -69,12 +72,12 @@ public class TrainClient extends Client {
 
     @Override
     public void registerClient() {
-        Database.getInstance().addClient(this.id, this, super.getClientAddress(), super.getClientPort() + "");
+        Database.getInstance().addClient(this.id, this);
         logger.info("Added new train to database: " + Database.getInstance().getTrainCount());
 
     }
 
     public void changeZone(int zone) {
-        this.zone = zone;
+        this.zone.set(zone);
     }
 }

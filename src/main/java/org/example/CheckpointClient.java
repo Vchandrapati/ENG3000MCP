@@ -31,7 +31,7 @@ public class CheckpointClient extends Client {
     }
 
     @Override
-    public void sendStatusMessage(String id, Long timestamp) {
+    public void sendStatusMessage(long timestamp) {
         String message = MessageGenerator.generateStatusMessage("ccp", id, System.currentTimeMillis());
         sendMessage(message, "STAT");
     }
@@ -44,7 +44,7 @@ public class CheckpointClient extends Client {
 
     @Override
     public void registerClient() {
-        Database.getInstance().addClient(this.id, this, super.getClientAddress(), super.getClientPort() + "");
+        Database.getInstance().addClient(this.id, this);
     }
 
     public void setTripped() {
