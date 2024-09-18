@@ -21,6 +21,8 @@ public class Database {
     // Set of all train clients waiting to reconnect
     private final HashSet<String> waitingToReconnectTrains;
 
+    private volatile Integer numberOfCheckpoints;
+
     private Database() {
         clients = new ConcurrentHashMap<>();
         trainBlockMap = new ConcurrentHashMap<>();
@@ -93,6 +95,10 @@ public class Database {
             allTrains.add(id);
         }
 
+        if (id.startsWith("CP")) {
+            numberOfCheckpoints++;
+        }
+
         clientKeys.put(clientAddress + clientPort, id);
     }
 
@@ -155,5 +161,9 @@ public class Database {
 
     public int getTrainCount() {
         return allTrains.size();
+    }
+
+    public Integer getCheckpointCount() {
+        return numberOfCheckpoints;
     }
 }
