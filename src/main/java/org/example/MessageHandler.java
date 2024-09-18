@@ -51,6 +51,8 @@ public class MessageHandler {
                 logger.log(Level.INFO, "Received STAT message from Checkpoint: {0}", receiveMessage.clientID);
                 break;
             case "STAT":
+                if (SystemStateManager.getInstance().getState() == SystemState.EMERGENCY)
+                    SystemStateManager.getInstance().sendEmergencyPacketClientID(receiveMessage.clientID);
                 client.setStatReturned(true);
                 logger.log(Level.INFO, "Received STAT command from Checkpoint: {0}", receiveMessage.clientID);
                 break;
@@ -92,6 +94,8 @@ public class MessageHandler {
                 logger.log(Level.INFO, "Received STIN message from Station: {0}", receiveMessage.clientID);
                 break;
             case "STAT":
+                if (SystemStateManager.getInstance().getState() == SystemState.EMERGENCY)
+                    SystemStateManager.getInstance().sendEmergencyPacketClientID(receiveMessage.clientID);
                 client.setStatReturned(true);
                 logger.log(Level.INFO, "Received STAT message from Station: {0}", receiveMessage.clientID);
                 break;
