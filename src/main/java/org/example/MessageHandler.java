@@ -10,6 +10,7 @@ public class MessageHandler {
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private static final ObjectMapper objectMapper = new ObjectMapper();
     private static final Database db = Database.getInstance();
+
     // Handles messages from CCPs and stations
     public void handleMessage(String message) {
         try {
@@ -21,12 +22,12 @@ public class MessageHandler {
                     break;
                 case "station":
                     handleStationMessage(receiveMessage);
-                    break;   
+                    break;
                 case "checkpoint":
                     handleCheckpointMessage(receiveMessage);
                     break;
                 default:
-                    logger.log(Level.WARNING, "Unknown client type: {0}",  receiveMessage.clientType);
+                    logger.log(Level.WARNING, "Unknown client type: {0}", receiveMessage.clientType);
             }
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Failed to handle message: {0}", e.getMessage());
@@ -35,29 +36,29 @@ public class MessageHandler {
 
     // Handles all checkpoint messages
     public void handleCheckpointMessage(ReceiveMessage message) {
-        CheckpointClient client = db.getCheckpoint(message.clientID);
+        CheckpointClient client = (CheckpointClient) db.getClient(message.clientID);
 
         Processor processor = new Processor();
         switch (message.message) {
             case "TRIP":
-                //location is fucked 
+                // location is fucked
                 processor.sensorTripped(Integer.parseInt(message.location));
                 break;
             case "STIN":
-                //TODO
+                // TODO
                 break;
             case "STAT":
                 client.setStatReturned(true);
-                logger.log(Level.INFO, "Received STAT command from Checkpoint: {0}",  message.clientID);
+                logger.log(Level.INFO, "Received STAT command from Checkpoint: {0}", message.clientID);
                 break;
             default:
-                logger.log(Level.SEVERE, "Failed to handle checkpoint message: {0}",  message);
+                logger.log(Level.SEVERE, "Failed to handle checkpoint message: {0}", message);
                 break;
         }
     }
 
     private void handleCCPMessage(ReceiveMessage receiveMessage) {
-        TrainClient client = db.getTrain(receiveMessage.clientID);
+        TrainClient client = (TrainClient) db.getClient(receiveMessage.clientID);
 
         if (receiveMessage.message.equals("STAT")) {
             client.updateStatus(receiveMessage.status.toUpperCase());
@@ -70,7 +71,7 @@ public class MessageHandler {
     }
 
     private void handleStationMessage(ReceiveMessage receiveMessage) {
-        StationClient client = db.getStation(receiveMessage.clientID);
+        StationClient client = (StationClient) db.getClient(receiveMessage.clientID);
         // Different behaviour based on what the message command is
         switch (receiveMessage.message) {
             case "DOOR":
@@ -95,7 +96,8 @@ public class MessageHandler {
                 client.id = receiveMessage.clientID;
                 client.registerClient();
                 client.sendAcknowledgeMessage();
-                logger.log(Level.INFO, "Received CCIN message from CCP and created new client: {0}", receiveMessage.clientID);
+                logger.log(Level.INFO, "Received CCIN message from CCP and created new client: {0}",
+                        receiveMessage.clientID);
             } else
                 logger.log(Level.INFO, "Unknown client type: {0}", receiveMessage.clientType);
 
