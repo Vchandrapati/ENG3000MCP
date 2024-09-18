@@ -10,11 +10,10 @@ public class EmergencyState implements SystemStateInterface {
 
     // All time units in milliseconds
     protected static final long EMERGENCY_TIMEOUT = 300000; // 5 minutes
-    protected static final long TIME_BETWEEN_RUNNING = 1000; 
-
+    protected static final long TIME_BETWEEN_RUNNING = 1000;
     protected final Database db = Database.getInstance();
 
-    private static BlockingQueue<String> clientMessageQueue = new LinkedBlockingQueue<>();
+    private static final BlockingQueue<String> clientMessageQueue = new LinkedBlockingQueue<>();
 
     protected static boolean startedStopping = false;
     protected static List<TrainClient> trains = null;
@@ -55,8 +54,7 @@ public class EmergencyState implements SystemStateInterface {
                 db.removeClientFromUnresponsive(client);
             }
         }
-        if(db.isUnresponsiveEmpty()) return true;
-        return false;
+        return db.isUnresponsiveEmpty();
     }
 
     public static void addMessage(String id) {
@@ -85,6 +83,6 @@ public class EmergencyState implements SystemStateInterface {
     @Override
     public void reset() {
         startedStopping = false;
-        trains = null;
+            trains = null;
     }
 }

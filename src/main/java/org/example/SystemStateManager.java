@@ -86,7 +86,7 @@ public class SystemStateManager {
     //2) All the client ids of stat messages received
 
     //Takes a string id of a client id
-    public void addUnressponsiveClient(String id) {
+    public void addUnressponsiveClient  (String id) {
         ERROR = true;
         db.addUnresponsiveClient(id);
     }

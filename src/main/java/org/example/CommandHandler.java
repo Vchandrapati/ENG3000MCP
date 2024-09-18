@@ -11,11 +11,10 @@ import java.util.logging.Logger;
  */
 public class CommandHandler implements Runnable {
     private static final Set<String> commands;
-    private Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+    private final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private static volatile boolean isRunning = true;
     private boolean startedStartup = false;
-    private Thread commandThread;
-    private BlockingQueue<String> commandQueue = new LinkedBlockingQueue<>();
+    private final BlockingQueue<String> commandQueue = new LinkedBlockingQueue<>();
 
     //Set of commands
     static {
@@ -27,7 +26,7 @@ public class CommandHandler implements Runnable {
     }
 
     public CommandHandler() {
-        commandThread = new Thread(this, "CommandHandler-Thread");
+        Thread commandThread = new Thread(this, "CommandHandler-Thread");
         commandThread.start();
     }
     
@@ -51,8 +50,9 @@ public class CommandHandler implements Runnable {
             //if command is invalid throw exception
             } catch (InvalidCommandException e) {
                 logger.severe("Error: " + e.getMessage());
-            } catch (Exception e) {
+            } catch (InterruptedException e) {
                 logger.severe("An unexpected error occurred: " + e.getMessage());
+                Thread.currentThread().interrupt();
             }
         }
     }
@@ -96,7 +96,7 @@ public class CommandHandler implements Runnable {
             commandString.append("\n").append(command);
         }
 
-        logger.info(commandString.toString());
+        logger.log(Level.INFO, "{0}", commandString);
     }
 
     //Exception for invalid commands
