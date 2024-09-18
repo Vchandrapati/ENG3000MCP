@@ -3,12 +3,12 @@ package org.example;
 import java.io.IOException;
 import java.net.*;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 import java.util.concurrent.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.nio.charset.*;
+
+import static org.example.Constants.PORT;
 
 /**
  * Manages network communication with clients over UDP.
@@ -20,7 +20,7 @@ import java.nio.charset.*;
  * exists.
  * It also implements the {@link Constants} interface for configuration.
  */
-public class Server implements Constants, Runnable {
+public class Server implements Runnable {
     private static final Database db = Database.getInstance();
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private DatagramSocket serverSocket;
@@ -29,7 +29,7 @@ public class Server implements Constants, Runnable {
     private static final int TIMEOUT = 5000;
     private static final int BUFFER_SIZE = 1024;
     private static final int STAT_INTERVAL_SECONDS = 5000;
-    private static BlockingQueue<DatagramPacket> mailbox = new LinkedBlockingQueue<>();
+    private static final BlockingQueue<DatagramPacket> mailbox = new LinkedBlockingQueue<>();
 
     private Server() {
         serverRunning = true;
@@ -89,8 +89,7 @@ public class Server implements Constants, Runnable {
                 if (receivePacket.getLength() > 0)
                     mailbox.add(receivePacket);
             } catch (IOException e) {
-                logger.log(Level.SEVERE, "Error receiving packet", e);
-
+                logger.log(Level.SEVERE, "Error receiving packet {0}", e.getMessage());
             }
         }
     }
@@ -99,13 +98,13 @@ public class Server implements Constants, Runnable {
         while (serverRunning) {
             try {
                 DatagramPacket receivePacket = mailbox.take();
-                String message = new String(receivePacket.getData(), 0, receivePacket.getLength(),
-                        StandardCharsets.UTF_8);
+                String message = new String(receivePacket.getData(), 0, receivePacket.getLength(), StandardCharsets.UTF_8);
                 MessageHandler mg = new MessageHandler();
                 mg.handleMessage(message, receivePacket.getAddress(), receivePacket.getPort());
-            } catch (Exception e) {
+            } catch (InterruptedException e) {
                 // Vikil you should fix this I just temp changed it
-                logger.log(Level.SEVERE, "Error {0}", e);
+                logger.log(Level.SEVERE, "Error {0}", e.getMessage());
+                Thread.currentThread().interrupt();
             }
         }
     }
@@ -126,7 +125,8 @@ public class Server implements Constants, Runnable {
                 Thread.sleep(TIMEOUT);
                 checkForMissingResponse(clients, sendTime);
             } catch (InterruptedException e) {
-                logger.info("Error waiting for stat");
+                logger.log(Level.INFO, "Error waiting for stat");
+                Thread.currentThread().interrupt();
             }
         }, 0, STAT_INTERVAL_SECONDS, TimeUnit.MILLISECONDS);
     }

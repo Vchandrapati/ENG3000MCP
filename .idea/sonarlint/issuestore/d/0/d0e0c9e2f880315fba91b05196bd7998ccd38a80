@@ -1,11 +1,4 @@
 
-
-java:S26296"7Use the built-in formatting to construct this argument.(ÖÛæøÿÿÿÿ8æ®è­Ÿ2J$fa263402-24e7-4d14-90d5-0ed2062691bd
-¢
-java:S1450"_Remove the "completedStartup" field and declare it as a local variable in the relevant methods.(†ºš›8Óé­Ÿ2J$d34e14ab-c7da-4e54-ab56-60461231006e
-Ü
-java:S6548"˜A Singleton implementation was detected. Make sure the use of the Singleton pattern is required and the implementation is the right one for the context.(¶ŞûÓ8ì®è­Ÿ2J$4be98fe0-6781-4fa4-a1d7-00602c8a0bc8
-u
-java:S1135Q"2Complete the task associated to this TODO comment.(…ïœ†8ï®è­Ÿ2J$57b4d3d3-20bb-4231-911c-d37ba7515e95
-w
-java:S1068"4Remove this unused "completedStartup" private field.(†ºš›8•Óé­Ÿ2J$7feb82fe-714c-4b76-93a3-fbdde9d93204
+‹	java:S116"PRename this field "ERROR" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÒİêˆJ$5af5a8d8-1bfd-4c42-9453-f8d2e08930ed
+Õ
+java:S6548"˜A Singleton implementation was detected. Make sure the use of the Singleton pattern is required and the implementation is the right one for the context.(¶ŞûÓJ$5327900f-ebe4-40f6-ab76-6d2507e83297

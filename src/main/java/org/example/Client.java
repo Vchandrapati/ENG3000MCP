@@ -1,15 +1,13 @@
 package org.example;
 
-import java.net.DatagramPacket;
 import java.net.InetAddress;
-import java.nio.charset.StandardCharsets;
 import java.util.logging.Logger;
 
 public abstract class Client {
     protected static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     protected MessageHandler messageHandler;
-    private InetAddress clientAddress;
-    private int clientPort;
+    private final InetAddress clientAddress;
+    private final int clientPort;
     protected String id;
     private volatile boolean statReturned = false;
     private volatile boolean statSent = false;

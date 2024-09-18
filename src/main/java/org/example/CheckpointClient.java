@@ -1,6 +1,5 @@
 package org.example;
 
-import java.net.DatagramPacket;
 import java.net.InetAddress;
 
 public class CheckpointClient extends Client {
