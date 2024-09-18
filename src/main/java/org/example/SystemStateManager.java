@@ -87,7 +87,7 @@ public class SystemStateManager {
     //For every stat message recieved during emergency mode
     //Takes a string id of a client id
     public void sendEmergencyPacketClientID(String id) {
-        
+        EmergencyState.addMessage(id);
     }
 
     //Checks to see if the system needs to go to emergency state, if already dont 

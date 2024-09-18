@@ -18,7 +18,7 @@ public class StartupState extends MappingState {
         // Check if early start or timeout
         if ((elapsedTime >= STARTUP_CONNECTION_TIME_PERIOD || startEarly)) {
             logger.info("Mapping conditions met, attempting to return trains from database");
-            trainsToMap = db.getTrains();
+            trainsToMap = db.getTrainClients();
             return true;
         }
         return false;

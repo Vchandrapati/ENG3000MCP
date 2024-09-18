@@ -146,10 +146,14 @@ public class Database {
                 .orElse(null);
     }
 
-    public List<Client> getTrains() {
-        List<Client> trains = new ArrayList<>();
+    public List<TrainClient> getTrainClients() {
+        List<TrainClient> trains = new ArrayList<>();
         for (String id : allTrains) {
-            trains.add(clients.get(id));
+            if (clients.get(id) instanceof TrainClient) {
+                trains.add((TrainClient) clients.get(id));
+            } else {
+                logger.log(Level.SEVERE, "A non train in allTrains set: {0}", id);
+            }
         }
 
         return trains;

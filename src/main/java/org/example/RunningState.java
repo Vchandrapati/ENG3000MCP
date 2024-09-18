@@ -23,7 +23,7 @@ public class RunningState implements SystemStateInterface {
 
     private void moveAllTrains() {
         try {
-            List<TrainClient> trains = Database.getInstance().getTrains();
+            List<TrainClient> trains = Database.getInstance().getTrainClients();
             if(trains != null && !trains.isEmpty()) {
                 allRunning = true;
                 for (TrainClient trainClient : trains) {

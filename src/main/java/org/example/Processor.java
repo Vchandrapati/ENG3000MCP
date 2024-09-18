@@ -7,7 +7,6 @@ import java.util.logging.Logger;
 public class Processor {
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private static final Database db = Database.getInstance();
-    // Get checkpint count no longer exists - Eugene
     private static final int TOTAL_BLOCKS = db.getCheckpointCount();
 
     public void sensorTripped(int sensorTripped) {
@@ -18,6 +17,7 @@ public class Processor {
     public void handleTrainSpeed(int sensor) {
         try {
             String trainID = db.getLastTrainInBlock(sensor - 1);
+            // Maybe put an error to catch this
             TrainClient train = (TrainClient) db.getClient(trainID);
 
             db.updateTrainBlock(trainID, sensor);
@@ -57,7 +57,6 @@ public class Processor {
 
     private int calculatePreviousBlock(int sensor) {
         int previousBlock = (sensor - 2) % TOTAL_BLOCKS;
-        // Get checkpint count no longer exists - Eugene
         return previousBlock == 0 ? db.getCheckpointCount() : previousBlock;
     }
 }

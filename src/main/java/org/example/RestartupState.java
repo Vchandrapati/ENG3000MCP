@@ -9,7 +9,7 @@ public class RestartupState extends MappingState {
 
     @Override
     protected boolean checkReadyToMap() {
-        trainsToMap = db.getUnresponsiveClients();
+        trainsToMap = db.getTrainsWaitingToReconnect();
         if (trainsToMap != null && !trainsToMap.isEmpty())
             return true;
         else {

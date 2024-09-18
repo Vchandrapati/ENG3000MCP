@@ -4,11 +4,11 @@ import java.util.logging.Logger;
 
 public class CurrentTrainInfo {
     static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-    private final TrainClient train;
+    private final Client train;
     private boolean hasSent;
     private long timeSinceSent;
 
-    public CurrentTrainInfo(TrainClient train) {
+    public CurrentTrainInfo(Client train) {
         this.train = train;
     }
 
@@ -48,8 +48,13 @@ public class CurrentTrainInfo {
         String message = MessageGenerator.generateExecuteMessage("ccp", train.id, System.currentTimeMillis(), SpeedEnum.SLOW);
         train.sendMessage(message, "TRAIN");
 
-        if (zone != -1)
-            train.changeZone(zone);
+        try {
+            TrainClient trainTemp = (TrainClient) train;
+            if (zone != -1)
+                trainTemp.changeZone(zone);
+        } catch (Exception e) {
+            logger.warning("Tried to cast Client to trainClient, failed");
+        }
     }
 
     // If the current train has not responded after timeout time then retry

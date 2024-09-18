@@ -25,7 +25,7 @@ public class EmergencyState implements SystemStateInterface {
             return checkIfAllReconnected();
         }
         else {
-            List<TrainClient> trains = db.getTrains();
+            List<TrainClient> trains = db.getTrainClients();
             if(trains != null && !trains.isEmpty()) {
                 startedStopping = true;
                 stopAllTrains();
