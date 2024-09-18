@@ -46,7 +46,7 @@ public class EmergencyState implements SystemStateInterface {
                 db.removeClientFromUnresponsive(client);
             }
         }
-        if(db.isUnreponsiveEmpty()) return true;
+        if(db.isUnresponsiveEmpty()) return true;
         return false;
     }
 

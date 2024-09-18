@@ -78,6 +78,13 @@ public class SystemStateManager {
         return completedStartup;
     }
 
+    //VIKIL PLEASE READ
+
+    //I need you to only send me unresponsive client ids while not in emergency mode,
+    //if in emergency mode you will
+    //1) Still send unresponsive client ids but they must be new
+    //2) All the client ids of stat messages received
+
     //Takes a string id of a client id
     public void addUnressponsiveClient(String id) {
         ERROR = true;
