@@ -1,29 +1,33 @@
 package org.example;
 
 import java.util.*;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class CommandHandler implements Runnable{
-    //Class for handling commands in the console given by the user
-
-    private static final List<String> commands;
-    private static final Logger logger = Logger.getLogger(CommandHandler.class.getName());
-    private volatile static boolean isRunning = true;
+/**
+ * Handles commands from the console given by the user
+ */
+public class CommandHandler implements Runnable {
+    private static final Set<String> commands;
+    private Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+    private static volatile boolean isRunning = true;
     private boolean startedStartup = false;
     private Thread commandThread;
+    private BlockingQueue<String> commandQueue = new LinkedBlockingQueue<>();
 
     //Set of commands
     static {
-        commands = new ArrayList<>();
+        commands = new HashSet<>();
         commands.add("start startup");
         commands.add("quit");
         commands.add("help");
         commands.add("start running");
-        //For adding syntax is "add brmax x" where x is the number to add
     }
 
     public CommandHandler() {
-        commandThread = new Thread(this);
+        commandThread = new Thread(this, "CommandHandler-Thread");
         commandThread.start();
     }
     
@@ -31,17 +35,18 @@ public class CommandHandler implements Runnable{
     @Override
     public void run() {
         logger.info("MCP online, please input a command, type help to see a list of commands");
-        Scanner scanner = new Scanner(System.in);
 
         while(isRunning) {
             try {
-                //tries to get console input
-                String input = scanner.nextLine();
+                //tries to get command from queue if exists
+                String input = commandQueue.take();
+
                 //if valid processes the command and prints to console
-                if (isValid(input)) {
-                    logger.info("Valid command executed: " + input);
+                if (commands.contains(input)) {
+                    executeCommand(input);
+                    logger.log(Level.INFO, "Command executed: {0}", input);
                 } else {
-                    logger.warning("Invalid command: " + input);
+                    logger.log(Level.WARNING,"Invalid command: {0}",  input);
                 }
             //if command is invalid throw exception
             } catch (InvalidCommandException e) {
@@ -50,46 +55,52 @@ public class CommandHandler implements Runnable{
                 logger.severe("An unexpected error occurred: " + e.getMessage());
             }
         }
-        scanner.close();
+    }
+
+    public void processInput(String input) {
+        try {
+            commandQueue.put(input); // Submit the command to the queue
+        } catch (InterruptedException e) {
+            logger.severe("Failed to submit command: " + e.getMessage());
+            Thread.currentThread().interrupt(); // Restore interrupted status
+        }
     }
 
     //takes an input string and executes its command, if invalid throw exception
-    private boolean isValid(String input) throws InvalidCommandException {
-        //using the substring find the command
+    private void executeCommand(String input) throws InvalidCommandException {
+        // using the substring find the command
         switch(input) {
-            case "":
-                return false;
             case "help":
                 help();
-                return true;
+                break;
             case "quit":
-                isRunning = false;
                 App.shutdown();
-                return true;
+                break;
             case "start startup":
                 if(!startedStartup) StartupState.startEarly();
                 else throw new InvalidCommandException("Has already been used");
-                return true;
+                break;
             case "start running":
                 if(!startedStartup) SystemStateManager.getInstance().setState(SystemState.RUNNING);
                 else throw new InvalidCommandException("Has already been used");
-                return true;
+                break;
             default:
                 throw new InvalidCommandException("Invalid command");
         }
     }
 
-    //prints all set commmnds to the console
+    // Prints all set commands to the console
     private void help() {
-        String commandString = "";
-        for (String string : commands) {
-            commandString += "\n" + string;
+        StringBuilder commandString = new StringBuilder();
+        for (String command : commands) {
+            commandString.append("\n").append(command);
         }
-        logger.info(commandString);
+
+        logger.info(commandString.toString());
     }
 
     //Exception for invalid commands
-    class InvalidCommandException extends Exception {
+    private static class InvalidCommandException extends Exception {
         public InvalidCommandException(String message) {
             super(message);
         }

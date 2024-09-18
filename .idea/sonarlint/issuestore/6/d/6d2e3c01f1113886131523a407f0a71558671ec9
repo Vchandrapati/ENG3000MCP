@@ -1,5 +1,9 @@
 
 ˜
-java:S1450"URemove the "status" field and declare it as a local variable in the relevant methods.(¦Ëº™8ä“ŠÙ2J$b72db074-649f-4e08-8ab9-f5ce3344de4a
+java:S1450"URemove the "status" field and declare it as a local variable in the relevant methods.(¦Ëº™8ˆ™ ÙŸ2J$d05f5eec-52be-40b8-90aa-57cc5329294f
+p
+java:S1185"(Remove this method to simply inherit it.(úÕ³Èıÿÿÿÿ8‹™ ÙŸ2J$bce16baf-9caa-4205-9571-79a7aa8fc3f9
+‚
+java:S1161":Add the "@Override" annotation above this method signature(úÕ³Èıÿÿÿÿ8Œ™ ÙŸ2J$a82a334d-b830-42d0-bb87-e7759c632024
 m
-java:S1068"*Remove this unused "status" private field.(¦Ëº™8ë“ŠÙ2J$0b61106e-04d8-4af6-88c7-0144c35571b2
+java:S1068"*Remove this unused "status" private field.(¦Ëº™8“™ ÙŸ2J$62013eca-7e30-4343-809a-1e0f69683aa6

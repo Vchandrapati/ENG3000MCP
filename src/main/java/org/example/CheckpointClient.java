@@ -2,7 +2,6 @@ package org.example;
 
 import java.net.DatagramPacket;
 import java.net.InetAddress;
-import java.util.concurrent.ExecutionException;
 
 public class CheckpointClient extends Client {
     private final Integer location;
@@ -24,26 +23,29 @@ public class CheckpointClient extends Client {
         this.tripped = false;
     }
 
-    public Integer getIntID(){
+    public Integer getIntID() {
         return intID;
     }
-    
+
     public Integer getLocation() {
         return location;
     }
 
-    // Uses an alternate process packet method as the messages are strings
     @Override
-    public void processPacket(DatagramPacket packet) {
-        String message = new String(packet.getData(), 0, packet.getLength());
-        if (!message.isEmpty()) {
-            messageHandler.handleCheckpointMessage(message);
-        }
+    public void sendStatusMessage(String id, Long timestamp) {
+        String message = MessageGenerator.generateStatusMessage("ccp", id, System.currentTimeMillis());
+        sendMessage(message, "STAT");
+    }
+
+    public void sendAcknowledgeMessage() {
+        String message = MessageGenerator.generateAcknowledgesMessage("checkpoint", id, System.currentTimeMillis());
+        sendMessage(message, "ACK");
+        registered = true;
     }
 
     @Override
     public void registerClient() {
-        Database.getInstance().addCheckpoint(this.id, this);
+        Database.getInstance().addClient(this.id, this, super.getClientAddress(), super.getClientPort() + "");
     }
 
     public void setTripped() {

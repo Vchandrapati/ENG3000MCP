@@ -1,15 +1,14 @@
 package org.example;
 
-import java.util.*;
 import java.util.logging.Logger;
 
 public class CurrentTrainInfo {
-    static final Logger logger = Logger.getLogger(SystemStateInterface.class.getName());
-    private final TrainClient train;
+    static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+    private final Client train;
     private boolean hasSent;
     private long timeSinceSent;
 
-    public CurrentTrainInfo(TrainClient train) {
+    public CurrentTrainInfo(Client train) {
         this.train = train;
     }
 
@@ -18,9 +17,7 @@ public class CurrentTrainInfo {
     public boolean process(long trainStartupTimeout) {
         if (!hasSent) {
             sendTrainToNextCheckpoint("");
-            return false;
-        } 
-        else {
+        } else {
             int tempTrip = SystemStateManager.getInstance().getLastTrip();
             if (tempTrip != -1) {
                 stopTrainAtCheckpoint(tempTrip);
@@ -29,32 +26,35 @@ public class CurrentTrainInfo {
             if (System.currentTimeMillis() - timeSinceSent > trainStartupTimeout) {
                 retrySending();
             }
-            return false;
         }
+        return false;
     }
 
     // Send speed message to the current train
     private void sendTrainToNextCheckpoint(String retry) {
-        if (train == null) {
-            return;
-        }
-        logger.info(retry + " Moving " + train.id);
-        long tempTime = System.currentTimeMillis();
-        String message = MessageGenerator.generateExecuteMessage("ccp", train.id, tempTime, SpeenEnum.SLOW);
-        train.sendMessage(message);
-        timeSinceSent = tempTime;
+        logger.info(String.format("%s Moving %s", retry, train.id));
+        sendTrainMessage(-1);
         hasSent = true;
     }
 
     // Tells the current train to stop when a checkpoint has been detected
     private void stopTrainAtCheckpoint(int zone) {
         logger.info("Train " + train.id + " has been mapped to zone " + zone);
-        long tempTime = System.currentTimeMillis();
-        String message = MessageGenerator.generateExecuteMessage("ccp", train.id, tempTime,
-                SpeenEnum.STOP);
-        train.sendMessage(message);
-        train.changeZone(zone);
+        sendTrainMessage(zone);
         hasSent = true;
+    }
+
+    private void sendTrainMessage(int zone) {
+        String message = MessageGenerator.generateExecuteMessage("ccp", train.id, System.currentTimeMillis(), SpeedEnum.SLOW);
+        train.sendMessage(message, "TRAIN");
+
+        try {
+            TrainClient trainTemp = (TrainClient) train;
+            if (zone != -1)
+                trainTemp.changeZone(zone);
+        } catch (Exception e) {
+            logger.warning("Tried to cast Client to trainClient, failed");
+        }
     }
 
     // If the current train has not responded after timeout time then retry

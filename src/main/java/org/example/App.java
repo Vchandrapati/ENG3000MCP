@@ -1,33 +1,37 @@
 
 package org.example;
 
+import javax.swing.*;
+
 public class App {
     private static Server server;
-    public volatile static boolean isRunning = true;
+    public static volatile boolean isRunning = true;
     private static SystemStateManager systemStateManager;
+    private static VisualiserScreen screen;
 
     public static void main(String[] args) {
-        LoggerConfig.setupLogger();
-        start();
-        new CommandHandler();
+        SwingUtilities.invokeLater(() -> {
+            screen = new VisualiserScreen();
+            screen.setVisible(true);
+            startMCP();
+        });
     }
 
-    //shutsdown entire program
-    public static void shutdown() {
-        server.shutdown();
-        Database.getInstance().shutdown();
-        isRunning = false;
-    }
-
-    public static void start() {
+    public static void startMCP() {
         new Thread(() -> {
             systemStateManager = SystemStateManager.getInstance();
-            server = new Server();
-            server.startStatusScheduler();
-            //main loop for program
+            server = Server.getInstance();
+            // main loop for program
             while(isRunning) {
                 systemStateManager.run();
             }
         }).start();
+    }
+
+    // shutdown entire program
+    public static void shutdown() {
+        server.shutdown();
+        isRunning = false;
+        Thread.currentThread().interrupt();
     }
 }

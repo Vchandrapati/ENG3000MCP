@@ -40,20 +40,23 @@ public class TrainClient extends Client {
     // 0: Stop
     // 1: Slow
     // 2+: Fast
-    public void sendExecuteMessage(SpeenEnum speed) {
-        String message = MessageGenerator.generateExecuteMessage("ccp", id, System.currentTimeMillis(), /*
-                                                                                                         * Will need to
-                                                                                                         * change this
-                                                                                                         * to comply
-                                                                                                         * with the Enum
-                                                                                                         */speed);
-        sendMessage(message);
+    public void sendExecuteMessage(SpeedEnum speed) {
+        String message = MessageGenerator.generateExecuteMessage("ccp", id, System.currentTimeMillis(), speed);
+        sendMessage(message, "EXEC");
     }
 
     // For sending an acknowledge message to the CCP
     public void sendAcknowledgeMessage() {
         String message = MessageGenerator.generateAcknowledgesMessage("ccp", id, System.currentTimeMillis());
-        sendMessage(message);
+        sendMessage(message, "ACK");
+        registered = true;
+    }
+
+    // For sending an status message to the CCP
+    @Override
+    public void sendStatusMessage(String id, Long timestamp) {
+        String message = MessageGenerator.generateStatusMessage("ccp", id, System.currentTimeMillis());
+        sendMessage(message, "STAT");
     }
 
     // For sending a message about updating the status of the door
@@ -61,12 +64,14 @@ public class TrainClient extends Client {
     // False: Door is closed
     public void sendDoorMessage(boolean doorOpen) {
         String message = MessageGenerator.generateDoorMessage("ccp", id, System.currentTimeMillis(), doorOpen);
-        sendMessage(message);
+        sendMessage(message, "DOOR");
     }
 
     @Override
     public void registerClient() {
-        Database.getInstance().addTrain(this.id, this);
+        Database.getInstance().addClient(this.id, this, super.getClientAddress(), super.getClientPort() + "");
+        logger.info("Added new train to database: " + Database.getInstance().getTrainCount());
+
     }
 
     public void changeZone(int zone) {

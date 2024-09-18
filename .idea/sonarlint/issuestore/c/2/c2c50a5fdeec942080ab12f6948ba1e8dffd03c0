@@ -1,15 +1,19 @@
 
-p
-java:S1450"URemove the "trains" field and declare it as a local variable in the relevant methods.(Óè®µúÿÿÿÿ
-t
-java:S2142"^Either re-interrupt this method or rethrow the "InterruptedException" that can be caught here.(üŸ´Â
-N
-java:S3400)"9Remove this method and declare a constant for this value.(¸®Ã'
-H
-java:S1135("2Complete the task associated to this TODO comment.(…ïœ†
-1
-java:S36268"Remove this redundant jump.(ûÁİ…
-A
-java:S1068"+Remove this unused "timeout" private field.(¸•å©
-E
-java:S1068"*Remove this unused "trains" private field.(Óè®µúÿÿÿÿ
+|
+java:S3516"9Refactor this method to not always return the same value.(¬¸¤¤8ç³È°Ÿ2J$704b73e7-1153-4ed7-a913-278bfe06816c
+}
+java:S1854":Remove this useless assignment to local variable "trains".(ëø‘®8è³È°Ÿ2J$18cb1be4-55a8-445e-b503-e4cb12a7025d
+}
+java:S1117":Rename "trains" which hides the field declared at line 17.(ëø‘®8¦É°Ÿ2J$0ce4a92b-8ccc-47e6-a50d-a7d7fafbbcc4
+n
+java:S1481"+Remove this unused "trains" local variable.(ëø‘®8¦É°Ÿ2J$612d04dc-f474-4607-80fa-e0e19554a254
+{
+java:S3400!"9Remove this method and declare a constant for this value.(¸®Ã'8é³È°Ÿ2J$68f0cabe-fe23-40f6-bd9b-feacc67074dd
+u
+java:S1135 "2Complete the task associated to this TODO comment.(…ïœ†8é³È°Ÿ2J$03fb67d1-2b72-419e-8a25-071425d13512
+^
+java:S36260"Remove this redundant jump.(ûÁİ…8ê³È°Ÿ2J$b87d83dd-e0f1-497b-8a11-84308cd12249
+n
+java:S1068"+Remove this unused "timeout" private field.(¸•å©8ê³È°Ÿ2J$484fb376-e97c-463b-97f6-fa9ada840abc
+r
+java:S1068"*Remove this unused "trains" private field.(Óè®µúÿÿÿÿ8ê³È°Ÿ2J$baeeadd8-f25c-4b16-be16-03aca23a242e

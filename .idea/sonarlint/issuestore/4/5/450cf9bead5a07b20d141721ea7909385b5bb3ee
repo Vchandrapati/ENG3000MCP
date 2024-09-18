@@ -1,9 +1,15 @@
 
-™	java:S116"RRename this field "TIMEOUT" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(À•úÿÿÿÿ8©”ÛŞ2J$6f5e62af-0eb7-4491-ac59-e89262bb9eca
-š	java:S116"XRename this field "STAT_INTERVAL" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¥ÍÃ—8©”ÛŞ2J$227ab1da-dfad-4444-a6bb-0ebe46d44aac
-i
-java:S1170"!Make this final field static too.(À•úÿÿÿÿ8©”ÛŞ2J$e32a294d-48ce-493f-9033-3b594744986a
-d
-java:S1170"!Make this final field static too.(¥ÍÃ—8©”ÛŞ2J$8bc1e024-7851-45a5-9c57-841d2c8cdeec
-o
-java:S11258"'Remove the unnecessary boolean literal.(§ÏâŞøÿÿÿÿ8¯”ÛŞ2J$6cc00eb0-fa94-4cd1-a377-be6d69c60953
+z
+java:S2629k"7Use the built-in formatting to construct this argument.(¼ßÙ—8½¥·¢ 2J$15f61d6b-f217-4543-9852-304389b06bab
+g
+java:S2629Ÿ"$Invoke method(s) only conditionally.(æœÁR8ÒÓ¸¢ 2J$50cc22d5-20a0-4d22-a44d-ad07adf3681f
+m
+java:S2629®"$Invoke method(s) only conditionally.(àğÆçşÿÿÿÿ8¾¥·¢ 2J$ac22a00a-21b4-4ea1-89bd-606cec4ae50a
+Ü
+java:S6548"˜A Singleton implementation was detected. Make sure the use of the Singleton pattern is required and the implementation is the right one for the context.(ğ»¢­8É¥·¢ 2J$d2a54789-50db-4ed3-9e38-0091fe4608db
+¡
+java:S2142q"^Either re-interrupt this method or rethrow the "InterruptedException" that can be caught here.(”ı¾8Í¥·¢ 2J$699ffdd2-0745-4cae-a828-a56bbe2ee13b
+¢
+java:S2142"^Either re-interrupt this method or rethrow the "InterruptedException" that can be caught here.(ä ¹€8Ñ¥·¢ 2J$81fdd6e9-0b89-47e0-95a5-aa25378293f4
+}
+java:S3457°"4Lambda should be used to defer string concatenation.(±Ùèªûÿÿÿÿ8Ó¥·¢ 2J$6524f4ac-64c0-41eb-a7ee-65971a3ac74f
