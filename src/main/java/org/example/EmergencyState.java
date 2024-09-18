@@ -19,9 +19,16 @@ public class EmergencyState implements SystemStateInterface {
     protected static boolean startedStopping = false;
     protected static List<TrainClient> trains = null;
 
+    //the time when counter started
+    private final long timeOnStart = System.currentTimeMillis();
+
     @Override
     public boolean performOperation() {
-        if(startedStopping) {
+        //if it has been 5 minutes within emergency state, the client has failed to reconnect in time and proceed to next state
+        if(System.currentTimeMillis() - timeOnStart >= EMERGENCY_TIMEOUT) {
+            return true;
+        }
+        else if(startedStopping) {
             return checkIfAllReconnected();
         }
         else {
@@ -37,7 +44,9 @@ public class EmergencyState implements SystemStateInterface {
         return false;
     }
 
-    //goes through the stat message queue, if a dead client blahahdhad
+    //goes through the stat message queue, if the string is of a dead client, that client has reconnected, remove from the dead list
+    //if that client is also a train add to restartup list
+    //if the queue is empty and the dead list is empty, go to next state
     private boolean checkIfAllReconnected() {
         while(!clientMessageQueue.isEmpty()) {
             String client = clientMessageQueue.poll();
