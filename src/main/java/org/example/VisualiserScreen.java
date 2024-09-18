@@ -2,7 +2,6 @@ package org.example;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Map;
 import java.util.logging.Logger;
 
 public class VisualiserScreen extends JFrame {
@@ -49,7 +48,6 @@ public class VisualiserScreen extends JFrame {
     private void handleCommand() {
         String input = commandInput.getText();
         commandInput.setText(""); // Clear the input field
-        logger.info("Command Entered: " + input);
         commandHandler.processInput(input);
     }
 

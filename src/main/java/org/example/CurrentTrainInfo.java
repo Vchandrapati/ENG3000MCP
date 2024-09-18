@@ -46,7 +46,7 @@ public class CurrentTrainInfo {
 
     private void sendTrainMessage(int zone) {
         String message = MessageGenerator.generateExecuteMessage("ccp", train.id, System.currentTimeMillis(), SpeedEnum.SLOW);
-        train.sendMessage(message);
+        train.sendMessage(message, "TRAIN");
 
         if (zone != -1)
             train.changeZone(zone);

@@ -2,7 +2,8 @@ package org.example;
 
 import java.io.IOException;
 import java.net.*;
-import java.util.Map;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
 import java.util.concurrent.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,16 +19,17 @@ import java.util.logging.Logger;
 public class Server implements Constants, Runnable {
     private static final Database db = Database.getInstance();
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-    public final Map<InetAddress, Client> clients = new ConcurrentHashMap<>();
+    public final Map<Integer, Client> clients = new ConcurrentHashMap<>();
     private DatagramSocket serverSocket;
-    private volatile boolean connectionListener;
+    private volatile boolean serverRunning;
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-    private static final long TIMEOUT = 5000;
+    private static final int TIMEOUT = 5000;
     private static final int BUFFER_SIZE = 1024;
-    private static final int STAT_INTERVAL_SECONDS = 2;
+    private static final int STAT_INTERVAL_SECONDS = 5000;
+    private static BlockingQueue<DatagramPacket> mailbox = new LinkedBlockingQueue<>();
 
     private Server() {
-        connectionListener = true;
+        serverRunning = true;
         try {
             serverSocket = new DatagramSocket(PORT);
             logger.info("Server completed startup and listening on PORT: " + PORT);
@@ -66,6 +68,9 @@ public class Server implements Constants, Runnable {
     private void startConnectionListener() {
         Thread listenerThread = new Thread(this::connectionListener, "Server-ConnectionListener");
         listenerThread.start();
+
+        Thread packetProcessor = new Thread(this::packetProcessor, "Packet-Processor-Thread");
+        packetProcessor.start();
     }
 
     /**
@@ -74,50 +79,61 @@ public class Server implements Constants, Runnable {
      * Otherwise, creates a new client instance and registers it.
      */
     private void connectionListener() {
-        while (connectionListener){
+        while (serverRunning){
             try {
                 DatagramPacket receivePacket = new DatagramPacket(new byte[BUFFER_SIZE], BUFFER_SIZE);
                 serverSocket.receive(receivePacket);
+                if (receivePacket.getLength() > 0)
+                    logger.info("Packet recieved");
 
-                InetAddress clientAddress = receivePacket.getAddress();
-                int clientPort = receivePacket.getPort();
-                Client client = findClient(clientAddress, clientPort);
-
-                if (client != null) {
-                    client.processPacket(receivePacket);
-                    logger.info("Packet processed for client: " + client.id);
-                } else {
-                    // Checks if client exists in the whitelist
-                    String clientType = ClientTable.getInstance().getComponent(clientAddress.getHostAddress(), clientPort);
-                    Client newClient = createClient(clientType, clientAddress, clientPort);
-                    newClient.registerClient();
-                    clients.put(clientAddress, newClient);
-                    newClient.processPacket(receivePacket);
-                    logger.info("New client created and packet processed for client: " + newClient.id);
-                }
+                mailbox.add(receivePacket);
             } catch (IOException e) {
-                if(!connectionListener) {
-                    logger.log(Level.SEVERE,"Unexpected error in connection listner", e);
-                }
-                else {
-                    logger.log(Level.SEVERE, "Error receiving or processing packet", e);
-                }
+                logger.log(Level.SEVERE, "Error receiving packet", e);
+                
             }
         }
     }
 
-    private Client findClient(InetAddress clientAddress, int clientPort) {
-        Client ret = clients.get(clientAddress);
-        if (ret.getClientPort() == clientPort)
-            return ret;
+    private void packetProcessor() {
+        while (serverRunning) {
+            try {
+                DatagramPacket receivePacket = mailbox.take();
+                InetAddress clientAddress = receivePacket.getAddress();
+                int clientPort = receivePacket.getPort();
 
-        return null;
+                Client client = findClient(clientAddress, clientPort);
+        
+                if (client != null) {
+                    client.processPacket(receivePacket);
+                    logger.info("Packet processed for client: " + client.id);
+                } else if (client == null) {
+                    // Checks if client exists in the whitelist
+                    String message = new String(receivePacket.getData(), 0, receivePacket.getLength(), StandardCharsets.UTF_8);
+                    MessageHandler mg = new MessageHandler();
+                    mg.handleInitilise(message, clientAddress, clientPort);
+                }
+            } catch (Exception e) {
+                logger.severe(e.getMessage());
+            }
+        }
+    }
+    private Client findClient(InetAddress clientAddress, int clientPort) {
+        List<Client> clients = Database.getInstance().getClients();
+        if (clients.isEmpty()) return null;
+
+        Optional<Client> client = clients.stream().filter(c -> c.getClientPort() == clientPort && c.getClientAddress() == clientAddress).findFirst();
+        logger.warning("Address: " + clientAddress + " Port: " + clientPort);
+        logger.warning(client.get() + "");
+        if (!client.isPresent())
+            return null;
+
+        return client.get();
     }
 
     private static Client createClient(String clientType, InetAddress clientAddress, int clientPort) throws IOException {
         String componentType = clientType.split(" ")[0];
 
-        if (componentType.contains("LED"))
+        if (componentType.contains("CP"))
             return new CheckpointClient(clientAddress, clientPort, clientType);
         else if (componentType.contains("BR"))
             return new TrainClient(clientAddress, clientPort, clientType);
@@ -130,14 +146,22 @@ public class Server implements Constants, Runnable {
     public void startStatusScheduler() {
         scheduler.scheduleAtFixedRate(() -> {
             long sendTime = System.currentTimeMillis();
-            for (Client client : clients.values()) {
-                client.setStatReturned(false);
-                String statusMessage = MessageGenerator.generateStatusMessage(client.id, client.id, System.currentTimeMillis());
-                client.sendMessage(statusMessage);  // Send status request message
+            
+            List<Client> clients = Database.getInstance().getClients();
+            for (Client client : clients) {
+                if (client.isRegistered()) {
+                    client.setStatReturned(false);
+                    client.sendStatusMessage(client.id, System.currentTimeMillis());
+                }
             }
 
-            scheduler.schedule(() -> checkForMissingResponse(sendTime), TIMEOUT, TimeUnit.MILLISECONDS);
-        }, 0, STAT_INTERVAL_SECONDS, TimeUnit.SECONDS);
+            try {
+                Thread.sleep(5000);
+                checkForMissingResponse(sendTime);
+            } catch (Exception e) {
+                logger.info("Error waiting for stat");
+            }
+        }, 0, STAT_INTERVAL_SECONDS, TimeUnit.MILLISECONDS);
     }
 
 
@@ -151,21 +175,23 @@ public class Server implements Constants, Runnable {
     private void checkForMissingResponse(long sendTime) {
         clients.values().forEach(client -> {
             boolean hasFailed = false;
-            if (!client.lastStatReturned()) {
+            if (!client.lastStatReturned() && client.isRegistered() && client.lastStatMsgSent()) {
                 logger.severe(String.format("No STAT response from %s sent at %d", client.getId(), sendTime));
                 hasFailed = true;
                 //if a train is unresponsive
                 if(client.getId().contains("BR")) db.addUnresponsiveClient(client.getId());
             }
+
             if(hasFailed) SystemStateManager.getInstance().setState(SystemState.EMERGENCY);
         });
     }
 
-    public void sendMessageToClient(Client client, String message) {
+    public void sendMessageToClient(Client client, String message, String type) {
         try {
             byte[] buffer = message.getBytes();
             DatagramPacket sendPacket = new DatagramPacket(buffer, buffer.length, client.getClientAddress(), client.getClientPort());
             serverSocket.send(sendPacket);
+            logger.info(String.format("Sent %s to client: %s", type, client.id));
         } catch (IOException e) {
             logger.log(Level.SEVERE, "Failed to send message to client " + client.getId(), e);
         }
@@ -175,7 +201,7 @@ public class Server implements Constants, Runnable {
     public void shutdown() {
         try {
             if(serverSocket != null) {
-                connectionListener = false;
+                serverRunning = false;
                 serverSocket.close();
                 scheduler.shutdown();
             }

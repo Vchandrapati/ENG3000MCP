@@ -9,6 +9,7 @@ public class Database {
     private final ConcurrentHashMap<String, TrainClient> trains;
     private final ConcurrentHashMap<String, StationClient> stations;
     private final ConcurrentHashMap<String, CheckpointClient> checkpoints;
+    private final ConcurrentHashMap<String, Client> clients;
     private final ConcurrentHashMap<String, Integer> trainBlockMap;
     private final Set<String> unresponsiveClients;
 
@@ -17,6 +18,7 @@ public class Database {
         stations = new ConcurrentHashMap<>();
         checkpoints = new ConcurrentHashMap<>();
         trainBlockMap = new ConcurrentHashMap<>();
+        clients = new ConcurrentHashMap<>();
         unresponsiveClients = ConcurrentHashMap.newKeySet();
     }
 
@@ -61,6 +63,7 @@ public class Database {
 
     public void addTrain(String id, TrainClient tr) {
         TrainClient prevValue = trains.putIfAbsent(id, tr);
+        clients.putIfAbsent(id, tr);
         if (prevValue != null) {
             String message = "Attempted to add duplicate train with id: " + id;
             logger.warning(message);
@@ -70,6 +73,7 @@ public class Database {
 
     public void addStation(String id, StationClient st) {
         StationClient prevValue = stations.putIfAbsent(id, st);
+        clients.putIfAbsent(id, st);
         if (prevValue != null) {
             String message = "Attempted to add duplicate station with id: " + id;
             logger.warning(message);
@@ -79,6 +83,7 @@ public class Database {
 
     public void addCheckpoint(String id, CheckpointClient ch) {
         CheckpointClient prevValue = checkpoints.putIfAbsent(id, ch);
+        clients.putIfAbsent(id, ch);
         if (prevValue != null) {
             String message = "Attempted to add duplicate checkpoint with id: " + id;
             logger.warning(message);
@@ -117,6 +122,10 @@ public class Database {
 
     public List<TrainClient> getTrains() {
         return new ArrayList<>(trains.values());
+    }
+
+    public List<Client> getClients() {
+        return new ArrayList<>(clients.values());
     }
 
     public int getTrainCount() {

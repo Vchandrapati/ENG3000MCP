@@ -31,7 +31,7 @@ public class StationClient extends CheckpointClient {
     // False: Door is closed
     public void sendDoorMessage(boolean doorOpen) {
         String message = MessageGenerator.generateDoorMessage("station", id, System.currentTimeMillis(), doorOpen);
-        sendMessage(message);
+        sendMessage(message, "DOOR");
     }
 
     // To tell the station what the status of the LED should be
@@ -39,7 +39,13 @@ public class StationClient extends CheckpointClient {
     // False: LED is off
     public void sendIRLEDMessage(boolean on) {
         String message = MessageGenerator.generateIRLEDMessage("station", id, System.currentTimeMillis(), on);
-        sendMessage(message);
+        sendMessage(message, "IRLED");
+    }
+
+    @Override
+    public void sendStatusMessage(String id, Long timestamp) {
+        String message = MessageGenerator.generateStatusMessage("ccp", id, System.currentTimeMillis());
+        sendMessage(message, "STAT");
     }
 
     @Override

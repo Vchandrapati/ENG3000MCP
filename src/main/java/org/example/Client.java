@@ -12,6 +12,8 @@ public abstract class Client {
     private int clientPort;
     protected String id;
     private volatile boolean statReturned = false;
+    private volatile boolean statSent = false;
+    protected boolean registered = false;
 
     protected Client(InetAddress clientAddress, int clientPort, String id) {
         this.id = id;
@@ -28,18 +30,27 @@ public abstract class Client {
         }
     }
 
-    public void sendMessage(String message) {
-        Server.getInstance().sendMessageToClient(this, message);
+    public void sendMessage(String message, String type) {
+        Server.getInstance().sendMessageToClient(this, message, type);
     }
 
     public abstract void registerClient();
+    protected abstract void sendStatusMessage(String id, Long timestamp);
 
     public boolean lastStatReturned() {
         return statReturned;
     }
 
+    public boolean lastStatMsgSent(){
+        return statSent;
+    }
+
     public void setStatReturned(boolean statReturned) {
         this.statReturned = statReturned;
+    }
+
+    public void setStatSent(boolean statSent){
+        this.statSent = statSent;
     }
 
     public InetAddress getClientAddress() {
@@ -52,5 +63,9 @@ public abstract class Client {
 
     public String getId() {
         return id;
+    }
+
+    public Boolean isRegistered() {
+        return registered;
     }
 }
