@@ -67,6 +67,21 @@ public class Database {
         return deadClients;
     }
 
+    public List<TrainClient> getTrainsWaitingToReconnect() {
+        List<TrainClient> waitingClients = new ArrayList<>();
+        for (String id : unresponsiveClients) {
+            Client client = clients.get(id);
+
+            if (client != null && clients.get(id) instanceof TrainClient) {
+                waitingClients.add((TrainClient) client);
+            } else {
+                logger.log(Level.SEVERE, "A non train in waitingToReconnectTrains set: {0}", id);
+            }
+        }
+
+        return waitingClients;
+    }
+
     public Map<String, Integer> getTrainBlockMap() {
         return new HashMap<>(trainBlockMap);
     }
