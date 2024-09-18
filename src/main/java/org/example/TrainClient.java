@@ -49,6 +49,7 @@ public class TrainClient extends Client {
     }
 
     // For sending an acknowledgment message to the CCP
+    @Override
     public void sendAcknowledgeMessage() {
         String message = MessageGenerator.generateAcknowledgesMessage("ccp", id, System.currentTimeMillis());
         sendMessage(message, "ACK");

@@ -36,6 +36,7 @@ public class CheckpointClient extends Client {
         sendMessage(message, "STAT");
     }
 
+    @Override
     public void sendAcknowledgeMessage() {
         String message = MessageGenerator.generateAcknowledgesMessage("checkpoint", id, System.currentTimeMillis());
         sendMessage(message, "ACK");

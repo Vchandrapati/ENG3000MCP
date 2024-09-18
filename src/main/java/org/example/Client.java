@@ -30,6 +30,7 @@ public abstract class Client {
     public abstract void registerClient();
 
     protected abstract void sendStatusMessage(long timestamp);
+    protected abstract void sendAcknowledgeMessage();
 
     public boolean lastStatReturned() {
         return statReturned.get();

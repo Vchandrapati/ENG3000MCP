@@ -5,31 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1d9b5952-4092-4fc7-8340-7dd220ada861" name="Changes" comment="Made some changes to comply with sonarlint">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/2/6/268b09d2a5cdab7d148f0ec91f7b3fb51601410d" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/2/6/268b09d2a5cdab7d148f0ec91f7b3fb51601410d" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/2/f/2f983decdfb727dcb6264a2451f5d54aebf3d582" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/2/f/2f983decdfb727dcb6264a2451f5d54aebf3d582" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/3/3/33df6e49c0049b5344e9fbe1452523adc50b1ae5" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/3/3/33df6e49c0049b5344e9fbe1452523adc50b1ae5" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/6/d/6d2e3c01f1113886131523a407f0a71558671ec9" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/6/d/6d2e3c01f1113886131523a407f0a71558671ec9" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/9/4/948f489c39dd752773a4b966be32393266256bd7" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/9/4/948f489c39dd752773a4b966be32393266256bd7" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/a/c/ac06820a0b9d2ca9b3064c1609686227fe9aaa98" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/a/c/ac06820a0b9d2ca9b3064c1609686227fe9aaa98" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/c/2/c2c50a5fdeec942080ab12f6948ba1e8dffd03c0" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/c/2/c2c50a5fdeec942080ab12f6948ba1e8dffd03c0" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/f/7/f7dd432092a502c8e35d0c574bc11e935a6987bd" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/f/7/f7dd432092a502c8e35d0c574bc11e935a6987bd" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/CheckpointClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/CheckpointClient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/CommandHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/CommandHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Database.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/LoggerConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/LoggerConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/MessageGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/MessageGenerator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/MessageHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/MessageHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Processor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Processor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/RunningState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/RunningState.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/StartupState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/StartupState.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/StationClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/StationClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/SystemStateManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/SystemStateManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/TrainClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/TrainClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/VisualiserScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/VisualiserScreen.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -86,7 +68,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1726662619710</updated>
-      <workItem from="1726662620775" duration="7549000" />
+      <workItem from="1726662620775" duration="8589000" />
     </task>
     <task id="LOCAL-00001" summary="Made some changes to comply with sonarlint">
       <option name="closed" value="true" />
@@ -104,7 +86,31 @@
       <option name="project" value="LOCAL" />
       <updated>1726668962356</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Made some changes to comply with sonarlint">
+      <option name="closed" value="true" />
+      <created>1726670335389</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1726670335389</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Made some changes to comply with sonarlint">
+      <option name="closed" value="true" />
+      <created>1726670342536</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1726670342536</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Made some changes to comply with sonarlint">
+      <option name="closed" value="true" />
+      <created>1726670346212</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1726670346212</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -119,7 +125,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/org/example/Client.java</url>
-          <line>38</line>
+          <line>39</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>

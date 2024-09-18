@@ -143,18 +143,13 @@ public class Server implements Runnable {
      */
     private void checkForMissingResponse(List<Client> clients, Long sendTime) {
         for (Client client : clients) {
-            boolean hasFailed = false;
             if (!client.lastStatReturned() && client.isRegistered() && client.lastStatMSGSent()) {
                 logger.severe(String.format("No STAT response from %s sent at %d", client.getId(), sendTime));
-                hasFailed = true;
 
-                // if a train is unresponsive
+                // If a train is unresponsive
                 if (client.isTrainClient())
-                    db.addUnresponsiveClient(client.getId());
+                    SystemStateManager.getInstance().addUnresponsiveClient(client.getId());
             }
-
-            if (hasFailed)
-                SystemStateManager.getInstance().setState(SystemState.EMERGENCY);
         }
     }
 
