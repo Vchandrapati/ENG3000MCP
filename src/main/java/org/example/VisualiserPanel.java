@@ -131,7 +131,7 @@ public class VisualiserPanel extends JPanel {
             FontMetrics fm = g2d.getFontMetrics();
             int labelWidth = fm.stringWidth(zoneNumber);
             int labelHeight = fm.getAscent();
-            g2d.drawString(zoneNumber, (float) labelX - labelWidth / 2, (float) labelY + labelHeight / 2);
+            g2d.drawString(zoneNumber, (float) labelX - (float) labelWidth / 2, (float) labelY + (float) labelHeight / 2);
         }
     }
 }

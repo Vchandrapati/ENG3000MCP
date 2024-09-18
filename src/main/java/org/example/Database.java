@@ -2,6 +2,7 @@ package org.example;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.net.InetAddress;
@@ -20,8 +21,7 @@ public class Database {
     private final HashSet<String> unresponsiveClients;
     // Set of all train clients waiting to reconnect
     private final HashSet<String> waitingToReconnectTrains;
-
-    private volatile Integer numberOfCheckpoints;
+    private final AtomicInteger numberOfCheckpoints;
 
     private Database() {
         clients = new ConcurrentHashMap<>();
@@ -33,7 +33,7 @@ public class Database {
         unresponsiveClients = new HashSet<>();
         waitingToReconnectTrains = new HashSet<>();
 
-        numberOfCheckpoints = 0;
+        numberOfCheckpoints = new AtomicInteger(0);
     }
 
     /**
@@ -113,7 +113,7 @@ public class Database {
         }
 
         if (id.startsWith("CP")) {
-            numberOfCheckpoints++;
+            numberOfCheckpoints.getAndIncrement();
         }
 
         clientKeys.put(clientAddress + clientPort, id);
@@ -206,6 +206,6 @@ public class Database {
     }
 
     public Integer getCheckpointCount() {
-        return numberOfCheckpoints;
+        return numberOfCheckpoints.get();
     }
 }

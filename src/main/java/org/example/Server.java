@@ -4,11 +4,10 @@ import java.io.IOException;
 import java.net.*;
 import java.util.List;
 import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.nio.charset.*;
-
-import static org.example.Constants.PORT;
 
 /**
  * Manages network communication with clients over UDP.
@@ -18,21 +17,23 @@ import static org.example.Constants.PORT;
  * <p>
  * Utilises the Singleton pattern to ensure only one instance of the Server
  * exists.
- * It also implements the {@link Constants} interface for configuration.
  */
 public class Server implements Runnable {
+    public static final int PORT = 6666;
     private static final Database db = Database.getInstance();
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private DatagramSocket serverSocket;
-    private volatile boolean serverRunning;
+    private final AtomicBoolean serverRunning;
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+    private final ExecutorService executorService = Executors.newFixedThreadPool(2);
     private static final int TIMEOUT = 5000;
     private static final int BUFFER_SIZE = 1024;
     private static final int STAT_INTERVAL_SECONDS = 5000;
     private static final BlockingQueue<DatagramPacket> mailbox = new LinkedBlockingQueue<>();
+    private final MessageHandler messageHandler = new MessageHandler();
 
     private Server() {
-        serverRunning = true;
+        serverRunning = new AtomicBoolean(true);
         try {
             serverSocket = new DatagramSocket(PORT);
             logger.info("Server completed startup and listening on PORT: " + PORT);
@@ -69,11 +70,8 @@ public class Server implements Runnable {
     }
 
     private void startConnectionListener() {
-        Thread listenerThread = new Thread(this::connectionListener, "Server-ConnectionListener");
-        listenerThread.start();
-
-        Thread packetProcessor = new Thread(this::packetProcessor, "Packet-Processor-Thread");
-        packetProcessor.start();
+        executorService.execute(this::connectionListener);
+        executorService.execute(this::packetProcessor);
     }
 
     /**
@@ -82,7 +80,7 @@ public class Server implements Runnable {
      * Otherwise, creates a new client instance and registers it.
      */
     private void connectionListener() {
-        while (serverRunning) {
+        while (serverRunning.get()) {
             try {
                 DatagramPacket receivePacket = new DatagramPacket(new byte[BUFFER_SIZE], BUFFER_SIZE);
                 serverSocket.receive(receivePacket);
@@ -95,18 +93,20 @@ public class Server implements Runnable {
     }
 
     private void packetProcessor() {
-        while (serverRunning) {
+        while (serverRunning.get()) {
             try {
                 DatagramPacket receivePacket = mailbox.take();
                 String message = new String(receivePacket.getData(), 0, receivePacket.getLength(), StandardCharsets.UTF_8);
-                MessageHandler mg = new MessageHandler();
-                mg.handleMessage(message, receivePacket.getAddress(), receivePacket.getPort());
+                messageHandler.handleMessage(message, receivePacket.getAddress(), receivePacket.getPort());
             } catch (InterruptedException e) {
-                // Vikil you should fix this I just temp changed it
-                logger.log(Level.SEVERE, "Error {0}", e.getMessage());
+                logger.log(Level.SEVERE, "Packet processor was interrupted", e);
                 Thread.currentThread().interrupt();
+            } catch (Exception e) {
+                logger.log(Level.SEVERE, "Error processing packet", e);
             }
         }
+
+        logger.log(Level.INFO, "Packet processor terminated");
     }
 
     public void startStatusScheduler() {
@@ -149,7 +149,7 @@ public class Server implements Runnable {
                 hasFailed = true;
 
                 // if a train is unresponsive
-                if (client.getId().contains("BR"))
+                if (client.isTrainClient())
                     db.addUnresponsiveClient(client.getId());
             }
             if (hasFailed)
@@ -173,9 +173,12 @@ public class Server implements Runnable {
     public void shutdown() {
         try {
             if (serverSocket != null) {
-                serverRunning = false;
+                serverRunning.set(false);
                 serverSocket.close();
-                scheduler.shutdown();
+                scheduler.shutdownNow();
+                executorService.shutdownNow();
+
+                logger.log(Level.INFO, "Server shutdown complete");
             }
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Error shutting down server", e);

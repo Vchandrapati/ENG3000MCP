@@ -19,7 +19,7 @@ public class SystemStateManager {
     private static final int NO_TRIP = -1;
     private int lastTrip = NO_TRIP;
 
-    private boolean ERROR = false;
+    private boolean error = false;
 
     private long timeWaited = System.currentTimeMillis();
     private static final Map<SystemState, Supplier<SystemStateInterface>> stateMap;
@@ -87,7 +87,7 @@ public class SystemStateManager {
 
     //Takes a string id of a client id
     public void addUnressponsiveClient  (String id) {
-        ERROR = true;
+        error = true;
         db.addUnresponsiveClient(id);
     }
 
@@ -99,7 +99,7 @@ public class SystemStateManager {
 
     //Checks to see if the system needs to go to emergency state, if already dont 
     private void checkChange() {
-        if(ERROR && currentState != SystemState.EMERGENCY) 
+        if(error && currentState != SystemState.EMERGENCY)
             setState(SystemState.EMERGENCY);
     }
 

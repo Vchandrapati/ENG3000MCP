@@ -7,8 +7,8 @@ import java.util.logging.LogRecord;
 import java.util.logging.SimpleFormatter;
 
 public class ScreenLogHandler extends Handler {
-    private JTextArea textArea;
-    private Formatter formatter;
+    private final JTextArea textArea;
+    private final Formatter formatter;
 
     public ScreenLogHandler(JTextArea textArea) {
         this.textArea = textArea;
@@ -16,11 +16,11 @@ public class ScreenLogHandler extends Handler {
     }
 
     @Override
-    public void publish(LogRecord record) {
-        if (!isLoggable(record))
+    public void publish(LogRecord logRecord) {
+        if (!isLoggable(logRecord))
             return;
 
-        String message = formatter.format(record);
+        String message = formatter.format(logRecord);
 
         SwingUtilities.invokeLater(() -> {
             textArea.append(message);

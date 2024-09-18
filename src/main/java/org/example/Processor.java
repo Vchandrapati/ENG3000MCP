@@ -1,7 +1,5 @@
 package org.example;
 
-import java.util.concurrent.ExecutionException;
-
 import java.util.logging.Logger;
 
 public class Processor {

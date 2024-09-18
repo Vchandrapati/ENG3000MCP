@@ -1,5 +1,0 @@
-
-´
-java:S6548	"˜A Singleton implementation was detected. Make sure the use of the Singleton pattern is required and the implementation is the right one for the context.(Ñ°Ù®þÿÿÿÿ
-W
-java:S3078t"AUse an "AtomicInteger" for this field; its operations are atomic.(ò¸¤Ô

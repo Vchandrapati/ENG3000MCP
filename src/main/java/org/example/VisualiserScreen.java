@@ -4,10 +4,10 @@ import javax.swing.*;
 import java.awt.*;
 
 public class VisualiserScreen extends JFrame {
-    private VisualiserPanel trackPanel;
-    private JTextField commandInput;
-    private JTextArea logArea;
-    private CommandHandler commandHandler = new CommandHandler();
+    private final VisualiserPanel trackPanel;
+    private final JTextField commandInput;
+    private final JTextArea logArea;
+    private final CommandHandler commandHandler = new CommandHandler();
     public VisualiserScreen() {
         setTitle("Master Control Protocol");
         setSize(1200, 600);

@@ -24,6 +24,10 @@ public abstract class Client {
         Server.getInstance().sendMessageToClient(this, message, type);
     }
 
+    public boolean isTrainClient() {
+        return this instanceof TrainClient;
+    }
+
     public abstract void registerClient();
 
     protected abstract void sendStatusMessage(String id, Long timestamp);

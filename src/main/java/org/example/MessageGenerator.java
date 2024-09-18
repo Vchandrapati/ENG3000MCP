@@ -13,6 +13,10 @@ public class MessageGenerator {
     private static final ObjectMapper objectMapper = new ObjectMapper();
     static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
+    private MessageGenerator() {
+        throw new IllegalStateException("Utility class");
+    }
+
     public static String generateAcknowledgesMessage(String clientType, String clientID, Long timestamp) {
         SendMessage message = new SendMessage();
         message.clientType = clientType;
