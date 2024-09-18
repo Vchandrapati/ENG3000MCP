@@ -27,13 +27,14 @@ public abstract class Client {
     }
 
     public abstract void registerClient();
+
     protected abstract void sendStatusMessage(String id, Long timestamp);
 
     public boolean lastStatReturned() {
         return statReturned;
     }
 
-    public boolean lastStatMSGSent(){
+    public boolean lastStatMSGSent() {
         return statSent;
     }
 
@@ -41,7 +42,7 @@ public abstract class Client {
         this.statReturned = statReturned;
     }
 
-    public void setStatSent(boolean statSent){
+    public void setStatSent(boolean statSent) {
         this.statSent = statSent;
     }
 

@@ -3,6 +3,7 @@ package org.example;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.std.InetAddressSerializer;
 
+import java.net.InetAddress;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.net.*;
