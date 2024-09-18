@@ -95,12 +95,12 @@ public class Server implements Constants, Runnable {
         }
     }
 
-    
     private void packetProcessor() {
         while (serverRunning) {
             try {
                 DatagramPacket receivePacket = mailbox.take();
-                String message = new String(receivePacket.getData(), 0, receivePacket.getLength(), StandardCharsets.UTF_8);
+                String message = new String(receivePacket.getData(), 0, receivePacket.getLength(),
+                        StandardCharsets.UTF_8);
                 MessageHandler mg = new MessageHandler();
                 mg.handleMessage(message, receivePacket.getAddress(), receivePacket.getPort());
             } catch (Exception e) {
@@ -163,7 +163,7 @@ public class Server implements Constants, Runnable {
             DatagramPacket sendPacket = new DatagramPacket(buffer, buffer.length, client.getClientAddress(),
                     client.getClientPort());
             serverSocket.send(sendPacket);
-            logger.info(String.format("Sent %s to client: %s", type, client.id));
+            logger.log(Level.INFO, String.format("Sent %s to client: %s", type, client.id));
         } catch (IOException e) {
             logger.log(Level.SEVERE, "Failed to send message to client " + client.getId(), e);
         }
