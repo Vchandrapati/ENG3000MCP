@@ -67,11 +67,11 @@ public class MessageHandler {
             client.updateStatus(receiveMessage.status.toUpperCase());
             client.setStatReturned(true);
             client.setStatSent(true);
-            logger.log(Level.INFO, "Received message from Blade Runner: {0}", receiveMessage.clientID);
+            logger.log(Level.INFO, "Received STAT message from Blade Runner: {0}", receiveMessage.clientID);
         } 
         else if(receiveMessage.message.equals("CCIN")) {
+            logger.log(Level.INFO, "Received CCIN message from Blade Runner: {0}", receiveMessage.clientID);
             handleInitialise(receiveMessage, address, port);
-            logger.log(Level.INFO, "Initialising", receiveMessage.message);
         }
         else {
             logger.log(Level.WARNING, "Unknown Blade Runner message: {0}", receiveMessage.message);

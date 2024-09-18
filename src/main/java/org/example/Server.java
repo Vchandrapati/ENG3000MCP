@@ -87,9 +87,7 @@ public class Server implements Constants, Runnable {
                 DatagramPacket receivePacket = new DatagramPacket(new byte[BUFFER_SIZE], BUFFER_SIZE);
                 serverSocket.receive(receivePacket);
                 if (receivePacket.getLength() > 0)
-                    logger.info("Packet recieved");
-
-                mailbox.add(receivePacket);
+                    mailbox.add(receivePacket);
             } catch (IOException e) {
                 logger.log(Level.SEVERE, "Error receiving packet", e);
 
