@@ -3,7 +3,6 @@ package org.example;
 import java.io.IOException;
 import java.net.*;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -120,11 +119,9 @@ public class Server implements Constants {
     // Closes the active threads safely
     public void shutdown() {
         try {
-            if(serverSocket != null) {
-                connectionListener = false;
-                serverSocket.close();
-                scheduler.shutdown();
-            }
+            connectionListener = false;
+            scheduler.shutdown();
+            if(serverSocket != null) serverSocket.close();
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Error shutting down server", e);
         }

@@ -29,6 +29,9 @@ public class RunningState implements SystemStateInterface{
             }
             logger.info("All Trains are now moving at speed 1");
         }
+        else {
+            logger.info("No trains connected!");
+        }
     }
 
     @Override
