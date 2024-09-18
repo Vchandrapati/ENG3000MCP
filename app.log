@@ -2070,3 +2070,25 @@ Sept 18, 2024 4:05:46 PM org.example.Server findClient
 WARNING: Address: /10.20.30.140 Port: 5002
 Sept 18, 2024 4:05:46 PM org.example.Server packetProcessor
 SEVERE: No value present l
+Sept 18, 2024 8:27:47 PM org.example.SystemStateManager setState
+INFO: Changing to system state STARTUP
+Sept 18, 2024 8:27:47 PM org.example.Server <init>
+INFO: Server completed startup and listening on PORT: 6666
+Sept 18, 2024 8:27:58 PM org.example.CommandHandler run
+INFO: Command executed: quit
+Sept 18, 2024 8:27:58 PM org.example.Server connectionListener
+SEVERE: Error receiving packet
+java.net.SocketException: Socket closed
+	at java.base/sun.nio.ch.DatagramSocketAdaptor.receive(DatagramSocketAdaptor.java:264)
+	at java.base/java.net.DatagramSocket.receive(DatagramSocket.java:714)
+	at org.example.Server.connectionListener(Server.java:88)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: java.nio.channels.AsynchronousCloseException
+	at java.base/sun.nio.ch.DatagramChannelImpl.endRead(DatagramChannelImpl.java:564)
+	at java.base/sun.nio.ch.DatagramChannelImpl.trustedBlockingReceive(DatagramChannelImpl.java:718)
+	at java.base/sun.nio.ch.DatagramChannelImpl.blockingReceive(DatagramChannelImpl.java:675)
+	at java.base/sun.nio.ch.DatagramSocketAdaptor.receive(DatagramSocketAdaptor.java:241)
+	... 3 more
+
+Sept 18, 2024 8:27:58 PM org.example.CommandHandler run
+SEVERE: An unexpected error occurred: null
