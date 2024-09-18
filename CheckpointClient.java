@@ -71,7 +71,7 @@ public class CheckpointClient {
 
     // Sends an initialise connection message
     public void sendInitialiseConnectionMsg(Integer num) {
-        byte[] buffer = ("{\"client_type\":\"checkpoint\", \"message\":\"CCIN\", \"client_id\":\"" + myID
+        byte[] buffer = ("{\"client_type\":\"checkpoint\", \"message\":\"CHIN\", \"client_id\":\"" + myID
                 + "\", \"timestamp\":\"2019-09-07T15:50+00Z\", \"location\":\""
                 + num + "\"}")
                 .getBytes();
