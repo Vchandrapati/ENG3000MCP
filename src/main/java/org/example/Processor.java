@@ -7,16 +7,18 @@ import java.util.logging.Logger;
 public class Processor {
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private static final Database db = Database.getInstance();
+    // Get checkpint count no longer exists - Eugene
     private static final int TOTAL_BLOCKS = db.getCheckpointCount();
+
     public void sensorTripped(int sensorTripped) {
-        if(!SystemStateManager.getInstance().needsTrip(sensorTripped)) 
+        if (!SystemStateManager.getInstance().needsTrip(sensorTripped))
             handleTrainSpeed(sensorTripped);
     }
 
     public void handleTrainSpeed(int sensor) {
         try {
             String trainID = db.getLastTrainInBlock(sensor - 1);
-            TrainClient train = db.getTrain(trainID);
+            TrainClient train = (TrainClient) db.getClient(trainID);
 
             db.updateTrainBlock(trainID, sensor);
             train.changeZone(sensor);
@@ -41,7 +43,7 @@ public class Processor {
     public void checkForTraffic(int block) {
         int currentBlock = block;
         // Check if block is occupied, if it is rerun handle Train speed for that train
-        while (db.isBlockOccupied(block)){
+        while (db.isBlockOccupied(block)) {
             // +1 because handleTrainSpeed gets the train behind the sensor being passed
             handleTrainSpeed(currentBlock + 1);
             currentBlock = calculatePreviousBlock(currentBlock + 1);
@@ -55,6 +57,7 @@ public class Processor {
 
     private int calculatePreviousBlock(int sensor) {
         int previousBlock = (sensor - 2) % TOTAL_BLOCKS;
+        // Get checkpint count no longer exists - Eugene
         return previousBlock == 0 ? db.getCheckpointCount() : previousBlock;
     }
 }

@@ -2,24 +2,36 @@ package org.example;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.net.InetAddress;
 
 public class Database {
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-    private final ConcurrentHashMap<String, TrainClient> trains;
-    private final ConcurrentHashMap<String, StationClient> stations;
-    private final ConcurrentHashMap<String, CheckpointClient> checkpoints;
     private final ConcurrentHashMap<String, Client> clients;
     private final ConcurrentHashMap<String, Integer> trainBlockMap;
-    private final Set<String> unresponsiveClients;
+
+    // Hashmap of key: IP + Port value: client ID
+    private final ConcurrentHashMap<String, String> clientKeys;
+
+    // Set of all train client IDs
+    private final HashSet<String> allTrains;
+    // Set of all unresponsive or "dead" clients
+    private final HashSet<String> unresponsiveClients;
+    // Set of all train clients waiting to reconnect
+    private final HashSet<String> waitingToReconnectTrains;
+
+    private volatile Integer numberOfCheckpoints;
 
     private Database() {
-        trains = new ConcurrentHashMap<>();
-        stations = new ConcurrentHashMap<>();
-        checkpoints = new ConcurrentHashMap<>();
-        trainBlockMap = new ConcurrentHashMap<>();
         clients = new ConcurrentHashMap<>();
-        unresponsiveClients = ConcurrentHashMap.newKeySet();
+        trainBlockMap = new ConcurrentHashMap<>();
+
+        clientKeys = new ConcurrentHashMap<>();
+
+        allTrains = new HashSet<>();
+        unresponsiveClients = new HashSet<>();
+        waitingToReconnectTrains = new HashSet<>();
     }
 
     /**
@@ -42,65 +54,79 @@ public class Database {
         unresponsiveClients.add(id);
     }
 
-    public List<TrainClient> getUnresponsiveClients() {
-        List<TrainClient> trainClients = new ArrayList<>();
+    // Method to return all clients which are unresponsive or "dead"
+    public List<Client> getUnresponsiveClients() {
+        List<Client> deadClients = new ArrayList<>();
         for (String id : unresponsiveClients) {
-            TrainClient client = trains.get(id);
+            Client client = clients.get(id);
             if (client != null) {
-                trainClients.add(client);
+                deadClients.add(client);
             }
         }
 
-        return trainClients;
+        return deadClients;
     }
 
     public Map<String, Integer> getTrainBlockMap() {
         return new HashMap<>(trainBlockMap);
     }
+
     public void clearUnresponsiveClients() {
         unresponsiveClients.clear();
     }
 
-    public void addTrain(String id, TrainClient tr) {
-        TrainClient prevValue = trains.putIfAbsent(id, tr);
-        clients.putIfAbsent(id, tr);
+    // Add any client with this method
+    public void addClient(String id, Client client, InetAddress clientAddress, String clientPort) {
+        // Will attempt to add a client
+        // If absent it will happen, however, if it is present the previous client will
+        // be handed over
+        Client prevValue = clients.putIfAbsent(id, client);
+        clients.putIfAbsent(id, client);
+
+        // If there was a previous cient log the error
         if (prevValue != null) {
-            String message = "Attempted to add duplicate train with id: " + id;
-            logger.warning(message);
+            String message = "Attempted to add duplicate client with id: " + id;
+            logger.log(Level.WARNING, message);
             throw new IllegalArgumentException(message);
         }
-    }
 
-    public void addStation(String id, StationClient st) {
-        StationClient prevValue = stations.putIfAbsent(id, st);
-        clients.putIfAbsent(id, st);
-        if (prevValue != null) {
-            String message = "Attempted to add duplicate station with id: " + id;
-            logger.warning(message);
-            throw new IllegalArgumentException(message);
+        // If there was no previous client then add the client to the correct lists
+        if (id.startsWith("BR")) {
+            allTrains.add(id);
         }
-    }
 
-    public void addCheckpoint(String id, CheckpointClient ch) {
-        CheckpointClient prevValue = checkpoints.putIfAbsent(id, ch);
-        clients.putIfAbsent(id, ch);
-        if (prevValue != null) {
-            String message = "Attempted to add duplicate checkpoint with id: " + id;
-            logger.warning(message);
-            throw new IllegalArgumentException(message);
+        if (id.startsWith("CP")) {
+            numberOfCheckpoints++;
         }
+
+        clientKeys.put(clientAddress + clientPort, id);
     }
 
-    public TrainClient getTrain(String id) {
-        return trains.get(id);
+    // Get any client with this method
+    public Client getClient(String id) {
+        return clients.get(id);
     }
 
-    public StationClient getStation(String id) {
-        return stations.get(id);
+    public void addClientToUnresponsive(String id) {
+        unresponsiveClients.add(id);
     }
 
-    public CheckpointClient getCheckpoint(String id) {
-        return checkpoints.get(id);
+    public void removeClientFromUnresponsive(String id) {
+        unresponsiveClients.remove(id);
+    }
+
+    public void addClientToReconnecting(String id) {
+        if (!id.startsWith("BR")) {
+            logger.log(Level.WARNING, "Attempted to add a non-train to waiting to reconnect: {0}", id);
+        }
+        waitingToReconnectTrains.add(id);
+    }
+
+    public void removeClientFromReconnecting(String id) {
+        if (!id.startsWith("BR")) {
+            logger.log(Level.WARNING, "Attempted to remove a non-train to waiting to reconnect: {0}", id);
+        }
+        waitingToReconnectTrains.remove(id);
     }
 
     public void updateTrainBlock(String trainId, int newBlock) {
@@ -120,8 +146,13 @@ public class Database {
                 .orElse(null);
     }
 
-    public List<TrainClient> getTrains() {
-        return new ArrayList<>(trains.values());
+    public List<Client> getTrains() {
+        List<Client> trains = new ArrayList<>();
+        for (String id : allTrains) {
+            trains.add(clients.get(id));
+        }
+
+        return trains;
     }
 
     public List<Client> getClients() {
@@ -129,14 +160,10 @@ public class Database {
     }
 
     public int getTrainCount() {
-        return trains.size();
+        return allTrains.size();
     }
 
-    public int getStationCount() {
-        return stations.size();
-    }
-
-    public int getCheckpointCount() {
-        return checkpoints.size();
+    public Integer getCheckpointCount() {
+        return numberOfCheckpoints;
     }
 }

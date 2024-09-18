@@ -41,7 +41,7 @@ public abstract class Client {
         return statReturned;
     }
 
-    public boolean lastStatMsgSent(){
+    public boolean lastStatMSGSent(){
         return statSent;
     }
 

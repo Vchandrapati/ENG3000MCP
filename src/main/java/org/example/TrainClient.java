@@ -48,7 +48,7 @@ public class TrainClient extends Client {
     // For sending an acknowledge message to the CCP
     public void sendAcknowledgeMessage() {
         String message = MessageGenerator.generateAcknowledgesMessage("ccp", id, System.currentTimeMillis());
-        sendMessage(message,"ACK");
+        sendMessage(message, "ACK");
         registered = true;
     }
 
@@ -69,7 +69,7 @@ public class TrainClient extends Client {
 
     @Override
     public void registerClient() {
-        Database.getInstance().addTrain(this.id, this);
+        Database.getInstance().addClient(this.id, this, super.getClientAddress(), id);
         logger.info("Added new train to database: " + Database.getInstance().getTrainCount());
 
     }

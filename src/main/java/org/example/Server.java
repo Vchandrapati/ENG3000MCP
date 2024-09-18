@@ -13,13 +13,14 @@ import java.util.logging.Logger;
  * It handles incoming packets, maintains a list of connected clients,
  * and schedules status checks.
  *
- * <p>Utilises the Singleton pattern to ensure only one instance of the Server exists.
+ * <p>
+ * Utilises the Singleton pattern to ensure only one instance of the Server
+ * exists.
  * It also implements the {@link Constants} interface for configuration.
  */
 public class Server implements Constants, Runnable {
     private static final Database db = Database.getInstance();
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-    public final Map<Integer, Client> clients = new ConcurrentHashMap<>();
     private DatagramSocket serverSocket;
     private volatile boolean serverRunning;
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
@@ -79,7 +80,7 @@ public class Server implements Constants, Runnable {
      * Otherwise, creates a new client instance and registers it.
      */
     private void connectionListener() {
-        while (serverRunning){
+        while (serverRunning) {
             try {
                 DatagramPacket receivePacket = new DatagramPacket(new byte[BUFFER_SIZE], BUFFER_SIZE);
                 serverSocket.receive(receivePacket);
@@ -89,7 +90,7 @@ public class Server implements Constants, Runnable {
                 mailbox.add(receivePacket);
             } catch (IOException e) {
                 logger.log(Level.SEVERE, "Error receiving packet", e);
-                
+
             }
         }
     }
@@ -102,52 +103,38 @@ public class Server implements Constants, Runnable {
                 int clientPort = receivePacket.getPort();
 
                 Client client = findClient(clientAddress, clientPort);
-        
+
                 if (client != null) {
                     client.processPacket(receivePacket);
                     logger.info("Packet processed for client: " + client.id);
-                } else if (client == null) {
-                    // Checks if client exists in the whitelist
-                    String message = new String(receivePacket.getData(), 0, receivePacket.getLength(), StandardCharsets.UTF_8);
+                } else {
+                    String message = new String(receivePacket.getData(), 0, receivePacket.getLength(),
+                            StandardCharsets.UTF_8);
                     MessageHandler mg = new MessageHandler();
-                    mg.handleInitilise(message, clientAddress, clientPort);
+                    mg.handleInitialise(message, clientAddress, clientPort);
                 }
             } catch (Exception e) {
-                logger.severe(e.getMessage());
+                // Vikil you should fix this I just temp changed it
+                logger.log(Level.SEVERE, "Error {0}", e);
             }
         }
     }
-    private Client findClient(InetAddress clientAddress, int clientPort) {
-        List<Client> clients = Database.getInstance().getClients();
-        if (clients.isEmpty()) return null;
 
-        Optional<Client> client = clients.stream().filter(c -> c.getClientPort() == clientPort && c.getClientAddress() == clientAddress).findFirst();
-        logger.warning("Address: " + clientAddress + " Port: " + clientPort);
-        logger.warning(client.get() + "");
-        if (!client.isPresent())
+    private Client findClient(InetAddress clientAddress, int clientPort) {
+        List<Client> clients = db.getClients();
+        if (clients.isEmpty())
             return null;
 
-        return client.get();
-    }
-
-    private static Client createClient(String clientType, InetAddress clientAddress, int clientPort) throws IOException {
-        String componentType = clientType.split(" ")[0];
-
-        if (componentType.contains("CP"))
-            return new CheckpointClient(clientAddress, clientPort, clientType);
-        else if (componentType.contains("BR"))
-            return new TrainClient(clientAddress, clientPort, clientType);
-        else if (componentType.contains("ST"))
-            return new StationClient(clientAddress, clientPort, clientType);
-        else
-            throw new IOException(clientType);
+        Optional<Client> client = clients.stream()
+                .filter(c -> c.getClientPort() == clientPort && c.getClientAddress() == clientAddress).findFirst();
+        return client.orElse(null);
     }
 
     public void startStatusScheduler() {
         scheduler.scheduleAtFixedRate(() -> {
             long sendTime = System.currentTimeMillis();
-            
-            List<Client> clients = Database.getInstance().getClients();
+
+            List<Client> clients = db.getClients();
             for (Client client : clients) {
                 if (client.isRegistered()) {
                     client.setStatReturned(false);
@@ -156,40 +143,45 @@ public class Server implements Constants, Runnable {
             }
 
             try {
-                Thread.sleep(5000);
-                checkForMissingResponse(sendTime);
-            } catch (Exception e) {
+                Thread.sleep(TIMEOUT);
+                checkForMissingResponse(clients, sendTime);
+            } catch (InterruptedException e) {
                 logger.info("Error waiting for stat");
             }
         }, 0, STAT_INTERVAL_SECONDS, TimeUnit.MILLISECONDS);
     }
 
-
     /**
-     * Checks for clients that have not responded to a status request sent within a timeframe.
-     * If a client has not responded, logs an error and updates the system state to EMERGENCY.
-     * For unresponsive train clients, adds them to the unresponsive client list in the database.
+     * Checks for clients that have not responded to a status request sent within a
+     * timeframe.
+     * If a client has not responded, logs an error and updates the system state to
+     * EMERGENCY.
+     * For unresponsive train clients, adds them to the unresponsive client list in
+     * the database.
      *
-     * @param sendTime the time the status request was sent
+     * @param clients the list of clients to check
      */
-    private void checkForMissingResponse(long sendTime) {
-        clients.values().forEach(client -> {
+    private void checkForMissingResponse(List<Client> clients, Long sendTime) {
+        for (Client client : clients) {
             boolean hasFailed = false;
-            if (!client.lastStatReturned() && client.isRegistered() && client.lastStatMsgSent()) {
+            if (!client.lastStatReturned() && client.isRegistered() && client.lastStatMSGSent()) {
                 logger.severe(String.format("No STAT response from %s sent at %d", client.getId(), sendTime));
                 hasFailed = true;
-                //if a train is unresponsive
-                if(client.getId().contains("BR")) db.addUnresponsiveClient(client.getId());
-            }
 
-            if(hasFailed) SystemStateManager.getInstance().setState(SystemState.EMERGENCY);
-        });
+                // if a train is unresponsive
+                if (client.getId().contains("BR"))
+                    db.addUnresponsiveClient(client.getId());
+            }
+            if (hasFailed)
+                SystemStateManager.getInstance().setState(SystemState.EMERGENCY);
+        }
     }
 
     public void sendMessageToClient(Client client, String message, String type) {
         try {
             byte[] buffer = message.getBytes();
-            DatagramPacket sendPacket = new DatagramPacket(buffer, buffer.length, client.getClientAddress(), client.getClientPort());
+            DatagramPacket sendPacket = new DatagramPacket(buffer, buffer.length, client.getClientAddress(),
+                    client.getClientPort());
             serverSocket.send(sendPacket);
             logger.info(String.format("Sent %s to client: %s", type, client.id));
         } catch (IOException e) {
@@ -200,7 +192,7 @@ public class Server implements Constants, Runnable {
     // Closes the active threads safely
     public void shutdown() {
         try {
-            if(serverSocket != null) {
+            if (serverSocket != null) {
                 serverRunning = false;
                 serverSocket.close();
                 scheduler.shutdown();
@@ -210,4 +202,3 @@ public class Server implements Constants, Runnable {
         }
     }
 }
-

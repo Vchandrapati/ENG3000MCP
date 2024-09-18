@@ -23,10 +23,10 @@ public class CheckpointClient extends Client {
         this.tripped = false;
     }
 
-    public Integer getIntID(){
+    public Integer getIntID() {
         return intID;
     }
-    
+
     public Integer getLocation() {
         return location;
     }
@@ -39,7 +39,7 @@ public class CheckpointClient extends Client {
 
     @Override
     public void registerClient() {
-        Database.getInstance().addCheckpoint(this.id, this);
+        Database.getInstance().addClient(this.id, this, super.getClientAddress(), id);
     }
 
     public void setTripped() {
