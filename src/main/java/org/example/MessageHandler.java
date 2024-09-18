@@ -48,7 +48,7 @@ public class MessageHandler {
                 break;
             case "CHIN":
                 handleInitialise(receiveMessage, address, port);
-                logger.log(Level.INFO, "Initialising", receiveMessage.message);
+                logger.log(Level.INFO, "Received STAT message from Checkpoint: {0}", receiveMessage.clientID);
                 break;
             case "STAT":
                 client.setStatReturned(true);
@@ -68,16 +68,16 @@ public class MessageHandler {
                 client.updateStatus(receiveMessage.status.toUpperCase());
                 client.setStatReturned(true);
                 client.setStatSent(true);
-                logger.log(Level.INFO, "Received message from Blade Runner: {0}", receiveMessage.clientID);
+                logger.log(Level.INFO, "Received STAT message from Blade Runner: {0}", receiveMessage.clientID);
                 break;
 
             case "CCIN":
                 handleInitialise(receiveMessage, address, port);
-                logger.log(Level.INFO, "Initialising", receiveMessage.message);
+                logger.log(Level.INFO, "Received CCIN message from Blade Runner: {0}", receiveMessage.clientID);
                 break;
 
             default:
-                logger.log(Level.WARNING, "Unknown Blade Runner message: {0}", receiveMessage.message);
+                logger.log(Level.WARNING, "Unknown CCP message: {0}", receiveMessage.message);
                 break;
         }
     }
