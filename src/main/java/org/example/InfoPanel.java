@@ -12,6 +12,7 @@ public class InfoPanel extends JPanel {
     private final JLabel connectedTrainsLabel;
     private final JLabel connectedCheckpointsLabel;
     private final JLabel connectedStationsLabel;
+    private final JLabel systemStateLabel;
 
     public InfoPanel(long startupTime) {
         this.startupTime = startupTime;
@@ -19,6 +20,7 @@ public class InfoPanel extends JPanel {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         currentTimeLabel = new JLabel();
+        systemStateLabel = new JLabel();
         elapsedTimeLabel = new JLabel();
         connectedTrainsLabel = new JLabel();
         connectedCheckpointsLabel = new JLabel();
@@ -30,6 +32,7 @@ public class InfoPanel extends JPanel {
         connectedTrainsLabel.setFont(font);
         connectedCheckpointsLabel.setFont(font);
         connectedStationsLabel.setFont(font);
+        systemStateLabel.setFont(font);
 
         add(Box.createVerticalStrut(20)); // Add some space at the top
         add(currentTimeLabel);
@@ -38,6 +41,7 @@ public class InfoPanel extends JPanel {
         add(connectedTrainsLabel);
         add(connectedCheckpointsLabel);
         add(connectedStationsLabel);
+        add(systemStateLabel);
 
         startUpdater();
     }
@@ -58,6 +62,8 @@ public class InfoPanel extends JPanel {
 
         currentTimeLabel.setText("Current Time: " + currentTimeStr);
         elapsedTimeLabel.setText("Time Since Startup: " + elapsedTimeStr);
+
+        systemStateLabel.setText("Current system state: " + SystemStateManager.getInstance().getState());
 
         // Update counts
         Database db = Database.getInstance();

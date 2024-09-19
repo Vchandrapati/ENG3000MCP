@@ -78,6 +78,10 @@ public class SystemStateManager {
         return completedStartup;
     }
 
+    public void resetERROR() {
+        this.error = false;
+    }
+
     //VIKIL PLEASE READ
 
     //I need you to only send me unresponsive client ids while not in emergency mode,

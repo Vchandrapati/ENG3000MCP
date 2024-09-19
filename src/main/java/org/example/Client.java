@@ -21,6 +21,7 @@ public abstract class Client {
 
     public void sendMessage(String message, String type) {
         Server.getInstance().sendMessageToClient(this, message, type);
+
     }
 
     public boolean isTrainClient() {

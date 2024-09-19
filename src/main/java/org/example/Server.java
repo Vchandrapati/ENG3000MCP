@@ -141,6 +141,8 @@ public class Server implements Runnable {
      *
      * @param clients the list of clients to check
      */
+
+    
     private void checkForMissingResponse(List<Client> clients, Long sendTime) {
         for (Client client : clients) {
             if (!client.lastStatReturned() && client.isRegistered() && client.lastStatMSGSent()) {
@@ -159,7 +161,7 @@ public class Server implements Runnable {
             DatagramPacket sendPacket = new DatagramPacket(buffer, buffer.length, client.getClientAddress(),
                     client.getClientPort());
             serverSocket.send(sendPacket);
-            logger.log(Level.INFO, String.format("Sent %s to client: %s", type, client.id));
+            //logger.log(Level.INFO, String.format("Sent %s to client: %s", type, client.id));
         } catch (IOException e) {
             logger.log(Level.SEVERE, "Failed to send message to client " + client.getId(), e);
         }
