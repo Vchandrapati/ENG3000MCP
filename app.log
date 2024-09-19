@@ -31563,6 +31563,7 @@ INFO: Server completed startup and listening on PORT: 6666Sept 19, 2024 10:34:03
 INFO: Changing to system state STARTUP
 Sept 19, 2024 10:34:03 PM org.example.Server <init>
 INFO: Server completed startup and listening on PORT: 6666
+<<<<<<< HEAD
 Sept 19, 2024 10:34:27 PM org.example.TrainClient registerClient
 INFO: Added new train to database: 1
 Sept 19, 2024 10:34:27 PM org.example.Server sendMessageToClient
@@ -37382,3 +37383,69 @@ Sept 20, 2024 12:06:44 AM org.example.MessageHandler handleCCPMessage
 INFO: Received STAT message from Blade Runner: BR01
 Sept 20, 2024 12:06:44 AM org.example.MessageHandler handleCheckpointMessage
 INFO: Received STAT command from Checkpoint: CP03
+=======
+Sept 19, 2024 3:02:32 PM org.example.SystemStateManager setState
+INFO: Changing to system state STARTUP
+Sept 19, 2024 3:02:32 PM org.example.Server <init>
+INFO: Server completed startup and listening on PORT: 6666
+Sept 19, 2024 3:03:07 PM org.example.SystemStateManager setState
+INFO: Changing to system state STARTUP
+Sept 19, 2024 3:03:07 PM org.example.Server <init>
+INFO: Server completed startup and listening on PORT: 6666
+Sept 19, 2024 3:05:20 PM org.example.SystemStateManager setState
+INFO: Changing to system state STARTUP
+Sept 19, 2024 3:05:20 PM org.example.Server <init>
+INFO: Server completed startup and listening on PORT: 6666
+Sept 19, 2024 11:35:30 PM org.example.SystemStateManager setState
+INFO: Changing to system state STARTUP
+Sept 19, 2024 11:35:30 PM org.example.Server <init>
+INFO: Server completed startup and listening on PORT: 6666
+Sept 19, 2024 11:36:57 PM org.example.SystemStateManager setState
+INFO: Changing to system state STARTUP
+Sept 19, 2024 11:36:57 PM org.example.Server <init>
+INFO: Server completed startup and listening on PORT: 6666
+Sept 19, 2024 11:37:20 PM org.example.SystemStateManager setState
+INFO: Changing to system state STARTUP
+Sept 19, 2024 11:37:21 PM org.example.Server <init>
+INFO: Server completed startup and listening on PORT: 6666
+Sept 19, 2024 11:37:29 PM org.example.SystemStateManager setState
+INFO: Changing to system state STARTUP
+Sept 19, 2024 11:37:29 PM org.example.Server <init>
+INFO: Server completed startup and listening on PORT: 6666
+Sept 19, 2024 11:37:46 PM org.example.SystemStateManager setState
+INFO: Changing to system state STARTUP
+Sept 19, 2024 11:37:47 PM org.example.Server <init>
+INFO: Server completed startup and listening on PORT: 6666
+Sept 19, 2024 11:38:21 PM org.example.SystemStateManager setState
+INFO: Changing to system state STARTUP
+Sept 19, 2024 11:38:21 PM org.example.Server <init>
+INFO: Server completed startup and listening on PORT: 6666
+Sept 19, 2024 11:38:35 PM org.example.SystemStateManager setState
+INFO: Changing to system state STARTUP
+Sept 19, 2024 11:38:35 PM org.example.Server <init>
+INFO: Server completed startup and listening on PORT: 6666
+Sept 19, 2024 11:38:52 PM org.example.SystemStateManager setState
+INFO: Changing to system state STARTUP
+Sept 19, 2024 11:38:52 PM org.example.Server <init>
+INFO: Server completed startup and listening on PORT: 6666
+Sept 19, 2024 11:39:05 PM org.example.SystemStateManager setState
+INFO: Changing to system state STARTUP
+Sept 19, 2024 11:39:05 PM org.example.Server <init>
+INFO: Server completed startup and listening on PORT: 6666
+Sept 19, 2024 11:40:06 PM org.example.SystemStateManager setState
+INFO: Changing to system state STARTUP
+Sept 19, 2024 11:40:06 PM org.example.Server <init>
+INFO: Server completed startup and listening on PORT: 6666
+Sept 19, 2024 11:40:15 PM org.example.SystemStateManager setState
+INFO: Changing to system state STARTUP
+Sept 19, 2024 11:40:15 PM org.example.Server <init>
+INFO: Server completed startup and listening on PORT: 6666
+Sept 19, 2024 11:40:44 PM org.example.SystemStateManager setState
+INFO: Changing to system state STARTUP
+Sept 19, 2024 11:40:44 PM org.example.Server <init>
+INFO: Server completed startup and listening on PORT: 6666
+Sept 19, 2024 11:41:08 PM org.example.SystemStateManager setState
+INFO: Changing to system state STARTUP
+Sept 19, 2024 11:41:08 PM org.example.Server <init>
+INFO: Server completed startup and listening on PORT: 6666
+>>>>>>> 08cc10eaf8a0ab411bcc03734726fd9032d17922

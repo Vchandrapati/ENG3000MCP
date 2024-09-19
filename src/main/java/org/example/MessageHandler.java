@@ -32,6 +32,7 @@ public class MessageHandler {
             }
         } catch (JsonProcessingException e) {
             logger.log(Level.SEVERE, "Failed to parse message: {0}", message);
+            logger.log(Level.SEVERE, "Exception: ", e);
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Unexpected error handling message from {0}:{1}", new Object[]{address, port});
             logger.log(Level.SEVERE, "Exception: ", e);
@@ -114,10 +115,10 @@ public class MessageHandler {
                     client = new TrainClient(address, port, receiveMessage.clientID);
                     break;
                 case "checkpoint":
-                    client = new CheckpointClient(address, port, receiveMessage.clientID, Integer.parseInt(receiveMessage.location));
+                    client = new CheckpointClient(address, port, receiveMessage.clientID, receiveMessage.location);
                     break;
                 case "station":
-                    client = new StationClient(address, port, receiveMessage.clientID, Integer.parseInt(receiveMessage.location));
+                    client = new StationClient(address, port, receiveMessage.clientID, receiveMessage.location);
                     break;
                 default:
                     logger.log(Level.WARNING, "Unknown client type: {0}", receiveMessage.clientType);
@@ -130,7 +131,8 @@ public class MessageHandler {
                 logger.log(Level.INFO, "Initialised new client: {0}", receiveMessage.clientID);
             }
         } catch (Exception e) {
-            logger.log(Level.SEVERE, "Failed to handle message", e);
+            logger.log(Level.SEVERE, "Failed to handle message");
+            logger.log(Level.SEVERE, "Exception: ", e);
         }
     }
 }

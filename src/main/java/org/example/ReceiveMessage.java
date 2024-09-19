@@ -12,5 +12,5 @@ public class ReceiveMessage {
     public String clientID;
     public String timestamp;
     public String status;
-    public String location;
+    public int location;
 }

@@ -97,7 +97,7 @@ public class Database {
         Client prevValue = clients.putIfAbsent(id, client);
         clients.putIfAbsent(id, client);
 
-        // If there was a previous cient log the error
+        // If there was a previous client log the error
         if (prevValue != null) {
             String message = "Attempted to add duplicate client with id: " + id;
             logger.log(Level.WARNING, message);
