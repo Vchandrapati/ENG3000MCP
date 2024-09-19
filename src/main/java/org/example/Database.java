@@ -88,7 +88,7 @@ public class Database {
     }
 
     // Add any client with this method
-    public void addClient(String id, Client client, InetAddress clientAddress, String clientPort) {
+    public void addClient(String id, Client client) {
         // Will attempt to add a client
         // If absent it will happen, however, if it is present the previous client will
         // be handed over
