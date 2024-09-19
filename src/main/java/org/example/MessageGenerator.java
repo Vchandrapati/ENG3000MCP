@@ -92,7 +92,7 @@ public class MessageGenerator {
         try {
             return objectMapper.writeValueAsString(message);
         } catch (JsonProcessingException e) {
-            logger.log(Level.SEVERE, "Failed to convert message to JSON {0}", e.getMessage());
+            logger.log(Level.SEVERE, "Failed to convert message to JSON", e);
             return "{}"; // Return an empty JSON object as a fallback
         }
     }

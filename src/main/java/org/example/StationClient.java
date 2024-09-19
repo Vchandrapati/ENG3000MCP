@@ -43,13 +43,7 @@ public class StationClient extends CheckpointClient {
     }
 
     @Override
-    public void sendStatusMessage(String id, Long timestamp) {
-        String message = MessageGenerator.generateStatusMessage("ccp", id, System.currentTimeMillis());
-        sendMessage(message, "STAT");
-    }
-
-    @Override
     public void registerClient() {
-        Database.getInstance().addClient(this.id, this, super.getClientAddress(), super.getClientPort() + "");
+        Database.getInstance().addClient(this.id, this);
     }
 }

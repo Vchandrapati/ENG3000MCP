@@ -6,7 +6,6 @@ import java.awt.*;
 public class VisualiserScreen extends JFrame {
     private final VisualiserPanel trackPanel;
     private final JTextField commandInput;
-    private final JTextArea logArea;
     private final CommandHandler commandHandler = new CommandHandler();
     public VisualiserScreen() {
         setTitle("Master Control Protocol");
@@ -25,7 +24,7 @@ public class VisualiserScreen extends JFrame {
         commandInput.setPreferredSize(new Dimension(300, 25));
         commandInput.addActionListener(e -> handleCommand());
 
-        logArea = new JTextArea();
+        JTextArea logArea = new JTextArea();
         logArea.setEditable(false);
         JScrollPane logScroller = new JScrollPane(logArea);
         logScroller.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
@@ -57,17 +56,5 @@ public class VisualiserScreen extends JFrame {
 
     private void updateVisualizer() {
         trackPanel.updateTrainZones(Database.getInstance().getTrainBlockMap());
-    }
-
-    public VisualiserPanel getVisualiserPanel() {
-        return trackPanel;
-    }
-
-    public JTextField getUserInputField() {
-        return commandInput;
-    }
-
-    public JTextArea getLogArea() {
-        return logArea;
     }
 }

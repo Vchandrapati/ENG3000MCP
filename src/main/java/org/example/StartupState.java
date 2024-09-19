@@ -4,10 +4,10 @@ public class StartupState extends MappingState {
     // ten minutes in milliseconds
     private static final long STARTUP_CONNECTION_TIME_PERIOD = 600000; 
 
-    // Flag to start early before 10 minute timer has finished
+    // Flag to start early before 10-minute timer has finished
     private static boolean startEarly = false;
 
-    //the time when counter 10 minute timer started
+    //the time when counter 10-minute timer started
     private final long timeOnStart = System.currentTimeMillis();
 
     // checks if mapping is ready to occur

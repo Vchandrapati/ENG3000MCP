@@ -5,7 +5,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.net.InetAddress;
 
 public class Database {
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);

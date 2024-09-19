@@ -33,7 +33,7 @@ public class Processor {
             int previousBlock = calculatePreviousBlock(sensor);
             checkForTraffic(previousBlock);
         } catch (Exception e) {
-            logger.severe("Unexpected error: " + e.getMessage());
+            logger.severe("Unexpected error: " + e);
             SystemStateManager.getInstance().setState(SystemState.EMERGENCY);
         }
     }
