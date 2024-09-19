@@ -1,25 +1,25 @@
+package Src;
 
 import java.io.IOException;
 import java.net.*;
 
-public class CheckpointClient {
+public class CCPClient {
 
     DatagramSocket socket;
-    volatile Boolean listen = false;
+    private volatile Boolean listen;
     private InetAddress sendAddress;
     private Integer sendPort;
     private String myID;
 
     // Creates a client on specified port and send to specified address
-    public CheckpointClient(Integer port, InetAddress addLoc, Integer snedPort, String ID) {
+    public CCPClient(Integer port, InetAddress addLoc, Integer snedPort, String id) {
 
         try {
-            myID = ID;
+            myID = id;
             sendPort = snedPort;
             sendAddress = addLoc;
             socket = new DatagramSocket(port);
 
-            listen = true;
             this.beginListen();
         } catch (Exception e) {
             e.printStackTrace();
@@ -27,8 +27,8 @@ public class CheckpointClient {
     }
 
     // Starts listening
-    private void beginListen() {
-
+    private void beginListen() throws IOException {
+        listen = true;
         new Thread(() -> {
             byte[] buffer = new byte[1024];
             while (listen) {
@@ -36,7 +36,8 @@ public class CheckpointClient {
                     DatagramPacket recievePacket = new DatagramPacket(buffer, buffer.length);
                     socket.receive(recievePacket);
 
-                    String message = new String(recievePacket.getData(), 0, recievePacket.getLength(), "UTF-8");
+                    String message = new String(recievePacket.getData(), 0,
+                            recievePacket.getLength(), "UTF-8");
                     if (!message.isEmpty()) {
                         message = message.replaceAll("[^\\x20-\\x7E]", " ");
                         // Print every message received
@@ -45,6 +46,14 @@ public class CheckpointClient {
 
                     String[] temp = message.split(",");
                     String[] c = temp[0].split(":");
+
+                    // If the message is an AKIN msg will get the ID
+                    if (c[1].equals("\"AKIN\"")) {
+                        String[] temp2 = temp[3].split(":");
+                        String[] temp3 = temp2[1].split("\"");
+                        myID = temp3[1];
+
+                    }
 
                     // If the message is a STAT msg will respond with a stat
                     if (c[1].equals("\"STAT\"")) {
@@ -68,25 +77,17 @@ public class CheckpointClient {
     }
 
     // Sends an initialise connection message
-    public void sendInitialiseConnectionMsg(Integer num) {
-        byte[] buffer = ("{\"client_type\":\"checkpoint\", \"message\":\"CHIN\", \"client_id\":\"" + myID
-                + "\", \"timestamp\":\"2019-09-07T15:50+00Z\", \"location\":\""
-                + num + "\"}")
+    public void sendInitialiseConnectionMsg() {
+        byte[] buffer = ("{\"client_type\":\"ccp\", \"message\":\"CCIN\", \"client_id\":\"" + myID
+                + "\", \"timestamp\":\"2019-09-07T15:50+00Z\"}")
                 .getBytes();
         sendMsg(buffer);
     }
 
     // Sends a stat message
     public void sendStatMsg() {
-        byte[] buffer = ("{\"client_type\":\"checkpoint\", \"message\":\"STAT\", \"client_id\":\"" + myID
+        byte[] buffer = ("{\"client_type\":\"ccp\", \"message\":\"STAT\", \"client_id\":\"" + myID
                 + "\", \"timestamp\":\"2019-09-07T15:50+00Z\", \"status\":\"ON\"}").getBytes();
-        sendMsg(buffer);
-    }
-
-    // Sends a stat message
-    public void sendTRIPMsg() {
-        byte[] buffer = ("{\"client_type\":\"checkpoint\", \"message\":\"TRIP\", \"client_id\":\"" + myID
-                + "\", \"timestamp\":\"2019-09-07T15:50+00Z\", \"status\":\"ERR\"}").getBytes();
         sendMsg(buffer);
     }
 
