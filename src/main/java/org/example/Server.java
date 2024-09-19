@@ -115,7 +115,7 @@ public class Server implements Runnable {
 
             List<Client> clients = db.getClients();
             for (Client client : clients) {
-                synchronized (client){
+                synchronized (client) {
                     if (Boolean.TRUE.equals(client.isRegistered())) {
                         client.setStatReturned(false);
                         client.sendStatusMessage(System.currentTimeMillis());
