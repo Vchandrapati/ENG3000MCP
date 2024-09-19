@@ -44,8 +44,7 @@ public class MessageHandler {
         CheckpointClient client = (CheckpointClient) db.getClient(receiveMessage.clientID);
         switch (receiveMessage.message) {
             case "TRIP":
-                // location is fucked
-                processor.sensorTripped(receiveMessage.location);
+                processor.sensorTripped(client.getLocation());
                 break;
             case "CHIN":
                 handleInitialise(receiveMessage, address, port);
@@ -100,6 +99,9 @@ public class MessageHandler {
                 client.setStatReturned(true);
                 logger.log(Level.INFO, "Received STAT message from Station: {0}", receiveMessage.clientID);
                 break;
+            case "STIN":
+                handleInitialise(receiveMessage, null, 0);
+                logger.log(Level.INFO, "Received STIN message from Station: {0}", receiveMessage.clientID);
             default:
                 logger.log(Level.WARNING, "Unknown station message: {0}", receiveMessage.clientID);
         }
@@ -114,6 +116,9 @@ public class MessageHandler {
                     break;
                 case "checkpoint":
                     client = new CheckpointClient(address, port, receiveMessage.clientID, receiveMessage.location);
+                    break;
+                case "station":
+                    client = new StationClient(address, port, receiveMessage.clientID, receiveMessage.location);
                     break;
                 default:
                     logger.log(Level.WARNING, "Unknown client type: {0}", receiveMessage.clientType);

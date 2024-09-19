@@ -1,5 +1,7 @@
 package org.example;
 
+import java.util.logging.Level;
+
 public class StartupState extends MappingState {
     // ten minutes in milliseconds
     private static final long STARTUP_CONNECTION_TIME_PERIOD = 600000; 
@@ -8,7 +10,7 @@ public class StartupState extends MappingState {
     private static boolean startEarly = false;
 
     //the time when counter 10-minute timer started
-    private final long timeOnStart = System.currentTimeMillis();
+    private long timeOnStart = System.currentTimeMillis();
 
     // checks if mapping is ready to occur
     @Override
@@ -17,8 +19,8 @@ public class StartupState extends MappingState {
 
         // Check if early start or timeout
         if ((elapsedTime >= STARTUP_CONNECTION_TIME_PERIOD || startEarly)) {
-            logger.info("Mapping conditions met, attempting to return trains from database");
             trainsToMap = db.getTrainClients();
+            logger.log(Level.INFO, "Mapping conditions met, proceeding to move {0} trains", trainsToMap.size());
             return true;
         }
         return false;
