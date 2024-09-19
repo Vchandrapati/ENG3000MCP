@@ -8,7 +8,6 @@ public class CCPClient {
     private volatile Boolean listen;
     private InetAddress sendAddress;
     private Integer sendPort;
-    private Integer myPort;
     private String myID;
 
     // Creates a client on specified port and send to specified address
@@ -16,7 +15,6 @@ public class CCPClient {
 
         try {
             myID = id;
-            myPort = port;
             sendPort = snedPort;
             sendAddress = addLoc;
             socket = new DatagramSocket(port);

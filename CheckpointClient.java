@@ -8,7 +8,6 @@ public class CheckpointClient {
     volatile Boolean listen = false;
     private InetAddress sendAddress;
     private Integer sendPort;
-    private Integer myPort;
     private String myID;
 
     // Creates a client on specified port and send to specified address
@@ -16,7 +15,6 @@ public class CheckpointClient {
 
         try {
             myID = ID;
-            myPort = port;
             sendPort = snedPort;
             sendAddress = addLoc;
             socket = new DatagramSocket(port);
