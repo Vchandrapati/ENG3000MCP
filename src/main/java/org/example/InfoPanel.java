@@ -12,6 +12,7 @@ public class InfoPanel extends JPanel {
     private final JLabel connectedTrainsLabel;
     private final JLabel connectedCheckpointsLabel;
     private final JLabel connectedStationsLabel;
+    private final JLabel currentState;
 
     public InfoPanel(long startupTime) {
         this.startupTime = startupTime;
@@ -23,6 +24,7 @@ public class InfoPanel extends JPanel {
         connectedTrainsLabel = new JLabel();
         connectedCheckpointsLabel = new JLabel();
         connectedStationsLabel = new JLabel();
+        currentState = new JLabel();
 
         Font font = new Font("Arial", Font.BOLD, 16);
         currentTimeLabel.setFont(font);
@@ -30,6 +32,7 @@ public class InfoPanel extends JPanel {
         connectedTrainsLabel.setFont(font);
         connectedCheckpointsLabel.setFont(font);
         connectedStationsLabel.setFont(font);
+        currentState.setFont(font);
 
         add(Box.createVerticalStrut(20)); // Add some space at the top
         add(currentTimeLabel);
@@ -38,6 +41,7 @@ public class InfoPanel extends JPanel {
         add(connectedTrainsLabel);
         add(connectedCheckpointsLabel);
         add(connectedStationsLabel);
+        add(currentState);
 
         startUpdater();
     }
@@ -64,6 +68,7 @@ public class InfoPanel extends JPanel {
         connectedTrainsLabel.setText("Connected trains: " + db.getTrainCount());
         connectedCheckpointsLabel.setText("Connected checkpoints: " + db.getCheckpointCount());
         connectedStationsLabel.setText("Connected stations: " + db.getStationCount());
+        currentState.setText("Current System State: " + SystemStateManager.getInstance().getState());
     }
 
     private String formatTime(long timeMillis) {
