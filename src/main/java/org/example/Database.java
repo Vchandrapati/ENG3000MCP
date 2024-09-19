@@ -18,6 +18,8 @@ public class Database {
     // Set of all train clients waiting to reconnect
     private final HashSet<String> waitingToReconnectTrains;
     private final AtomicInteger numberOfCheckpoints;
+    private final AtomicInteger numberOfStations;
+
 
     private Database() {
         clients = new ConcurrentHashMap<>();
@@ -28,6 +30,7 @@ public class Database {
         waitingToReconnectTrains = new HashSet<>();
 
         numberOfCheckpoints = new AtomicInteger(0);
+        numberOfStations = new AtomicInteger(0);
     }
 
     /**
@@ -109,6 +112,10 @@ public class Database {
         if (id.startsWith("CP")) {
             numberOfCheckpoints.getAndIncrement();
         }
+
+        if (id.startsWith("ST")) {
+            numberOfStations.getAndIncrement();
+        }
     }
 
     // Get any client with this method
@@ -176,6 +183,15 @@ public class Database {
         return trains;
     }
 
+    public String getTrainStatus(String trainId) {
+        Client client = getClient(trainId);
+        if (client instanceof TrainClient) {
+            TrainClient trainClient = (TrainClient) client;
+            return trainClient.getStatus();
+        }
+        return "Unknown";
+    }
+
     public List<Client> getClients() {
         return new ArrayList<>(clients.values());
     }
@@ -186,5 +202,9 @@ public class Database {
 
     public Integer getCheckpointCount() {
         return numberOfCheckpoints.get();
+    }
+
+    public Integer getStationCount() {
+        return numberOfStations.get();
     }
 }

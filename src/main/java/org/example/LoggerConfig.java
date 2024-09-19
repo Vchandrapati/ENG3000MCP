@@ -26,6 +26,7 @@ public class LoggerConfig {
             // Create the custom LogTextAreaHandler
             ScreenLogHandler textAreaHandler = new ScreenLogHandler(logArea);
             textAreaHandler.setLevel(Level.ALL);
+            textAreaHandler.setFormatter(new ScreenLogFormatter());
 
             // Remove default handlers
             logger.setUseParentHandlers(false);
@@ -39,6 +40,16 @@ public class LoggerConfig {
             logger.setLevel(Level.ALL);
         } catch (IOException e) {
             logger.log(Level.SEVERE, "Failed to initialize logger handler.", e);
+        }
+    }
+
+    static class ScreenLogFormatter extends Formatter {
+        @Override
+        public String format(LogRecord logRecord) {
+            return logRecord.getLevel() + ": " +
+                    logRecord.getMessage() +
+                    System.lineSeparator() +
+                    System.lineSeparator(); // Add an extra line for spacing
         }
     }
 }

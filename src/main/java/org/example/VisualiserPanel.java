@@ -3,6 +3,8 @@ package org.example;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -53,6 +55,7 @@ public class VisualiserPanel extends JPanel {
     private void drawTrainLocations(double angleIncrement, int centerX, double radiusX, int centerY, double radiusY, Graphics2D g2d) {
         for (Map.Entry<String, Integer> entry : trainZones.entrySet()) {
             String trainId = entry.getKey();
+            String status = Database.getInstance().getTrainStatus(entry.getKey());
             int zone = entry.getValue();
 
             // Calculate the angle at the center of the zone
@@ -98,6 +101,7 @@ public class VisualiserPanel extends JPanel {
             Point2D idPoint = idTransform.transform(new Point2D.Double(idOffsetX, idOffsetY), null);
 
             g2d.drawString(trainId, (float) idPoint.getX(), (float) idPoint.getY());
+            g2d.drawString(status, (float) idPoint.getX(), (float) idPoint.getY() - 10);
         }
     }
 
