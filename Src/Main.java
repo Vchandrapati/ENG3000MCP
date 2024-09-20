@@ -114,7 +114,7 @@ public class Main {
                 ID = "CP" + (Checkglobal + 1);
             }
             Checkclients.add(new CheckpointClient(3001 + Checkglobal, add, port, ID));
-            Checkclients.get(Checkclients.size() - 1).sendInitialiseConnectionMsg(Checkclients.size() - 1);
+            Checkclients.get(Checkclients.size() - 1).sendInitialiseConnectionMsg(Checkclients.size());
             Checkglobal++;
             numcheckClinets++;
         }
