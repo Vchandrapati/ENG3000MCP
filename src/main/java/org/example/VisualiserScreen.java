@@ -11,7 +11,8 @@ public class VisualiserScreen extends JFrame {
     private final long startupTime;
     public VisualiserScreen() {
         setTitle("Master Control Protocol");
-        setSize(1200, 600);
+        setSize(1600, 800);
+        setResizable(false);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         this.startupTime = System.currentTimeMillis();
@@ -21,7 +22,7 @@ public class VisualiserScreen extends JFrame {
 
         JPanel userPanel = new JPanel();
         userPanel.setLayout(new BorderLayout());
-        userPanel.setPreferredSize(new Dimension(600, 300));
+        userPanel.setPreferredSize(new Dimension(800, 300));
 
         commandInput = new JTextField();
         Font font = new Font("Arial", Font.PLAIN, 20);
@@ -38,11 +39,11 @@ public class VisualiserScreen extends JFrame {
         userPanel.add(logScroller, BorderLayout.CENTER);
 
         // Create a horizontal split pane for the bottom half
-        JSplitPane bottomSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, infoPanel, userPanel);
-        bottomSplitPane.setDividerLocation(600); // Adjust as needed
+        JSplitPane bottomSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, trackPanel, infoPanel);
+        bottomSplitPane.setDividerLocation(800); // Adjust as needed
         bottomSplitPane.setOneTouchExpandable(true);
 
-        JSplitPane mainSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, trackPanel, bottomSplitPane);
+        JSplitPane mainSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, userPanel, bottomSplitPane);
         mainSplitPane.setDividerLocation(400); // Adjust as needed
         mainSplitPane.setOneTouchExpandable(true);
 
@@ -65,6 +66,6 @@ public class VisualiserScreen extends JFrame {
     }
 
     private void updateVisualizer() {
-        trackPanel.updateTrainZones(Database.getInstance().getTrainBlockMap());
+        trackPanel.updateTrainZones(Database.getInstance().getTrainClients());
     }
 }

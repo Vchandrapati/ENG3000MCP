@@ -115,9 +115,11 @@ public class Server implements Runnable {
 
             List<Client> clients = db.getClients();
             for (Client client : clients) {
-                if (client.isRegistered()) {
-                    client.setStatReturned(false);
-                    client.sendStatusMessage(System.currentTimeMillis());
+                synchronized (client) {
+                    if (Boolean.TRUE.equals(client.isRegistered())) {
+                        client.setStatReturned(false);
+                        client.sendStatusMessage(System.currentTimeMillis());
+                    }
                 }
             }
 
@@ -141,14 +143,18 @@ public class Server implements Runnable {
      *
      * @param clients the list of clients to check
      */
+
+    
     private void checkForMissingResponse(List<Client> clients, Long sendTime) {
         for (Client client : clients) {
-            if (!client.lastStatReturned() && client.isRegistered() && client.lastStatMSGSent()) {
-                logger.severe(String.format("No STAT response from %s sent at %d", client.getId(), sendTime));
+            synchronized (client) {
+                if (Boolean.TRUE.equals(!client.lastStatReturned() && client.isRegistered()) && client.lastStatMSGSent()) {
+                    logger.log(Level.WARNING, "No STAT response from {0} sent at {1}", new Object[]{client.getId(), sendTime});
 
-                // If a train is unresponsive
-                if (client.isTrainClient())
-                    SystemStateManager.getInstance().addUnresponsiveClient(client.getId());
+                    // If a train is unresponsive
+                    if (client.isTrainClient())
+                        SystemStateManager.getInstance().addUnresponsiveClient(client.getId());
+                }
             }
         }
     }
@@ -159,9 +165,10 @@ public class Server implements Runnable {
             DatagramPacket sendPacket = new DatagramPacket(buffer, buffer.length, client.getClientAddress(),
                     client.getClientPort());
             serverSocket.send(sendPacket);
-            logger.log(Level.INFO, String.format("Sent %s to client: %s", type, client.id));
+            logger.log(Level.INFO, "Sent {0} to client: {1}", new Object[]{type, client.id});
         } catch (IOException e) {
-            logger.log(Level.SEVERE, "Failed to send message to client " + client.getId(), e);
+            logger.log(Level.SEVERE, "Failed to send message to client {0}", client.getId());
+            logger.log(Level.SEVERE, "Exception: ", e);
         }
     }
 

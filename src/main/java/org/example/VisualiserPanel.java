@@ -4,16 +4,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.*;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.List;
 
 public class VisualiserPanel extends JPanel {
-    private Map<String, Integer> trainZones = new HashMap<>();
+    private List<TrainClient> trainZones = new ArrayList<>();
     private static final int SEGMENTS = 11;
     private static final double SEGMENT_DRAW_LENGTH = 10;
 
-    public void updateTrainZones(Map<String, Integer> newTrainZones) {
+    public void updateTrainZones(List<TrainClient> newTrainZones) {
         trainZones = newTrainZones;
         repaint(); // Request the panel to be repainted
     }
@@ -53,10 +52,9 @@ public class VisualiserPanel extends JPanel {
     }
 
     private void drawTrainLocations(double angleIncrement, int centerX, double radiusX, int centerY, double radiusY, Graphics2D g2d) {
-        for (Map.Entry<String, Integer> entry : trainZones.entrySet()) {
-            String trainId = entry.getKey();
-            String status = Database.getInstance().getTrainStatus(entry.getKey());
-            int zone = entry.getValue();
+        for (TrainClient train : trainZones) {
+            String status = train.getStatus();
+            int zone = train.getZone();
 
             // Calculate the angle at the center of the zone
             double theta = zone * angleIncrement + angleIncrement / 2;
@@ -90,7 +88,7 @@ public class VisualiserPanel extends JPanel {
             // Draw the train ID near the train
             g2d.setColor(Color.BLACK);
             FontMetrics fm = g2d.getFontMetrics();
-            int idWidth = fm.stringWidth(trainId);
+            int idWidth = fm.stringWidth(train.id);
 
             double idOffsetX = -idWidth / 2.0;
             double idOffsetY = -rectHeight / 2.0 - 5;
@@ -100,7 +98,7 @@ public class VisualiserPanel extends JPanel {
             idTransform.rotate(angleOfTangent);
             Point2D idPoint = idTransform.transform(new Point2D.Double(idOffsetX, idOffsetY), null);
 
-            g2d.drawString(trainId, (float) idPoint.getX(), (float) idPoint.getY());
+            g2d.drawString(train.id, (float) idPoint.getX(), (float) idPoint.getY());
             g2d.drawString(status, (float) idPoint.getX(), (float) idPoint.getY() - 10);
         }
     }

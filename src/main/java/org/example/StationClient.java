@@ -10,8 +10,8 @@ public class StationClient extends CheckpointClient {
         CLOSE
     }
 
-    public StationClient(InetAddress clientAddress, int clientPort, String id) {
-        super(clientAddress, clientPort, id);
+    public StationClient(InetAddress clientAddress, int clientPort, String id, int location) {
+        super(clientAddress, clientPort, id, location);
     }
 
     public void updateStatus(String newStatus) {

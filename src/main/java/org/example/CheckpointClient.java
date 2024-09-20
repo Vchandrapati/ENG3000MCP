@@ -13,9 +13,9 @@ public class CheckpointClient extends Client {
         DEAD
     }
 
-    public CheckpointClient(InetAddress clientAddress, int clientPort, String id) {
+    public CheckpointClient(InetAddress clientAddress, int clientPort, String id, int location) {
         super(clientAddress, clientPort, id);
-        location = 0;
+        this.location = location;
         String idString = id.substring(2);
         intID = Integer.parseInt(idString);
         status = Status.ALIVE;
