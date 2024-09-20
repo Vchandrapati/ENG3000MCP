@@ -7,6 +7,7 @@ import java.util.logging.Level;
 public class TrainClient extends Client {
     private final AtomicInteger zone = new AtomicInteger();
     private volatile Status status;
+    private volatile boolean isCurrentlyMapped;
 
     private enum Status {
         STOPPED,
@@ -21,6 +22,7 @@ public class TrainClient extends Client {
     public TrainClient(InetAddress clientAddress, int clientPort, String id) {
         super(clientAddress, clientPort, id);
         this.status = Status.ON;
+        this.isCurrentlyMapped = false;
     }
 
     public Integer getZone() {
@@ -80,5 +82,14 @@ public class TrainClient extends Client {
 
     public void changeZone(int zone) {
         this.zone.set(zone);
+        isCurrentlyMapped = true;
+    }
+
+    public void unmap() {
+        isCurrentlyMapped = false;
+    }
+
+    public boolean isCurrentlyMapped() {
+        return isCurrentlyMapped;
     }
 }

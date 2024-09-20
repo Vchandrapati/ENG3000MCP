@@ -104,4 +104,43 @@ java.net.BindException: Address already in use: bind
 	at org.example.Server$Holder.<clinit>(Server.java:48)
 	at org.example.Server.getInstance(Server.java:68)
 	at org.example.App.lambda$1(App.java:23)
+	at java.base/java.lang.Thread.run(Thread.java:1583)Sept 20, 2024 12:25:13 AM org.example.SystemStateManager setState
+INFO: Changing to system state STARTUP
+Sept 20, 2024 12:25:14 AM org.example.Server <init>
+SEVERE: Error starting up server
+java.net.BindException: Address already in use: bind
+	at java.base/sun.nio.ch.Net.bind0(Native Method)
+	at java.base/sun.nio.ch.Net.bind(Net.java:565)
+	at java.base/sun.nio.ch.DatagramChannelImpl.bindInternal(DatagramChannelImpl.java:1267)
+	at java.base/sun.nio.ch.DatagramChannelImpl.bind(DatagramChannelImpl.java:1237)
+	at java.base/sun.nio.ch.DatagramSocketAdaptor.bind(DatagramSocketAdaptor.java:111)
+	at java.base/java.net.DatagramSocket.createDelegate(DatagramSocket.java:1425)
+	at java.base/java.net.DatagramSocket.<init>(DatagramSocket.java:328)
+	at java.base/java.net.DatagramSocket.<init>(DatagramSocket.java:387)
+	at java.base/java.net.DatagramSocket.<init>(DatagramSocket.java:353)
+	at org.example.Server.<init>(Server.java:38)
+	at org.example.Server$Holder.<clinit>(Server.java:49)
+	at org.example.Server.getInstance(Server.java:69)
+	at org.example.App.lambda$1(App.java:22)
 	at java.base/java.lang.Thread.run(Thread.java:1583)
+
+Sept 20, 2024 12:25:17 AM org.example.SystemStateManager setState
+INFO: Changing to system state STARTUP
+Sept 20, 2024 12:25:17 AM org.example.Server <init>
+SEVERE: Error starting up server
+java.net.BindException: Address already in use: bind
+	at java.base/sun.nio.ch.Net.bind0(Native Method)
+	at java.base/sun.nio.ch.Net.bind(Net.java:565)
+	at java.base/sun.nio.ch.DatagramChannelImpl.bindInternal(DatagramChannelImpl.java:1267)
+	at java.base/sun.nio.ch.DatagramChannelImpl.bind(DatagramChannelImpl.java:1237)
+	at java.base/sun.nio.ch.DatagramSocketAdaptor.bind(DatagramSocketAdaptor.java:111)
+	at java.base/java.net.DatagramSocket.createDelegate(DatagramSocket.java:1425)
+	at java.base/java.net.DatagramSocket.<init>(DatagramSocket.java:328)
+	at java.base/java.net.DatagramSocket.<init>(DatagramSocket.java:387)
+	at java.base/java.net.DatagramSocket.<init>(DatagramSocket.java:353)
+	at org.example.Server.<init>(Server.java:38)
+	at org.example.Server$Holder.<clinit>(Server.java:49)
+	at org.example.Server.getInstance(Server.java:69)
+	at org.example.App.lambda$1(App.java:22)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+

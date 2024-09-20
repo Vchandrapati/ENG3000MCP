@@ -43,6 +43,7 @@ public class CurrentTrainInfo {
     private void stopTrainAtCheckpoint(int zone) {
         logger.log(Level.INFO, "Train " + train.id + " has been mapped to zone " + zone);
         train.sendExecuteMessage(SpeedEnum.STOP);
+        train.changeZone(zone);
     }
 
 

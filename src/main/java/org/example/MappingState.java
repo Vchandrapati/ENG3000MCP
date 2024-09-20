@@ -1,6 +1,6 @@
 package org.example;
 
-import java.util.List;
+import java.util.*;
 import java.util.logging.Logger;
 
 public abstract class MappingState implements SystemStateInterface{
@@ -11,7 +11,7 @@ public abstract class MappingState implements SystemStateInterface{
     protected static final long TIME_BETWEEN_RUNNING = 5000; //5 seconds
     protected static final SystemState NEXT_STATE = SystemState.RUNNING;
 
-    protected List<TrainClient> trainsToMap;
+    protected List<TrainClient> trainsToMap = new ArrayList<>();
     protected boolean startMapping = false;
     protected CurrentTrainInfo currentTrainInfo = null;
     protected int currentTrainIndex = 0;

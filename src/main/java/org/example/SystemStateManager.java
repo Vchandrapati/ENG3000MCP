@@ -16,6 +16,9 @@ public class SystemStateManager {
 
     private boolean completedStartup = false;
 
+    // Flag to start early before 10-minute timer has finished
+    private boolean startEarly = false;
+
     private static final int NO_TRIP = -1;
     private int lastTrip = NO_TRIP;
 
@@ -82,21 +85,29 @@ public class SystemStateManager {
         this.error = false;
     }
 
-    //VIKIL PLEASE READ
+    public void startEarly() {
+        startEarly = true;
+    }
 
-    //I need you to only send me unresponsive client ids while not in emergency mode,
-    //if in emergency mode you will
-    //1) Still send unresponsive client ids, but they must be new
-    //2) All the client ids of stat messages received
+    public boolean hasStartedEarly() {
+        return startEarly;
+    }
 
     //Takes a string id of a client id
+    //adds a unresponsive client to the unresponsive client list in the database
     public void addUnresponsiveClient(String id) {
         error = true;
+        Client curClient = db.getClient(id);
+        if(curClient.isTrainClient()) {
+            TrainClient train = (TrainClient) curClient;
+            train.unmap();
+        }
         db.addUnresponsiveClient(id);
     }
 
     //For every stat message received during emergency mode
     //Takes a string id of a client id
+    //Adds a string if of a client of a packet received during emergency mode to the emergency mode message queue
     public void sendEmergencyPacketClientID(String id) {
         EmergencyState.addMessage(id);
     }

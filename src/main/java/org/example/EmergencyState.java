@@ -48,10 +48,12 @@ public class EmergencyState implements SystemStateInterface {
     //if the queue is empty and the dead list is empty, go to next state
     private boolean checkIfAllReconnected() {
         while(!clientMessageQueue.isEmpty()) {
-            String client = clientMessageQueue.poll();
-            if(db.isClientUnresponsive(client)) {
-                if(client.contains("BR")) db.addClientToReconnecting(client);
-                db.removeClientFromUnresponsive(client);
+            String clientID = clientMessageQueue.poll();
+            if(db.isClientUnresponsive(clientID)) {
+                if(clientID.contains("BR")) {
+                    db.addClientToReconnecting(clientID);
+                }
+                db.removeClientFromUnresponsive(clientID);
             }
         }
         boolean temp = db.isUnresponsiveEmpty();
@@ -65,7 +67,7 @@ public class EmergencyState implements SystemStateInterface {
     //tells each train to stop at next station
     private void stopAllTrains() {
         for (TrainClient trainClient : trains) {
-            trainClient.sendExecuteMessage(SpeedEnum.STOPNEXTSTATION);
+            trainClient.sendExecuteMessage(SpeedEnum.STOP);
         }
     }
 

@@ -60,7 +60,6 @@ public class TestingStates {
         Processor p = new Processor();
         int count = 1;
         Thread.sleep(5000);
-        StartupState.startEarly();
 
         while(App.isRunning) {
             if(System.currentTimeMillis() - time >= 2000 && count < 6) {
@@ -83,7 +82,6 @@ public class TestingStates {
         Processor p = new Processor();
         int count = 1;
         Thread.sleep(5000);
-        StartupState.startEarly();
 
         while(App.isRunning) {
             if(System.currentTimeMillis() - time >= 2000) {

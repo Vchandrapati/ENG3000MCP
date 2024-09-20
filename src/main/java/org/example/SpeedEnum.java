@@ -4,5 +4,6 @@ public enum SpeedEnum {
     FAST,
     SLOW,
     STOP,
-    STOPNEXTSTATION
+    STOPNEXTSTATION,
+    BACKWARDS
 }

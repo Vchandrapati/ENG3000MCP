@@ -4,10 +4,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.*;
 import java.text.SimpleDateFormat;
-import java.util.*;
 import java.util.List;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class VisualiserPanel extends JPanel {
+
+    private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+
     private List<TrainClient> trainZones = new ArrayList<>();
     private static final int SEGMENTS = 11;
     private static final double SEGMENT_DRAW_LENGTH = 10;
@@ -53,6 +58,8 @@ public class VisualiserPanel extends JPanel {
 
     private void drawTrainLocations(double angleIncrement, int centerX, double radiusX, int centerY, double radiusY, Graphics2D g2d) {
         for (TrainClient train : trainZones) {
+            if(!train.isCurrentlyMapped()) continue;
+
             String status = train.getStatus();
             int zone = train.getZone();
 

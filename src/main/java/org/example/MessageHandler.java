@@ -45,6 +45,7 @@ public class MessageHandler {
         switch (receiveMessage.message) {
             case "TRIP":
                 processor.sensorTripped(client.getLocation());
+                logger.log(Level.INFO, "Received TRIP command from Checkpoint: {0}", receiveMessage.clientID);
                 break;
             case "CHIN":
                 handleInitialise(receiveMessage, address, port);

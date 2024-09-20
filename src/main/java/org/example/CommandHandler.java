@@ -77,7 +77,7 @@ public class CommandHandler implements Runnable {
                 App.shutdown();
                 break;
             case "start startup":
-                if(!startedStartup) StartupState.startEarly();
+                if(!startedStartup) SystemStateManager.getInstance().startEarly();
                 else throw new InvalidCommandException("Has already been used");
                 break;
             case "start running":
