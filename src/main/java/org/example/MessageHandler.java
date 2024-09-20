@@ -33,7 +33,7 @@ public class MessageHandler {
         } catch (JsonProcessingException e) {
             logger.log(Level.SEVERE, "Failed to parse message: {0}", message);
         } catch (Exception e) {
-            logger.log(Level.SEVERE, "Unexpected error handling message from {0}:{1}", new Object[]{address, port});
+            logger.log(Level.SEVERE, "Unexpected error handling message from {0}:{1}", new Object[] { address, port });
             logger.log(Level.SEVERE, "Exception: ", e);
         }
     }
@@ -44,7 +44,11 @@ public class MessageHandler {
         switch (receiveMessage.message) {
             case "TRIP":
                 // location is fucked
-                processor.sensorTripped(Integer.parseInt(receiveMessage.location));
+                if (!client.isTripped()) {
+                    client.setTripped();
+                    processor.sensorTripped(Integer.parseInt(receiveMessage.location));
+                }
+
                 break;
             case "CHIN":
                 handleInitialise(receiveMessage, address, port);
@@ -55,6 +59,11 @@ public class MessageHandler {
                     SystemStateManager.getInstance().sendEmergencyPacketClientID(receiveMessage.clientID);
                 client.setStatReturned(true);
                 logger.log(Level.INFO, "Received STAT command from Checkpoint: {0}", receiveMessage.clientID);
+                break;
+            case "UNTRIP":
+                if (client.isTripped()) {
+                    client.reset();
+                }
                 break;
             default:
                 logger.log(Level.SEVERE, "Failed to handle checkpoint message: {0}", receiveMessage);
@@ -119,7 +128,7 @@ public class MessageHandler {
                     break;
             }
 
-            if(client != null) {
+            if (client != null) {
                 client.registerClient();
                 client.sendAcknowledgeMessage();
                 logger.log(Level.INFO, "Initialised new client: {0}", receiveMessage.clientID);
