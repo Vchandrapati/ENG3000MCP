@@ -34,7 +34,7 @@ public class MessageHandler {
             logger.log(Level.SEVERE, "Failed to parse message: {0}", message);
             logger.log(Level.SEVERE, "Exception: ", e);
         } catch (Exception e) {
-            logger.log(Level.SEVERE, "Unexpected error handling message from {0}:{1}", new Object[]{address, port});
+            logger.log(Level.SEVERE, "Unexpected error handling message from {0}:{1}", new Object[] { address, port });
             logger.log(Level.SEVERE, "Exception: ", e);
         }
     }
@@ -44,8 +44,12 @@ public class MessageHandler {
         CheckpointClient client = (CheckpointClient) db.getClient(receiveMessage.clientID);
         switch (receiveMessage.message) {
             case "TRIP":
-                processor.sensorTripped(client.getLocation());
-                logger.log(Level.INFO, "Received TRIP command from Checkpoint: {0}", receiveMessage.clientID);
+                // location is fucked
+                if (!client.isTripped()) {
+                    client.setTripped();
+                    processor.sensorTripped(receiveMessage.location);
+                    logger.log(Level.INFO, "Received TRIP command from Checkpoint: {0}", receiveMessage.clientID);
+                }
                 break;
             case "CHIN":
                 handleInitialise(receiveMessage, address, port);
@@ -56,6 +60,11 @@ public class MessageHandler {
                     SystemStateManager.getInstance().sendEmergencyPacketClientID(receiveMessage.clientID);
                 client.setStatReturned(true);
                 logger.log(Level.INFO, "Received STAT command from Checkpoint: {0}", receiveMessage.clientID);
+                break;
+            case "UNTRIP":
+                if (client.isTripped()) {
+                    client.reset();
+                }
                 break;
             default:
                 logger.log(Level.SEVERE, "Failed to handle checkpoint message: {0}", receiveMessage);
@@ -126,7 +135,7 @@ public class MessageHandler {
                     break;
             }
 
-            if(client != null) {
+            if (client != null) {
                 client.registerClient();
                 client.sendAcknowledgeMessage();
                 logger.log(Level.INFO, "Initialised new client: {0}", receiveMessage.clientID);
