@@ -70,7 +70,7 @@ public class Main {
 
         // Starts by having every client send a fake connection msg
         for (int i = 0; i < numcheckClinets; i++) {
-            Checkclients.get(i).sendInitialiseConnectionMsg(i);
+            Checkclients.get(i).sendInitialiseConnectionMsg(i + 1);
         }
 
     }
