@@ -10,11 +10,13 @@ public class CCPClient {
     private InetAddress sendAddress;
     private Integer sendPort;
     private String myID;
+    private boolean living;
 
     // Creates a client on specified port and send to specified address
     public CCPClient(Integer port, InetAddress addLoc, Integer snedPort, String id) {
 
         try {
+            living = true;
             myID = id;
             sendPort = snedPort;
             sendAddress = addLoc;
@@ -92,6 +94,10 @@ public class CCPClient {
     }
 
     public void sendMsg(byte[] buffer) {
+        if (!living) {
+            return;
+        }
+
         try {
             DatagramPacket sendPacket = new DatagramPacket(buffer, buffer.length, sendAddress, sendPort);
             socket.send(sendPacket);
@@ -100,6 +106,10 @@ public class CCPClient {
             System.out.println("Failed to send packet");
         }
 
+    }
+
+    public void setLivingStatus(boolean status) {
+        living = status;
     }
 
 }

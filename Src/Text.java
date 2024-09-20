@@ -70,6 +70,7 @@ class Text extends JFrame implements ActionListener, KeyListener {
     public void submit() {
         // set the text of the label to the text of the field
         String text = t.getText();
+        System.out.println(text);
         main.Commands(text);
 
         fullText = fullText + text + "<br/>";

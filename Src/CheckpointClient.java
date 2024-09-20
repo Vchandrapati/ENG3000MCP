@@ -10,11 +10,13 @@ public class CheckpointClient {
     private InetAddress sendAddress;
     private Integer sendPort;
     private String myID;
+    private boolean living;
 
     // Creates a client on specified port and send to specified address
     public CheckpointClient(Integer port, InetAddress addLoc, Integer snedPort, String ID) {
 
         try {
+            living = true;
             myID = ID;
             sendPort = snedPort;
             sendAddress = addLoc;
@@ -93,6 +95,10 @@ public class CheckpointClient {
 
     public void sendMsg(byte[] buffer) {
         try {
+            if (!living) {
+                return;
+            }
+
             DatagramPacket sendPacket = new DatagramPacket(buffer, buffer.length, sendAddress, sendPort);
             socket.send(sendPacket);
             System.out.println(myID + " Sent msg " + new String(buffer));
@@ -100,6 +106,10 @@ public class CheckpointClient {
             System.out.println("Failed to send packet");
         }
 
+    }
+
+    public void setLivingStatus(boolean status) {
+        living = status;
     }
 
 }

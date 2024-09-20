@@ -112,6 +112,25 @@ public class Main {
             numcheckClinets++;
         }
 
+        if (inputs.length == 3 && (inputs[0].equals("kill") || inputs[0].equals("rez"))) {
+            boolean status = false;
+            if (inputs[0].equals("rez")) {
+                status = true;
+            }
+            try {
+                switch (inputs[1]) {
+                    case "ccp":
+                        CCPclients.get(Integer.parseInt(inputs[2])).setLivingStatus(status);
+                        break;
+                    case "cp":
+                        Checkclients.get(Integer.parseInt(inputs[2])).setLivingStatus(status);
+                        break;
+                }
+            } catch (Exception e) {
+                System.out.println("NO! bad thomas");
+            }
+        }
+
         if (input.equals("q")) {
 
             for (int i = 0; i < numCCPClinets; i++) {
