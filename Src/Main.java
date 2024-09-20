@@ -79,11 +79,18 @@ public class Main {
         String[] inputs = input.split(" ");
         if (inputs.length == 2 && inputs[0].equals("trip")) {
             try {
-                Checkclients.get(Integer.parseInt(inputs[1])).sendTRIPMsg();
+                Checkclients.get(Integer.parseInt(inputs[1]) - 1).sendTRIPMsg(true);
             } catch (Exception e) {
                 System.out.println("NO! bad user");
             }
+        }
 
+        if (inputs.length == 2 && inputs[0].equals("untrip")) {
+            try {
+                Checkclients.get(Integer.parseInt(inputs[1]) - 1).sendTRIPMsg(false);
+            } catch (Exception e) {
+                System.out.println("NO! bad user");
+            }
         }
 
         if (inputs.length == 1 && inputs[0].equals("ccp")) {
@@ -120,10 +127,10 @@ public class Main {
             try {
                 switch (inputs[1]) {
                     case "ccp":
-                        CCPclients.get(Integer.parseInt(inputs[2])).setLivingStatus(status);
+                        CCPclients.get(Integer.parseInt(inputs[2]) - 1).setLivingStatus(status);
                         break;
                     case "cp":
-                        Checkclients.get(Integer.parseInt(inputs[2])).setLivingStatus(status);
+                        Checkclients.get(Integer.parseInt(inputs[2]) - 1).setLivingStatus(status);
                         break;
                 }
             } catch (Exception e) {

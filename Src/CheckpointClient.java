@@ -87,8 +87,12 @@ public class CheckpointClient {
     }
 
     // Sends a stat message
-    public void sendTRIPMsg() {
-        byte[] buffer = ("{\"client_type\":\"checkpoint\", \"message\":\"TRIP\", \"client_id\":\"" + myID
+    public void sendTRIPMsg(boolean tripped) {
+        String trip = "TRIP";
+        if (!tripped) {
+            trip = "UNTRIP";
+        }
+        byte[] buffer = ("{\"client_type\":\"checkpoint\", \"message\":\"" + trip + "\", \"client_id\":\"" + myID
                 + "\", \"timestamp\":\"2019-09-07T15:50+00Z\", \"status\":\"ERR\"}").getBytes();
         sendMsg(buffer);
     }
