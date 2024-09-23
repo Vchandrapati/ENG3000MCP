@@ -1,13 +1,20 @@
 package org.example;
 
 import java.util.*;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class RunningState implements SystemStateInterface {
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-    private boolean allRunning = false;
+
     private static final SystemState nextState = SystemState.RUNNING;
-    private static long timeBetweenRunning = 500;
+
+    private boolean allRunning;
+    private static final long TIME_BETWEEN_RUNNING = 500;
+
+    public RunningState() {
+        allRunning = false;
+    }
 
     @Override
     public boolean performOperation() {
@@ -15,7 +22,7 @@ public class RunningState implements SystemStateInterface {
             try {
                 moveAllTrains();
             } catch (Exception e) {
-                logger.warning("Failed to grab trains from database");
+                logger.log(Level.WARNING, "Failed to grab trains from database");
             }
         }
         return false;
@@ -29,27 +36,21 @@ public class RunningState implements SystemStateInterface {
                 for (TrainClient trainClient : trains) {
                     trainClient.sendExecuteMessage(SpeedEnum.SLOW);
                 }
-                logger.info("All Trains are now moving at speed 1");
+                logger.log(Level.INFO, "All Trains are now moving at speed 1");
             }
         } catch (Exception e) {
-            logger.severe("Failed to move trains: " + e);
+            logger.log(Level.SEVERE, "Failed to move trains");
             SystemStateManager.getInstance().setState(SystemState.EMERGENCY);
         }
     }
 
     @Override
     public long getTimeToWait() {
-        return timeBetweenRunning;
+        return TIME_BETWEEN_RUNNING;
     }
 
     @Override
     public SystemState getNextState() {
         return nextState;
     }
-
-    @Override
-    public void reset() {
-        allRunning = false;
-    }
-
 }

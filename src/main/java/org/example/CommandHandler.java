@@ -76,7 +76,7 @@ public class CommandHandler implements Runnable {
                 App.shutdown();
                 break;
             case "start mapping":
-                if(!startedStartup && SystemStateManager.getInstance().getState() == SystemState.WAITING) SystemStateManager.getInstance().startEarly();
+                if(SystemStateManager.getInstance().getState() == SystemState.WAITING) SystemStateManager.getInstance().startEarly();
                 else throw new InvalidCommandException("Has already been used or in that state currently");
                 break;
             default:

@@ -44,11 +44,6 @@ public class MessageHandler {
         CheckpointClient client = (CheckpointClient) db.getClient(receiveMessage.clientID);
         switch (receiveMessage.message) {
             case "TRIP":
-                // location is fucked
-                if(receiveMessage.clientID.contains("CP02")) {
-                    System.out.println();
-                }
-
                 if (!client.isTripped()) {
                     client.setTripped();
                     processor.sensorTripped(client.getLocation());

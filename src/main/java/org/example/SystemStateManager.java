@@ -3,6 +3,7 @@ package org.example;
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.function.Supplier;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class SystemStateManager {
@@ -13,11 +14,6 @@ public class SystemStateManager {
     //holds the current state and the current state concrete implementation
     private SystemState currentState;
     private SystemStateInterface currentStateConcrete;
-
-    private boolean completedStartup = false;
-
-    // Flag to start early before 10-minute timer has finished
-    private boolean startEarly = false;
 
     private static final int NO_TRIP = -1;
     private int lastTrip = NO_TRIP;
@@ -49,8 +45,7 @@ public class SystemStateManager {
     public void setState(SystemState newState) {
         if(currentState == newState) return;
         
-        if(currentStateConcrete != null )
-            currentStateConcrete.reset();
+        if(currentState == SystemState.EMERGENCY) error = false;
 
         currentState = newState;
         currentStateConcrete = stateMap.get(newState).get();
@@ -77,26 +72,21 @@ public class SystemStateManager {
         return tempTrip;
     }
 
-    public boolean hasCompletedStartup() {
-        return completedStartup;
-    }
-
-    public void resetERROR() {
-        this.error = false;
-    }
-
     public void startEarly() {
-        startEarly = true;
+        if(currentState == SystemState.WAITING) {
+            setState(SystemState.MAPPING);
+        }
+        else {
+            logger.log(Level.FINE, "Tried to start mapping, must be in state WAITING");
+        }
     }
 
-    public boolean hasStartedEarly() {
-        return startEarly;
-    }
 
     //Takes a string id of a client id
     //adds a unresponsive client to the unresponsive client list in the database
     //only does this if in not in the waiting state
     public void addUnresponsiveClient(String id) {
+        logger.log(Level.WARNING, "Client {0} has disconnected", id);
         if(currentState != SystemState.WAITING) {
             error = true;
             Client curClient = db.getClient(id);
@@ -128,9 +118,6 @@ public class SystemStateManager {
         if(System.currentTimeMillis() - timeWaited >= timeToWait) {
             //if the current state returns true, means it has finished and will be changed to its next appropriate state
             if(currentStateConcrete.performOperation()) {
-                if(currentState == SystemState.MAPPING)
-                    completedStartup = true;
-
                 setState(currentStateConcrete.getNextState());
             }
             timeWaited = System.currentTimeMillis();

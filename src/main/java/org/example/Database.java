@@ -15,8 +15,7 @@ public class Database {
     private final HashSet<String> allTrains;
     // Set of all unresponsive or "dead" clients
     private final HashSet<String> unresponsiveClients;
-    // Set of all train clients waiting to reconnect
-    private final HashSet<String> waitingToReconnectTrains;
+
     private final AtomicInteger numberOfCheckpoints;
     private final AtomicInteger numberOfStations;
 
@@ -27,7 +26,6 @@ public class Database {
 
         allTrains = new HashSet<>();
         unresponsiveClients = new HashSet<>();
-        waitingToReconnectTrains = new HashSet<>();
 
         numberOfCheckpoints = new AtomicInteger(0);
         numberOfStations = new AtomicInteger(0);
@@ -137,20 +135,6 @@ public class Database {
 
     public boolean isUnresponsiveEmpty() {
         return unresponsiveClients.isEmpty();
-    }
-
-    public void addClientToReconnecting(String id) {
-        if (!id.startsWith("BR")) {
-            logger.log(Level.WARNING, "Attempted to add a non-train to waiting to reconnect: {0}", id);
-        }
-        waitingToReconnectTrains.add(id);
-    }
-
-    public void removeClientFromReconnecting(String id) {
-        if (!id.startsWith("BR")) {
-            logger.log(Level.WARNING, "Attempted to remove a non-train to waiting to reconnect: {0}", id);
-        }
-        waitingToReconnectTrains.remove(id);
     }
 
     public void updateTrainBlock(String trainId, int newBlock) {

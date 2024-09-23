@@ -3,11 +3,10 @@ package org.example;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+//Initial waiting phase, either exits when ten minutes is over or started by command
+//No emergency mode can happen in this phase
+
 public class WaitingState implements SystemStateInterface {
-
-    //Initial waiting phase, either exits when ten minutes is over or started by command
-    //No emergency mode can happen in this phase
-
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     // All time units in milliseconds
@@ -17,20 +16,17 @@ public class WaitingState implements SystemStateInterface {
 
     private static final SystemState NEXT_STATE = SystemState.MAPPING;
 
-
-
     @Override
     public boolean performOperation() {
         long elapsedTime = System.currentTimeMillis() - TIME_ON_START;
 
         // Check if early start or timeout
-        if ((elapsedTime >= STARTUP_CONNECTION_TIME_PERIOD || SystemStateManager.getInstance().hasStartedEarly())) {
-            logger.log(Level.INFO, "Timeout or early state has occured");
+        if (elapsedTime >= STARTUP_CONNECTION_TIME_PERIOD) {
+            logger.log(Level.INFO, "Timeout state has occured");
             return true;
         }
         return false;
     }
-
 
     @Override
     public long getTimeToWait() {
@@ -41,12 +37,6 @@ public class WaitingState implements SystemStateInterface {
     public SystemState getNextState() {
         return NEXT_STATE;
     }
-
-    @Override
-    public void reset() {
-        //Nothing to reset
-    }
-
 }
 
 

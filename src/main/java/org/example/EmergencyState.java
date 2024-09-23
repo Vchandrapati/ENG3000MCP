@@ -6,26 +6,32 @@ import java.util.logging.Logger;
 import java.util.concurrent.*;
 
 public class EmergencyState implements SystemStateInterface {
-
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-    protected static final SystemState NEXT_STATE = SystemState.MAPPING;
 
     // All time units in milliseconds
     private static final long EMERGENCY_TIMEOUT = 600000; // 10 minutes
     private static final long TIME_BETWEEN_RUNNING = 1000;
-    private final Database db = Database.getInstance();
+    private static final long TIME_BETWEEN_SENDING_STOP = 5000; //5 seconds
 
-    private static BlockingQueue<String> clientMessageQueue = new LinkedBlockingQueue<>();
-
-    private List<TrainClient> trains = null;
+    private static final SystemState NEXT_STATE = SystemState.MAPPING;
 
     //the time when counter started
-    private final long timeOnStart = System.currentTimeMillis();
+    private long TIME_ON_START;
+    private long TIME_ON_STOP;
+    private final Database db = Database.getInstance();
+    private static BlockingQueue<String> clientMessageQueue = new LinkedBlockingQueue<>();
+    private List<TrainClient> trains;
+
+    public EmergencyState() {
+        TIME_ON_START = System.currentTimeMillis();
+        TIME_ON_STOP = TIME_BETWEEN_SENDING_STOP;
+        trains = null;
+    }
 
     @Override
     public boolean performOperation() {
         //if it has been EMERGENCY_TIMEOUT minutes within emergency state, the client/s has failed to reconnect in time and proceed to next state
-        if(System.currentTimeMillis() - timeOnStart >= EMERGENCY_TIMEOUT) {
+        if(System.currentTimeMillis() - TIME_ON_START >= EMERGENCY_TIMEOUT) {
             return true;
         }
         else {
@@ -43,23 +49,25 @@ public class EmergencyState implements SystemStateInterface {
             String clientID = clientMessageQueue.poll();
             if(db.isClientUnresponsive(clientID)) {
                 logger.log(Level.INFO, "Client has {0} has reconnected", clientID);
-                if(clientID.contains("BR")) {
-                    db.addClientToReconnecting(clientID);
-                }
                 db.removeClientFromUnresponsive(clientID);
             }
         }
-        return db.isUnresponsiveEmpty();
+        boolean result = db.isUnresponsiveEmpty();
+        if(result) logger.log(Level.INFO, "All clients have reconnected moving to state {0}", NEXT_STATE);
+        return result;
     }
 
     public static void addMessage(String id) {
         clientMessageQueue.add(id);
     }
 
-    //tells each train to stop at next station
+    //tells each train to stop every 5 seconds
     private void stopAllTrains() {
-        for (TrainClient trainClient : trains) {
-            trainClient.sendExecuteMessage(SpeedEnum.STOP);
+        if(System.currentTimeMillis() - TIME_ON_STOP >= TIME_BETWEEN_SENDING_STOP || TIME_ON_STOP == 5000) {
+            TIME_ON_STOP = System.currentTimeMillis();
+            for (TrainClient trainClient : trains) {
+                trainClient.sendExecuteMessage(SpeedEnum.STOP);
+            }
         }
     }
 
@@ -71,11 +79,5 @@ public class EmergencyState implements SystemStateInterface {
     @Override
     public SystemState getNextState() {
         return NEXT_STATE;
-    }
-
-    @Override
-    public void reset() {
-        trains = null;
-        SystemStateManager.getInstance().resetERROR();
     }
 }

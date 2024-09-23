@@ -7,21 +7,28 @@ import java.util.logging.Level;
 public class MappingState implements SystemStateInterface{
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
-    //if a train cannot be mapped, stop that train and go to waiting
-
     // All time units in milliseconds
     private static final long TRAIN_MAPPING_DEATH_TIMEOUT = 60000; // 1 minute
-    private static long CURRENT_TRAIN_START_TIME = System.currentTimeMillis();
     private static final long TRAIN_MAPPING_RETRY_TIMEOUT = 15000; // 15 seconds
     private static final long TIME_BETWEEN_RUNNING = 500; //1 second
+
     private static final SystemState NEXT_STATE = SystemState.RUNNING;
 
-    private List<TrainClient> trainsToMap = new ArrayList<>();
-    private boolean startMapping = false;
-    private CurrentTrainInfo currentTrainInfo = null;
-    private int currentTrainIndex = 0;
+    private List<TrainClient> trainsToMap;
+    private boolean startMapping;
+    private CurrentTrainInfo currentTrainInfo;
+    private int currentTrainIndex;
+    private long CURRENT_TRAIN_START_TIME;
 
     private final Database db = Database.getInstance();
+
+    public MappingState() {
+        CURRENT_TRAIN_START_TIME = System.currentTimeMillis();
+        trainsToMap = new ArrayList<>();
+        startMapping = false;
+        currentTrainInfo = null;
+        currentTrainIndex = 0;
+    }
     
     @Override
     public boolean performOperation() {
@@ -64,6 +71,7 @@ public class MappingState implements SystemStateInterface{
                 currentTrainInfo = new CurrentTrainInfo(trainsToMap.get(currentTrainIndex));
         } 
         else if (currentTrainInfo.process(TRAIN_MAPPING_RETRY_TIMEOUT)) {
+            CURRENT_TRAIN_START_TIME = System.currentTimeMillis();
             currentTrainIndex++;
             if (currentTrainIndex >= trainsToMap.size()) {
                 logger.info("All clients have been mapped.");
@@ -82,13 +90,5 @@ public class MappingState implements SystemStateInterface{
     @Override
     public SystemState getNextState() {
         return NEXT_STATE;
-    }
-
-    @Override
-    public void reset() {
-        startMapping = false;
-        currentTrainInfo = null;
-        currentTrainIndex = 0;
-        trainsToMap = null;
     }
 }
