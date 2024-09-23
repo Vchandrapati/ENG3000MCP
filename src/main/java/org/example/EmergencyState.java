@@ -1,6 +1,7 @@
 package org.example;
 
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.concurrent.*;
 
@@ -41,6 +42,7 @@ public class EmergencyState implements SystemStateInterface {
         while(!clientMessageQueue.isEmpty()) {
             String clientID = clientMessageQueue.poll();
             if(db.isClientUnresponsive(clientID)) {
+                logger.log(Level.INFO, "Client has {0} has reconnected", clientID);
                 if(clientID.contains("BR")) {
                     db.addClientToReconnecting(clientID);
                 }

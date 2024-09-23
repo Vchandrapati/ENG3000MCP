@@ -22,10 +22,6 @@ public class StationClient extends CheckpointClient {
         }
     }
 
-    public Integer getLocation() {
-        return super.getLocation();
-    }
-
     // For sending a message about updating the status of the door
     // True: Door is open
     // False: Door is closed

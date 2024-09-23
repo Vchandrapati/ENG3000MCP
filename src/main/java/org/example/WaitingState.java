@@ -2,7 +2,6 @@ package org.example;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.*;
 
 public class WaitingState implements SystemStateInterface {
 
@@ -26,6 +25,7 @@ public class WaitingState implements SystemStateInterface {
 
         // Check if early start or timeout
         if ((elapsedTime >= STARTUP_CONNECTION_TIME_PERIOD || SystemStateManager.getInstance().hasStartedEarly())) {
+            logger.log(Level.INFO, "Timeout or early state has occured");
             return true;
         }
         return false;

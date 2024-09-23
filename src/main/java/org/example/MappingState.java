@@ -2,12 +2,17 @@ package org.example;
 
 import java.util.*;
 import java.util.logging.Logger;
+import java.util.logging.Level;
 
 public class MappingState implements SystemStateInterface{
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
+    //if a train cannot be mapped, stop that train and go to waiting
+
     // All time units in milliseconds
-    private static final long TRAIN_MAPPING_TIMEOUT = 15000; // 15 seconds
+    private static final long TRAIN_MAPPING_DEATH_TIMEOUT = 60000; // 1 minute
+    private static long CURRENT_TRAIN_START_TIME = System.currentTimeMillis();
+    private static final long TRAIN_MAPPING_RETRY_TIMEOUT = 15000; // 15 seconds
     private static final long TIME_BETWEEN_RUNNING = 500; //1 second
     private static final SystemState NEXT_STATE = SystemState.RUNNING;
 
@@ -33,8 +38,16 @@ public class MappingState implements SystemStateInterface{
             startMapping = true;
         }
 
-        if(startMapping) 
+        if(startMapping) {
+            //if a train does not map in a minute time, send stop message to current train and go to waiting state
+            long elapsedTime = System.currentTimeMillis() - CURRENT_TRAIN_START_TIME;
+            if(elapsedTime >= TRAIN_MAPPING_DEATH_TIMEOUT) {
+                trainsToMap.get(currentTrainIndex).sendExecuteMessage(SpeedEnum.STOP);
+                SystemStateManager.getInstance().setState(SystemState.WAITING);
+                logger.log(Level.SEVERE, "Blade runner failed to be mapped in time");
+            }
             return mapClients();
+        }
 
         return false;
     }
@@ -50,7 +63,7 @@ public class MappingState implements SystemStateInterface{
             if (currentTrainIndex < trainsToMap.size()) 
                 currentTrainInfo = new CurrentTrainInfo(trainsToMap.get(currentTrainIndex));
         } 
-        else if (currentTrainInfo.process(TRAIN_MAPPING_TIMEOUT)) {
+        else if (currentTrainInfo.process(TRAIN_MAPPING_RETRY_TIMEOUT)) {
             currentTrainIndex++;
             if (currentTrainIndex >= trainsToMap.size()) {
                 logger.info("All clients have been mapped.");

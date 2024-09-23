@@ -16,9 +16,6 @@ public class CurrentTrainInfo {
     // Processes the current train to move to next checkpoint, keeps trying until it
     // reaches
     public boolean process(long trainStartupTimeout) {
-        if(train.id.contains("BR02")) {
-            System.out.println("");
-        }
         if (!hasSent) {
             sendTrainToNextCheckpoint("");
         } else {
