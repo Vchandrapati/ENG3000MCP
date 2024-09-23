@@ -7,15 +7,15 @@ import java.util.concurrent.*;
 public class EmergencyState implements SystemStateInterface {
 
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+    protected static final SystemState NEXT_STATE = SystemState.MAPPING;
 
     // All time units in milliseconds
-    private static final long EMERGENCY_TIMEOUT = 300000; // 5 minutes
+    private static final long EMERGENCY_TIMEOUT = 600000; // 10 minutes
     private static final long TIME_BETWEEN_RUNNING = 1000;
     private final Database db = Database.getInstance();
 
     private static BlockingQueue<String> clientMessageQueue = new LinkedBlockingQueue<>();
 
-    private boolean startedStopping = false;
     private List<TrainClient> trains = null;
 
     //the time when counter started
@@ -23,24 +23,15 @@ public class EmergencyState implements SystemStateInterface {
 
     @Override
     public boolean performOperation() {
-        //if it has been 5 minutes within emergency state, the client/s has failed to reconnect in time and proceed to next state
+        //if it has been EMERGENCY_TIMEOUT minutes within emergency state, the client/s has failed to reconnect in time and proceed to next state
         if(System.currentTimeMillis() - timeOnStart >= EMERGENCY_TIMEOUT) {
             return true;
         }
-        else if(startedStopping) {
-            return checkIfAllReconnected();
-        }
         else {
             trains = db.getTrainClients();
-            if(trains != null && !trains.isEmpty()) {
-                startedStopping = true;
-                stopAllTrains();
-            }
-            else {
-                logger.warning("Finding no trains in database");
-            }
+            stopAllTrains();
+            return checkIfAllReconnected();
         }
-        return false;
     }
 
     //goes through the stat message queue, if the string is of a dead client, that client has reconnected, remove from the dead list
@@ -56,8 +47,7 @@ public class EmergencyState implements SystemStateInterface {
                 db.removeClientFromUnresponsive(clientID);
             }
         }
-        boolean temp = db.isUnresponsiveEmpty();
-        return temp;
+        return db.isUnresponsiveEmpty();
     }
 
     public static void addMessage(String id) {
@@ -78,13 +68,11 @@ public class EmergencyState implements SystemStateInterface {
 
     @Override
     public SystemState getNextState() {
-        if(SystemStateManager.getInstance().hasCompletedStartup()) return SystemState.RESTARTUP;
-        return SystemState.STARTUP;
+        return NEXT_STATE;
     }
 
     @Override
     public void reset() {
-        startedStopping = false;
         trains = null;
         SystemStateManager.getInstance().resetERROR();
     }

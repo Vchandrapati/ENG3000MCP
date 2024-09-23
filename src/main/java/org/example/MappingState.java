@@ -3,38 +3,45 @@ package org.example;
 import java.util.*;
 import java.util.logging.Logger;
 
-public abstract class MappingState implements SystemStateInterface{
-    protected static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+public class MappingState implements SystemStateInterface{
+    private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     // All time units in milliseconds
-    protected static final long TRAIN_MAPPING_TIMEOUT = 15000; // 15 seconds
-    protected static final long TIME_BETWEEN_RUNNING = 5000; //5 seconds
-    protected static final SystemState NEXT_STATE = SystemState.RUNNING;
+    private static final long TRAIN_MAPPING_TIMEOUT = 15000; // 15 seconds
+    private static final long TIME_BETWEEN_RUNNING = 500; //1 second
+    private static final SystemState NEXT_STATE = SystemState.RUNNING;
 
-    protected List<TrainClient> trainsToMap = new ArrayList<>();
-    protected boolean startMapping = false;
-    protected CurrentTrainInfo currentTrainInfo = null;
-    protected int currentTrainIndex = 0;
+    private List<TrainClient> trainsToMap = new ArrayList<>();
+    private boolean startMapping = false;
+    private CurrentTrainInfo currentTrainInfo = null;
+    private int currentTrainIndex = 0;
 
-    protected final Database db = Database.getInstance();
-
-    //abstract method
-    protected abstract boolean checkReadyToMap();
+    private final Database db = Database.getInstance();
     
     @Override
     public boolean performOperation() {
-        if (startMapping) {
-            return mapClients();
-        } else {
-            if (checkReadyToMap())
-                startMapping = true;
+        if(!startMapping) {
+            //grab all train clients
+            List<TrainClient> tempTrainsToMap = db.getTrainClients();
+
+            //get all unmapped trains
+            for (TrainClient trainClient : tempTrainsToMap) {
+                if(!trainClient.isCurrentlyMapped()) {
+                    trainsToMap.add(trainClient);
+                }
+            }
+            startMapping = true;
         }
+
+        if(startMapping) 
+            return mapClients();
+
         return false;
     }
 
     protected boolean mapClients() {
-        // Double check if all clients mapped
-        if (trainsToMap == null || trainsToMap.isEmpty()) {
+         //If no clients are available, complete mapping
+        if (trainsToMap.isEmpty() || trainsToMap == null) {
             logger.warning("No trains to map.");
             return true;
         }
@@ -46,7 +53,7 @@ public abstract class MappingState implements SystemStateInterface{
         else if (currentTrainInfo.process(TRAIN_MAPPING_TIMEOUT)) {
             currentTrainIndex++;
             if (currentTrainIndex >= trainsToMap.size()) {
-                logger.info("All clients have been remapped.");
+                logger.info("All clients have been mapped.");
                 return true;
             }
             currentTrainInfo = new CurrentTrainInfo(trainsToMap.get(currentTrainIndex));

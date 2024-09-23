@@ -7,7 +7,7 @@ public class VisualiserScreen extends JFrame {
     private final VisualiserPanel trackPanel;
     private final InfoPanel infoPanel;
     private final JTextField commandInput;
-    private final CommandHandler commandHandler = new CommandHandler();
+    private final CommandHandler commandHandler;
     private final long startupTime;
     public VisualiserScreen() {
         setTitle("Master Control Protocol");
@@ -50,6 +50,7 @@ public class VisualiserScreen extends JFrame {
         getContentPane().add(mainSplitPane);
         LoggerConfig.setupLogger(logArea);
         startVisualizerUpdater();
+        commandHandler = new CommandHandler();
     }
 
     // Method to handle user input from the text field

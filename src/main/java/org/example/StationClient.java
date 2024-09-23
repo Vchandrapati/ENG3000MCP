@@ -45,5 +45,6 @@ public class StationClient extends CheckpointClient {
     @Override
     public void registerClient() {
         Database.getInstance().addClient(this.id, this);
+        logger.info("Added new station to database: " + Database.getInstance().getStationCount());
     }
 }

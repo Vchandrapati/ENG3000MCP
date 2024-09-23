@@ -151,9 +151,8 @@ public class Server implements Runnable {
                 if (Boolean.TRUE.equals(!client.lastStatReturned() && client.isRegistered()) && client.lastStatMSGSent()) {
                     logger.log(Level.WARNING, "No STAT response from {0} sent at {1}", new Object[]{client.getId(), sendTime});
 
-                    // If a train is unresponsive
-                    if (client.isTrainClient())
-                        SystemStateManager.getInstance().addUnresponsiveClient(client.getId());
+                    // If a client is unresponsive
+                    SystemStateManager.getInstance().addUnresponsiveClient(client.getId());
                 }
             }
         }

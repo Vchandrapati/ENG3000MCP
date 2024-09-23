@@ -3,6 +3,10 @@ package org.example;
 import java.util.logging.Logger;
 
 public class Processor {
+
+    //POTENTIAL ISSUES TO BE FIXED IN PROCESSOR
+    //[1] Setting status of clients, and not using them if dead, like checkpoints for example
+
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private static final Database db = Database.getInstance();
     private static final int TOTAL_BLOCKS = db.getCheckpointCount();

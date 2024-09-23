@@ -19,10 +19,9 @@ public class CommandHandler implements Runnable {
     //Set of commands
     static {
         commands = new HashSet<>();
-        commands.add("start startup");
+        commands.add("start mapping");
         commands.add("quit");
         commands.add("help");
-        commands.add("start running");
     }
 
     public CommandHandler() {
@@ -76,13 +75,9 @@ public class CommandHandler implements Runnable {
             case "quit":
                 App.shutdown();
                 break;
-            case "start startup":
-                if(!startedStartup) SystemStateManager.getInstance().startEarly();
-                else throw new InvalidCommandException("Has already been used");
-                break;
-            case "start running":
-                if(!startedStartup) SystemStateManager.getInstance().setState(SystemState.RUNNING);
-                else throw new InvalidCommandException("Has already been used");
+            case "start mapping":
+                if(!startedStartup && SystemStateManager.getInstance().getState() == SystemState.WAITING) SystemStateManager.getInstance().startEarly();
+                else throw new InvalidCommandException("Has already been used or in that state currently");
                 break;
             default:
                 throw new InvalidCommandException("Invalid command");
@@ -92,6 +87,7 @@ public class CommandHandler implements Runnable {
     // Prints all set commands to the console
     private void help() {
         StringBuilder commandString = new StringBuilder();
+        commandString.append("\n").append("List of valid commands");
         for (String command : commands) {
             commandString.append("\n").append(command);
         }

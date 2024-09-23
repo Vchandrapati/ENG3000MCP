@@ -29,15 +29,15 @@ public class SystemStateManager {
 
     static {
         stateMap = new EnumMap<>(SystemState.class);
-        stateMap.put(SystemState.STARTUP, StartupState::new);
-        stateMap.put(SystemState.RESTARTUP, RestartupState::new);
+        stateMap.put(SystemState.WAITING, WaitingState::new);
+        stateMap.put(SystemState.MAPPING, MappingState::new);
         stateMap.put(SystemState.RUNNING, RunningState::new);
         stateMap.put(SystemState.EMERGENCY, EmergencyState::new);
     }
 
     //Initial state
     private SystemStateManager() {
-        setState(SystemState.STARTUP);
+        setState(SystemState.WAITING);
     }
 
     public static SystemStateManager getInstance() {
@@ -64,7 +64,7 @@ public class SystemStateManager {
     }
 
     public boolean needsTrip(int trippedSensor) {
-        if(currentState == SystemState.STARTUP || currentState == SystemState.RESTARTUP) {
+        if(currentState == SystemState.MAPPING) {
             lastTrip = trippedSensor;
             return true;
         }
@@ -95,14 +95,17 @@ public class SystemStateManager {
 
     //Takes a string id of a client id
     //adds a unresponsive client to the unresponsive client list in the database
+    //only does this if in not in the waiting state
     public void addUnresponsiveClient(String id) {
-        error = true;
-        Client curClient = db.getClient(id);
-        if(curClient.isTrainClient()) {
-            TrainClient train = (TrainClient) curClient;
-            train.unmap();
+        if(currentState != SystemState.WAITING) {
+            error = true;
+            Client curClient = db.getClient(id);
+            if(curClient.isTrainClient()) {
+                TrainClient train = (TrainClient) curClient;
+                train.unmap();
+            }
+            db.addUnresponsiveClient(id);
         }
-        db.addUnresponsiveClient(id);
     }
 
     //For every stat message received during emergency mode
@@ -125,7 +128,7 @@ public class SystemStateManager {
         if(System.currentTimeMillis() - timeWaited >= timeToWait) {
             //if the current state returns true, means it has finished and will be changed to its next appropriate state
             if(currentStateConcrete.performOperation()) {
-                if(currentState == SystemState.STARTUP)
+                if(currentState == SystemState.MAPPING)
                     completedStartup = true;
 
                 setState(currentStateConcrete.getNextState());
@@ -133,7 +136,6 @@ public class SystemStateManager {
             timeWaited = System.currentTimeMillis();
         }
         else {
-            //if state is not ready to run, check if there is any changes that may affect the current state
             checkChange();
         }
     }

@@ -46,6 +46,7 @@ public class CheckpointClient extends Client {
     @Override
     public void registerClient() {
         Database.getInstance().addClient(this.id, this);
+        logger.info("Added new checkpoint to database: " + Database.getInstance().getCheckpointCount());
     }
 
     public void setTripped() {

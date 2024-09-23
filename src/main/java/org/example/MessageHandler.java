@@ -45,9 +45,13 @@ public class MessageHandler {
         switch (receiveMessage.message) {
             case "TRIP":
                 // location is fucked
+                if(receiveMessage.clientID.contains("CP02")) {
+                    System.out.println();
+                }
+
                 if (!client.isTripped()) {
                     client.setTripped();
-                    processor.sensorTripped(receiveMessage.location);
+                    processor.sensorTripped(client.getLocation());
                     logger.log(Level.INFO, "Received TRIP command from Checkpoint: {0}", receiveMessage.clientID);
                 }
                 break;
@@ -58,7 +62,9 @@ public class MessageHandler {
             case "STAT":
                 if (SystemStateManager.getInstance().getState() == SystemState.EMERGENCY)
                     SystemStateManager.getInstance().sendEmergencyPacketClientID(receiveMessage.clientID);
+
                 client.setStatReturned(true);
+                client.setStatSent(true);
                 logger.log(Level.INFO, "Received STAT command from Checkpoint: {0}", receiveMessage.clientID);
                 break;
             case "UNTRIP":
@@ -79,7 +85,7 @@ public class MessageHandler {
             case "STAT":
                 if (SystemStateManager.getInstance().getState() == SystemState.EMERGENCY)
                     SystemStateManager.getInstance().sendEmergencyPacketClientID(receiveMessage.clientID);
-
+                
                 client.updateStatus(receiveMessage.status.toUpperCase());
                 client.setStatReturned(true);
                 client.setStatSent(true);
@@ -107,6 +113,7 @@ public class MessageHandler {
                 if (SystemStateManager.getInstance().getState() == SystemState.EMERGENCY)
                     SystemStateManager.getInstance().sendEmergencyPacketClientID(receiveMessage.clientID);
                 client.setStatReturned(true);
+                client.setStatSent(true);
                 logger.log(Level.INFO, "Received STAT message from Station: {0}", receiveMessage.clientID);
                 break;
             case "STIN":
@@ -140,6 +147,11 @@ public class MessageHandler {
                 client.sendAcknowledgeMessage();
                 logger.log(Level.INFO, "Initialised new client: {0}", receiveMessage.clientID);
             }
+
+            //if a client joins while not in waiting state, goes to emergency mode
+            if (SystemStateManager.getInstance().getState() != SystemState.WAITING)
+                    SystemStateManager.getInstance().addUnresponsiveClient(receiveMessage.clientID);
+
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Failed to handle message");
             logger.log(Level.SEVERE, "Exception: ", e);
