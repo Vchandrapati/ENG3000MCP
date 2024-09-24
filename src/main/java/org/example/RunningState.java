@@ -59,4 +59,9 @@ public class RunningState implements SystemStateInterface {
     public SystemState getNextState() {
         return nextState;
     }
+
+    @Override
+    public long getStateTimeout() {
+        return -1;
+    }
 }

@@ -19,6 +19,8 @@ public class Processor {
     //[6] line 52, if this is uncommented, it will run the normal handle train code, then rerun it no matter what, causing the train
     // to be section +1 then what it should be 
 
+    //[7] need to deal with trip and untrip btw
+
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private static final Database db = Database.getInstance();
     private static int TOTAL_BLOCKS = db.getCheckpointCount();

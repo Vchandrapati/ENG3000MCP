@@ -95,4 +95,9 @@ public class MappingState implements SystemStateInterface{
     public SystemState getNextState() {
         return NEXT_STATE;
     }
+
+    @Override
+    public long getStateTimeout() {
+        return System.currentTimeMillis() - CURRENT_TRAIN_START_TIME;
+    }
 }

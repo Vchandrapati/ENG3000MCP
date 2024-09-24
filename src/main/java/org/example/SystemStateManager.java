@@ -151,4 +151,10 @@ public class SystemStateManager {
     public void sendEmergencyPacketClientID(String id) {
         EmergencyState.addMessage(id);
     }
+
+    //returns the current timer for the current state
+    //if returns -1 means state has no appropriate time, 
+    public long getCurrentStateTimeout() {
+        return currentStateConcrete.getStateTimeout();
+    }
 }

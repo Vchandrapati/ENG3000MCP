@@ -4,4 +4,5 @@ public interface SystemStateInterface {
     boolean performOperation();
     long getTimeToWait();
     SystemState getNextState();
+    long getStateTimeout();
 }
