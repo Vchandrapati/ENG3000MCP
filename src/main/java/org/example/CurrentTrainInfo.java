@@ -3,8 +3,10 @@ package org.example;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 
+//Holds the data for the current train being mapped
 public class CurrentTrainInfo {
     static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+
     private final TrainClient train;
     private boolean hasSent;
     private long timeSinceSent;
@@ -13,8 +15,7 @@ public class CurrentTrainInfo {
         this.train = train;
     }
 
-    // Processes the current train to move to next checkpoint, keeps trying until it
-    // reaches
+    // Processes the current train to move to next checkpoint, keeps trying until it reaches
     public boolean process(long trainStartupTimeout) {
         if (!hasSent) {
             sendTrainToNextCheckpoint("");
@@ -34,16 +35,17 @@ public class CurrentTrainInfo {
     // Send speed message to the current train
     private void sendTrainToNextCheckpoint(String retry) {
         timeSinceSent = System.currentTimeMillis();
-        logger.log(Level.INFO, String.format("%s Moving %s", retry, train.id));
+        logger.log(Level.INFO, "Moving " + retry + "{0}", train.id);
         train.sendExecuteMessage(SpeedEnum.SLOW);
         hasSent = true;
     }
 
     // Tells the current train to stop when a checkpoint has been detected
     private void stopTrainAtCheckpoint(int zone) {
-        logger.log(Level.INFO, "Train " + train.id + " has been mapped to zone " + zone);
+        logger.log(Level.INFO, "Train " + train.id + " has been mapped to zone {0}", zone);
         train.sendExecuteMessage(SpeedEnum.STOP);
         train.changeZone(zone);
+        Database.getInstance().updateTrainBlock(train.id, zone);
     }
 
 

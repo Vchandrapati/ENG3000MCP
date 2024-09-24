@@ -10,7 +10,7 @@ public class MappingState implements SystemStateInterface{
     // All time units in milliseconds
     private static final long TRAIN_MAPPING_DEATH_TIMEOUT = 60000; // 1 minute
     private static final long TRAIN_MAPPING_RETRY_TIMEOUT = 15000; // 15 seconds
-    private static final long TIME_BETWEEN_RUNNING = 500; //1 second
+    private static final long TIME_BETWEEN_RUNNING = 500; 
 
     private static final SystemState NEXT_STATE = SystemState.RUNNING;
 
@@ -22,6 +22,7 @@ public class MappingState implements SystemStateInterface{
 
     private final Database db = Database.getInstance();
 
+    //Constructor
     public MappingState() {
         CURRENT_TRAIN_START_TIME = System.currentTimeMillis();
         trainsToMap = new ArrayList<>();
@@ -30,6 +31,8 @@ public class MappingState implements SystemStateInterface{
         currentTrainIndex = 0;
     }
     
+    //Performs the operation of this state at set intervals according to TIME_BETWEEN_RUNNING
+    //If returns true then system goes to NEXT_STATE
     @Override
     public boolean performOperation() {
         if(!startMapping) {
@@ -59,10 +62,11 @@ public class MappingState implements SystemStateInterface{
         return false;
     }
 
+    //proceeds to map all train clients one by one, return true if no trains or all trains are mapped
     protected boolean mapClients() {
          //If no clients are available, complete mapping
         if (trainsToMap.isEmpty() || trainsToMap == null) {
-            logger.warning("No trains to map.");
+            logger.log(Level.WARNING, "No trains to map");
             return true;
         }
 
@@ -74,7 +78,7 @@ public class MappingState implements SystemStateInterface{
             CURRENT_TRAIN_START_TIME = System.currentTimeMillis();
             currentTrainIndex++;
             if (currentTrainIndex >= trainsToMap.size()) {
-                logger.info("All clients have been mapped.");
+                logger.log(Level.INFO, "All clients have been mapped");
                 return true;
             }
             currentTrainInfo = new CurrentTrainInfo(trainsToMap.get(currentTrainIndex));

@@ -13,7 +13,6 @@ public class CommandHandler implements Runnable {
     private static final Set<String> commands;
     private final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private static volatile boolean isRunning = true;
-    private boolean startedStartup = false;
     private final BlockingQueue<String> commandQueue = new LinkedBlockingQueue<>();
 
     //Set of commands
@@ -32,7 +31,7 @@ public class CommandHandler implements Runnable {
     //Main loop for command handler
     @Override
     public void run() {
-        logger.info("MCP online, please input a command, type help to see a list of commands");
+        logger.log(Level.INFO, "MCP online, please input a command, type help to see a list of commands");
 
         while(isRunning) {
             try {
@@ -48,9 +47,9 @@ public class CommandHandler implements Runnable {
                 }
             //if command is invalid throw exception
             } catch (InvalidCommandException e) {
-                logger.severe("Error: " + e);
+                logger.log(Level.WARNING,  "Invalid command");
             } catch (InterruptedException e) {
-                logger.severe("An unexpected error occurred: " + e);
+                logger.log(Level.SEVERE, "An unexpected error occurred: {0}", e);
                 Thread.currentThread().interrupt();
             }
         }
@@ -60,7 +59,7 @@ public class CommandHandler implements Runnable {
         try {
             commandQueue.put(input); // Submit the command to the queue
         } catch (InterruptedException e) {
-            logger.severe("Failed to submit command: " + e);
+            logger.log(Level.SEVERE, "Failed to submit command: {0}", e);
             Thread.currentThread().interrupt(); // Restore interrupted status
         }
     }
@@ -91,14 +90,13 @@ public class CommandHandler implements Runnable {
         for (String command : commands) {
             commandString.append("\n").append(command);
         }
-
         logger.log(Level.INFO, "{0}", commandString);
     }
 
     //Exception for invalid commands
-    private static class InvalidCommandException extends Exception {
+    private class InvalidCommandException extends Exception {
         public InvalidCommandException(String message) {
-            super(message);
+            logger.log(Level.WARNING, message);
         }
     }
 }

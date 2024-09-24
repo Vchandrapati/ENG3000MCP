@@ -46,7 +46,7 @@ public class MessageHandler {
             case "TRIP":
                 if (!client.isTripped()) {
                     client.setTripped();
-                    processor.sensorTripped(client.getLocation());
+                    //processor.sensorTripped(client.getLocation());
                     logger.log(Level.INFO, "Received TRIP command from Checkpoint: {0}", receiveMessage.clientID);
                 }
                 break;
@@ -55,8 +55,9 @@ public class MessageHandler {
                 logger.log(Level.INFO, "Received STAT message from Checkpoint: {0}", receiveMessage.clientID);
                 break;
             case "STAT":
-                if (SystemStateManager.getInstance().getState() == SystemState.EMERGENCY)
+                if (SystemStateManager.getInstance().getState() == SystemState.EMERGENCY) {
                     SystemStateManager.getInstance().sendEmergencyPacketClientID(receiveMessage.clientID);
+                }
 
                 client.setStatReturned(true);
                 client.setStatSent(true);
@@ -65,6 +66,8 @@ public class MessageHandler {
             case "UNTRIP":
                 if (client.isTripped()) {
                     client.reset();
+                    processor.sensorTripped(client.getLocation());
+                    logger.log(Level.INFO, "Received UNTRIP command from Checkpoint: {0}", receiveMessage.clientID);
                 }
                 break;
             default:

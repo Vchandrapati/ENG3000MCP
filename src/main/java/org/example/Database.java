@@ -154,7 +154,6 @@ public class Database {
                 .orElse(null);
     }
 
-
     
     public List<TrainClient> getTrainClients() {
         List<TrainClient> trains = new ArrayList<>();
