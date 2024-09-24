@@ -65,7 +65,7 @@ public class MessageHandler {
             case "UNTRIP":
                 if (client.isTripped()) {
                     client.reset();
-                    processor.sensorTripped(client.getLocation());
+                    processor.checkpointTripped(client.getLocation());
                     logger.log(Level.INFO, "Received UNTRIP command from Checkpoint: {0}", receiveMessage.clientID);
                 }
                 break;

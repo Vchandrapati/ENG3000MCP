@@ -31,7 +31,7 @@ class StateTest {
         while(App.isRunning) {
             if(System.currentTimeMillis() - time >= 2000 && count < 6) {
                 time = System.currentTimeMillis();
-                p.sensorTripped(count);
+                p.checkpointTripped(count);
                 count++;
             }
             if(count == 6) {
@@ -53,7 +53,7 @@ class StateTest {
         while(App.isRunning) {
             if(System.currentTimeMillis() - time >= 2000 && count < 6) {
                 time = System.currentTimeMillis();
-                p.sensorTripped(count);
+                p.checkpointTripped(count);
                 count++;
             }
             // if(count == 6) {
@@ -75,7 +75,7 @@ class StateTest {
         while(App.isRunning) {
             if(System.currentTimeMillis() - time >= 2000) {
                 time = System.currentTimeMillis();
-                p.sensorTripped(count);
+                p.checkpointTripped(count);
                 count++;
             }
             if(count == 6) {
