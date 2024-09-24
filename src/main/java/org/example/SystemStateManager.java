@@ -101,7 +101,7 @@ public class SystemStateManager {
                 logger.log(Level.INFO, "System state manager has detected trip {0}", trippedSensor);
                 return true;
             }
-            logger.log(Level.WARNING, "Mulitiple trips have occured in mapping, once a time should only happen");
+            logger.log(Level.WARNING, "Multiple trips have occured in mapping, one at a time should happen");
             setState(SystemState.EMERGENCY);
             return false;
         }
