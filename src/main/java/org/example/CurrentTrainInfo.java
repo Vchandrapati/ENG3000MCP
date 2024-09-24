@@ -25,6 +25,7 @@ public class CurrentTrainInfo {
                 stopTrainAtCheckpoint(tempTrip);
                 return true;
             }
+
             if (System.currentTimeMillis() - timeSinceSent > trainStartupTimeout) {
                 retrySending();
             }
@@ -35,14 +36,14 @@ public class CurrentTrainInfo {
     // Send speed message to the current train
     private void sendTrainToNextCheckpoint(String retry) {
         timeSinceSent = System.currentTimeMillis();
-        logger.log(Level.INFO, "Moving " + retry + "{0}", train.id);
+        logger.log(Level.INFO, "{0} moving {1}", new Object[]{retry, train.id});
         train.sendExecuteMessage(SpeedEnum.SLOW);
         hasSent = true;
     }
 
     // Tells the current train to stop when a checkpoint has been detected
     private void stopTrainAtCheckpoint(int zone) {
-        logger.log(Level.INFO, "Train " + train.id + " has been mapped to zone {0}", zone);
+        logger.log(Level.INFO, "Train {0} mapped to zone {1}", new Object[]{train.id, zone});
         train.sendExecuteMessage(SpeedEnum.STOP);
         train.changeZone(zone);
         Database.getInstance().updateTrainBlock(train.id, zone);

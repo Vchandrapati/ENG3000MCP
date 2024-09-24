@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 public class CommandHandler implements Runnable {
     private static final Set<String> commands;
     private final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-    private static volatile boolean isRunning = true;
+    private static final boolean IS_RUNNING = true;
     private final BlockingQueue<String> commandQueue = new LinkedBlockingQueue<>();
 
     //Set of commands
@@ -33,7 +33,7 @@ public class CommandHandler implements Runnable {
     public void run() {
         logger.log(Level.INFO, "MCP online, please input a command, type help to see a list of commands");
 
-        while(isRunning) {
+        while(IS_RUNNING) {
             try {
                 //tries to get command from queue if exists
                 String input = commandQueue.take();
@@ -49,7 +49,7 @@ public class CommandHandler implements Runnable {
             } catch (InvalidCommandException e) {
                 logger.log(Level.WARNING,  "Invalid command");
             } catch (InterruptedException e) {
-                logger.log(Level.SEVERE, "An unexpected error occurred: {0}", e);
+                logger.log(Level.SEVERE, "An unexpected error occurred: ", e);
                 Thread.currentThread().interrupt();
             }
         }
@@ -59,7 +59,7 @@ public class CommandHandler implements Runnable {
         try {
             commandQueue.put(input); // Submit the command to the queue
         } catch (InterruptedException e) {
-            logger.log(Level.SEVERE, "Failed to submit command: {0}", e);
+            logger.log(Level.SEVERE, "Failed to submit command: ", e);
             Thread.currentThread().interrupt(); // Restore interrupted status
         }
     }

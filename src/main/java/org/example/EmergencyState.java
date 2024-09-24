@@ -16,25 +16,24 @@ public class EmergencyState implements SystemStateInterface {
     private static final SystemState NEXT_STATE = SystemState.MAPPING;
 
     //the time when counter started
-    private long TIME_ON_START;
-    private long TIME_ON_STOP;
+    private final long timeOnStart;
+    private long timeOnStop;
     private final Database db = Database.getInstance();
-    private static BlockingQueue<String> clientMessageQueue = new LinkedBlockingQueue<>();
+    private static final BlockingQueue<String> clientMessageQueue = new LinkedBlockingQueue<>();
     private List<TrainClient> trains;
 
     public EmergencyState() {
-        TIME_ON_START = System.currentTimeMillis();
-        TIME_ON_STOP = TIME_BETWEEN_SENDING_STOP;
+        timeOnStart = System.currentTimeMillis();
+        timeOnStop = TIME_BETWEEN_SENDING_STOP;
         trains = null;
     }
 
     @Override
     public boolean performOperation() {
         //if it has been EMERGENCY_TIMEOUT minutes within emergency state, the client/s has failed to reconnect in time and proceed to next state
-        if(System.currentTimeMillis() - TIME_ON_START >= EMERGENCY_TIMEOUT) {
+        if(System.currentTimeMillis() - timeOnStart >= EMERGENCY_TIMEOUT) {
             return true;
-        }
-        else {
+        } else {
             trains = db.getTrainClients();
             stopAllTrains();
             return checkIfAllReconnected();
@@ -45,13 +44,14 @@ public class EmergencyState implements SystemStateInterface {
     //if that client is also a train add to restartup list
     //if the queue is empty and the dead list is empty, go to next state
     private boolean checkIfAllReconnected() {
-        while(!clientMessageQueue.isEmpty()) {
+        while (!clientMessageQueue.isEmpty()) {
             String clientID = clientMessageQueue.poll();
-            if(db.isClientUnresponsive(clientID)) {
+            if (db.isClientUnresponsive(clientID)) {
                 logger.log(Level.INFO, "Client has {0} has reconnected", clientID);
                 db.removeClientFromUnresponsive(clientID);
             }
         }
+
         boolean result = db.isUnresponsiveEmpty();
         if(result) logger.log(Level.INFO, "All clients have reconnected moving to state {0}", NEXT_STATE);
         return result;
@@ -63,8 +63,8 @@ public class EmergencyState implements SystemStateInterface {
 
     //tells each train to stop every 5 seconds
     private void stopAllTrains() {
-        if(System.currentTimeMillis() - TIME_ON_STOP >= TIME_BETWEEN_SENDING_STOP || TIME_ON_STOP == 5000) {
-            TIME_ON_STOP = System.currentTimeMillis();
+        if(System.currentTimeMillis() - timeOnStop >= TIME_BETWEEN_SENDING_STOP || timeOnStop == 5000) {
+            timeOnStop = System.currentTimeMillis();
             for (TrainClient trainClient : trains) {
                 trainClient.sendExecuteMessage(SpeedEnum.STOP);
             }
@@ -81,8 +81,7 @@ public class EmergencyState implements SystemStateInterface {
         return NEXT_STATE;
     }
 
-    @Override
     public long getStateTimeout() {
-        return System.currentTimeMillis() - TIME_ON_START;
+        return System.currentTimeMillis() - timeOnStart;
     }
 }

@@ -51,14 +51,14 @@ public class SystemStateManager {
     public void run() {
         long timeToWait = currentStateConcrete.getTimeToWait();
 
-        if(System.currentTimeMillis() - timeWaited >= timeToWait) {
+        if (System.currentTimeMillis() - timeWaited >= timeToWait) {
             //if the current state returns true, means it has finished and will be changed to its next appropriate state
-            if(currentStateConcrete.performOperation()) {
+            if (currentStateConcrete.performOperation()) {
                 setState(currentStateConcrete.getNextState());
             }
+
             timeWaited = System.currentTimeMillis();
-        }
-        else {
+        } else {
             checkChange();
         }
     }
@@ -74,13 +74,7 @@ public class SystemStateManager {
     //Sets the state of the program to the given one
     public void setState(SystemState newState) {
         if(currentState == newState) return;
-        
         if(currentState == SystemState.EMERGENCY) error = false;
-
-        //remove this for testing
-        if(newState == SystemState.EMERGENCY) {
-            System.out.println();
-        }
 
         currentState = newState;
         currentStateConcrete = stateMap.get(newState).get();

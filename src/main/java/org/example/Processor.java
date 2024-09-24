@@ -23,7 +23,7 @@ public class Processor {
 
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private static final Database db = Database.getInstance();
-    private static int TOTAL_BLOCKS = db.getCheckpointCount();
+    private int totalBlocks = db.getCheckpointCount();
 
     public void sensorTripped(int sensorTripped) {
         if (!SystemStateManager.getInstance().needsTrip(sensorTripped))
@@ -33,16 +33,15 @@ public class Processor {
     public void handleTrainSpeed(int sensor) {
         try {
             //need to check total blocks each time, may change due to connecting or disconnect checkpoints
-            TOTAL_BLOCKS = db.getCheckpointCount();
+            totalBlocks = db.getCheckpointCount();
 
-            //[2] what about the a train in the firt section?, you will get -1 no?
+            //[2] what about a train in the firt section?, you will get -1 no?
             String trainID = db.getLastTrainInBlock(sensor - 1);
             // Maybe put an error to catch this
             TrainClient train = (TrainClient) db.getClient(trainID);
 
             db.updateTrainBlock(trainID, sensor);
             train.changeZone(sensor);
-            //train.updateStatus("STARTED");
 
             // Check if block in front is occupied and stop if it is
             int checkNextBlock = calculateNextBlock(sensor + 1);
@@ -51,10 +50,6 @@ public class Processor {
                 train.sendExecuteMessage(SpeedEnum.STOP);
                 train.updateStatus("STOPPED");
             }
-
-            //this is always running?
-            //int previousBlock = calculatePreviousBlock(sensor);
-            //checkForTraffic(previousBlock);
         } catch (Exception e) {
             logger.severe("Unexpected error: " + e);
             SystemStateManager.getInstance().setState(SystemState.EMERGENCY);
@@ -72,12 +67,12 @@ public class Processor {
     }
 
     private int calculateNextBlock(int sensor) {
-        int nextBlock = (sensor) % TOTAL_BLOCKS;
+        int nextBlock = (sensor) % totalBlocks;
         return nextBlock == 0 ? 1 : nextBlock;
     }
 
     private int calculatePreviousBlock(int sensor) {
-        int previousBlock = (sensor - 2) % TOTAL_BLOCKS;
+        int previousBlock = (sensor - 2) % totalBlocks;
         return previousBlock == 0 ? db.getCheckpointCount() : previousBlock;
     }
 }

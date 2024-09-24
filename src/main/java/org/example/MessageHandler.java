@@ -46,7 +46,6 @@ public class MessageHandler {
             case "TRIP":
                 if (!client.isTripped()) {
                     client.setTripped();
-                    //processor.sensorTripped(client.getLocation());
                     logger.log(Level.INFO, "Received TRIP command from Checkpoint: {0}", receiveMessage.clientID);
                 }
                 break;
@@ -117,6 +116,7 @@ public class MessageHandler {
             case "STIN":
                 handleInitialise(receiveMessage, null, 0);
                 logger.log(Level.INFO, "Received STIN message from Station: {0}", receiveMessage.clientID);
+                break;
             default:
                 logger.log(Level.WARNING, "Unknown station message: {0}", receiveMessage.clientID);
         }

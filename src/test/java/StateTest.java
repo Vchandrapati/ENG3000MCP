@@ -1,18 +1,7 @@
 import org.junit.jupiter.api.*;
-import org.junit.platform.commons.logging.Logger;
 import org.example.*;
 
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
-import java.util.*;
-
-import java.util.logging.Level;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.example.LoggerConfig.*;
-
-public class TestingStates {
+class StateTest {
     Database db = Database.getInstance();
 
     @BeforeEach

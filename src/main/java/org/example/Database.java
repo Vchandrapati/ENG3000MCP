@@ -158,23 +158,14 @@ public class Database {
     public List<TrainClient> getTrainClients() {
         List<TrainClient> trains = new ArrayList<>();
         for (String id : allTrains) {
-            if (clients.get(id) instanceof TrainClient) {
-                trains.add((TrainClient) clients.get(id));
+            if (clients.get(id) instanceof TrainClient trainClient) {
+                trains.add(trainClient);
             } else {
                 logger.log(Level.SEVERE, "A non train in allTrains set: {0}", id);
             }
         }
 
         return trains;
-    }
-
-    public String getTrainStatus(String trainId) {
-        Client client = getClient(trainId);
-        if (client instanceof TrainClient) {
-            TrainClient trainClient = (TrainClient) client;
-            return trainClient.getStatus();
-        }
-        return "Unknown";
     }
 
     public List<Client> getClients() {

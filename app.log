@@ -54737,6 +54737,99 @@ Sept 23, 2024 10:27:44 PM org.example.Server <init>
 INFO: Server completed startup and listening on PORT: 6666
 Sept 23, 2024 10:27:54 PM org.example.CommandHandler run
 INFO: Command executed: start mapping
+Sept 23, 2024 10:47:02 PM org.example.CommandHandler run
+INFO: MCP online, please input a command, type help to see a list of commands
+Sept 23, 2024 10:47:02 PM org.example.SystemStateManager setState
+INFO: Changing to system state WAITING
+Sept 23, 2024 10:47:02 PM org.example.Server <init>
+INFO: Server completed startup and listening on PORT: 6666
+Sept 23, 2024 10:47:41 PM org.example.CommandHandler run
+INFO: MCP online, please input a command, type help to see a list of commands
+Sept 23, 2024 10:47:41 PM org.example.SystemStateManager setState
+INFO: Changing to system state WAITING
+Sept 23, 2024 10:47:41 PM org.example.Server <init>
+INFO: Server completed startup and listening on PORT: 6666
+Sept 23, 2024 10:48:11 PM org.example.CommandHandler run
+INFO: MCP online, please input a command, type help to see a list of commands
+Sept 23, 2024 10:48:11 PM org.example.SystemStateManager setState
+INFO: Changing to system state WAITING
+Sept 23, 2024 10:48:11 PM org.example.Server <init>
+INFO: Server completed startup and listening on PORT: 6666
+Sept 23, 2024 10:50:50 PM org.example.CommandHandler run
+INFO: MCP online, please input a command, type help to see a list of commands
+Sept 23, 2024 10:50:51 PM org.example.SystemStateManager setState
+INFO: Changing to system state WAITING
+Sept 23, 2024 10:50:51 PM org.example.Server <init>
+INFO: Server completed startup and listening on PORT: 6666
+Sept 23, 2024 10:52:58 PM org.example.CommandHandler run
+INFO: MCP online, please input a command, type help to see a list of commands
+Sept 23, 2024 10:52:58 PM org.example.SystemStateManager setState
+INFO: Changing to system state WAITING
+Sept 23, 2024 10:52:58 PM org.example.Server <init>
+INFO: Server completed startup and listening on PORT: 6666
+Sept 23, 2024 11:05:08 PM org.example.CommandHandler run
+INFO: MCP online, please input a command, type help to see a list of commands
+Sept 23, 2024 11:05:08 PM org.example.SystemStateManager setState
+INFO: Changing to system state WAITING
+Sept 23, 2024 11:05:08 PM org.example.Server <init>
+INFO: Server completed startup and listening on PORT: 6666
+Sept 23, 2024 11:05:41 PM org.example.CommandHandler run
+INFO: MCP online, please input a command, type help to see a list of commands
+Sept 23, 2024 11:05:41 PM org.example.SystemStateManager setState
+INFO: Changing to system state WAITING
+Sept 23, 2024 11:05:41 PM org.example.Server <init>
+INFO: Server completed startup and listening on PORT: 6666
+2024-09-23 23:14:18 INFO org.example.CommandHandler run MCP online, please input a command, type help to see a list of commands
+2024-09-23 23:14:18 INFO org.example.SystemStateManager setState Changing to system state WAITING
+2024-09-23 23:14:18 INFO org.example.Server <init> Server completed startup and listening on PORT: 6666
+23:14:43 INFO org.example.CommandHandler run MCP online, please input a command, type help to see a list of commands
+23:14:43 INFO org.example.SystemStateManager setState Changing to system state WAITING
+23:14:43 INFO org.example.Server <init> Server completed startup and listening on PORT: 6666
+23:15:13 INFO: org.example.CommandHandler run MCP online, please input a command, type help to see a list of commands
+23:15:13 INFO: org.example.SystemStateManager setState Changing to system state WAITING
+23:15:13 INFO: org.example.Server <init> Server completed startup and listening on PORT: 6666
+23:15:35.618 INFO: org.example.CommandHandler run MCP online, please input a command, type help to see a list of commands
+23:15:35.686 INFO: org.example.SystemStateManager setState Changing to system state WAITING
+23:15:35.790 INFO: org.example.Server <init> Server completed startup and listening on PORT: 6666
+23:16:07.792 INFO: org.example.CommandHandler run MCP online, please input a command, type help to see a list of commands
+23:16:07.859 INFO: org.example.SystemStateManager setState Changing to system state WAITING
+23:16:07.967 INFO: org.example.Server <init> Server completed startup and listening on PORT: 6666
+23:16:18.943 INFO: org.example.CommandHandler run MCP online, please input a command, type help to see a list of commands
+23:16:19.009 INFO: org.example.SystemStateManager setState Changing to system state WAITING
+23:16:19.116 INFO: org.example.Server <init> Server completed startup and listening on PORT: 6666
+23:17:07.021 INFO: org.example.CommandHandler run MCP online, please input a command, type help to see a list of commands
+23:17:07.108 INFO: org.example.SystemStateManager setState Changing to system state WAITING
+23:17:07.231 INFO: org.example.Server <init> Server completed startup and listening on PORT: 6666
+23:17:16.928 INFO: org.example.CommandHandler run MCP online, please input a command, type help to see a list of commands
+23:17:17.007 INFO: org.example.SystemStateManager setState Changing to system state WAITING
+23:17:17.121 INFO: org.example.Server <init> Server completed startup and listening on PORT: 6666
+23:17:27.653 INFO: org.example.CommandHandler run MCP online, please input a command, type help to see a list of commands
+23:17:27.728 INFO: org.example.SystemStateManager setState Changing to system state WAITING
+23:17:27.835 INFO: org.example.Server <init> Server completed startup and listening on PORT: 6666
+23:17:39.942 INFO: org.example.CommandHandler run MCP online, please input a command, type help to see a list of commands
+23:17:40.020 INFO: org.example.SystemStateManager setState Changing to system state WAITING
+23:17:40.133 INFO: org.example.Server <init> Server completed startup and listening on PORT: 6666
+Sept 23, 2024 11:19:48 PM org.example.CommandHandler run
+INFO: MCP online, please input a command, type help to see a list of commands
+Sept 23, 2024 11:19:48 PM org.example.SystemStateManager setState
+INFO: Changing to system state WAITING
+Sept 23, 2024 11:19:49 PM org.example.Server <init>
+INFO: Server completed startup and listening on PORT: 6666
+23:20:46.899 INFO: org.example.CommandHandler run MCP online, please input a command, type help to see a list of commands
+23:20:46.973 INFO: org.example.SystemStateManager setState Changing to system state WAITING
+23:20:47.098 INFO: org.example.Server <init> Server completed startup and listening on PORT: 6666
+2024-09-23 23:23:24 INFO org.example.CommandHandler run MCP online, please input a command, type help to see a list of commands
+2024-09-23 23:23:24 INFO org.example.SystemStateManager setState Changing to system state WAITING
+2024-09-23 23:23:24 INFO org.example.Server <init> Server completed startup and listening on PORT: 6666
+23:23:36.279 INFO: org.example.CommandHandler run MCP online, please input a command, type help to see a list of commands
+23:23:36.368 INFO: org.example.SystemStateManager setState Changing to system state WAITING
+23:23:36.505 INFO: org.example.Server <init> Server completed startup and listening on PORT: 6666
+23:23:49.793 INFO: MCP online, please input a command, type help to see a list of commands
+23:23:49.882 INFO: Changing to system state WAITING
+23:23:50.021 INFO: Server completed startup and listening on PORT: 6666
+23:33:49.882 INFO: Changing to system state MAPPING
+23:33:50.382 WARNING: No trains to map.
+23:33:50.382 INFO: Changing to system state RUNNING
 Sept 23, 2024 10:41:42 PM org.example.CommandHandler run
 INFO: MCP online, please input a command, type help to see a list of commands
 Sept 23, 2024 10:41:42 PM org.example.SystemStateManager setState
@@ -64433,3 +64526,48 @@ Sept 24, 2024 12:51:34 PM org.example.MessageHandler handleCheckpointMessage
 INFO: Received STAT command from Checkpoint: CP01
 Sept 24, 2024 12:51:34 PM org.example.MessageHandler handleCCPMessage
 INFO: Received STAT message from Blade Runner: BR01
+14:30:53.306 INFO: org.example.CommandHandler run MCP online, please input a command, type help to see a list of commands
+14:30:53.391 INFO: org.example.SystemStateManager setState Changing to system state WAITING
+14:30:53.510 INFO: org.example.Server <init> Server completed startup and listening on PORT: 6666
+14:38:55.684 INFO: org.example.CommandHandler run MCP online, please input a command, type help to see a list of commands
+14:38:55.756 INFO: org.example.SystemStateManager setState Changing to system state WAITING
+14:38:55.863 INFO: org.example.Server <init> Server completed startup and listening on PORT: 6666
+14:39:21.805 INFO: org.example.CommandHandler run MCP online, please input a command, type help to see a list of commands
+14:39:21.884 INFO: org.example.SystemStateManager setState Changing to system state WAITING
+14:39:22.013 INFO: org.example.Server <init> Server completed startup and listening on PORT: 6666
+14:40:30.781 INFO: org.example.CommandHandler run MCP online, please input a command, type help to see a list of commands
+14:40:30.858 INFO: org.example.SystemStateManager setState Changing to system state WAITING
+14:40:30.973 INFO: org.example.Server <init> Server completed startup and listening on PORT: 6666
+14:41:45.929 INFO: org.example.CommandHandler run MCP online, please input a command, type help to see a list of commands
+14:41:46.012 INFO: org.example.SystemStateManager setState Changing to system state WAITING
+14:41:46.141 INFO: org.example.Server <init> Server completed startup and listening on PORT: 6666
+14:42:04.452 INFO: org.example.CommandHandler run MCP online, please input a command, type help to see a list of commands
+14:42:04.532 INFO: org.example.SystemStateManager setState Changing to system state WAITING
+14:42:04.648 INFO: org.example.Server <init> Server completed startup and listening on PORT: 6666
+14:42:10.704 INFO: org.example.CommandHandler run MCP online, please input a command, type help to see a list of commands
+14:42:10.789 INFO: org.example.SystemStateManager setState Changing to system state WAITING
+14:42:10.926 INFO: org.example.Server <init> Server completed startup and listening on PORT: 6666
+14:42:25.799 INFO: org.example.CommandHandler run MCP online, please input a command, type help to see a list of commands
+14:42:25.868 INFO: org.example.SystemStateManager setState Changing to system state WAITING
+14:42:25.983 INFO: org.example.Server <init> Server completed startup and listening on PORT: 6666
+14:42:38.688 INFO: org.example.CommandHandler run MCP online, please input a command, type help to see a list of commands
+14:42:38.761 INFO: org.example.SystemStateManager setState Changing to system state WAITING
+14:42:38.875 INFO: org.example.Server <init> Server completed startup and listening on PORT: 6666
+14:42:48.640 INFO: org.example.CommandHandler run MCP online, please input a command, type help to see a list of commands
+14:42:48.716 INFO: org.example.SystemStateManager setState Changing to system state WAITING
+14:42:48.847 INFO: org.example.Server <init> Server completed startup and listening on PORT: 6666
+14:42:56.747 INFO: org.example.CommandHandler run MCP online, please input a command, type help to see a list of commands
+14:42:56.819 INFO: org.example.SystemStateManager setState Changing to system state WAITING
+14:42:56.932 INFO: org.example.Server <init> Server completed startup and listening on PORT: 6666
+14:43:03.415 INFO: org.example.CommandHandler run MCP online, please input a command, type help to see a list of commands
+14:43:03.492 INFO: org.example.SystemStateManager setState Changing to system state WAITING
+14:43:03.610 INFO: org.example.Server <init> Server completed startup and listening on PORT: 6666
+14:44:38.758 INFO: org.example.CommandHandler run MCP online, please input a command, type help to see a list of commands
+14:44:38.829 INFO: org.example.SystemStateManager setState Changing to system state WAITING
+14:44:38.942 INFO: org.example.Server <init> Server completed startup and listening on PORT: 6666
+14:46:14.164 INFO: org.example.CommandHandler run MCP online, please input a command, type help to see a list of commands
+14:46:14.267 INFO: org.example.SystemStateManager setState Changing to system state WAITING
+14:46:14.414 INFO: org.example.Server <init> Server completed startup and listening on PORT: 6666
+14:46:42.112 INFO: org.example.CommandHandler run MCP online, please input a command, type help to see a list of commands
+14:46:42.192 INFO: org.example.SystemStateManager setState Changing to system state WAITING
+14:46:42.318 INFO: org.example.Server <init> Server completed startup and listening on PORT: 6666

@@ -3078,3 +3078,9 @@ Q.idea/sonarlint/securityhotspotstore/b/8/b8b1c4f6bd12acfd17d7fd80aa722310398231
 Q.idea/sonarlint/securityhotspotstore/b/8/b8bcdcd6fdbe3ab22ae40e15d85a7f7b0a99a06d,9\7\97295a19c88b6e24d625e208be7f7bea26817d0e
 Å
 Q.idea/sonarlint/securityhotspotstore/e/5/e53c6eea988bb1fc660eb9dc3441081033133d83,c\1\c16f2a120a8e153ef3df566eb98a8aae4f40c77b
+[
++src/main/java/org/example/WaitingState.java,e\d\eda57f141af237c39366c539b90f6f57ac1cd09d
+;
+app.log.lck,a\2\a25d27c883effcfcc3869691528e8b2e0a003c92
+L
+src/test/java/StateTest.java,0\2\0209b0fff1326fac5e04133af61a2c523b0a1791

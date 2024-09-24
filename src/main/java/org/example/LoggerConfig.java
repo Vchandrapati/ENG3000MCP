@@ -10,6 +10,7 @@ public class LoggerConfig {
     }
 
     public static void setupLogger(JTextArea logArea) {
+        System.setProperty("java.util.logging.SimpleFormatter.format", "%1$tT.%1$tL %4$s: %2$s %5$s%6$s%n");
         Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
         try {
@@ -26,7 +27,7 @@ public class LoggerConfig {
             // Create the custom LogTextAreaHandler
             ScreenLogHandler textAreaHandler = new ScreenLogHandler(logArea);
             textAreaHandler.setLevel(Level.ALL);
-            textAreaHandler.setFormatter(new ScreenLogFormatter());
+            textAreaHandler.setFormatter(new SimpleFormatter());
 
             // Remove default handlers
             logger.setUseParentHandlers(false);
@@ -40,16 +41,6 @@ public class LoggerConfig {
             logger.setLevel(Level.ALL);
         } catch (IOException e) {
             logger.log(Level.SEVERE, "Failed to initialize logger handler.", e);
-        }
-    }
-
-    static class ScreenLogFormatter extends Formatter {
-        @Override
-        public String format(LogRecord logRecord) {
-            return logRecord.getLevel() + ": " +
-                    logRecord.getMessage() +
-                    System.lineSeparator() +
-                    System.lineSeparator(); // Add an extra line for spacing
         }
     }
 }
