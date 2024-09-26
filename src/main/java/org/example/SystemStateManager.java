@@ -129,6 +129,7 @@ public class SystemStateManager {
             if (currentState != SystemState.WAITING) {
                 error = true;
                 Client curClient = db.<BladeRunnerClient>getClient(id, BladeRunnerClient.class);
+                // maybe look at refactor if statement below - ET
                 if (curClient.isBladeRunnerClient()) {
                     BladeRunnerClient bladeRunner = (BladeRunnerClient) curClient;
                     bladeRunner.unmap();
