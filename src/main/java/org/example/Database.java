@@ -44,42 +44,6 @@ public class Database {
         unresponsiveClients.add(id);
     }
 
-    // Method to return all clients which are unresponsive or "dead"
-    public List<Client> getUnresponsiveClients() {
-        List<Client> deadClients = new ArrayList<>();
-        for (String id : unresponsiveClients) {
-            Client client = clients.get(id);
-            if (client != null) {
-                deadClients.add(client);
-            }
-        }
-
-        return deadClients;
-    }
-
-    public List<BladeRunnerClient> getBladeRunnersWaitingToReconnect() {
-        List<BladeRunnerClient> waitingClients = new ArrayList<>();
-        for (String id : unresponsiveClients) {
-            Client client = clients.get(id);
-
-            if (client != null && clients.get(id) instanceof BladeRunnerClient) {
-                waitingClients.add((BladeRunnerClient) client);
-            } else {
-                logger.log(Level.SEVERE, "A non BladeRunner in waitingToReconnectBladeRunners set: {0}", id);
-            }
-        }
-
-        return waitingClients;
-    }
-
-    public Map<String, Integer> getBladeRunnerBlockMap() {
-        return new HashMap<>(bladeRunnerBlockMap);
-    }
-
-    public void clearUnresponsiveClients() {
-        unresponsiveClients.clear();
-    }
-
     // Add any client with this method
     public void addClient(String id, Client client) {
         // Will attempt to add a client
@@ -112,10 +76,6 @@ public class Database {
     // Get any client with this method
     public Client getClient(String id) {
         return clients.get(id);
-    }
-
-    public void addClientToUnresponsive(String id) {
-        unresponsiveClients.add(id);
     }
 
     public void removeClientFromUnresponsive(String id) {
