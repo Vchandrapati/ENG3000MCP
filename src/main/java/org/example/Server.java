@@ -130,7 +130,8 @@ public class Server implements Runnable {
      * timeframe.
      * If a client has not responded, logs an error and updates the system state to
      * EMERGENCY.
-     * For unresponsive BladeRunner clients, adds them to the unresponsive client list in
+     * For unresponsive BladeRunner clients, adds them to the unresponsive client
+     * list in
      * the database.
      *
      * @param clients the list of clients to check
@@ -142,7 +143,7 @@ public class Server implements Runnable {
                 if (Boolean.TRUE.equals(!client.lastStatReturned() && client.isRegistered())
                         && client.lastStatMSGSent()) {
                     logger.log(Level.WARNING, "No STAT response from {0} sent at {1}",
-                            new Object[]{client.getId(), sendTime});
+                            new Object[] { client.getId(), sendTime });
 
                     // If a client is unresponsive
                     SystemStateManager.getInstance().addUnresponsiveClient(client.getId());

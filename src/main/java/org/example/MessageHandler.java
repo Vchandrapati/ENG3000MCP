@@ -36,14 +36,15 @@ public class MessageHandler {
             logger.log(Level.SEVERE, "Failed to parse message: {0}", message);
             logger.log(Level.SEVERE, "Exception: ", e);
         } catch (Exception e) {
-            logger.log(Level.SEVERE, "Unexpected error handling message from {0}:{1}", new Object[]{address, port});
+            logger.log(Level.SEVERE, "Unexpected error handling message from {0}:{1}", new Object[] { address, port });
             logger.log(Level.SEVERE, "Exception: ", e);
         }
     }
 
     // Handles all checkpoint messages
     private void handleCheckpointMessage(ReceiveMessage receiveMessage, InetAddress address, int port) {
-        CheckpointClient client = (CheckpointClient) db.getClient(receiveMessage.clientID);
+        CheckpointClient client = db.<CheckpointClient>getClient(receiveMessage.clientID, CheckpointClient.class);
+
         switch (receiveMessage.message) {
             case "TRIP":
                 if (!client.isTripped()) {
@@ -78,7 +79,7 @@ public class MessageHandler {
     }
 
     private void handleCCPMessage(ReceiveMessage receiveMessage, InetAddress address, int port) {
-        BladeRunnerClient client = (BladeRunnerClient) db.getClient(receiveMessage.clientID);
+        BladeRunnerClient client = db.<BladeRunnerClient>getClient(receiveMessage.clientID, BladeRunnerClient.class);
 
         switch (receiveMessage.message) {
             case "STAT":
@@ -101,7 +102,8 @@ public class MessageHandler {
     }
 
     private void handleStationMessage(ReceiveMessage receiveMessage) {
-        StationClient client = (StationClient) db.getClient(receiveMessage.clientID);
+        StationClient client = db.<StationClient>getClient(receiveMessage.clientID, StationClient.class);
+
         // Different behaviour based on what the message command is
         switch (receiveMessage.message) {
             case "DOOR":

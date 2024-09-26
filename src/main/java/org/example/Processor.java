@@ -12,11 +12,13 @@ public class Processor {
 
     // [2] line 29 ?? not sure whats wrong or right
 
-    // [3] line 38, why are we starting BladeRunners when they should alredy be on? ??? Where is this sir
+    // [3] line 38, why are we starting BladeRunners when they should alredy be on?
+    // ??? Where is this sir
 
     // [5] no logging, needs to be proper format, and more logs please
 
-    // [6] line 52, if this is uncommented, it will run the normal handle BladeRunner
+    // [6] line 52, if this is uncommented, it will run the normal handle
+    // BladeRunner
     // code, then rerun it no matter what, causing the BladeRunner
     // to be section +1 then what it should be
 
@@ -40,7 +42,7 @@ public class Processor {
 
             // [2] what about a BladeRunner in the first section?, you will get -1 no?
             String bladeRunnerID = checkpoint == 1 ? db.getLastBladeRunnerInBlock(HIGHEST_CHECKPOINT)
-                    : db.getLastBladeRunnerInBlock(checkpoint - 1) ;
+                    : db.getLastBladeRunnerInBlock(checkpoint - 1);
 
             updateBladeRunnerId(checkpoint, bladeRunnerID);
         } catch (Exception e) {
@@ -51,7 +53,7 @@ public class Processor {
 
     private void updateBladeRunnerId(int checkpoint, String bladeRunnerID) {
         try {
-            BladeRunnerClient bladeRunner = (BladeRunnerClient) db.getClient(bladeRunnerID);
+            BladeRunnerClient bladeRunner = db.<BladeRunnerClient>getClient(bladeRunnerID, BladeRunnerClient.class);
 
             db.updateBladeRunnerBlock(bladeRunnerID, checkpoint);
             bladeRunner.changeZone(checkpoint);
@@ -59,7 +61,7 @@ public class Processor {
             // Check if block in front is occupied and stop if it is
             int checkNextBlock = calculateNextBlock(checkpoint + 1);
 
-            //check if next block or current block is occupied
+            // check if next block or current block is occupied
             if (db.isBlockOccupied(checkNextBlock) || db.isBlockOccupied(checkpoint)) {
                 bladeRunner.sendExecuteMessage(SpeedEnum.STOP);
                 bladeRunner.updateStatus("STOPPED");
@@ -71,9 +73,11 @@ public class Processor {
 
     public void checkForTraffic(int block) {
         int currentBlock = block;
-        // Check if block is occupied, if it is rerun handle BladeRunner speed for that BladeRunner
+        // Check if block is occupied, if it is rerun handle BladeRunner speed for that
+        // BladeRunner
         while (db.isBlockOccupied(block)) {
-            // +1 because handleBladeRunnerSpeed gets the BladeRunner behind the checkpoint being passed
+            // +1 because handleBladeRunnerSpeed gets the BladeRunner behind the checkpoint
+            // being passed
             handleBladeRunnerSpeed(currentBlock + 1);
             currentBlock = calculatePreviousBlock(currentBlock + 1);
         }

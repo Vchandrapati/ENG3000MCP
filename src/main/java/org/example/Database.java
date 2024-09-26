@@ -74,8 +74,19 @@ public class Database {
     }
 
     // Get any client with this method
-    public Client getClient(String id) {
-        return clients.get(id);
+    public <T extends Client> T getClient(String id, Class<T> type) {
+        Client c = clients.get(id);
+
+        if (c == null) {
+            return null;
+        }
+
+        if (type.isInstance(c)) {
+            return type.cast(c);
+        } else {
+            logger.log(Level.SEVERE, "Client with ID: " + id + " is not of type: " + type.getName());
+            return null;
+        }
     }
 
     public void removeClientFromUnresponsive(String id) {
