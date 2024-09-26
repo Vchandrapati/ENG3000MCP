@@ -66,6 +66,6 @@ public class VisualiserScreen extends JFrame {
     }
 
     private void updateVisualizer() {
-        trackPanel.updateTrainZones(Database.getInstance().getTrainClients());
+        trackPanel.updateBladeRunnerZones(Database.getInstance().getBladeRunnerClients());
     }
 }

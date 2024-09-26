@@ -7,7 +7,7 @@ class StateTest {
     @BeforeEach
     public void setUp() throws Exception {
         for (int i = 1; i <= 4; i++) {
-            //db.addClient("BR0"+i, new TrainClient(InetAddress.getByName("localhost"),1, "BR0"+i));
+            //db.addClient("BR0"+i, new BladeRunnerClient(InetAddress.getByName("localhost"),1, "BR0"+i));
         }
         for (int i = 1; i <= 10; i++) {
             //db.addClient("ST0"+i, new StationClient(InetAddress.getByName("localhost"),1, "ST0"+i));
@@ -28,7 +28,7 @@ class StateTest {
         Processor p = new Processor();
         int count = 1;
         Thread.sleep(12000);
-        while(App.isRunning) {
+        while(App.isRunning()) {
             if(System.currentTimeMillis() - time >= 2000 && count < 6) {
                 time = System.currentTimeMillis();
                 p.checkpointTripped(count);
@@ -50,7 +50,7 @@ class StateTest {
         int count = 1;
         Thread.sleep(5000);
 
-        while(App.isRunning) {
+        while(App.isRunning()) {
             if(System.currentTimeMillis() - time >= 2000 && count < 6) {
                 time = System.currentTimeMillis();
                 p.checkpointTripped(count);
@@ -72,7 +72,7 @@ class StateTest {
         int count = 1;
         Thread.sleep(5000);
 
-        while(App.isRunning) {
+        while(App.isRunning()) {
             if(System.currentTimeMillis() - time >= 2000) {
                 time = System.currentTimeMillis();
                 p.checkpointTripped(count);
@@ -80,7 +80,7 @@ class StateTest {
             }
             if(count == 6) {
                  Thread.sleep(3000);
-                 //db.TESTING("BR99", new TrainClient(InetAddress.getByName("localhost"),1, "BR99"));
+                 //db.TESTING("BR99", new BladeRunnerClient(InetAddress.getByName("localhost"),1, "BR99"));
                  count++;
             }
             if(count == 10) break;

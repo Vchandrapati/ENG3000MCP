@@ -12,71 +12,69 @@ public class Processor {
 
     // [2] line 29 ?? not sure whats wrong or right
 
-    // [3] line 38, why are we starting trains when they should alredy be on? ??? Where is this sir
+    // [3] line 38, why are we starting BladeRunners when they should alredy be on? ??? Where is this sir
 
     // [5] no logging, needs to be proper format, and more logs please
 
-    // [6] line 52, if this is uncommented, it will run the normal handle train
-    // code, then rerun it no matter what, causing the train
+    // [6] line 52, if this is uncommented, it will run the normal handle BladeRunner
+    // code, then rerun it no matter what, causing the BladeRunner
     // to be section +1 then what it should be
 
     // [7] need to deal with trip and untrip btw
 
-    final int highestCheckpoint = 10;
-
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private static final Database db = Database.getInstance();
+    private static final int HIGHEST_CHECKPOINT = 10;
     private int totalBlocks = db.getCheckpointCount();
 
     public void checkpointTripped(int checkpointTripped) {
         if (!SystemStateManager.getInstance().needsTrip(checkpointTripped))
-            handleTrainSpeed(checkpointTripped);
+            handleBladeRunnerSpeed(checkpointTripped);
     }
 
-    public void handleTrainSpeed(int checkpoint) {
+    public void handleBladeRunnerSpeed(int checkpoint) {
         try {
             // need to check total blocks each time, may change due to connecting or
             // disconnect checkpoints
             totalBlocks = db.getCheckpointCount();
 
-            // [2] what about a train in the firt section?, you will get -1 no?
-            String trainID = "";
-            if (checkpoint == 1)
-                trainID = db.getLastTrainInBlock(highestCheckpoint);
-            else {
-                trainID = db.getLastTrainInBlock(checkpoint - 1);
-            }
+            // [2] what about a BladeRunner in the first section?, you will get -1 no?
+            String bladeRunnerID = checkpoint == 1 ? db.getLastBladeRunnerInBlock(HIGHEST_CHECKPOINT)
+                    : db.getLastBladeRunnerInBlock(checkpoint - 1) ;
 
-            // Maybe put an error to catch this
-            try {
-                TrainClient train = (TrainClient) db.getClient(trainID);
-
-                db.updateTrainBlock(trainID, checkpoint);
-                train.changeZone(checkpoint);
-
-                // Check if block in front is occupied and stop if it is
-                int checkNextBlock = calculateNextBlock(checkpoint + 1);
-
-                //check if next block or current block is occupied
-                if (db.isBlockOccupied(checkNextBlock) || db.isBlockOccupied(checkpoint)) {
-                    train.sendExecuteMessage(SpeedEnum.STOP);
-                    train.updateStatus("STOPPED");
-                }
-            } catch (Exception e) {
-                logger.log(Level.SEVERE, "Unexpected error: " + e);
-            }
+            updateBladeRunnerId(checkpoint, bladeRunnerID);
         } catch (Exception e) {
             logger.severe("Unexpected error: " + e);
             SystemStateManager.getInstance().setState(SystemState.EMERGENCY);
         }
     }
 
+    private void updateBladeRunnerId(int checkpoint, String bladeRunnerID) {
+        try {
+            BladeRunnerClient bladeRunner = (BladeRunnerClient) db.getClient(bladeRunnerID);
+
+            db.updateBladeRunnerBlock(bladeRunnerID, checkpoint);
+            bladeRunner.changeZone(checkpoint);
+
+            // Check if block in front is occupied and stop if it is
+            int checkNextBlock = calculateNextBlock(checkpoint + 1);
+
+            //check if next block or current block is occupied
+            if (db.isBlockOccupied(checkNextBlock) || db.isBlockOccupied(checkpoint)) {
+                bladeRunner.sendExecuteMessage(SpeedEnum.STOP);
+                bladeRunner.updateStatus("STOPPED");
+            }
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, "Unexpected error: ", e);
+        }
+    }
+
     public void checkForTraffic(int block) {
         int currentBlock = block;
-        // Check if block is occupied, if it is rerun handle Train speed for that train
+        // Check if block is occupied, if it is rerun handle BladeRunner speed for that BladeRunner
         while (db.isBlockOccupied(block)) {
-            // +1 because handleTrainSpeed gets the train behind the checkpoint being passed
-            handleTrainSpeed(currentBlock + 1);
+            // +1 because handleBladeRunnerSpeed gets the BladeRunner behind the checkpoint being passed
+            handleBladeRunnerSpeed(currentBlock + 1);
             currentBlock = calculatePreviousBlock(currentBlock + 1);
         }
     }

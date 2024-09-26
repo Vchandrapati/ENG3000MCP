@@ -1,58 +1,58 @@
 package org.example;
 
-import java.util.*;
-import java.util.logging.Logger;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
-public class MappingState implements SystemStateInterface{
+public class MappingState implements SystemStateInterface {
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     // All time units in milliseconds
-    private static final long TRAIN_MAPPING_DEATH_TIMEOUT = 60000; // 1 minute
-    private static final long TRAIN_MAPPING_RETRY_TIMEOUT = 15000; // 15 seconds
-    private static final long TIME_BETWEEN_RUNNING = 500; 
+    private static final long BLADE_RUNNER_MAPPING_DEATH_TIMEOUT = 60000; // 1 minute
+    private static final long BLADE_RUNNER_MAPPING_RETRY_TIMEOUT = 15000; // 15 seconds
+    private static final long TIME_BETWEEN_RUNNING = 500;
 
     private static final SystemState NEXT_STATE = SystemState.RUNNING;
 
-    private final List<TrainClient> trainsToMap;
-    private boolean startMapping;
-    private CurrentTrainInfo currentTrainInfo;
-    private int currentTrainIndex;
-    private long currentTrainStartTime;
-
+    private final List<BladeRunnerClient> bladeRunnersToMap;
     private final Database db = Database.getInstance();
+    private boolean startMapping;
+    private CurrentBladeRunnerInfo currentBladeRunnerInfo;
+    private int currentBladeRunnerIndex;
+    private long currentBladeRunnerStartTime;
 
     //Constructor
     public MappingState() {
-        currentTrainStartTime = System.currentTimeMillis();
-        trainsToMap = new ArrayList<>();
+        currentBladeRunnerStartTime = System.currentTimeMillis();
+        bladeRunnersToMap = new ArrayList<>();
         startMapping = false;
-        currentTrainInfo = null;
-        currentTrainIndex = 0;
+        currentBladeRunnerInfo = null;
+        currentBladeRunnerIndex = 0;
     }
-    
+
     //Performs the operation of this state at set intervals according to TIME_BETWEEN_RUNNING
     //If returns true then system goes to NEXT_STATE
     @Override
     public boolean performOperation() {
-        if(!startMapping) {
-            //grab all train clients
-            List<TrainClient> tempTrainsToMap = db.getTrainClients();
+        if (!startMapping) {
+            //grab all BladeRunner clients
+            List<BladeRunnerClient> tempBladeRunnersToMap = db.getBladeRunnerClients();
 
-            //get all unmapped trains
-            for (TrainClient trainClient : tempTrainsToMap) {
-                if(!trainClient.isCurrentlyMapped()) {
-                    trainsToMap.add(trainClient);
+            //get all unmapped BladeRunners
+            for (BladeRunnerClient BladeRunnerClient : tempBladeRunnersToMap) {
+                if (!BladeRunnerClient.isUnmapped()) {
+                    bladeRunnersToMap.add(BladeRunnerClient);
                 }
             }
             startMapping = true;
         }
 
 
-        // if a train does not map in a minute time, send stop message to current train and go to waiting state
-        long elapsedTime = System.currentTimeMillis() - currentTrainStartTime;
-        if(elapsedTime >= TRAIN_MAPPING_DEATH_TIMEOUT) {
-            trainsToMap.get(currentTrainIndex).sendExecuteMessage(SpeedEnum.STOP);
+        // if a BladeRunner does not map in a minute time, send stop message to current BladeRunner and go to waiting state
+        long elapsedTime = System.currentTimeMillis() - currentBladeRunnerStartTime;
+        if (elapsedTime >= BLADE_RUNNER_MAPPING_DEATH_TIMEOUT) {
+            bladeRunnersToMap.get(currentBladeRunnerIndex).sendExecuteMessage(SpeedEnum.STOP);
             SystemStateManager.getInstance().setState(SystemState.WAITING);
             logger.log(Level.SEVERE, "Blade runner failed to be mapped in time");
         }
@@ -60,26 +60,25 @@ public class MappingState implements SystemStateInterface{
         return mapClients();
     }
 
-    //proceeds to map all train clients one by one, return true if no trains or all trains are mapped
+    //proceeds to map all BladeRunner clients one by one, return true if no BladeRunners or all BladeRunners are mapped
     protected boolean mapClients() {
-         //If no clients are available, complete mapping
-        if (trainsToMap.isEmpty()) {
-            logger.log(Level.WARNING, "No trains to map");
+        //If no clients are available, complete mapping
+        if (bladeRunnersToMap.isEmpty()) {
+            logger.log(Level.WARNING, "No BladeRunners to map");
             return true;
         }
 
-        if (currentTrainInfo == null) {
-            if (currentTrainIndex < trainsToMap.size()) 
-                currentTrainInfo = new CurrentTrainInfo(trainsToMap.get(currentTrainIndex));
-        } 
-        else if (currentTrainInfo.process(TRAIN_MAPPING_RETRY_TIMEOUT)) {
-            currentTrainStartTime = System.currentTimeMillis();
-            currentTrainIndex++;
-            if (currentTrainIndex >= trainsToMap.size()) {
+        if (currentBladeRunnerInfo == null) {
+            if (currentBladeRunnerIndex < bladeRunnersToMap.size())
+                currentBladeRunnerInfo = new CurrentBladeRunnerInfo(bladeRunnersToMap.get(currentBladeRunnerIndex));
+        } else if (currentBladeRunnerInfo.process(BLADE_RUNNER_MAPPING_RETRY_TIMEOUT)) {
+            currentBladeRunnerStartTime = System.currentTimeMillis();
+            currentBladeRunnerIndex++;
+            if (currentBladeRunnerIndex >= bladeRunnersToMap.size()) {
                 logger.log(Level.INFO, "All clients have been mapped");
                 return true;
             }
-            currentTrainInfo = new CurrentTrainInfo(trainsToMap.get(currentTrainIndex));
+            currentBladeRunnerInfo = new CurrentBladeRunnerInfo(bladeRunnersToMap.get(currentBladeRunnerIndex));
         }
         return false;
     }
@@ -96,6 +95,6 @@ public class MappingState implements SystemStateInterface{
 
     @Override
     public long getStateTimeout() {
-        return System.currentTimeMillis() - currentTrainStartTime;
+        return System.currentTimeMillis() - currentBladeRunnerStartTime;
     }
 }

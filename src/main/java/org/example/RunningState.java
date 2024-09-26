@@ -1,6 +1,6 @@
 package org.example;
 
-import java.util.*;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -9,10 +9,8 @@ public class RunningState implements SystemStateInterface {
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     private static final SystemState nextState = SystemState.RUNNING;
-
-    private boolean allRunning;
-
     private static final long TIME_BETWEEN_RUNNING = 500;
+    private boolean allRunning;
 
     //constructor
     public RunningState() {
@@ -23,29 +21,29 @@ public class RunningState implements SystemStateInterface {
     //If returns true then system goes to NEXT_STATE
     @Override
     public boolean performOperation() {
-        if(!allRunning) {
+        if (!allRunning) {
             try {
-                moveAllTrains();
+                moveAllBladeRunners();
             } catch (Exception e) {
-                logger.log(Level.WARNING, "Failed to grab trains from database");
+                logger.log(Level.WARNING, "Failed to grab BladeRunners from database");
             }
         }
         return false;
     }
 
-    //sends a one time message to all trains to make them move
-    private void moveAllTrains() {
+    //sends a one time message to all BladeRunners to make them move
+    private void moveAllBladeRunners() {
         try {
-            List<TrainClient> trains = Database.getInstance().getTrainClients();
-            if(trains != null && !trains.isEmpty()) {
+            List<BladeRunnerClient> bladeRunners = Database.getInstance().getBladeRunnerClients();
+            if (bladeRunners != null && !bladeRunners.isEmpty()) {
                 allRunning = true;
-                for (TrainClient trainClient : trains) {
-                    trainClient.sendExecuteMessage(SpeedEnum.SLOW);
+                for (BladeRunnerClient BladeRunnerClient : bladeRunners) {
+                    BladeRunnerClient.sendExecuteMessage(SpeedEnum.SLOW);
                 }
-                logger.log(Level.INFO, "All Trains are now moving at speed 1");
+                logger.log(Level.INFO, "All BladeRunners are now moving at speed 1");
             }
         } catch (Exception e) {
-            logger.log(Level.SEVERE, "Failed to move trains");
+            logger.log(Level.SEVERE, "Failed to move BladeRunners");
             SystemStateManager.getInstance().setState(SystemState.EMERGENCY);
         }
     }

@@ -33,7 +33,7 @@ public class LoggerConfig {
             logger.setUseParentHandlers(false);
 
             // Add handlers to the logger
-            // logger.addHandler(consoleHandler);
+             logger.addHandler(consoleHandler);
             logger.addHandler(fileHandler);
             logger.addHandler(textAreaHandler);
 

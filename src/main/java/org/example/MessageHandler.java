@@ -2,6 +2,7 @@ package org.example;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.net.InetAddress;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -35,7 +36,7 @@ public class MessageHandler {
             logger.log(Level.SEVERE, "Failed to parse message: {0}", message);
             logger.log(Level.SEVERE, "Exception: ", e);
         } catch (Exception e) {
-            logger.log(Level.SEVERE, "Unexpected error handling message from {0}:{1}", new Object[] { address, port });
+            logger.log(Level.SEVERE, "Unexpected error handling message from {0}:{1}", new Object[]{address, port});
             logger.log(Level.SEVERE, "Exception: ", e);
         }
     }
@@ -77,7 +78,7 @@ public class MessageHandler {
     }
 
     private void handleCCPMessage(ReceiveMessage receiveMessage, InetAddress address, int port) {
-        TrainClient client = (TrainClient) db.getClient(receiveMessage.clientID);
+        BladeRunnerClient client = (BladeRunnerClient) db.getClient(receiveMessage.clientID);
 
         switch (receiveMessage.message) {
             case "STAT":
@@ -128,7 +129,7 @@ public class MessageHandler {
             Client client = null;
             switch (receiveMessage.clientType) {
                 case "ccp":
-                    client = new TrainClient(address, port, receiveMessage.clientID);
+                    client = new BladeRunnerClient(address, port, receiveMessage.clientID);
                     break;
                 case "checkpoint":
                     client = new CheckpointClient(address, port, receiveMessage.clientID, receiveMessage.location);

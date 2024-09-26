@@ -1,6 +1,7 @@
 package org.example;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.logging.Level;
@@ -11,9 +12,7 @@ import java.util.logging.Logger;
  */
 public class CommandHandler implements Runnable {
     private static final Set<String> commands;
-    private final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-    private static final boolean IS_RUNNING = true;
-    private final BlockingQueue<String> commandQueue = new LinkedBlockingQueue<>();
+    private static boolean isRunning = true;
 
     //Set of commands
     static {
@@ -23,17 +22,20 @@ public class CommandHandler implements Runnable {
         commands.add("help");
     }
 
+    private final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+    private final BlockingQueue<String> commandQueue = new LinkedBlockingQueue<>();
+
     public CommandHandler() {
         Thread commandThread = new Thread(this, "CommandHandler-Thread");
         commandThread.start();
     }
-    
+
     //Main loop for command handler
     @Override
     public void run() {
         logger.log(Level.INFO, "MCP online, please input a command, type help to see a list of commands");
 
-        while(IS_RUNNING) {
+        while (isRunning) {
             try {
                 //tries to get command from queue if exists
                 String input = commandQueue.take();
@@ -43,11 +45,11 @@ public class CommandHandler implements Runnable {
                     executeCommand(input);
                     logger.log(Level.INFO, "Command executed: {0}", input);
                 } else {
-                    logger.log(Level.WARNING,"Invalid command: {0}",  input);
+                    logger.log(Level.WARNING, "Invalid command: {0}", input);
                 }
-            //if command is invalid throw exception
+                //if command is invalid throw exception
             } catch (InvalidCommandException e) {
-                logger.log(Level.WARNING,  "Invalid command");
+                logger.log(Level.WARNING, "Invalid command");
             } catch (InterruptedException e) {
                 logger.log(Level.SEVERE, "An unexpected error occurred: ", e);
                 Thread.currentThread().interrupt();
@@ -67,7 +69,7 @@ public class CommandHandler implements Runnable {
     //takes an input string and executes its command, if invalid throw exception
     private void executeCommand(String input) throws InvalidCommandException {
         // using the substring find the command
-        switch(input) {
+        switch (input) {
             case "help":
                 help();
                 break;
@@ -75,7 +77,8 @@ public class CommandHandler implements Runnable {
                 App.shutdown();
                 break;
             case "start mapping":
-                if(SystemStateManager.getInstance().getState() == SystemState.WAITING) SystemStateManager.getInstance().startEarly();
+                if (SystemStateManager.getInstance().getState() == SystemState.WAITING)
+                    SystemStateManager.getInstance().startEarly();
                 else throw new InvalidCommandException("Has already been used or in that state currently");
                 break;
             default:
@@ -87,9 +90,10 @@ public class CommandHandler implements Runnable {
     private void help() {
         StringBuilder commandString = new StringBuilder();
         commandString.append("\n").append("List of valid commands");
-        for (String command : commands) {
+
+        for (String command : commands)
             commandString.append("\n").append(command);
-        }
+
         logger.log(Level.INFO, "{0}", commandString);
     }
 
@@ -98,5 +102,9 @@ public class CommandHandler implements Runnable {
         public InvalidCommandException(String message) {
             logger.log(Level.WARNING, message);
         }
+    }
+
+    public static void stop() {
+        isRunning = false;
     }
 }

@@ -11,22 +11,10 @@ public class SystemStateManager {
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     private static final Database db = Database.getInstance();
-
+    private static final int NO_TRIP = -1;
+    private static final Map<SystemState, Supplier<SystemStateInterface>> stateMap;
     //singleton instance of class
     private static volatile SystemStateManager instance;
-
-    //holds the current state and the current state concrete implementation
-    private SystemState currentState;
-    private SystemStateInterface currentStateConcrete;
-
-    private static final int NO_TRIP = -1;
-    private int lastTrip = NO_TRIP;
-
-    private boolean error = false;
-
-    private long timeWaited = System.currentTimeMillis();
-
-    private static final Map<SystemState, Supplier<SystemStateInterface>> stateMap;
 
     static {
         stateMap = new EnumMap<>(SystemState.class);
@@ -36,6 +24,13 @@ public class SystemStateManager {
         stateMap.put(SystemState.EMERGENCY, EmergencyState::new);
     }
 
+    //holds the current state and the current state concrete implementation
+    private SystemState currentState;
+    private SystemStateInterface currentStateConcrete;
+    private int lastTrip = NO_TRIP;
+    private boolean error = false;
+    private long timeWaited = System.currentTimeMillis();
+
     //Initial state
     private SystemStateManager() {
         setState(SystemState.WAITING);
@@ -43,7 +38,7 @@ public class SystemStateManager {
 
     //gets instance of system state manager, if none makes one
     public static SystemStateManager getInstance() {
-        if(instance == null) instance = new SystemStateManager();
+        if (instance == null) instance = new SystemStateManager();
         return instance;
     }
 
@@ -65,21 +60,10 @@ public class SystemStateManager {
 
     //Checks to see if the system needs to go to emergency state, if already don't
     private void checkChange() {
-        if(error && currentState != SystemState.EMERGENCY) {
+        if (error && currentState != SystemState.EMERGENCY) {
             logger.log(Level.WARNING, "Error detected while in state {0}", currentState);
             setState(SystemState.EMERGENCY);
         }
-    }
-
-    //Sets the state of the program to the given one
-    public void setState(SystemState newState) {
-        if(currentState == newState) return;
-        if(currentState == SystemState.EMERGENCY) error = false;
-
-        currentState = newState;
-        currentStateConcrete = stateMap.get(newState).get();
-
-        logger.log(Level.INFO, "Changing to system state {0}", newState);
     }
 
     //gets current state
@@ -87,10 +71,21 @@ public class SystemStateManager {
         return currentState;
     }
 
+    //Sets the state of the program to the given one
+    public void setState(SystemState newState) {
+        if (currentState == newState) return;
+        if (currentState == SystemState.EMERGENCY) error = false;
+
+        currentState = newState;
+        currentStateConcrete = stateMap.get(newState).get();
+
+        logger.log(Level.INFO, "Changing to system state {0}", newState);
+    }
+
     //For processor, if in mapping state all trips need to be redirected here
     public boolean needsTrip(int trippedSensor) {
-        if(currentState == SystemState.MAPPING) {
-            if(lastTrip == -1) {
+        if (currentState == SystemState.MAPPING) {
+            if (lastTrip == -1) {
                 lastTrip = trippedSensor;
                 logger.log(Level.INFO, "System state manager has detected trip {0}", trippedSensor);
                 return true;
@@ -111,11 +106,10 @@ public class SystemStateManager {
 
     //if the start early command is entered, the system is put into mapping if appriopriate
     public void startEarly() {
-        if(currentState == SystemState.WAITING) {
+        if (currentState == SystemState.WAITING) {
             setState(SystemState.MAPPING);
             logger.log(Level.INFO, "Starting early");
-        }
-        else {
+        } else {
             logger.log(Level.FINE, "Tried to start mapping, must be in state WAITING");
         }
     }
@@ -125,14 +119,14 @@ public class SystemStateManager {
     //adds a unresponsive client to the unresponsive client list in the database
     //only does this if in not in the waiting state
     public void addUnresponsiveClient(String id) {
-        if(!db.isClientUnresponsive(id)) {
+        if (!db.isClientUnresponsive(id)) {
             logger.log(Level.WARNING, "Client {0} has disconnected", id);
-            if(currentState != SystemState.WAITING) {
+            if (currentState != SystemState.WAITING) {
                 error = true;
                 Client curClient = db.getClient(id);
-                if(curClient.isTrainClient()) {
-                    TrainClient train = (TrainClient) curClient;
-                    train.unmap();
+                if (curClient.isBladeRunnerClient()) {
+                    BladeRunnerClient bladeRunner = (BladeRunnerClient) curClient;
+                    bladeRunner.unmap();
                 }
                 db.addUnresponsiveClient(id);
             }

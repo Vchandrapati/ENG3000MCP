@@ -2,16 +2,17 @@ package org.example;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 import java.time.Instant;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class MessageGenerator {
     private static final ObjectMapper objectMapper = new ObjectMapper();
-    static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+    static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     private MessageGenerator() {
         throw new IllegalStateException("Utility class");

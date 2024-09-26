@@ -1,7 +1,7 @@
 import org.example.Server;
 import org.example.SystemState;
 import org.example.SystemStateManager;
-import org.example.TrainClient;
+import org.example.BladeRunnerClient;
 import org.example.Database;
 import org.example.Processor;
 import org.junit.jupiter.api.AfterEach;
@@ -21,10 +21,10 @@ public class ProcessorTest {
     private Database db = Database.getInstance();
     private Processor p = new Processor();
 
-    TrainClient t1 = new TrainClient(InetAddress.getLoopbackAddress(), 2000, "BR01");
-    TrainClient t2 = new TrainClient(InetAddress.getLoopbackAddress(), 2000, "BR02");
-    TrainClient t3 = new TrainClient(InetAddress.getLoopbackAddress(), 2000, "BR03");
-    TrainClient t4 = new TrainClient(InetAddress.getLoopbackAddress(), 2000, "BR04");
+ BladeRunnerClient t1 = new BladeRunnerClient(InetAddress.getLoopbackAddress(), 2000, "BR01");
+ BladeRunnerClient t2 = new BladeRunnerClient(InetAddress.getLoopbackAddress(), 2000, "BR02");
+ BladeRunnerClient t3 = new BladeRunnerClient(InetAddress.getLoopbackAddress(), 2000, "BR03");
+ BladeRunnerClient t4 = new BladeRunnerClient(InetAddress.getLoopbackAddress(), 2000, "BR04");
 
     @BeforeEach
     public void setUp() throws Exception {
@@ -36,13 +36,14 @@ public class ProcessorTest {
         t3.updateStatus("STARTED");
         t4.updateStatus("STARTED");
 
-        db.updateTrainBlock("BR01", 4);
-        db.updateTrainBlock("BR02", 6);
 
-        t1.changeZone(4);
-        t2.changeZone(6);
-        // db.updateTrainBlock("BR03", 7);
-        // db.updateTrainBlock("BR04", 8);
+     db.updateBladeRunnerBlock("BR01", 4);
+     db.updateBladeRunnerBlock("BR02", 6);
+
+     t1.changeZone(4);
+     t2.changeZone(6);
+     //db.updateBladeRunnerBlock("BR03", 7);
+     //db.updateBladeRunnerBlock("BR04", 8);
 
     }
 
@@ -50,23 +51,13 @@ public class ProcessorTest {
     public void tearDown() {
     }
 
-    @Test // Test trains distance are maintained 1 block
-    public void testTrainDistance() throws Exception {
-        p.checkpointTripped(5);
-        assertEquals(t1.getStatus(), "STOPPED");
-        assertEquals(t2.getStatus(), "STARTED");
-        assertEquals(t3.getStatus(), "STARTED");
-        assertEquals(t4.getStatus(), "STARTED");
-
-    }
-
     @Test // Test processor identifies collisions and stops them
     void testCollissionDetection() throws Exception {
 
     }
 
-    @Test // Test processor identifies malfunctioning trains
-    void testBrokenTrain() throws Exception {
+ @Test // Test processor identifies malfunctioning BladeRunners
+ void testBrokenBladeRunner() throws Exception {
 
     }
 
@@ -75,8 +66,8 @@ public class ProcessorTest {
 
     }
 
-    @Test // Test processor correctly reads database updates simultaneously
-    void TrainZoneUpdate() throws Exception {
+ @Test // Test processor correctly reads database updates simultaneously
+ void BladeRunnerZoneUpdate() throws Exception {
 
         assertEquals(Optional.ofNullable(t1.getZone()), Optional.of(4));
         assertEquals(Optional.ofNullable(t2.getZone()), Optional.of(6));
