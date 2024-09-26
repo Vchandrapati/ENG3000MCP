@@ -8,7 +8,9 @@ import java.util.logging.Logger;
 
 public class Database {
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+    // All client objects
     private final ConcurrentHashMap<String, Client> clients;
+    // Current block of trains
     private final ConcurrentHashMap<String, Integer> trainBlockMap;
 
     // Set of all train client IDs
@@ -18,7 +20,6 @@ public class Database {
 
     private final AtomicInteger numberOfCheckpoints;
     private final AtomicInteger numberOfStations;
-
 
     private Database() {
         clients = new ConcurrentHashMap<>();
@@ -154,7 +155,6 @@ public class Database {
                 .orElse(null);
     }
 
-    
     public List<TrainClient> getTrainClients() {
         List<TrainClient> trains = new ArrayList<>();
         for (String id : allTrains) {
