@@ -16,6 +16,7 @@ public class MessageHandler {
     public void handleMessage(String message, InetAddress address, int port) {
         try {
             ReceiveMessage receiveMessage = objectMapper.readValue(message, ReceiveMessage.class);
+
             // Handle based on the client type
             switch (receiveMessage.clientType) {
                 case "ccp":
@@ -82,7 +83,7 @@ public class MessageHandler {
             case "STAT":
                 if (SystemStateManager.getInstance().getState() == SystemState.EMERGENCY)
                     SystemStateManager.getInstance().sendEmergencyPacketClientID(receiveMessage.clientID);
-                
+
                 client.updateStatus(receiveMessage.status.toUpperCase());
                 client.setStatReturned(true);
                 client.setStatSent(true);
@@ -146,9 +147,9 @@ public class MessageHandler {
                 logger.log(Level.INFO, "Initialised new client: {0}", receiveMessage.clientID);
             }
 
-            //if a client joins while not in waiting state, goes to emergency mode
+            // if a client joins while not in waiting state, goes to emergency mode
             if (SystemStateManager.getInstance().getState() != SystemState.WAITING)
-                    SystemStateManager.getInstance().addUnresponsiveClient(receiveMessage.clientID);
+                SystemStateManager.getInstance().addUnresponsiveClient(receiveMessage.clientID);
 
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Failed to handle message");

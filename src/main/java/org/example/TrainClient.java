@@ -37,7 +37,8 @@ public class TrainClient extends Client {
         try {
             status = Status.valueOf(newStatus);
         } catch (IllegalArgumentException e) {
-            logger.log(Level.SEVERE, "Tried to assign unknown status: {0} for train {1}", new Object[]{newStatus, id});
+            logger.log(Level.SEVERE, "Tried to assign unknown status: {0} for train {1}",
+                    new Object[] { newStatus, id });
         }
     }
 
@@ -54,7 +55,9 @@ public class TrainClient extends Client {
     @Override
     public void sendAcknowledgeMessage() {
         String message = MessageGenerator.generateAcknowledgesMessage("ccp", id, System.currentTimeMillis());
+        long t = System.currentTimeMillis();
         sendMessage(message, "ACK");
+        System.out.println("time: " + (System.currentTimeMillis() - t));
         registered = true;
     }
 

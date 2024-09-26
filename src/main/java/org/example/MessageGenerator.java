@@ -23,7 +23,6 @@ public class MessageGenerator {
         message.message = "AKIN";
         message.clientID = clientID;
         message.timestamp = convertToProperTime(timestamp);
-
         return convertToJson(message);
     }
 

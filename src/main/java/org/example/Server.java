@@ -84,8 +84,9 @@ public class Server implements Runnable {
             try {
                 DatagramPacket receivePacket = new DatagramPacket(new byte[BUFFER_SIZE], BUFFER_SIZE);
                 serverSocket.receive(receivePacket);
-                if (receivePacket.getLength() > 0)
+                if (receivePacket.getLength() > 0) {
                     mailbox.add(receivePacket);
+                }
             } catch (IOException e) {
                 logger.log(Level.SEVERE, "Error receiving packet", e);
             }
@@ -96,7 +97,8 @@ public class Server implements Runnable {
         while (serverRunning.get()) {
             try {
                 DatagramPacket receivePacket = mailbox.take();
-                String message = new String(receivePacket.getData(), 0, receivePacket.getLength(), StandardCharsets.UTF_8);
+                String message = new String(receivePacket.getData(), 0, receivePacket.getLength(),
+                        StandardCharsets.UTF_8);
                 messageHandler.handleMessage(message, receivePacket.getAddress(), receivePacket.getPort());
             } catch (InterruptedException e) {
                 logger.log(Level.SEVERE, "Packet processor was interrupted", e);
@@ -144,12 +146,13 @@ public class Server implements Runnable {
      * @param clients the list of clients to check
      */
 
-    
     private void checkForMissingResponse(List<Client> clients, Long sendTime) {
         for (Client client : clients) {
             synchronized (client) {
-                if (Boolean.TRUE.equals(!client.lastStatReturned() && client.isRegistered()) && client.lastStatMSGSent()) {
-                    logger.log(Level.WARNING, "No STAT response from {0} sent at {1}", new Object[]{client.getId(), sendTime});
+                if (Boolean.TRUE.equals(!client.lastStatReturned() && client.isRegistered())
+                        && client.lastStatMSGSent()) {
+                    logger.log(Level.WARNING, "No STAT response from {0} sent at {1}",
+                            new Object[] { client.getId(), sendTime });
 
                     // If a client is unresponsive
                     SystemStateManager.getInstance().addUnresponsiveClient(client.getId());
@@ -164,7 +167,7 @@ public class Server implements Runnable {
             DatagramPacket sendPacket = new DatagramPacket(buffer, buffer.length, client.getClientAddress(),
                     client.getClientPort());
             serverSocket.send(sendPacket);
-            logger.log(Level.INFO, "Sent {0} to client: {1}", new Object[]{type, client.id});
+            logger.log(Level.INFO, "Sent {0} to client: {1}", new Object[] { type, client.id });
         } catch (IOException e) {
             logger.log(Level.SEVERE, "Failed to send message to client {0}", client.getId());
             logger.log(Level.SEVERE, "Exception: ", e);
