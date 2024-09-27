@@ -2,6 +2,7 @@ package org.example;
 
 import java.util.EnumMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -128,7 +129,15 @@ public class SystemStateManager {
             logger.log(Level.WARNING, "Client {0} has disconnected", id);
             if (currentState != SystemState.WAITING) {
                 error = true;
-                Client curClient = db.<BladeRunnerClient>getClient(id, BladeRunnerClient.class);
+                Optional<BladeRunnerClient> opCurClient = db.<BladeRunnerClient>getClient(id, BladeRunnerClient.class);
+                BladeRunnerClient curClient;
+
+                if (opCurClient.isPresent()) {
+                    curClient = opCurClient.get();
+                } else {
+                    logger.log(Level.SEVERE, "Attempted to get non-existant bladerunner: {0}", id);
+                    return;
+                }
                 // maybe look at refactor if statement below - ET
                 if (curClient.isBladeRunnerClient()) {
                     BladeRunnerClient bladeRunner = (BladeRunnerClient) curClient;

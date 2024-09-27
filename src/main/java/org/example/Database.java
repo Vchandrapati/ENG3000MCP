@@ -74,18 +74,18 @@ public class Database {
     }
 
     // Get any client with this method
-    public <T extends Client> T getClient(String id, Class<T> type) {
+    public <T extends Client> Optional<T> getClient(String id, Class<T> type) {
         Client c = clients.get(id);
 
         if (c == null) {
-            return null;
+            return Optional.of(null);
         }
 
         if (type.isInstance(c)) {
-            return type.cast(c);
+            return Optional.of(type.cast(c));
         } else {
             logger.log(Level.SEVERE, "Client with ID: " + id + " is not of type: " + type.getName());
-            return null;
+            return Optional.of(null);
         }
     }
 

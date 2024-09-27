@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.net.InetAddress;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -36,14 +37,22 @@ public class MessageHandler {
             logger.log(Level.SEVERE, "Failed to parse message: {0}", message);
             logger.log(Level.SEVERE, "Exception: ", e);
         } catch (Exception e) {
-            logger.log(Level.SEVERE, "Unexpected error handling message from {0}:{1}", new Object[] { address, port });
+            logger.log(Level.SEVERE, "Unexpected error handling message from {0}:{1}", new Object[] {address, port});
             logger.log(Level.SEVERE, "Exception: ", e);
         }
     }
 
     // Handles all checkpoint messages
     private void handleCheckpointMessage(ReceiveMessage receiveMessage, InetAddress address, int port) {
-        CheckpointClient client = db.<CheckpointClient>getClient(receiveMessage.clientID, CheckpointClient.class);
+        Optional<CheckpointClient> opClient = db.<CheckpointClient>getClient(receiveMessage.clientID, CheckpointClient.class);
+        CheckpointClient client;
+
+        if (opClient.isPresent()) {
+            client = opClient.get();
+        } else {
+            logger.log(Level.SEVERE, "Attempted to get non-existant bladerunner: {0}", receiveMessage.clientID);
+            return;
+        }
 
         switch (receiveMessage.message) {
             case "TRIP":
@@ -79,7 +88,15 @@ public class MessageHandler {
     }
 
     private void handleCCPMessage(ReceiveMessage receiveMessage, InetAddress address, int port) {
-        BladeRunnerClient client = db.<BladeRunnerClient>getClient(receiveMessage.clientID, BladeRunnerClient.class);
+        Optional<BladeRunnerClient> opClient = db.<BladeRunnerClient>getClient(receiveMessage.clientID, BladeRunnerClient.class);
+        BladeRunnerClient client;
+
+        if (opClient.isPresent()) {
+            client = opClient.get();
+        } else {
+            logger.log(Level.SEVERE, "Attempted to get non-existant bladerunner: {0}", receiveMessage.clientID);
+            return;
+        }
 
         switch (receiveMessage.message) {
             case "STAT":
@@ -102,7 +119,16 @@ public class MessageHandler {
     }
 
     private void handleStationMessage(ReceiveMessage receiveMessage) {
-        StationClient client = db.<StationClient>getClient(receiveMessage.clientID, StationClient.class);
+        Optional<StationClient> opClient = db.<StationClient>getClient(receiveMessage.clientID, StationClient.class);
+        StationClient client;
+
+        if (opClient.isPresent()) {
+            client = opClient.get();
+        } else {
+            logger.log(Level.SEVERE, "Attempted to get non-existant bladerunner: {0}", receiveMessage.clientID);
+            return;
+        }
+
 
         // Different behaviour based on what the message command is
         switch (receiveMessage.message) {
