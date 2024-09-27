@@ -1,99 +1,91 @@
-// import org.example.Server;
-// import org.example.SystemState;
-// import org.example.SystemStateManager;
-// import org.example.TrainClient;
-// import org.example.Database;
-// import org.example.Processor;
-// import org.junit.jupiter.api.AfterEach;
-// import org.junit.jupiter.api.BeforeEach;
-// import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
+import org.example.*;
 
-// import java.net.DatagramSocket;
-// import java.net.InetAddress;
-// import java.util.Optional;
+class StateTest {
+    Database db = Database.getInstance();
 
-// import static org.junit.Assert.assertEquals;
+    @BeforeEach
+    public void setUp() throws Exception {
+        for (int i = 1; i <= 4; i++) {
+            //db.addClient("BR0"+i, new BladeRunnerClient(InetAddress.getByName("localhost"),1, "BR0"+i));
+        }
+        for (int i = 1; i <= 10; i++) {
+            //db.addClient("ST0"+i, new StationClient(InetAddress.getByName("localhost"),1, "ST0"+i));
+            //db.addClient("CH0"+i, new CheckpointClient(InetAddress.getByName("localhost"),1, "CH0"+i));
+        }
 
-// public class ProcessorTest {
-//     private Server server;
-//     private DatagramSocket clientSocket;
-//     private DatagramSocket clientSocket2;
-//     private Database db = Database.getInstance();
-//     private Processor p = new Processor();
+    }
 
-//     TrainClient t1 = new TrainClient(InetAddress.getLoopbackAddress(), 2000, "BR01");
-//     TrainClient t2 = new TrainClient(InetAddress.getLoopbackAddress(), 2000, "BR02");
-//     TrainClient t3 = new TrainClient(InetAddress.getLoopbackAddress(), 2000, "BR03");
-//     TrainClient t4 = new TrainClient(InetAddress.getLoopbackAddress(), 2000, "BR04");
+    @AfterEach
+    public void tearDown() {
 
-//     @BeforeEach
-//     public void setUp() throws Exception {
+    }
 
-//         SystemStateManager.getInstance().setState(SystemState.RUNNING);
+    @Test
+    void testStartupTimeoutStart() throws Exception {
+        App.main(null);
+        long time = System.currentTimeMillis();
+        Processor p = new Processor();
+        int count = 1;
+        Thread.sleep(12000);
+        while(App.isRunning()) {
+            if(System.currentTimeMillis() - time >= 2000 && count < 6) {
+                time = System.currentTimeMillis();
+                p.checkpointTripped(count);
+                count++;
+            }
+            if(count == 6) {
+                Thread.sleep(10000);
+                break;
+            }
+        }
+        App.shutdown();
+    }
 
-//         t1.updateStatus("STARTED");
-//         t2.updateStatus("STARTED");
-//         t3.updateStatus("STARTED");
-//         t4.updateStatus("STARTED");
+    @Test
+    void testEarlyStartup() throws Exception {
+        App.main(null);
+        long time = System.currentTimeMillis();
+        Processor p = new Processor();
+        int count = 1;
+        Thread.sleep(5000);
 
-//         db.updateTrainBlock("BR01", 4);
-//         db.updateTrainBlock("BR02", 6);
+        while(App.isRunning()) {
+            if(System.currentTimeMillis() - time >= 2000 && count < 6) {
+                time = System.currentTimeMillis();
+                p.checkpointTripped(count);
+                count++;
+            }
+            // if(count == 6) {
+            //     Thread.sleep(10000);
+            //     break;
+            // }
+        }
+        App.shutdown();
+    }
 
-//         t1.changeZone(4);
-//         t2.changeZone(6);
-//         // db.updateTrainBlock("BR03", 7);
-//         // db.updateTrainBlock("BR04", 8);
+    @Test
+    void RestartupTest() throws Exception {
+        App.main(null);
+        long time = System.currentTimeMillis();
+        Processor p = new Processor();
+        int count = 1;
+        Thread.sleep(5000);
 
-//     }
+        while(App.isRunning()) {
+            if(System.currentTimeMillis() - time >= 2000) {
+                time = System.currentTimeMillis();
+                p.checkpointTripped(count);
+                count++;
+            }
+            if(count == 6) {
+                 Thread.sleep(3000);
+                 //db.TESTING("BR99", new BladeRunnerClient(InetAddress.getByName("localhost"),1, "BR99"));
+                 count++;
+            }
+            if(count == 10) break;
+        }
+        App.shutdown();
+    }
 
-//     @AfterEach
-//     public void tearDown() {
-//     }
-
-//     @Test // Test trains distance are maintained 1 block
-//     public void testTrainDistance() throws Exception {
-//         p.checkpointTripped(5);
-//         assertEquals(t1.getStatus(), "STOPPED");
-//         assertEquals(t2.getStatus(), "STARTED");
-//         assertEquals(t3.getStatus(), "STARTED");
-//         assertEquals(t4.getStatus(), "STARTED");
-
-//     }
-
-//     @Test // Test processor identifies collisions and stops them
-//     void testCollissionDetection() throws Exception {
-
-//     }
-
-//     @Test // Test processor identifies malfunctioning trains
-//     void testBrokenTrain() throws Exception {
-
-//     }
-
-//     @Test // Test processor correctly reads database updates simultaneously
-//     void testDatabaseUpdate() throws Exception {
-
-//     }
-
-//     @Test // Test processor correctly reads database updates simultaneously
-//     void TrainZoneUpdate() throws Exception {
-
-//         assertEquals(Optional.ofNullable(t1.getZone()), Optional.of(4));
-//         assertEquals(Optional.ofNullable(t2.getZone()), Optional.of(6));
-
-//         p.checkpointTripped(5);
-//         // t1 should stop now as t2 is in zone 6
-//         assertEquals(Optional.ofNullable(t1.getZone()), Optional.of(5));
-//         assertEquals(t1.getStatus(), "STOPPED");
-
-//         p.checkpointTripped(7);
-//         p.checkpointTripped(8);
-//         assertEquals(Optional.ofNullable(t2.getZone()), Optional.of(8));
-//         assertEquals(Optional.ofNullable(t1.getZone()), Optional.of(7));
-//         assertEquals(t1.getStatus(), "STOPPED");
-//         assertEquals(t2.getStatus(), "STARTED");
-
-//         // t2 should move to 7, causing t1 to move to 6
-//         // 4,6,7,8
-//     }
-// }
+}

@@ -8,34 +8,27 @@ import java.util.logging.Logger;
 
 public class Database {
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+    // All client objects
     private final ConcurrentHashMap<String, Client> clients;
-    private final ConcurrentHashMap<String, Integer> trainBlockMap;
+    private final ConcurrentHashMap<String, Integer> bladeRunnerBlockMap;
 
-    // Set of all train client IDs
-    private final HashSet<String> allTrains;
+    // Set of all BladeRunner client IDs
+    private final HashSet<String> allBladeRunners;
     // Set of all unresponsive or "dead" clients
-    private final HashSet<String> unresponsiveClients;
+    private final HashMap<String, ReasonEnum> unresponsiveClients;
 
     private final AtomicInteger numberOfCheckpoints;
     private final AtomicInteger numberOfStations;
 
-
     private Database() {
         clients = new ConcurrentHashMap<>();
-        trainBlockMap = new ConcurrentHashMap<>();
+        bladeRunnerBlockMap = new ConcurrentHashMap<>();
 
-        allTrains = new HashSet<>();
-        unresponsiveClients = new HashSet<>();
+        allBladeRunners = new HashSet<>();
+        unresponsiveClients = new HashMap<>();
 
         numberOfCheckpoints = new AtomicInteger(0);
         numberOfStations = new AtomicInteger(0);
-    }
-
-    /**
-     * Holder class for implementing the Singleton pattern.
-     */
-    private static class Holder {
-        private static final Database INSTANCE = new Database();
     }
 
     /**
@@ -47,44 +40,8 @@ public class Database {
         return Holder.INSTANCE;
     }
 
-    public void addUnresponsiveClient(String id) {
-        unresponsiveClients.add(id);
-    }
-
-    // Method to return all clients which are unresponsive or "dead"
-    public List<Client> getUnresponsiveClients() {
-        List<Client> deadClients = new ArrayList<>();
-        for (String id : unresponsiveClients) {
-            Client client = clients.get(id);
-            if (client != null) {
-                deadClients.add(client);
-            }
-        }
-
-        return deadClients;
-    }
-
-    public List<TrainClient> getTrainsWaitingToReconnect() {
-        List<TrainClient> waitingClients = new ArrayList<>();
-        for (String id : unresponsiveClients) {
-            Client client = clients.get(id);
-
-            if (client != null && clients.get(id) instanceof TrainClient) {
-                waitingClients.add((TrainClient) client);
-            } else {
-                logger.log(Level.SEVERE, "A non train in waitingToReconnectTrains set: {0}", id);
-            }
-        }
-
-        return waitingClients;
-    }
-
-    public Map<String, Integer> getTrainBlockMap() {
-        return new HashMap<>(trainBlockMap);
-    }
-
-    public void clearUnresponsiveClients() {
-        unresponsiveClients.clear();
+    public void addUnresponsiveClient(String id, ReasonEnum reason) {
+        unresponsiveClients.put(id, reason);
     }
 
     // Add any client with this method
@@ -104,7 +61,7 @@ public class Database {
 
         // If there was no previous client then add the client to the correct lists
         if (id.startsWith("BR")) {
-            allTrains.add(id);
+            allBladeRunners.add(id);
         }
 
         if (id.startsWith("CP")) {
@@ -117,12 +74,19 @@ public class Database {
     }
 
     // Get any client with this method
-    public Client getClient(String id) {
-        return clients.get(id);
-    }
+    public <T extends Client> T getClient(String id, Class<T> type) {
+        Client c = clients.get(id);
 
-    public void addClientToUnresponsive(String id) {
-        unresponsiveClients.add(id);
+        if (c == null) {
+            return null;
+        }
+
+        if (type.isInstance(c)) {
+            return type.cast(c);
+        } else {
+            logger.log(Level.SEVERE, "Client with ID: " + id + " is not of type: " + type.getName());
+            return null;
+        }
     }
 
     public void removeClientFromUnresponsive(String id) {
@@ -130,23 +94,23 @@ public class Database {
     }
 
     public boolean isClientUnresponsive(String id) {
-        return unresponsiveClients.contains(id);
+        return unresponsiveClients.containsKey(id);
     }
 
     public boolean isUnresponsiveEmpty() {
         return unresponsiveClients.isEmpty();
     }
 
-    public void updateTrainBlock(String trainId, int newBlock) {
-        trainBlockMap.put(trainId, newBlock);
+    public void updateBladeRunnerBlock(String bladeRunnerId, int newBlock) {
+        bladeRunnerBlockMap.put(bladeRunnerId, newBlock);
     }
 
     public boolean isBlockOccupied(int blockId) {
-        return trainBlockMap.containsValue(blockId);
+        return bladeRunnerBlockMap.containsValue(blockId);
     }
 
-    public String getLastTrainInBlock(int blockId) {
-        return trainBlockMap.entrySet()
+    public String getLastBladeRunnerInBlock(int blockId) {
+        return bladeRunnerBlockMap.entrySet()
                 .stream()
                 .filter(entry -> entry.getValue().equals(blockId))
                 .map(Map.Entry::getKey)
@@ -154,26 +118,25 @@ public class Database {
                 .orElse(null);
     }
 
-    
-    public List<TrainClient> getTrainClients() {
-        List<TrainClient> trains = new ArrayList<>();
-        for (String id : allTrains) {
-            if (clients.get(id) instanceof TrainClient trainClient) {
-                trains.add(trainClient);
+    public List<BladeRunnerClient> getBladeRunnerClients() {
+        List<BladeRunnerClient> bladeRunners = new ArrayList<>();
+        for (String id : allBladeRunners) {
+            if (clients.get(id) instanceof BladeRunnerClient bladeRunnerClient) {
+                bladeRunners.add(bladeRunnerClient);
             } else {
-                logger.log(Level.SEVERE, "A non train in allTrains set: {0}", id);
+                logger.log(Level.SEVERE, "A non BladeRunner in allBladeRunners set: {0}", id);
             }
         }
 
-        return trains;
+        return bladeRunners;
     }
 
     public List<Client> getClients() {
         return new ArrayList<>(clients.values());
     }
 
-    public int getTrainCount() {
-        return allTrains.size();
+    public int getBladeRunnerCount() {
+        return allBladeRunners.size();
     }
 
     public Integer getCheckpointCount() {
@@ -182,5 +145,12 @@ public class Database {
 
     public Integer getStationCount() {
         return numberOfStations.get();
+    }
+
+    /**
+     * Holder class for implementing the Singleton pattern.
+     */
+    private static class Holder {
+        private static final Database INSTANCE = new Database();
     }
 }

@@ -5,11 +5,6 @@ import java.net.InetAddress;
 public class StationClient extends CheckpointClient {
     private volatile DoorStatus status;
 
-    private enum DoorStatus {
-        OPEN,
-        CLOSE
-    }
-
     public StationClient(InetAddress clientAddress, int clientPort, String id, int location) {
         super(clientAddress, clientPort, id, location);
     }
@@ -18,7 +13,7 @@ public class StationClient extends CheckpointClient {
         try {
             status = StationClient.DoorStatus.valueOf(newStatus);
         } catch (IllegalArgumentException e) {
-            logger.severe(String.format("Tried to assign unknown status: %s for train %s", newStatus, id));
+            logger.severe(String.format("Tried to assign unknown status: %s for BladeRunner %s", newStatus, id));
         }
     }
 
@@ -42,5 +37,10 @@ public class StationClient extends CheckpointClient {
     public void registerClient() {
         Database.getInstance().addClient(this.id, this);
         logger.info("Added new station to database: " + Database.getInstance().getStationCount());
+    }
+
+    private enum DoorStatus {
+        OPEN,
+        CLOSE
     }
 }

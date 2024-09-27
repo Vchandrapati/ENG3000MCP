@@ -2,6 +2,7 @@ package org.example;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.net.InetAddress;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -11,12 +12,12 @@ public class MessageHandler {
     private static final ObjectMapper objectMapper = new ObjectMapper();
     private static final Database db = Database.getInstance();
     private final Processor processor = new Processor();
-    private final String clientErrorReason = "joined while in waiting state";
 
     // Handles messages from CCPs and stations
     public void handleMessage(String message, InetAddress address, int port) {
         try {
             ReceiveMessage receiveMessage = objectMapper.readValue(message, ReceiveMessage.class);
+
             // Handle based on the client type
             switch (receiveMessage.clientType) {
                 case "ccp":
@@ -42,7 +43,8 @@ public class MessageHandler {
 
     // Handles all checkpoint messages
     private void handleCheckpointMessage(ReceiveMessage receiveMessage, InetAddress address, int port) {
-        CheckpointClient client = (CheckpointClient) db.getClient(receiveMessage.clientID);
+        CheckpointClient client = db.<CheckpointClient>getClient(receiveMessage.clientID, CheckpointClient.class);
+
         switch (receiveMessage.message) {
             case "TRIP":
                 if (!client.isTripped()) {
@@ -59,7 +61,6 @@ public class MessageHandler {
                 if (SystemStateManager.getInstance().getState() == SystemState.EMERGENCY) {
                     SystemStateManager.getInstance().sendEmergencyPacketClientID(receiveMessage.clientID);
                 }
-
                 client.setStatReturned(true);
                 client.setStatSent(true);
                 logger.log(Level.INFO, "Received STAT command from Checkpoint: {0}", receiveMessage.clientID);
@@ -78,13 +79,13 @@ public class MessageHandler {
     }
 
     private void handleCCPMessage(ReceiveMessage receiveMessage, InetAddress address, int port) {
-        TrainClient client = (TrainClient) db.getClient(receiveMessage.clientID);
+        BladeRunnerClient client = db.<BladeRunnerClient>getClient(receiveMessage.clientID, BladeRunnerClient.class);
 
         switch (receiveMessage.message) {
             case "STAT":
-                if (SystemStateManager.getInstance().getState() == SystemState.EMERGENCY)
+                if (SystemStateManager.getInstance().getState() == SystemState.EMERGENCY) {
                     SystemStateManager.getInstance().sendEmergencyPacketClientID(receiveMessage.clientID);
-                
+                }
                 client.updateStatus(receiveMessage.status.toUpperCase());
                 client.setStatReturned(true);
                 client.setStatSent(true);
@@ -101,7 +102,8 @@ public class MessageHandler {
     }
 
     private void handleStationMessage(ReceiveMessage receiveMessage) {
-        StationClient client = (StationClient) db.getClient(receiveMessage.clientID);
+        StationClient client = db.<StationClient>getClient(receiveMessage.clientID, StationClient.class);
+
         // Different behaviour based on what the message command is
         switch (receiveMessage.message) {
             case "DOOR":
@@ -129,7 +131,7 @@ public class MessageHandler {
             Client client = null;
             switch (receiveMessage.clientType) {
                 case "ccp":
-                    client = new TrainClient(address, port, receiveMessage.clientID);
+                    client = new BladeRunnerClient(address, port, receiveMessage.clientID);
                     break;
                 case "checkpoint":
                     client = new CheckpointClient(address, port, receiveMessage.clientID, receiveMessage.location);
@@ -148,10 +150,10 @@ public class MessageHandler {
                 logger.log(Level.INFO, "Initialised new client: {0}", receiveMessage.clientID);
             }
 
-            //if a client joins while not in waiting state, goes to emergency mode
-            if (SystemStateManager.getInstance().getState() != SystemState.WAITING)
-                    SystemStateManager.getInstance().addUnresponsiveClient(receiveMessage.clientID, clientErrorReason);
-
+            // if a client joins while not in waiting state, goes to emergency mode
+            if (SystemStateManager.getInstance().getState() != SystemState.WAITING) {
+                    SystemStateManager.getInstance().addUnresponsiveClient(receiveMessage.clientID, ReasonEnum.INVALDCONNECT);
+            }
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Failed to handle message");
             logger.log(Level.SEVERE, "Exception: ", e);

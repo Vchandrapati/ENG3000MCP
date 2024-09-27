@@ -4,26 +4,14 @@ import java.net.InetAddress;
 
 public class CheckpointClient extends Client {
     private final Integer location;
-    private final Integer intID;
-    private Status status;
+    private final Status status;
     private boolean tripped;
-
-    private enum Status {
-        ALIVE,
-        DEAD
-    }
 
     public CheckpointClient(InetAddress clientAddress, int clientPort, String id, int location) {
         super(clientAddress, clientPort, id);
         this.location = location;
-        String idString = id.substring(2);
-        intID = Integer.parseInt(idString);
         status = Status.ALIVE;
         this.tripped = false;
-    }
-
-    public Integer getIntID() {
-        return intID;
     }
 
     public Integer getLocation() {
@@ -59,5 +47,10 @@ public class CheckpointClient extends Client {
 
     public boolean isTripped() {
         return tripped;
+    }
+
+    private enum Status {
+        ALIVE,
+        DEAD
     }
 }
