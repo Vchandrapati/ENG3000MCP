@@ -146,7 +146,7 @@ public class Server implements Runnable {
                             new Object[] { client.getId(), sendTime });
 
                     // If a client is unresponsive
-                    SystemStateManager.getInstance().addUnresponsiveClient(client.getId());
+                    SystemStateManager.getInstance().addUnresponsiveClient(client.getId(), ReasonEnum.NOSTAT);
                 }
             }
         }

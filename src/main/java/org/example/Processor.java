@@ -11,10 +11,7 @@ public class Processor {
     // [1] Setting status of clients, and not using them if dead, like checkpoints
     // for example
 
-    // [2] line 29 ?? not sure whats wrong or right
-
-    // [3] line 38, why are we starting BladeRunners when they should alredy be on?
-    // ??? Where is this sir
+    // [3]why are we starting trains when they should alredy be on? ??? Where is this sir
 
     // [5] no logging, needs to be proper format, and more logs please
 
@@ -25,14 +22,26 @@ public class Processor {
 
     // [7] need to deal with trip and untrip btw
 
+    //[8] If a checkpoint trips, but there is no train before, the code dies, need a null check
+
+    //[9] for checking if the current block is occupied, u put the current zone in that train and then check instead of other way around
+
+    //[10] does not check for traffic?
+
+    final int highestCheckpoint = 10;
+
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private static final Database db = Database.getInstance();
     private static final int HIGHEST_CHECKPOINT = 10;
     private int totalBlocks = db.getCheckpointCount();
 
-    public void checkpointTripped(int checkpointTripped) {
-        if (!SystemStateManager.getInstance().needsTrip(checkpointTripped))
-            handleBladeRunnerSpeed(checkpointTripped);
+    
+    public void checkpointTripped(int checkpointTripped, boolean untrip) {
+        //ASHTON USE BOTH TRIP AND UNTRIP
+        //TODO
+        if (!SystemStateManager.getInstance().needsTrip(checkpointTripped, untrip)) {
+            if (!untrip) handleBladeRunnerSpeed(checkpointTripped);
+        }
     }
 
     public void handleBladeRunnerSpeed(int checkpoint) {

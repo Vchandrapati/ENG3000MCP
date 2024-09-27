@@ -41,7 +41,7 @@ public class CheckpointClient extends Client {
         this.tripped = true;
     }
 
-    public void reset() {
+    public void resetTrip() {
         this.tripped = false;
     }
 

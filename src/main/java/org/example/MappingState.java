@@ -18,16 +18,18 @@ public class MappingState implements SystemStateInterface {
     private final List<BladeRunnerClient> bladeRunnersToMap;
     private final Database db = Database.getInstance();
     private boolean startMapping;
-    private CurrentBladeRunnerInfo currentBladeRunnerInfo;
+    private BladeRunnerClient currentBladeRunner;
     private int currentBladeRunnerIndex;
+    private boolean hasSent;
     private long currentBladeRunnerStartTime;
 
     //Constructor
     public MappingState() {
-        currentBladeRunnerStartTime = System.currentTimeMillis();
+        hasSent = false;
+        currentBladeRunnerStartTime = 0;
         bladeRunnersToMap = new ArrayList<>();
         startMapping = false;
-        currentBladeRunnerInfo = null;
+        currentBladeRunner = null;
         currentBladeRunnerIndex = 0;
     }
 
@@ -35,52 +37,115 @@ public class MappingState implements SystemStateInterface {
     //If returns true then system goes to NEXT_STATE
     @Override
     public boolean performOperation() {
+        //Will grab all unmapped trains once
         if (!startMapping) {
-            //grab all BladeRunner clients
-            List<BladeRunnerClient> tempBladeRunnersToMap = db.getBladeRunnerClients();
-
-            //get all unmapped BladeRunners
-            for (BladeRunnerClient BladeRunnerClient : tempBladeRunnersToMap) {
-                if (!BladeRunnerClient.isUnmapped()) {
-                    bladeRunnersToMap.add(BladeRunnerClient);
-                }
-            }
+            grabUnmappedBladeRunners();
             startMapping = true;
         }
 
+        //If the blade runner timeout has occured
+        //will change the state
+        checkIfBladeRunnerIsDead();
 
-        // if a BladeRunner does not map in a minute time, send stop message to current BladeRunner and go to waiting state
-        long elapsedTime = System.currentTimeMillis() - currentBladeRunnerStartTime;
-        if (elapsedTime >= BLADE_RUNNER_MAPPING_DEATH_TIMEOUT) {
-            bladeRunnersToMap.get(currentBladeRunnerIndex).sendExecuteMessage(SpeedEnum.STOP);
-            SystemStateManager.getInstance().setState(SystemState.WAITING);
-            logger.log(Level.SEVERE, "Blade runner failed to be mapped in time");
-        }
-
+        //maps the clients, returns true if all are mapped
         return mapClients();
     }
 
+
+
     //proceeds to map all BladeRunner clients one by one, return true if no BladeRunners or all BladeRunners are mapped
     protected boolean mapClients() {
+
         //If no clients are available, complete mapping
         if (bladeRunnersToMap.isEmpty()) {
             logger.log(Level.WARNING, "No BladeRunners to map");
             return true;
         }
 
-        if (currentBladeRunnerInfo == null) {
-            if (currentBladeRunnerIndex < bladeRunnersToMap.size())
-                currentBladeRunnerInfo = new CurrentBladeRunnerInfo(bladeRunnersToMap.get(currentBladeRunnerIndex));
-        } else if (currentBladeRunnerInfo.process(BLADE_RUNNER_MAPPING_RETRY_TIMEOUT)) {
-            currentBladeRunnerStartTime = System.currentTimeMillis();
-            currentBladeRunnerIndex++;
-            if (currentBladeRunnerIndex >= bladeRunnersToMap.size()) {
+        //if no there are blade runners to map, and mapping has not started yet
+        //make the first train info
+        if (currentBladeRunner == null) {
+            currentBladeRunner = bladeRunnersToMap.get(currentBladeRunnerIndex);
+        }
+
+        boolean isCurrentBladeRunnerMapped = processCurrentBladeRunner();
+
+        if(isCurrentBladeRunnerMapped) {
+            if (++currentBladeRunnerIndex >= bladeRunnersToMap.size()) {
                 logger.log(Level.INFO, "All clients have been mapped");
                 return true;
             }
-            currentBladeRunnerInfo = new CurrentBladeRunnerInfo(bladeRunnersToMap.get(currentBladeRunnerIndex));
+            currentBladeRunner = bladeRunnersToMap.get(currentBladeRunnerIndex);
+        }
+
+        return false;
+    }
+
+    //Grabs all unmapped trains
+    private void grabUnmappedBladeRunners() {
+        List<BladeRunnerClient> tempBladeRunnersToMap = db.getBladeRunnerClients();
+        for (BladeRunnerClient BladeRunnerClient : tempBladeRunnersToMap) {
+            if (BladeRunnerClient.isUnmapped()) {
+                bladeRunnersToMap.add(BladeRunnerClient);
+            }
+        }
+    }
+
+    // if a BladeRunner does not map in a minute time, send stop message to current 
+    //BladeRunner and go to waiting state
+    //* Returns true if the timeout has occured */
+    private void checkIfBladeRunnerIsDead() {
+        if(hasSent) {
+            long elapsedTime = System.currentTimeMillis() - currentBladeRunnerStartTime;
+            if (elapsedTime >= BLADE_RUNNER_MAPPING_DEATH_TIMEOUT) {
+                bladeRunnersToMap.get(currentBladeRunnerIndex).sendExecuteMessage(SpeedEnum.STOP);
+                SystemStateManager.getInstance().setState(SystemState.WAITING);
+                logger.log(Level.SEVERE, "Blade runner failed to be mapped in time");
+            }
+        }
+    }
+
+    // Processes the current BladeRunner to move to next checkpoint, keeps trying until it reaches
+    public boolean processCurrentBladeRunner () {
+        if (!hasSent) {
+            sendBladeRunnerToNextCheckpoint(false);
+        } else {
+            int tempTrip = SystemStateManager.getInstance().getLastTrip();
+            if (tempTrip != -1) {
+                stopBladeRunnerAtCheckpoint(tempTrip);
+                return true;
+            }
+
+            //every BLADE_RUNNER_MAPPING_RETRY_TIMEOUT seconds, while not mapped, will try to move the blade runner again
+            if (System.currentTimeMillis() - currentBladeRunnerStartTime > BLADE_RUNNER_MAPPING_RETRY_TIMEOUT) {
+                retrySending();
+            }
         }
         return false;
+    }
+
+    // Send speed message to the current BladeRunner
+    private void sendBladeRunnerToNextCheckpoint(boolean retry) {
+        currentBladeRunnerStartTime = System.currentTimeMillis();
+        String retryString = (retry) ? "retry" : "";
+        logger.log(Level.INFO, "{0} moving {1}", new Object[]{retryString, currentBladeRunner.getId()});
+        currentBladeRunner.sendExecuteMessage(SpeedEnum.SLOW);
+        hasSent = true;
+    }
+
+    // Tells the current BladeRunner to stop when a checkpoint has been detected
+    private void stopBladeRunnerAtCheckpoint(int zone) {
+        logger.log(Level.INFO, "BladeRunner {0} mapped to zone {1}", new Object[]{currentBladeRunner.getId(), zone});
+        currentBladeRunner.sendExecuteMessage(SpeedEnum.STOP);
+        currentBladeRunner.changeZone(zone);
+        Database.getInstance().updateBladeRunnerBlock(currentBladeRunner.getId(), zone);
+    }
+
+
+    // If the current BladeRunner has not responded after timeout time then retry
+    private void retrySending() {
+        hasSent = false;
+        sendBladeRunnerToNextCheckpoint(true);
     }
 
     @Override

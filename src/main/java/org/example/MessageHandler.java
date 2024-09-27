@@ -58,6 +58,7 @@ public class MessageHandler {
             case "TRIP":
                 if (!client.isTripped()) {
                     client.setTripped();
+                    processor.checkpointTripped(client.getLocation(), false);
                     logger.log(Level.INFO, "Received TRIP command from Checkpoint: {0}", receiveMessage.clientID);
                 }
                 break;
@@ -69,15 +70,14 @@ public class MessageHandler {
                 if (SystemStateManager.getInstance().getState() == SystemState.EMERGENCY) {
                     SystemStateManager.getInstance().sendEmergencyPacketClientID(receiveMessage.clientID);
                 }
-
                 client.setStatReturned(true);
                 client.setStatSent(true);
                 logger.log(Level.INFO, "Received STAT command from Checkpoint: {0}", receiveMessage.clientID);
                 break;
             case "UNTRIP":
                 if (client.isTripped()) {
-                    client.reset();
-                    processor.checkpointTripped(client.getLocation());
+                    client.resetTrip();
+                    processor.checkpointTripped(client.getLocation(), true);
                     logger.log(Level.INFO, "Received UNTRIP command from Checkpoint: {0}", receiveMessage.clientID);
                 }
                 break;
@@ -100,9 +100,9 @@ public class MessageHandler {
 
         switch (receiveMessage.message) {
             case "STAT":
-                if (SystemStateManager.getInstance().getState() == SystemState.EMERGENCY)
+                if (SystemStateManager.getInstance().getState() == SystemState.EMERGENCY) {
                     SystemStateManager.getInstance().sendEmergencyPacketClientID(receiveMessage.clientID);
-
+                }
                 client.updateStatus(receiveMessage.status.toUpperCase());
                 client.setStatReturned(true);
                 client.setStatSent(true);
@@ -177,9 +177,9 @@ public class MessageHandler {
             }
 
             // if a client joins while not in waiting state, goes to emergency mode
-            if (SystemStateManager.getInstance().getState() != SystemState.WAITING)
-                SystemStateManager.getInstance().addUnresponsiveClient(receiveMessage.clientID);
-
+            if (SystemStateManager.getInstance().getState() != SystemState.WAITING) {
+                    SystemStateManager.getInstance().addUnresponsiveClient(receiveMessage.clientID, ReasonEnum.INVALDCONNECT);
+            }
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Failed to handle message");
             logger.log(Level.SEVERE, "Exception: ", e);

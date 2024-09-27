@@ -7,13 +7,14 @@ import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-//Manages the states of the system
+// Manages the states of the system
 public class SystemStateManager {
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     private static final Database db = Database.getInstance();
     private static final int NO_TRIP = -1;
     private static final Map<SystemState, Supplier<SystemStateInterface>> stateMap;
+
     // singleton instance of class
     private static volatile SystemStateManager instance;
 
@@ -77,10 +78,12 @@ public class SystemStateManager {
 
     // Sets the state of the program to the given one
     public void setState(SystemState newState) {
-        if (currentState == newState)
+        if (currentState == newState) {
             return;
-        if (currentState == SystemState.EMERGENCY)
+        }
+        if (currentState == SystemState.EMERGENCY) {
             error = false;
+        }
 
         currentState = newState;
         currentStateConcrete = stateMap.get(newState).get();
@@ -88,17 +91,27 @@ public class SystemStateManager {
         logger.log(Level.INFO, "Changing to system state {0}", newState);
     }
 
-    // For processor, if in mapping state all trips need to be redirected here
-    public boolean needsTrip(int trippedSensor) {
+
+    // Takes trips/untrips from processor only in WAITING and MAPPING state
+    public boolean needsTrip(int trippedSensor, boolean untrip) {
+        // if in waiting phase, no mans land, anything could happen MCP does nothing but waits for
+        // connections
+        // will take any trips from Processor and void them
+        if (currentState == SystemState.WAITING)
+            return true;
+
+        // if in the appropriate state of MAPPING only
         if (currentState == SystemState.MAPPING) {
             if (lastTrip == -1) {
-                lastTrip = trippedSensor;
-                logger.log(Level.INFO, "System state manager has detected trip {0}", trippedSensor);
+                if (untrip) {
+                    lastTrip = trippedSensor;
+                    logger.log(Level.INFO, "System state manager has detected untrip {0}", trippedSensor);
+                }
+                // accepts both trip and untrip for mapping, but only cares about untrip
                 return true;
             }
-            logger.log(Level.WARNING, "Mulitiple trips have occured in mapping, once a time should only happen");
+            logger.log(Level.WARNING, "Multiple trips have occured in mapping, one at a time should happen");
             setState(SystemState.EMERGENCY);
-            return false;
         }
         return false;
     }
@@ -121,30 +134,15 @@ public class SystemStateManager {
         }
     }
 
-    // Takes a string id of a client id
-    // adds a unresponsive client to the unresponsive client list in the database
-    // only does this if in not in the waiting state
-    public void addUnresponsiveClient(String id) {
-        if (!db.isClientUnresponsive(id)) {
-            logger.log(Level.WARNING, "Client {0} has disconnected", id);
-            if (currentState != SystemState.WAITING) {
-                error = true;
-                Optional<BladeRunnerClient> opCurClient = db.<BladeRunnerClient>getClient(id, BladeRunnerClient.class);
-                BladeRunnerClient curClient;
 
-                if (opCurClient.isPresent()) {
-                    curClient = opCurClient.get();
-                } else {
-                    logger.log(Level.SEVERE, "Attempted to get non-existant bladerunner: {0}", id);
-                    return;
-                }
-                // maybe look at refactor if statement below - ET
-                if (curClient.isBladeRunnerClient()) {
-                    BladeRunnerClient bladeRunner = (BladeRunnerClient) curClient;
-                    bladeRunner.unmap();
-                }
-                db.addUnresponsiveClient(id);
-            }
+    // Takes a string id of a client id
+    // adds a client to the unresponsive client list in the database
+    // only does this if in not in the waiting state
+    public void addUnresponsiveClient(String id, ReasonEnum reason) {
+        if (currentState != SystemState.WAITING && !db.isClientUnresponsive(id)) {
+            logger.log(Level.WARNING, "Client {0} has {1}", new Object[] {id, reason});
+            error = true;
+            db.addUnresponsiveClient(id, reason);
         }
     }
 

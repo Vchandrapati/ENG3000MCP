@@ -15,7 +15,7 @@ public class Database {
     // Set of all BladeRunner client IDs
     private final HashSet<String> allBladeRunners;
     // Set of all unresponsive or "dead" clients
-    private final HashSet<String> unresponsiveClients;
+    private final HashMap<String, ReasonEnum> unresponsiveClients;
 
     private final AtomicInteger numberOfCheckpoints;
     private final AtomicInteger numberOfStations;
@@ -25,7 +25,7 @@ public class Database {
         bladeRunnerBlockMap = new ConcurrentHashMap<>();
 
         allBladeRunners = new HashSet<>();
-        unresponsiveClients = new HashSet<>();
+        unresponsiveClients = new HashMap<>();
 
         numberOfCheckpoints = new AtomicInteger(0);
         numberOfStations = new AtomicInteger(0);
@@ -40,8 +40,8 @@ public class Database {
         return Holder.INSTANCE;
     }
 
-    public void addUnresponsiveClient(String id) {
-        unresponsiveClients.add(id);
+    public void addUnresponsiveClient(String id, ReasonEnum reason) {
+        unresponsiveClients.put(id, reason);
     }
 
     // Add any client with this method
@@ -94,7 +94,7 @@ public class Database {
     }
 
     public boolean isClientUnresponsive(String id) {
-        return unresponsiveClients.contains(id);
+        return unresponsiveClients.containsKey(id);
     }
 
     public boolean isUnresponsiveEmpty() {

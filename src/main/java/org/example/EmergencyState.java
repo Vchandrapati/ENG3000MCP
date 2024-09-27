@@ -13,23 +13,19 @@ public class EmergencyState implements SystemStateInterface {
     private static final long EMERGENCY_TIMEOUT = 600000; // 10 minutes
     private static final long TIME_BETWEEN_RUNNING = 1000;
     private static final long TIME_BETWEEN_SENDING_STOP = 5000; //5 seconds
+    private static final long MINIMUM_EMERGENCY_TIME = 5000; //5 seconds
 
     private static final SystemState NEXT_STATE = SystemState.MAPPING;
     private static final BlockingQueue<String> clientMessageQueue = new LinkedBlockingQueue<>();
+
     //the time when counter started
     private final long timeOnStart;
     private final Database db = Database.getInstance();
     private long timeOnStop;
-    private List<BladeRunnerClient> bladeRunners;
 
     public EmergencyState() {
         timeOnStart = System.currentTimeMillis();
-        timeOnStop = TIME_BETWEEN_SENDING_STOP;
-        bladeRunners = null;
-    }
-
-    public static void addMessage(String id) {
-        clientMessageQueue.add(id);
+        timeOnStop = 0;
     }
 
     @Override
@@ -38,7 +34,6 @@ public class EmergencyState implements SystemStateInterface {
         if (System.currentTimeMillis() - timeOnStart >= EMERGENCY_TIMEOUT) {
             return true;
         } else {
-            bladeRunners = db.getBladeRunnerClients();
             stopAllBladeRunners();
             return checkIfAllReconnected();
         }
@@ -56,19 +51,33 @@ public class EmergencyState implements SystemStateInterface {
             }
         }
 
-        boolean result = db.isUnresponsiveEmpty();
-        if (result) logger.log(Level.INFO, "All clients have reconnected moving to state {0}", NEXT_STATE);
-        return result;
+        boolean result = db.isUnresponsiveEmpty(); 
+
+        //Ensures a minimum time in emergency mode
+        if(System.currentTimeMillis() - timeOnStart >= MINIMUM_EMERGENCY_TIME) {
+            if (result) logger.log(Level.INFO, "All clients have reconnected");
+            return result;
+        }
+        else {
+            return false;
+        }
     }
 
-    //tells each BladeRunner to stop every 5 seconds
+    //Grabs all the trains each time and tells each
+    //performs this every 5 seconds, and instantly when going into emergency mode
+    //grabs all the trains each time as new trains could connect unexpectedly
     private void stopAllBladeRunners() {
-        if (System.currentTimeMillis() - timeOnStop >= TIME_BETWEEN_SENDING_STOP || timeOnStop == 5000) {
+        if (System.currentTimeMillis() - timeOnStop >= TIME_BETWEEN_SENDING_STOP || timeOnStop == 0) {
+            List<BladeRunnerClient> bladeRunners = db.getBladeRunnerClients();
             timeOnStop = System.currentTimeMillis();
             for (BladeRunnerClient BladeRunnerClient : bladeRunners) {
                 BladeRunnerClient.sendExecuteMessage(SpeedEnum.STOP);
             }
         }
+    }
+
+    public static void addMessage(String id) {
+        clientMessageQueue.add(id);
     }
 
     @Override
