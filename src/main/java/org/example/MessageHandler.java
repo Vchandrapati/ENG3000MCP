@@ -11,6 +11,7 @@ public class MessageHandler {
     private static final ObjectMapper objectMapper = new ObjectMapper();
     private static final Database db = Database.getInstance();
     private final Processor processor = new Processor();
+    private final String clientErrorReason = "joined while in waiting state";
 
     // Handles messages from CCPs and stations
     public void handleMessage(String message, InetAddress address, int port) {
@@ -46,7 +47,7 @@ public class MessageHandler {
             case "TRIP":
                 if (!client.isTripped()) {
                     client.setTripped();
-                    //processor.sensorTripped(client.getLocation());
+                    processor.checkpointTripped(client.getLocation(), false);
                     logger.log(Level.INFO, "Received TRIP command from Checkpoint: {0}", receiveMessage.clientID);
                 }
                 break;
@@ -65,8 +66,8 @@ public class MessageHandler {
                 break;
             case "UNTRIP":
                 if (client.isTripped()) {
-                    client.reset();
-                    processor.sensorTripped(client.getLocation());
+                    client.resetTrip();
+                    processor.checkpointTripped(client.getLocation(), true);
                     logger.log(Level.INFO, "Received UNTRIP command from Checkpoint: {0}", receiveMessage.clientID);
                 }
                 break;
@@ -117,6 +118,7 @@ public class MessageHandler {
             case "STIN":
                 handleInitialise(receiveMessage, null, 0);
                 logger.log(Level.INFO, "Received STIN message from Station: {0}", receiveMessage.clientID);
+                break;
             default:
                 logger.log(Level.WARNING, "Unknown station message: {0}", receiveMessage.clientID);
         }
@@ -148,7 +150,7 @@ public class MessageHandler {
 
             //if a client joins while not in waiting state, goes to emergency mode
             if (SystemStateManager.getInstance().getState() != SystemState.WAITING)
-                    SystemStateManager.getInstance().addUnresponsiveClient(receiveMessage.clientID);
+                    SystemStateManager.getInstance().addUnresponsiveClient(receiveMessage.clientID, clientErrorReason);
 
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Failed to handle message");

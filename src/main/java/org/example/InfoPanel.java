@@ -13,6 +13,8 @@ public class InfoPanel extends JPanel {
     private final JLabel connectedCheckpointsLabel;
     private final JLabel connectedStationsLabel;
     private final JLabel currentState;
+    private final JLabel waitingTimer;
+    private long startTime = -1;
 
     public InfoPanel(long startupTime) {
         this.startupTime = startupTime;
@@ -25,6 +27,7 @@ public class InfoPanel extends JPanel {
         connectedCheckpointsLabel = new JLabel();
         connectedStationsLabel = new JLabel();
         currentState = new JLabel();
+        waitingTimer = new JLabel();
 
         Font font = new Font("Arial", Font.BOLD, 16);
         currentTimeLabel.setFont(font);
@@ -33,6 +36,7 @@ public class InfoPanel extends JPanel {
         connectedCheckpointsLabel.setFont(font);
         connectedStationsLabel.setFont(font);
         currentState.setFont(font);
+        waitingTimer.setFont(font);
 
         add(Box.createVerticalStrut(20)); // Add some space at the top
         add(currentTimeLabel);
@@ -42,6 +46,7 @@ public class InfoPanel extends JPanel {
         add(connectedCheckpointsLabel);
         add(connectedStationsLabel);
         add(currentState);
+        add(waitingTimer);
 
         startUpdater();
     }
@@ -58,7 +63,7 @@ public class InfoPanel extends JPanel {
         String currentTimeStr = formatTime(currentTimeMillis);
 
         long elapsedTimeMillis = currentTimeMillis - startupTime;
-        String elapsedTimeStr = formatElapsedTime(elapsedTimeMillis);
+        String elapsedTimeStr = formatElapsedTime(elapsedTimeMillis, false);
 
         currentTimeLabel.setText("Current Time: " + currentTimeStr);
         elapsedTimeLabel.setText("Time Since Startup: " + elapsedTimeStr);
@@ -68,19 +73,35 @@ public class InfoPanel extends JPanel {
         connectedTrainsLabel.setText("Connected trains: " + db.getTrainCount());
         connectedCheckpointsLabel.setText("Connected checkpoints: " + db.getCheckpointCount());
         connectedStationsLabel.setText("Connected stations: " + db.getStationCount());
-        currentState.setText("Current System State: " + SystemStateManager.getInstance().getState());
+
+        SystemState currState = SystemStateManager.getInstance().getState();
+        currentState.setText("Current System State: " + currState);
+
+        // Begin timer for waiting state
+        if (currState == SystemState.WAITING) {
+            waitingTimer.setVisible(true);
+            if (startTime == -1)
+                startTime = currentTimeMillis;
+
+            // 10 minutes in millis
+            long countdownTimeDuration = 10 * 60 * 1000L;
+            long remainingTime = countdownTimeDuration - (currentTimeMillis - startTime);
+            String timer = formatElapsedTime(remainingTime, true);
+            waitingTimer.setText("Time remaining for clients to connect: " + timer);
+        } else
+            waitingTimer.setVisible(false);
     }
 
-    private String formatTime(long timeMillis) {
+    private String formatTime (long timeMillis) {
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
         return timeFormat.format(new Date(timeMillis));
     }
 
-    private String formatElapsedTime(long elapsedMillis) {
+    private String formatElapsedTime (long elapsedMillis, boolean timer) {
         long seconds = elapsedMillis / 1000 % 60;
         long minutes = elapsedMillis / (1000 * 60) % 60;
         long hours = elapsedMillis / (1000 * 60 * 60);
 
-        return String.format("%02d:%02d:%02d", hours, minutes, seconds);
+        return timer ? String.format("%02d:%02d", minutes, seconds) : String.format("%02d:%02d:%02d", hours, minutes, seconds);
     }
 }

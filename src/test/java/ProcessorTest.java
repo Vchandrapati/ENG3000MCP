@@ -7,14 +7,11 @@
 // import org.junit.jupiter.api.AfterEach;
 // import org.junit.jupiter.api.BeforeEach;
 // import org.junit.jupiter.api.Test;
-// import org.junit.jupiter.params.shadow.com.univocity.parsers.annotations.Trim;
 
-// import java.net.DatagramPacket;
 // import java.net.DatagramSocket;
 // import java.net.InetAddress;
 // import java.util.Optional;
 
-// import static org.example.Constants.PORT;
 // import static org.junit.Assert.assertEquals;
 
 // public class ProcessorTest {
@@ -39,22 +36,14 @@
 //         t3.updateStatus("STARTED");
 //         t4.updateStatus("STARTED");
 
-//         db.addTrain("BR01", t1);
-//         db.addTrain("BR02", t2);
-//         //db.addTrain("BR03", t3);
-//         //db.addTrain("BR04", t3);
-
 //         db.updateTrainBlock("BR01", 4);
 //         db.updateTrainBlock("BR02", 6);
 
 //         t1.changeZone(4);
 //         t2.changeZone(6);
-//         //db.updateTrainBlock("BR03", 7);
-//         //db.updateTrainBlock("BR04", 8);
+//         // db.updateTrainBlock("BR03", 7);
+//         // db.updateTrainBlock("BR04", 8);
 
-//         server = new Server();
-
-      
 //     }
 
 //     @AfterEach
@@ -62,17 +51,13 @@
 //     }
 
 //     @Test // Test trains distance are maintained 1 block
-//     public void testTrainDistance() throws Exception{
-//         p.sensorTripped(5);
-
-//         System.out.println(db.getLastTrainInBlock(5).get());
-
+//     public void testTrainDistance() throws Exception {
+//         p.checkpointTripped(5);
 //         assertEquals(t1.getStatus(), "STOPPED");
 //         assertEquals(t2.getStatus(), "STARTED");
 //         assertEquals(t3.getStatus(), "STARTED");
 //         assertEquals(t4.getStatus(), "STARTED");
 
-        
 //     }
 
 //     @Test // Test processor identifies collisions and stops them
@@ -96,20 +81,19 @@
 //         assertEquals(Optional.ofNullable(t1.getZone()), Optional.of(4));
 //         assertEquals(Optional.ofNullable(t2.getZone()), Optional.of(6));
 
-
-//         p.sensorTripped(5);
-//         //t1 should stop now as t2 is in zone 6
+//         p.checkpointTripped(5);
+//         // t1 should stop now as t2 is in zone 6
 //         assertEquals(Optional.ofNullable(t1.getZone()), Optional.of(5));
 //         assertEquals(t1.getStatus(), "STOPPED");
 
-//         p.sensorTripped(7);
-//         p.sensorTripped(8);
+//         p.checkpointTripped(7);
+//         p.checkpointTripped(8);
 //         assertEquals(Optional.ofNullable(t2.getZone()), Optional.of(8));
-//         assertEquals(Optional.ofNullable(t1.getZone()),Optional.of(7));
+//         assertEquals(Optional.ofNullable(t1.getZone()), Optional.of(7));
 //         assertEquals(t1.getStatus(), "STOPPED");
 //         assertEquals(t2.getStatus(), "STARTED");
 
 //         // t2 should move to 7, causing t1 to move to 6
-//         //4,6,7,8
+//         // 4,6,7,8
 //     }
 // }

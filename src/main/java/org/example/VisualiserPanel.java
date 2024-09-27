@@ -3,18 +3,13 @@ package org.example;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.*;
-import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class VisualiserPanel extends JPanel {
-
-    private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-
-    private List<TrainClient> trainZones = new ArrayList<>();
-    private static final int SEGMENTS = 11;
+    private transient List<TrainClient> trainZones = new ArrayList<>();
+    private static final int SEGMENTS = 10;
     private static final double SEGMENT_DRAW_LENGTH = 10;
 
     public void updateTrainZones(List<TrainClient> newTrainZones) {
@@ -111,7 +106,7 @@ public class VisualiserPanel extends JPanel {
     }
 
     private static void drawSegments(double angleIncrement, int centerX, double radiusX, int centerY, double radiusY, Graphics2D g2d) {
-        for (int i = 0; i < SEGMENTS; i++) {
+        for (int i = 1; i <= SEGMENTS; i++) {
             // Current angle for this segment
             double angle = i * angleIncrement;
 

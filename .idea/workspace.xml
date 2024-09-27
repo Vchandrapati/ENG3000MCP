@@ -4,13 +4,44 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1d9b5952-4092-4fc7-8340-7dd220ada861" name="Changes" comment="Updated some server logic and fixed message handler location">
+    <list default="true" id="1d9b5952-4092-4fc7-8340-7dd220ada861" name="Changes" comment="Updated visualiser to use different table for showing trains">
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/0/6/06ad388c5671ec4908c30fdceaeec39d4946db70" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/2/6/268b09d2a5cdab7d148f0ec91f7b3fb51601410d" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/2/6/268b09d2a5cdab7d148f0ec91f7b3fb51601410d" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/2/a/2aedb1127eeacd09f5aa6fa073768e9eeb41ad5b" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/2/a/2aedb1127eeacd09f5aa6fa073768e9eeb41ad5b" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/2/f/2f983decdfb727dcb6264a2451f5d54aebf3d582" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/2/f/2f983decdfb727dcb6264a2451f5d54aebf3d582" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/3/3/33df6e49c0049b5344e9fbe1452523adc50b1ae5" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/5/b/5be3ecc733cb88382e406ce331946780573a9eb5" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/5/b/5be3ecc733cb88382e406ce331946780573a9eb5" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/6/d/6d2e3c01f1113886131523a407f0a71558671ec9" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/6/d/6d2e3c01f1113886131523a407f0a71558671ec9" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/a/c/ac06820a0b9d2ca9b3064c1609686227fe9aaa98" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/a/c/ac06820a0b9d2ca9b3064c1609686227fe9aaa98" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/c/2/c2c50a5fdeec942080ab12f6948ba1e8dffd03c0" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/c/2/c2c50a5fdeec942080ab12f6948ba1e8dffd03c0" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/c/4/c473d7ca2e2f6f951c88b1e598902b50771748ae" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/c/4/c473d7ca2e2f6f951c88b1e598902b50771748ae" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/c/8/c8511f2a7808ecdf7d0d43b56a5627d10e1bc4bf" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/c/8/c8511f2a7808ecdf7d0d43b56a5627d10e1bc4bf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/e/2/e2e73d2d48b6795b48055dc0494427630a91bb05" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/e/2/e2e73d2d48b6795b48055dc0494427630a91bb05" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/e/3/e30cbeac6330249122db68224054f827aa95efa6" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/e/3/e30cbeac6330249122db68224054f827aa95efa6" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/f/4/f4c6994139fb4966ba8f52c2a200c329a3f13a7f" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/f/4/f4c6994139fb4966ba8f52c2a200c329a3f13a7f" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/0/6/06ad388c5671ec4908c30fdceaeec39d4946db70" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/3/3/33df6e49c0049b5344e9fbe1452523adc50b1ae5" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Server.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.log" beforeDir="false" afterPath="$PROJECT_DIR$/app.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.log.lck" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/CheckpointClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/CheckpointClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/CommandHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/CommandHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/CurrentTrainInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/CurrentTrainInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Database.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/EmergencyState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/EmergencyState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/InfoPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/InfoPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/LoggerConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/LoggerConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/MappingState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/MappingState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/MessageHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/MessageHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Processor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Processor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/SystemStateManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/SystemStateManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/VisualiserPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/VisualiserPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/VisualiserScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/VisualiserScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/ProcessorTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ProcessorTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/TestClient.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/TestingStates.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/StateTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,7 +62,7 @@
   &quot;isMigrated&quot;: true
 }</component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="CurrentFile" />
+    <option name="selectedTabId" value="ProjectErrors" />
   </component>
   <component name="ProjectCodeStyleSettingsMigration">
     <option name="version" value="2" />
@@ -44,22 +75,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.Unnamed.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SONARLINT_PRECOMMIT_ANALYSIS&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Unnamed.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SONARLINT_PRECOMMIT_ANALYSIS": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.App" />
@@ -86,7 +118,10 @@
       <updated>1726662619710</updated>
       <workItem from="1726662620775" duration="12389000" />
       <workItem from="1726714384225" duration="3166000" />
-      <workItem from="1726752285766" duration="4164000" />
+      <workItem from="1726752285766" duration="7356000" />
+      <workItem from="1727093956805" duration="221000" />
+      <workItem from="1727094523589" duration="4485000" />
+      <workItem from="1727151100753" duration="2829000" />
     </task>
     <task id="LOCAL-00001" summary="Made some changes to comply with sonarlint">
       <option name="closed" value="true" />
@@ -160,7 +195,23 @@
       <option name="project" value="LOCAL" />
       <updated>1726755423120</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Updated visualiser to use different table for showing trains">
+      <option name="closed" value="true" />
+      <created>1726757017143</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1726757017143</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Updated visualiser to use different table for showing trains">
+      <option name="closed" value="true" />
+      <created>1726757060265</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1726757060265</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -170,14 +221,15 @@
     <MESSAGE value="Made some changes to comply with sonarlint" />
     <MESSAGE value="Made some changes to comply with sonarlint and rerouted messages in emergency state" />
     <MESSAGE value="Updated some server logic and fixed message handler location" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated some server logic and fixed message handler location" />
+    <MESSAGE value="Updated visualiser to use different table for showing trains" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated visualiser to use different table for showing trains" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/org/example/Client.java</url>
-          <line>39</line>
+          <line>40</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>

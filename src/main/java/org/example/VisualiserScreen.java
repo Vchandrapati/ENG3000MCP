@@ -5,20 +5,19 @@ import java.awt.*;
 
 public class VisualiserScreen extends JFrame {
     private final VisualiserPanel trackPanel;
-    private final InfoPanel infoPanel;
     private final JTextField commandInput;
-    private final CommandHandler commandHandler;
-    private final long startupTime;
+    private final transient CommandHandler commandHandler;
+
     public VisualiserScreen() {
         setTitle("Master Control Protocol");
-        setSize(1600, 800);
+        setSize(1900, 800);
         setResizable(false);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        this.startupTime = System.currentTimeMillis();
+        long startupTime = System.currentTimeMillis();
 
         trackPanel = new VisualiserPanel();
-        infoPanel = new InfoPanel(startupTime);
+        InfoPanel infoPanel = new InfoPanel(startupTime);
 
         JPanel userPanel = new JPanel();
         userPanel.setLayout(new BorderLayout());
@@ -39,12 +38,12 @@ public class VisualiserScreen extends JFrame {
         userPanel.add(logScroller, BorderLayout.CENTER);
 
         // Create a horizontal split pane for the bottom half
-        JSplitPane bottomSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, trackPanel, infoPanel);
-        bottomSplitPane.setDividerLocation(800); // Adjust as needed
-        bottomSplitPane.setOneTouchExpandable(true);
+        JSplitPane sideSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, trackPanel, userPanel);
+        sideSplitPane.setDividerLocation(800); // Adjust as needed
+        sideSplitPane.setOneTouchExpandable(true);
 
-        JSplitPane mainSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, userPanel, bottomSplitPane);
-        mainSplitPane.setDividerLocation(400); // Adjust as needed
+        JSplitPane mainSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, infoPanel, sideSplitPane);
+        mainSplitPane.setDividerLocation(380); // Adjust as needed
         mainSplitPane.setOneTouchExpandable(true);
 
         getContentPane().add(mainSplitPane);

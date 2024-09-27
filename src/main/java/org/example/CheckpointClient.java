@@ -4,7 +4,7 @@ import java.net.InetAddress;
 
 public class CheckpointClient extends Client {
     private final Integer location;
-    protected Integer intID;
+    private final Integer intID;
     private Status status;
     private boolean tripped;
 
@@ -53,7 +53,7 @@ public class CheckpointClient extends Client {
         this.tripped = true;
     }
 
-    public void reset() {
+    public void resetTrip() {
         this.tripped = false;
     }
 

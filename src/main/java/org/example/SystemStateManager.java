@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.List;
 
 //Manages the states of the system
 public class SystemStateManager {
@@ -27,6 +28,8 @@ public class SystemStateManager {
     private long timeWaited = System.currentTimeMillis();
 
     private static final Map<SystemState, Supplier<SystemStateInterface>> stateMap;
+
+    private final String clientErrorReason = "double trip";
 
     static {
         stateMap = new EnumMap<>(SystemState.class);
@@ -51,14 +54,14 @@ public class SystemStateManager {
     public void run() {
         long timeToWait = currentStateConcrete.getTimeToWait();
 
-        if(System.currentTimeMillis() - timeWaited >= timeToWait) {
+        if (System.currentTimeMillis() - timeWaited >= timeToWait) {
             //if the current state returns true, means it has finished and will be changed to its next appropriate state
-            if(currentStateConcrete.performOperation()) {
+            if (currentStateConcrete.performOperation()) {
                 setState(currentStateConcrete.getNextState());
             }
+
             timeWaited = System.currentTimeMillis();
-        }
-        else {
+        } else {
             checkChange();
         }
     }
@@ -74,13 +77,7 @@ public class SystemStateManager {
     //Sets the state of the program to the given one
     public void setState(SystemState newState) {
         if(currentState == newState) return;
-        
         if(currentState == SystemState.EMERGENCY) error = false;
-
-        //remove this for testing
-        if(newState == SystemState.EMERGENCY) {
-            System.out.println();
-        }
 
         currentState = newState;
         currentStateConcrete = stateMap.get(newState).get();
@@ -94,14 +91,22 @@ public class SystemStateManager {
     }
 
     //For processor, if in mapping state all trips need to be redirected here
-    public boolean needsTrip(int trippedSensor) {
+    public boolean needsTrip(int trippedSensor, boolean untrip) {
+        if(currentState == SystemState.WAITING) return false;
         if(currentState == SystemState.MAPPING) {
             if(lastTrip == -1) {
-                lastTrip = trippedSensor;
-                logger.log(Level.INFO, "System state manager has detected trip {0}", trippedSensor);
-                return true;
+                //accepts both trip and untrip for mapping, but only cares about untrip
+                if(untrip) {
+                    lastTrip = trippedSensor;
+                    logger.log(Level.INFO, "System state manager has detected untrip {0}", trippedSensor);
+                    return true;
+                }
+                //what if multiple checkpoints are dead before that, then the zone will be a combination of multiple checkpoint zones
+                //TODO
+                return false;
             }
             logger.log(Level.WARNING, "Multiple trips have occured in mapping, one at a time should happen");
+            resetTrips();
             setState(SystemState.EMERGENCY);
             return false;
         }
@@ -130,9 +135,9 @@ public class SystemStateManager {
     //Takes a string id of a client id
     //adds a unresponsive client to the unresponsive client list in the database
     //only does this if in not in the waiting state
-    public void addUnresponsiveClient(String id) {
+    public void addUnresponsiveClient(String id, String reason) {
         if(!db.isClientUnresponsive(id)) {
-            logger.log(Level.WARNING, "Client {0} has disconnected", id);
+            logger.log(Level.WARNING, "Client {0} has {1}", new Object[]{id, reason});
             if(currentState != SystemState.WAITING) {
                 error = true;
                 Client curClient = db.getClient(id);
@@ -156,5 +161,18 @@ public class SystemStateManager {
     //if returns -1 means state has no appropriate time, 
     public long getCurrentStateTimeout() {
         return currentStateConcrete.getStateTimeout();
+    }
+
+    public void resetTrips() {
+        //reset all trips, in case any false trips happened
+        List<Client> clients = db.getClients();
+        for (Client client : clients) {
+            synchronized(client) {
+                if (client.id.contains("CH")) {
+                    CheckpointClient check = (CheckpointClient) client;
+                    check.resetTrip();
+                }
+            }
+        }
     }
 }

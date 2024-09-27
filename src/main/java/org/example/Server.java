@@ -31,6 +31,7 @@ public class Server implements Runnable {
     private static final int STAT_INTERVAL_SECONDS = 5000;
     private static final BlockingQueue<DatagramPacket> mailbox = new LinkedBlockingQueue<>();
     private final MessageHandler messageHandler = new MessageHandler();
+    private final String clientErrorReason = "disconnected";
 
     private Server() {
         serverRunning = new AtomicBoolean(true);
@@ -152,7 +153,7 @@ public class Server implements Runnable {
                     logger.log(Level.WARNING, "No STAT response from {0} sent at {1}", new Object[]{client.getId(), sendTime});
 
                     // If a client is unresponsive
-                    SystemStateManager.getInstance().addUnresponsiveClient(client.getId());
+                    SystemStateManager.getInstance().addUnresponsiveClient(client.getId(), clientErrorReason);
                 }
             }
         }
