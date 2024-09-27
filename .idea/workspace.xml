@@ -7,7 +7,6 @@
     <list default="true" id="1d9b5952-4092-4fc7-8340-7dd220ada861" name="Changes" comment="Fixed optional bug">
       <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/2/a/2aedb1127eeacd09f5aa6fa073768e9eeb41ad5b" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/2/a/2aedb1127eeacd09f5aa6fa073768e9eeb41ad5b" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.log" beforeDir="false" afterPath="$PROJECT_DIR$/app.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/MessageHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/MessageHandler.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -29,7 +28,7 @@
   &quot;isMigrated&quot;: true
 }</component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="ProjectErrors" />
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectCodeStyleSettingsMigration">
     <option name="version" value="2" />
@@ -94,7 +93,7 @@
       <workItem from="1727190317781" duration="938000" />
       <workItem from="1727334859992" duration="4665000" />
       <workItem from="1727353281317" duration="2659000" />
-      <workItem from="1727423267711" duration="1069000" />
+      <workItem from="1727423267711" duration="1774000" />
     </task>
     <task id="LOCAL-00001" summary="Made some changes to comply with sonarlint">
       <option name="closed" value="true" />
@@ -216,7 +215,15 @@
       <option name="project" value="LOCAL" />
       <updated>1727423504889</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Fixed optional bug">
+      <option name="closed" value="true" />
+      <created>1727424352865</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1727424352865</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

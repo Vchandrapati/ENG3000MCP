@@ -4,8 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.net.InetAddress;
-import java.util.Objects;
-import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -26,7 +24,7 @@ public class MessageHandler {
                     handleCCPMessage(receiveMessage, address, port);
                     break;
                 case "station":
-                    handleStationMessage(receiveMessage);
+                    handleStationMessage(receiveMessage, address, port);
                     break;
                 case "checkpoint":
                     handleCheckpointMessage(receiveMessage, address, port);
@@ -35,122 +33,116 @@ public class MessageHandler {
                     logger.log(Level.WARNING, "Unknown client type: {0}", receiveMessage.clientType);
             }
         } catch (JsonProcessingException e) {
-            logger.log(Level.SEVERE, "Failed to parse message: {0}", message);
-            logger.log(Level.SEVERE, "Exception: ", e);
+            logger.log(Level.SEVERE, "Failed to parse message: {0} \nException: {1}", new Object[] {message, e.getMessage()});
         } catch (Exception e) {
-            logger.log(Level.SEVERE, "Unexpected error handling message from {0}:{1}", new Object[] {address, port});
-            logger.log(Level.SEVERE, "Exception: ", e);
+            logger.log(Level.SEVERE, "Unexpected error handling message from {0}:{1} \nException: {2}", new Object[] {address, port,  e.getMessage()});
         }
     }
 
     // Handles all checkpoint messages
     private void handleCheckpointMessage(ReceiveMessage receiveMessage, InetAddress address, int port) {
-        Optional<CheckpointClient> opClient = db.getClient(receiveMessage.clientID, CheckpointClient.class);
-        CheckpointClient client = null;
-
-        if (opClient.isPresent()) {
-            client = opClient.get();
-        } else if (!Objects.equals(receiveMessage.message, "CHIN")){
-            logger.log(Level.SEVERE, "Attempted to get non-existent station: {0}", receiveMessage.clientID);
-            return;
-        }
-
-        switch (receiveMessage.message) {
-            case "TRIP":
-                if (!client.isTripped()) {
-                    client.setTripped();
-                    processor.checkpointTripped(client.getLocation(), false);
-                    logger.log(Level.INFO, "Received TRIP command from Checkpoint: {0}", receiveMessage.clientID);
-                }
-                break;
-            case "CHIN":
+        db.getClient(receiveMessage.clientID, CheckpointClient.class).ifPresentOrElse(client -> {
+            // Client is present
+            switch (receiveMessage.message) {
+                case "TRIP":
+                    if (!client.isTripped()) {
+                        client.setTripped();
+                        processor.checkpointTripped(client.getLocation(), false);
+                        logger.log(Level.INFO, "Received TRIP command from Checkpoint: {0}", receiveMessage.clientID);
+                    }
+                    break;
+                case "STAT":
+                    if (SystemStateManager.getInstance().getState() == SystemState.EMERGENCY) {
+                        SystemStateManager.getInstance().sendEmergencyPacketClientID(receiveMessage.clientID);
+                    }
+                    client.setStatReturned(true);
+                    client.setStatSent(true);
+                    logger.log(Level.INFO, "Received STAT command from Checkpoint: {0}", receiveMessage.clientID);
+                    break;
+                case "UNTRIP":
+                    if (client.isTripped()) {
+                        client.resetTrip();
+                        processor.checkpointTripped(client.getLocation(), true);
+                        logger.log(Level.INFO, "Received UNTRIP command from Checkpoint: {0}", receiveMessage.clientID);
+                    }
+                    break;
+                default:
+                    logger.log(Level.SEVERE, "Failed to handle checkpoint message: {0}", receiveMessage);
+                    break;
+            }
+        }, () -> {
+            // Client is not present
+            if ("CHIN".equals(receiveMessage.message)) {
                 handleInitialise(receiveMessage, address, port);
-                logger.log(Level.INFO, "Received STAT message from Checkpoint: {0}", receiveMessage.clientID);
-                break;
-            case "STAT":
-                if (SystemStateManager.getInstance().getState() == SystemState.EMERGENCY) {
-                    SystemStateManager.getInstance().sendEmergencyPacketClientID(receiveMessage.clientID);
-                }
-                client.setStatReturned(true);
-                client.setStatSent(true);
-                logger.log(Level.INFO, "Received STAT command from Checkpoint: {0}", receiveMessage.clientID);
-                break;
-            case "UNTRIP":
-                if (client.isTripped()) {
-                    client.resetTrip();
-                    processor.checkpointTripped(client.getLocation(), true);
-                    logger.log(Level.INFO, "Received UNTRIP command from Checkpoint: {0}", receiveMessage.clientID);
-                }
-                break;
-            default:
-                logger.log(Level.SEVERE, "Failed to handle checkpoint message: {0}", receiveMessage);
-                break;
-        }
+                logger.log(Level.INFO, "Received CHIN message from Checkpoint: {0}", receiveMessage.clientID);
+            } else {
+                logger.log(Level.SEVERE, "Attempted to get non-existent checkpoint: {0}", receiveMessage.clientID);
+            }
+        });
     }
+
 
     private void handleCCPMessage(ReceiveMessage receiveMessage, InetAddress address, int port) {
-        Optional<BladeRunnerClient> opClient = db.getClient(receiveMessage.clientID, BladeRunnerClient.class);
-        BladeRunnerClient client = null;
-
-        if (opClient.isPresent()) {
-            client = opClient.get();
-        } else if (!Objects.equals(receiveMessage.message, "CCIN")){
-            logger.log(Level.SEVERE, "Attempted to get non-existent bladerunner: {0}", receiveMessage.clientID);
-            return;
-        }
-
-        switch (receiveMessage.message) {
-            case "STAT":
-                if (SystemStateManager.getInstance().getState() == SystemState.EMERGENCY)
-                    SystemStateManager.getInstance().sendEmergencyPacketClientID(receiveMessage.clientID);
-
-                client.updateStatus(receiveMessage.status.toUpperCase());
-                client.setStatReturned(true);
-                client.setStatSent(true);
-                logger.log(Level.INFO, "Received STAT message from Blade Runner: {0}", receiveMessage.clientID);
-                break;
-            case "CCIN":
+        db.getClient(receiveMessage.clientID, BladeRunnerClient.class).ifPresentOrElse(client -> {
+            // Client is present
+            switch (receiveMessage.message) {
+                case "STAT":
+                    if (SystemStateManager.getInstance().getState() == SystemState.EMERGENCY) {
+                        SystemStateManager.getInstance().sendEmergencyPacketClientID(receiveMessage.clientID);
+                    }
+                    client.updateStatus(receiveMessage.status.toUpperCase());
+                    client.setStatReturned(true);
+                    client.setStatSent(true);
+                    logger.log(Level.INFO, "Received STAT message from Blade Runner: {0}", receiveMessage.clientID);
+                    break;
+                case "DOOR":
+                    client.updateStatus(receiveMessage.status.toUpperCase());
+                    logger.log(Level.INFO, "Received DOOR message from Blade Runner: {0}", receiveMessage.clientID);
+                    break;
+                default:
+                    logger.log(Level.WARNING, "Unknown CCP message: {0}", receiveMessage.message);
+                    break;
+            }
+        }, () -> {
+            // Client is not present
+            if ("CCIN".equals(receiveMessage.message)) {
                 handleInitialise(receiveMessage, address, port);
                 logger.log(Level.INFO, "Received CCIN message from Blade Runner: {0}", receiveMessage.clientID);
-                break;
-            default:
-                logger.log(Level.WARNING, "Unknown CCP message: {0}", receiveMessage.message);
-                break;
-        }
+            } else {
+                logger.log(Level.SEVERE, "Attempted to get non-existent bladerunner: {0}", receiveMessage.clientID);
+            }
+        });
     }
 
-    private void handleStationMessage(ReceiveMessage receiveMessage) {
-        Optional<StationClient> opClient = db.getClient(receiveMessage.clientID, StationClient.class);
-        StationClient client = null;
-
-        if (opClient.isPresent()) {
-            client = opClient.get();
-        } else if (!Objects.equals(receiveMessage.message, "STIN")){
-            logger.log(Level.SEVERE, "Attempted to get non-existent station: {0}", receiveMessage.clientID);
-            return;
-        }
-
-
-        // Different behaviour based on what the message command is
-        switch (receiveMessage.message) {
-            case "DOOR":
-                client.updateStatus(receiveMessage.status.toUpperCase());
+    private void handleStationMessage(ReceiveMessage receiveMessage, InetAddress address, int port) {
+        db.getClient(receiveMessage.clientID, StationClient.class).ifPresentOrElse(client -> {
+            // Client is present
+            switch (receiveMessage.message) {
+                case "DOOR":
+                    client.updateStatus(receiveMessage.status.toUpperCase());
+                    logger.log(Level.INFO, "Received DOOR message from Station: {0}", receiveMessage.clientID);
+                    break;
+                case "STAT":
+                    if (SystemStateManager.getInstance().getState() == SystemState.EMERGENCY) {
+                        SystemStateManager.getInstance().sendEmergencyPacketClientID(receiveMessage.clientID);
+                    }
+                    client.setStatReturned(true);
+                    client.setStatSent(true);
+                    logger.log(Level.INFO, "Received STAT message from Station: {0}", receiveMessage.clientID);
+                    break;
+                default:
+                    logger.log(Level.WARNING, "Unknown station message: {0}", receiveMessage.message);
+                    break;
+            }
+        }, () -> {
+            // Client is not present
+            if ("STIN".equals(receiveMessage.message)) {
+                handleInitialise(receiveMessage, address, port);
                 logger.log(Level.INFO, "Received STIN message from Station: {0}", receiveMessage.clientID);
-                break;
-            case "STAT":
-                if (SystemStateManager.getInstance().getState() == SystemState.EMERGENCY)
-                    SystemStateManager.getInstance().sendEmergencyPacketClientID(receiveMessage.clientID);
-                client.setStatReturned(true);
-                client.setStatSent(true);
-                logger.log(Level.INFO, "Received STAT message from Station: {0}", receiveMessage.clientID);
-                break;
-            case "STIN":
-                handleInitialise(receiveMessage, null, 0);
-                logger.log(Level.INFO, "Received STIN message from Station: {0}", receiveMessage.clientID);
-                break;
-            default:
-                logger.log(Level.WARNING, "Unknown station message: {0}", receiveMessage.clientID);
-        }
+            } else {
+                logger.log(Level.SEVERE, "Attempted to get non-existent station: {0}", receiveMessage.clientID);
+            }
+        });
     }
 
     private void handleInitialise(ReceiveMessage receiveMessage, InetAddress address, int port) {
