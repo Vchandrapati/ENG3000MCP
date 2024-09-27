@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.net.InetAddress;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -45,12 +46,12 @@ public class MessageHandler {
     // Handles all checkpoint messages
     private void handleCheckpointMessage(ReceiveMessage receiveMessage, InetAddress address, int port) {
         Optional<CheckpointClient> opClient = db.getClient(receiveMessage.clientID, CheckpointClient.class);
-        CheckpointClient client;
+        CheckpointClient client = null;
 
         if (opClient.isPresent()) {
             client = opClient.get();
-        } else {
-            logger.log(Level.SEVERE, "Attempted to get non-existant bladerunner: {0}", receiveMessage.clientID);
+        } else if (!Objects.equals(receiveMessage.message, "CHIN")){
+            logger.log(Level.SEVERE, "Attempted to get non-existent station: {0}", receiveMessage.clientID);
             return;
         }
 
@@ -89,20 +90,20 @@ public class MessageHandler {
 
     private void handleCCPMessage(ReceiveMessage receiveMessage, InetAddress address, int port) {
         Optional<BladeRunnerClient> opClient = db.getClient(receiveMessage.clientID, BladeRunnerClient.class);
-        BladeRunnerClient client;
+        BladeRunnerClient client = null;
 
         if (opClient.isPresent()) {
             client = opClient.get();
-        } else {
-            logger.log(Level.SEVERE, "Attempted to get non-existant bladerunner: {0}", receiveMessage.clientID);
+        } else if (!Objects.equals(receiveMessage.message, "CCIN")){
+            logger.log(Level.SEVERE, "Attempted to get non-existent bladerunner: {0}", receiveMessage.clientID);
             return;
         }
 
         switch (receiveMessage.message) {
             case "STAT":
-                if (SystemStateManager.getInstance().getState() == SystemState.EMERGENCY) {
+                if (SystemStateManager.getInstance().getState() == SystemState.EMERGENCY)
                     SystemStateManager.getInstance().sendEmergencyPacketClientID(receiveMessage.clientID);
-                }
+
                 client.updateStatus(receiveMessage.status.toUpperCase());
                 client.setStatReturned(true);
                 client.setStatSent(true);
@@ -120,12 +121,12 @@ public class MessageHandler {
 
     private void handleStationMessage(ReceiveMessage receiveMessage) {
         Optional<StationClient> opClient = db.getClient(receiveMessage.clientID, StationClient.class);
-        StationClient client;
+        StationClient client = null;
 
         if (opClient.isPresent()) {
             client = opClient.get();
-        } else {
-            logger.log(Level.SEVERE, "Attempted to get non-existant bladerunner: {0}", receiveMessage.clientID);
+        } else if (!Objects.equals(receiveMessage.message, "STIN")){
+            logger.log(Level.SEVERE, "Attempted to get non-existent station: {0}", receiveMessage.clientID);
             return;
         }
 
