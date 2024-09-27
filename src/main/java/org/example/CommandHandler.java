@@ -14,11 +14,12 @@ public class CommandHandler implements Runnable {
     private static final Set<String> commands;
     private static boolean isRunning = true;
 
-    //Set of commands
+    // Set of commands
     static {
         commands = new HashSet<>();
         commands.add("start mapping");
         commands.add("quit");
+        commands.add("override emergency");
         commands.add("help");
     }
 
@@ -30,24 +31,25 @@ public class CommandHandler implements Runnable {
         commandThread.start();
     }
 
-    //Main loop for command handler
+    // Main loop for command handler
     @Override
     public void run() {
-        logger.log(Level.INFO, "MCP online, please input a command, type help to see a list of commands");
+        logger.log(Level.INFO,
+                "MCP online, please input a command, type help to see a list of commands");
 
         while (isRunning) {
             try {
-                //tries to get command from queue if exists
+                // tries to get command from queue if exists
                 String input = commandQueue.take();
 
-                //if valid processes the command and prints to console
+                // if valid processes the command and prints to console
                 if (commands.contains(input)) {
                     executeCommand(input);
                     logger.log(Level.INFO, "Command executed: {0}", input);
                 } else {
                     logger.log(Level.WARNING, "Invalid command: {0}", input);
                 }
-                //if command is invalid throw exception
+                // if command is invalid throw exception
             } catch (InvalidCommandException e) {
                 logger.log(Level.WARNING, "Invalid command");
             } catch (InterruptedException e) {
@@ -66,7 +68,7 @@ public class CommandHandler implements Runnable {
         }
     }
 
-    //takes an input string and executes its command, if invalid throw exception
+    // takes an input string and executes its command, if invalid throw exception
     private void executeCommand(String input) throws InvalidCommandException {
         // using the substring find the command
         switch (input) {
@@ -79,7 +81,14 @@ public class CommandHandler implements Runnable {
             case "start mapping":
                 if (SystemStateManager.getInstance().getState() == SystemState.WAITING)
                     SystemStateManager.getInstance().startEarly();
-                else throw new InvalidCommandException("Has already been used or in that state currently");
+                else
+                    throw new InvalidCommandException("Not in waiting state");
+                break;
+            case "override emergency":
+                if (SystemStateManager.getInstance().getState() == SystemState.EMERGENCY)
+                    SystemStateManager.getInstance().setState(SystemState.MAPPING);
+                else
+                    throw new InvalidCommandException("Not in emergency state");
                 break;
             default:
                 throw new InvalidCommandException("Invalid command");
@@ -97,7 +106,7 @@ public class CommandHandler implements Runnable {
         logger.log(Level.INFO, "{0}", commandString);
     }
 
-    //Exception for invalid commands
+    // Exception for invalid commands
     private class InvalidCommandException extends Exception {
         public InvalidCommandException(String message) {
             logger.log(Level.WARNING, message);

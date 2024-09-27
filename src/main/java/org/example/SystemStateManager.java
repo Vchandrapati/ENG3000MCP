@@ -131,7 +131,6 @@ public class SystemStateManager {
         }
     }
 
-
     //Takes a string id of a client id
     //adds a client to the unresponsive client list in the database
     //only does this if in not in the waiting state
