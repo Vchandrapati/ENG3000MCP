@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.List;
 
 //Manages the states of the system
 public class SystemStateManager {
@@ -78,10 +77,12 @@ public class SystemStateManager {
 
     // Sets the state of the program to the given one
     public void setState(SystemState newState) {
-        if (currentState == newState)
+        if (currentState == newState) {
             return;
-        if (currentState == SystemState.EMERGENCY)
+        }
+        if (currentState == SystemState.EMERGENCY) {
             error = false;
+        }
 
         currentState = newState;
         currentStateConcrete = stateMap.get(newState).get();
@@ -99,17 +100,14 @@ public class SystemStateManager {
         //if in the appropriate state of MAPPING only
         if(currentState == SystemState.MAPPING) {
             if(lastTrip == -1) {
-                //accepts both trip and untrip for mapping, but only cares about untrip
                 if(untrip) {
                     lastTrip = trippedSensor;
                     logger.log(Level.INFO, "System state manager has detected untrip {0}", trippedSensor);
                 }
-                //what if multiple checkpoints are dead before that, then the zone will be a combination of multiple checkpoint zones
-                //TODO
+                //accepts both trip and untrip for mapping, but only cares about untrip
                 return true;
             }
             logger.log(Level.WARNING, "Multiple trips have occured in mapping, one at a time should happen");
-            resetTrips();
             setState(SystemState.EMERGENCY);
         }
         return false;
@@ -157,18 +155,5 @@ public class SystemStateManager {
     // if returns -1 means state has no appropriate time,
     public long getCurrentStateTimeout() {
         return currentStateConcrete.getStateTimeout();
-    }
-
-    public void resetTrips() {
-        //reset all trips, in case any false trips happened
-        List<Client> clients = db.getClients();
-        for (Client client : clients) {
-            synchronized(client) {
-                if (client.id.contains("CH")) {
-                    CheckpointClient check = (CheckpointClient) client;
-                    check.resetTrip();
-                }
-            }
-        }
     }
 }
