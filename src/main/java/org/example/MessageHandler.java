@@ -44,7 +44,7 @@ public class MessageHandler {
 
     // Handles all checkpoint messages
     private void handleCheckpointMessage(ReceiveMessage receiveMessage, InetAddress address, int port) {
-        Optional<CheckpointClient> opClient = db.<CheckpointClient>getClient(receiveMessage.clientID, CheckpointClient.class);
+        Optional<CheckpointClient> opClient = db.getClient(receiveMessage.clientID, CheckpointClient.class);
         CheckpointClient client;
 
         if (opClient.isPresent()) {
@@ -88,7 +88,7 @@ public class MessageHandler {
     }
 
     private void handleCCPMessage(ReceiveMessage receiveMessage, InetAddress address, int port) {
-        Optional<BladeRunnerClient> opClient = db.<BladeRunnerClient>getClient(receiveMessage.clientID, BladeRunnerClient.class);
+        Optional<BladeRunnerClient> opClient = db.getClient(receiveMessage.clientID, BladeRunnerClient.class);
         BladeRunnerClient client;
 
         if (opClient.isPresent()) {
@@ -119,7 +119,7 @@ public class MessageHandler {
     }
 
     private void handleStationMessage(ReceiveMessage receiveMessage) {
-        Optional<StationClient> opClient = db.<StationClient>getClient(receiveMessage.clientID, StationClient.class);
+        Optional<StationClient> opClient = db.getClient(receiveMessage.clientID, StationClient.class);
         StationClient client;
 
         if (opClient.isPresent()) {

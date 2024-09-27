@@ -86,16 +86,16 @@ public class Database {
     public <T extends Client> Optional<T> getClient(String id, Class<T> type) {
         Client c = clients.get(id);
 
-        if (c == null) {
-            return Optional.of(null);
-        }
+        if (c == null)
+            return Optional.empty();
+
 
         if (type.isInstance(c)) {
             return Optional.of(type.cast(c));
         } else {
             String[] temp = {id, type.getName()};
             logger.log(Level.SEVERE, "Client with ID: {0} is not of type: {1}", temp);
-            return Optional.of(null);
+            return Optional.empty();
         }
     }
 
