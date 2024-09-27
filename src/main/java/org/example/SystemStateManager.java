@@ -2,7 +2,6 @@ package org.example;
 
 import java.util.EnumMap;
 import java.util.Map;
-import java.util.Optional;
 import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -39,7 +38,7 @@ public class SystemStateManager {
     }
 
     // gets instance of system state manager, if none makes one
-    public static SystemStateManager getInstance() {
+    public static synchronized SystemStateManager getInstance() {
         if (instance == null)
             instance = new SystemStateManager();
         return instance;
