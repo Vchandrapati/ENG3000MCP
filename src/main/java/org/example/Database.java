@@ -40,9 +40,18 @@ public class Database {
         return Holder.INSTANCE;
     }
 
+    /**
+     * Holder class for implementing the Singleton pattern.
+     */
+    private static class Holder {
+        private static final Database INSTANCE = new Database();
+    }
+
     public void addUnresponsiveClient(String id, ReasonEnum reason) {
         unresponsiveClients.put(id, reason);
     }
+
+
 
     // Add any client with this method
     public void addClient(String id, Client client) {
@@ -60,32 +69,33 @@ public class Database {
         }
 
         // If there was no previous client then add the client to the correct lists
-        if (id.startsWith("BR")) {
+        if (client instanceof BladeRunnerClient) {
             allBladeRunners.add(id);
         }
 
-        if (id.startsWith("CP")) {
+        if (client instanceof CheckpointClient) {
             numberOfCheckpoints.getAndIncrement();
         }
 
-        if (id.startsWith("ST")) {
+        if (client instanceof StationClient) {
             numberOfStations.getAndIncrement();
         }
     }
 
     // Get any client with this method
-    public <T extends Client> T getClient(String id, Class<T> type) {
+    public <T extends Client> Optional<T> getClient(String id, Class<T> type) {
         Client c = clients.get(id);
 
-        if (c == null) {
-            return null;
-        }
+        if (c == null)
+            return Optional.empty();
+
 
         if (type.isInstance(c)) {
-            return type.cast(c);
+            return Optional.of(type.cast(c));
         } else {
-            logger.log(Level.SEVERE, "Client with ID: " + id + " is not of type: " + type.getName());
-            return null;
+            String[] temp = {id, type.getName()};
+            logger.log(Level.SEVERE, "Client with ID: {0} is not of type: {1}", temp);
+            return Optional.empty();
         }
     }
 
@@ -110,12 +120,8 @@ public class Database {
     }
 
     public String getLastBladeRunnerInBlock(int blockId) {
-        return bladeRunnerBlockMap.entrySet()
-                .stream()
-                .filter(entry -> entry.getValue().equals(blockId))
-                .map(Map.Entry::getKey)
-                .reduce((first, second) -> second)
-                .orElse(null);
+        return bladeRunnerBlockMap.entrySet().stream().filter(entry -> entry.getValue().equals(blockId)).map(Map.Entry::getKey)
+                .reduce((first, second) -> second).orElse(null);
     }
 
     public List<BladeRunnerClient> getBladeRunnerClients() {
@@ -147,10 +153,5 @@ public class Database {
         return numberOfStations.get();
     }
 
-    /**
-     * Holder class for implementing the Singleton pattern.
-     */
-    private static class Holder {
-        private static final Database INSTANCE = new Database();
-    }
+
 }

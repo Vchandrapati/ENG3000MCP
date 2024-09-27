@@ -1,5 +1,6 @@
 package org.example;
 
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -62,7 +63,15 @@ public class Processor {
 
     private void updateBladeRunnerId(int checkpoint, String bladeRunnerID) {
         try {
-            BladeRunnerClient bladeRunner = db.<BladeRunnerClient>getClient(bladeRunnerID, BladeRunnerClient.class);
+            Optional<BladeRunnerClient> opBladeRunner = db.<BladeRunnerClient>getClient(bladeRunnerID,
+                    BladeRunnerClient.class);
+            BladeRunnerClient bladeRunner;
+            if (opBladeRunner.isPresent()) {
+                bladeRunner = opBladeRunner.get();
+            } else {
+                logger.log(Level.SEVERE, "Attempted to get non-existant bladerunner: {0}", bladeRunnerID);
+                return;
+            }
 
             db.updateBladeRunnerBlock(bladeRunnerID, checkpoint);
             bladeRunner.changeZone(checkpoint);
