@@ -110,6 +110,7 @@ public class Server implements Runnable {
                 for (Client client : clients) {
                     if (Boolean.TRUE.equals(client.isRegistered())) {
                         client.setStatReturned(false);
+                        client.setStatSent(true);
                         client.sendStatusMessage(System.currentTimeMillis());
                     }
                 }

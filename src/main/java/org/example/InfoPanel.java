@@ -110,18 +110,16 @@ public class InfoPanel extends JPanel {
                 errorClientList.setText("Clients experiencing an error");
                 Font font = new Font("Arial", Font.BOLD, 16);
                 List<String> clients = Database.getInstance().getAllUnresponsiveClientStrings();
-                if(errorClients.size() != clients.size()) {
-                    for (JLabel label : errorClients) {
-                        label.setVisible(false);
-                        remove(label);
-                    }
-                    errorClients.clear();
-                    for (int i = 0; i < clients.size(); i++) {
-                        JLabel temp = new JLabel(clients.get(i));
-                        temp.setFont(font);
-                        errorClients.add(temp);
-                        add(errorClients.get(i));
-                    }
+                for (JLabel label : errorClients) {
+                    label.setVisible(false);
+                    remove(label);
+                }
+                errorClients.clear();
+                for (int i = 0; i < clients.size(); i++) {
+                    JLabel temp = new JLabel(clients.get(i));
+                    temp.setFont(font);
+                    errorClients.add(temp);
+                    add(errorClients.get(i));
                 }
             }
             else {

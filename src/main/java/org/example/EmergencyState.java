@@ -80,12 +80,13 @@ public class EmergencyState implements SystemStateInterface {
 
         for (int i = clients.size() - 1; i > -1; i--) {
             String client = clients.get(i);
-            dealWithReasons(client, db.getClientReasons(client));
+            dealWithReasons(client, new ArrayList<>(db.getClientReasons(client)));
         }
     }
 
-    private void dealWithReasons(String client, Set<ReasonEnum> reasons) {
-        for (ReasonEnum reason : reasons) {
+    private void dealWithReasons(String client, List<ReasonEnum> reasons) {
+        for (int i = reasons.size() - 1; i > -1; i--) {
+            ReasonEnum reason = reasons.get(i);
             switch (reason) {
                 case ReasonEnum.INVALCONNECT: // same as no stat for now
                 case ReasonEnum.NOSTAT: {
