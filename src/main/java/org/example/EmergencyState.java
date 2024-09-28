@@ -5,7 +5,6 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.Set;
 import java.util.ArrayList;
 
 public class EmergencyState implements SystemStateInterface {

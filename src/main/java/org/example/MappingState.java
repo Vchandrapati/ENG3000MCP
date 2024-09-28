@@ -9,9 +9,10 @@ public class MappingState implements SystemStateInterface {
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     // All time units in milliseconds
-    private static final long BLADE_RUNNER_MAPPING_DEATH_TIMEOUT = 60000; // 1 minute 60000
     private static final long BLADE_RUNNER_MAPPING_RETRY_TIMEOUT = 15000; // 15 seconds
     private static final long TIME_BETWEEN_RUNNING = 500;
+
+    private static final int MAX_RETRIES = 3;
 
     private static final SystemState NEXT_STATE = SystemState.RUNNING;
 
@@ -103,7 +104,7 @@ public class MappingState implements SystemStateInterface {
     // BladeRunner and go to waiting state
     // * Returns true if the timeout has occured */
     private void checkIfBladeRunnerIsDead() {
-        if (retryAttemps > 4) {
+        if (retryAttemps > MAX_RETRIES) {
             SystemStateManager.getInstance().addUnresponsiveClient(currentBladeRunner.getId(),
                     ReasonEnum.MAPTIMEOUT);
             logger.log(Level.SEVERE, "Blade runner failed to be mapped in time");
