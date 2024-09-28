@@ -4,11 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1d9b5952-4092-4fc7-8340-7dd220ada861" name="Changes" comment="Refactored Database">
+    <list default="true" id="1d9b5952-4092-4fc7-8340-7dd220ada861" name="Changes" comment="Fixed optional bug">
       <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/2/a/2aedb1127eeacd09f5aa6fa073768e9eeb41ad5b" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/2/a/2aedb1127eeacd09f5aa6fa073768e9eeb41ad5b" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/c/4/c473d7ca2e2f6f951c88b1e598902b50771748ae" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/c/4/c473d7ca2e2f6f951c88b1e598902b50771748ae" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Database.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/MessageHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/MessageHandler.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -30,7 +28,7 @@
   &quot;isMigrated&quot;: true
 }</component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="ProjectErrors" />
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectCodeStyleSettingsMigration">
     <option name="version" value="2" />
@@ -95,7 +93,7 @@
       <workItem from="1727190317781" duration="938000" />
       <workItem from="1727334859992" duration="4665000" />
       <workItem from="1727353281317" duration="2659000" />
-      <workItem from="1727423267711" duration="223000" />
+      <workItem from="1727423267711" duration="1774000" />
     </task>
     <task id="LOCAL-00001" summary="Made some changes to comply with sonarlint">
       <option name="closed" value="true" />
@@ -209,7 +207,23 @@
       <option name="project" value="LOCAL" />
       <updated>1727353741185</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Fixed optional bug">
+      <option name="closed" value="true" />
+      <created>1727423504889</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1727423504889</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Fixed optional bug">
+      <option name="closed" value="true" />
+      <created>1727424352865</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1727424352865</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -224,7 +238,8 @@
     <MESSAGE value="Reformatted code to be cleaner" />
     <MESSAGE value="Renamed everything to blade runner and cleaned up code" />
     <MESSAGE value="Refactored Database" />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactored Database" />
+    <MESSAGE value="Fixed optional bug" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed optional bug" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

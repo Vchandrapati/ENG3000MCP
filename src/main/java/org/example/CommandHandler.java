@@ -20,6 +20,7 @@ public class CommandHandler implements Runnable {
         commands.add("start mapping");
         commands.add("quit");
         commands.add("override emergency");
+        commands.add("start waiting");
         commands.add("help");
     }
 
@@ -80,7 +81,7 @@ public class CommandHandler implements Runnable {
                 break;
             case "start mapping":
                 if (SystemStateManager.getInstance().getState() == SystemState.WAITING)
-                    SystemStateManager.getInstance().startEarly();
+                    SystemStateManager.getInstance().setState(SystemState.MAPPING);
                 else
                     throw new InvalidCommandException("Not in waiting state");
                 break;
@@ -89,6 +90,12 @@ public class CommandHandler implements Runnable {
                     SystemStateManager.getInstance().setState(SystemState.MAPPING);
                 else
                     throw new InvalidCommandException("Not in emergency state");
+                break;
+            case "start waiting":
+                if (SystemStateManager.getInstance().getState() != SystemState.WAITING)
+                    SystemStateManager.getInstance().setState(SystemState.WAITING);
+                else
+                    throw new InvalidCommandException("Already in waiting state");
                 break;
             default:
                 throw new InvalidCommandException("Invalid command");

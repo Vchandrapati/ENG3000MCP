@@ -18,6 +18,7 @@ public class BladeRunnerClient extends Client {
     private final AtomicInteger zone = new AtomicInteger();
     private volatile Status status;
     private volatile boolean isCurrentlyMapped;
+    private volatile boolean collision;
 
     public BladeRunnerClient(InetAddress clientAddress, int clientPort, String id) {
         super(clientAddress, clientPort, id);
@@ -29,6 +30,7 @@ public class BladeRunnerClient extends Client {
         return zone.get();
     }
 
+    @Override
     public String getStatus() {
         return status.toString();
     }
@@ -92,5 +94,12 @@ public class BladeRunnerClient extends Client {
 
     public boolean isUnmapped() {
         return !isCurrentlyMapped;
+    }
+
+    public boolean collision(boolean hasCollide, Object o) {
+        if(o != null) {
+            collision = hasCollide;
+        }
+        return collision;
     }
 }
