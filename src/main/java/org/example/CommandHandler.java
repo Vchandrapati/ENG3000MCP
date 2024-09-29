@@ -120,7 +120,7 @@ public class CommandHandler implements Runnable {
         }
     }
 
-    public static void stop() {
+    public static void shutdown() {
         isRunning = false;
     }
 }

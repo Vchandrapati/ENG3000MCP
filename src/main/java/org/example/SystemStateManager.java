@@ -123,7 +123,7 @@ public class SystemStateManager {
             logger.log(Level.WARNING,
                     "Multiple untrips have occured in mapping, only one should occur at any time");
             String id1 = (trippedSensor > 9) ? "CH" + trippedSensor : "CH0" + trippedSensor;
-            String id2 = (lastTrip> 9) ? "CH" + lastTrip : "CH0" + lastTrip;
+            String id2 = (lastTrip > 9) ? "CH" + lastTrip : "CH0" + lastTrip;
             addUnresponsiveClient(id1, ReasonEnum.INCORTRIP);
             addUnresponsiveClient(id2, ReasonEnum.INCORTRIP);
         }
@@ -154,7 +154,7 @@ public class SystemStateManager {
     // Adds a string if of a client of a packet received during emergency mode to
     // the emergency mode message queue
     public void sendEmergencyPacketClientID(String id) {
-        if(db.isClientUnresponsive(id)) {
+        if (db.isClientUnresponsive(id)) {
             EmergencyState.addMessage(id);
         }
     }

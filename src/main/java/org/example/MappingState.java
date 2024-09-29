@@ -11,6 +11,7 @@ public class MappingState implements SystemStateInterface {
     // All time units in milliseconds
     private static final long BLADE_RUNNER_MAPPING_RETRY_TIMEOUT = 15000; // 15 seconds
     private static final long TIME_BETWEEN_RUNNING = 500;
+    private static final long DELAY_BEFORE_START = 2000;
 
     private static final int MAX_RETRIES = 3;
 
@@ -24,6 +25,7 @@ public class MappingState implements SystemStateInterface {
     private boolean hasSent;
     private long currentBladeRunnerStartTime;
     private int retryAttemps;
+    private long startTime;
 
     // Constructor
     public MappingState() {
@@ -33,6 +35,7 @@ public class MappingState implements SystemStateInterface {
         currentBladeRunner = null;
         currentBladeRunnerIndex = 0;
         currentBladeRunnerStartTime = 0;
+        startTime = System.currentTimeMillis();
         bladeRunnersToMap = new ArrayList<>();
     }
 
@@ -41,17 +44,20 @@ public class MappingState implements SystemStateInterface {
     @Override
     public boolean performOperation() {
         // Will grab all unmapped trains once
-        if (!startMapping) {
+        if (!startMapping && System.currentTimeMillis() - startTime >= DELAY_BEFORE_START) {
             grabBladeRunners();
             startMapping = true;
         }
 
-        // If the blade runner timeout has occured
-        // will change the state
-        checkIfBladeRunnerIsDead();
+        if(startMapping) {
+            // If the blade runner timeout has occured
+            // will change the state
+            checkIfBladeRunnerIsDead();
 
-        // maps the clients, returns true if all are mapped
-        return mapClients();
+            // maps the clients, returns true if all are mapped
+            return mapClients();
+        }
+        return false;
     }
 
 
@@ -124,8 +130,8 @@ public class MappingState implements SystemStateInterface {
 
             // every BLADE_RUNNER_MAPPING_RETRY_TIMEOUT seconds, while not mapped, will try to move
             // the blade runner again
-            if (System.currentTimeMillis()
-                    - currentBladeRunnerStartTime > (retryAttemps + 1) * BLADE_RUNNER_MAPPING_RETRY_TIMEOUT) {
+            if (System.currentTimeMillis() - currentBladeRunnerStartTime > (retryAttemps + 1)
+                    * BLADE_RUNNER_MAPPING_RETRY_TIMEOUT) {
                 sendBladeRunnerToNextCheckpoint(true);
                 retryAttemps++;
             }

@@ -31,6 +31,7 @@ public class App {
     public static void shutdown() {
         server.shutdown();
         setRunning(false);
+        CommandHandler.shutdown();
         Thread.currentThread().interrupt();
     }
 

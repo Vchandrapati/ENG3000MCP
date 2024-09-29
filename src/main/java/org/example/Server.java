@@ -26,6 +26,7 @@ public class Server implements Runnable {
     private static final int TIMEOUT = 5000;
     private static final int BUFFER_SIZE = 1024;
     private static final int STAT_INTERVAL_SECONDS = 5000;
+    private static final int MAX_THROUGHPUT = 50;
     private static final BlockingQueue<DatagramPacket> mailbox = new LinkedBlockingQueue<>();
     private final AtomicBoolean serverRunning;
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
@@ -86,6 +87,10 @@ public class Server implements Runnable {
     private void packetProcessor() {
         while (serverRunning.get()) {
             try {
+                //if the server cannot process requests fast enough
+                if(mailbox.size() > MAX_THROUGHPUT) {
+                    SystemStateManager.getInstance().addUnresponsiveClient("SYSTEM", ReasonEnum.SYSTEMOVER);
+                }
                 DatagramPacket receivePacket = mailbox.take();
                 String message = new String(receivePacket.getData(), 0, receivePacket.getLength(),
                         StandardCharsets.UTF_8);
@@ -97,7 +102,6 @@ public class Server implements Runnable {
                 logger.log(Level.SEVERE, "Error processing packet", e);
             }
         }
-
         logger.log(Level.INFO, "Packet processor terminated");
     }
 
