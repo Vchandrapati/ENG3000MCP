@@ -36,17 +36,17 @@ public class Processor {
 
     public void checkpointUntripped(int checkpointTripped) {
         if (!SystemStateManager.getInstance().needsTrip(checkpointTripped, true)) {
-            handleUntripped(checkpointTripped);
+            handleUntripped(checkpointTripped, false);
         }
     }
     
     public void checkpointTripped(int checkpointTripped) {
         if (!SystemStateManager.getInstance().needsTrip(checkpointTripped, true)) {
-            handleTripped(checkpointTripped);
+            handleTripped(checkpointTripped, false);
         }
     }
 
-    public void handleUntripped(int checkpoint) {
+    public void handleUntripped(int checkpoint, boolean tripped) {
         try {
             String bladeRunnerID = checkpoint == 1 ? db.getLastBladeRunnerInBlock(HIGHEST_CHECKPOINT)
                     : db.getLastBladeRunnerInBlock(checkpoint - 1);
@@ -78,7 +78,7 @@ public class Processor {
     }
 
 
-    private void handleTripped(int checkpoint) {
+    private void handleTripped(int checkpoint, boolean tripped) {
         try {
             String bladeRunnerID = checkpoint == 1 ? db.getLastBladeRunnerInBlock(HIGHEST_CHECKPOINT)
                     : db.getLastBladeRunnerInBlock(checkpoint - 1);
@@ -137,7 +137,7 @@ public class Processor {
         // BladeRunner
 
         if(db.isBlockOccupied(currentBlock - 2)){
-            handleUntripped(currentBlock - 1);
+            handleUntripped(currentBlock - 1, true);
         }
     }
 
