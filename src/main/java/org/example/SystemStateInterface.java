@@ -6,6 +6,4 @@ public interface SystemStateInterface {
     long getTimeToWait();
 
     SystemState getNextState();
-
-    long getStateTimeout();
 }

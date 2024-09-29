@@ -15,7 +15,7 @@ public class Database {
     // Set of all BladeRunner client IDs
     private final HashSet<String> allBladeRunners;
     // Set of all unresponsive or "dead" clients
-    private final HashMap<String, ReasonEnum> unresponsiveClients;
+    private final HashMap<String, Set<ReasonEnum>> unresponsiveClients;
 
     private final AtomicInteger numberOfCheckpoints;
     private final AtomicInteger numberOfStations;
@@ -46,12 +46,6 @@ public class Database {
     private static class Holder {
         private static final Database INSTANCE = new Database();
     }
-
-    public void addUnresponsiveClient(String id, ReasonEnum reason) {
-        unresponsiveClients.put(id, reason);
-    }
-
-
 
     // Add any client with this method
     public void addClient(String id, Client client) {
@@ -99,8 +93,39 @@ public class Database {
         }
     }
 
+    public List<String> getAllUnresponsiveClientStrings() {
+        List<String> arrayOfErrorsAndReasons = new ArrayList<>();
+        for (String string : unresponsiveClients.keySet()) {
+            arrayOfErrorsAndReasons.add(string + " " + unresponsiveClients.get(string).toString());
+        }
+        return arrayOfErrorsAndReasons;
+    }
+
+    public Set<String> getAllUnresponsiveClientIDs() {
+        return unresponsiveClients.keySet();
+    }
+
+    public void addUnresponsiveClient(String id, ReasonEnum reason) {
+        unresponsiveClients.computeIfPresent(id, (k, v) -> {
+            v.add(reason);
+            return v;
+        });
+        unresponsiveClients.putIfAbsent(id, new HashSet<>(List.of(reason)));
+    }
+
+    public void removeReason(String id, ReasonEnum reason) {
+        unresponsiveClients.get(id).remove(reason);
+        if (unresponsiveClients.get(id).isEmpty()) {
+            unresponsiveClients.remove(id);
+        }
+    }
+
     public void removeClientFromUnresponsive(String id) {
         unresponsiveClients.remove(id);
+    }
+
+    public Set<ReasonEnum> getClientReasons(String id) {
+        return unresponsiveClients.get(id);
     }
 
     public boolean isClientUnresponsive(String id) {
@@ -120,7 +145,8 @@ public class Database {
     }
 
     public String getLastBladeRunnerInBlock(int blockId) {
-        return bladeRunnerBlockMap.entrySet().stream().filter(entry -> entry.getValue().equals(blockId)).map(Map.Entry::getKey)
+        return bladeRunnerBlockMap.entrySet().stream()
+                .filter(entry -> entry.getValue().equals(blockId)).map(Map.Entry::getKey)
                 .reduce((first, second) -> second).orElse(null);
     }
 

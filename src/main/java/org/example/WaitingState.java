@@ -39,11 +39,6 @@ public class WaitingState implements SystemStateInterface {
     public SystemState getNextState() {
         return NEXT_STATE;
     }
-
-    @Override
-    public long getStateTimeout() {
-        return System.currentTimeMillis() - TIME_ON_START;
-    }
 }
 
 

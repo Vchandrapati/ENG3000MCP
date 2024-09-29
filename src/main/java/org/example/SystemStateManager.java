@@ -17,6 +17,8 @@ public class SystemStateManager {
     // singleton instance of class
     private static volatile SystemStateManager instance;
 
+    private static final Object lock = new Object();
+
     static {
         stateMap = new EnumMap<>(SystemState.class);
         stateMap.put(SystemState.WAITING, WaitingState::new);
@@ -39,8 +41,15 @@ public class SystemStateManager {
 
     // gets instance of system state manager, if none makes one
     public static synchronized SystemStateManager getInstance() {
-        if (instance == null)
-            instance = new SystemStateManager();
+        SystemStateManager tempInstance = instance;
+        if (tempInstance == null) {
+            synchronized (lock) {
+                tempInstance = instance;
+                if (tempInstance == null) {
+                    instance = tempInstance = new SystemStateManager();
+                }
+            }
+        }
         return instance;
     }
 
@@ -96,21 +105,27 @@ public class SystemStateManager {
         // if in waiting phase, no mans land, anything could happen MCP does nothing but waits for
         // connections
         // will take any trips from Processor and void them
-        if (currentState == SystemState.WAITING)
+        if (currentState == SystemState.WAITING) {
             return true;
+        }
 
         // if in the appropriate state of MAPPING only
         if (currentState == SystemState.MAPPING) {
             if (lastTrip == -1) {
                 if (untrip) {
                     lastTrip = trippedSensor;
-                    logger.log(Level.INFO, "System state manager has detected untrip {0}", trippedSensor);
+                    logger.log(Level.INFO, "System state manager has detected untrip {0}",
+                            trippedSensor);
                 }
                 // accepts both trip and untrip for mapping, but only cares about untrip
                 return true;
             }
-            logger.log(Level.WARNING, "Multiple trips have occured in mapping, one at a time should happen");
-            setState(SystemState.EMERGENCY);
+            logger.log(Level.WARNING,
+                    "Multiple untrips have occured in mapping, only one should occur at any time");
+            String id1 = (trippedSensor > 9) ? "CH" + trippedSensor : "CH0" + trippedSensor;
+            String id2 = (lastTrip > 9) ? "CH" + lastTrip : "CH0" + lastTrip;
+            addUnresponsiveClient(id1, ReasonEnum.INCORTRIP);
+            addUnresponsiveClient(id2, ReasonEnum.INCORTRIP);
         }
         return false;
     }
@@ -122,23 +137,12 @@ public class SystemStateManager {
         return tempTrip;
     }
 
-    // if the start early command is entered, the system is put into mapping if
-    // appriopriate
-    public void startEarly() {
-        if (currentState == SystemState.WAITING) {
-            setState(SystemState.MAPPING);
-            logger.log(Level.INFO, "Starting early");
-        } else {
-            logger.log(Level.FINE, "Tried to start mapping, must be in state WAITING");
-        }
-    }
-
 
     // Takes a string id of a client id
     // adds a client to the unresponsive client list in the database
     // only does this if in not in the waiting state
     public void addUnresponsiveClient(String id, ReasonEnum reason) {
-        if (currentState != SystemState.WAITING && !db.isClientUnresponsive(id)) {
+        if (currentState != SystemState.WAITING) {
             logger.log(Level.WARNING, "Client {0} has {1}", new Object[] {id, reason});
             error = true;
             db.addUnresponsiveClient(id, reason);
@@ -150,12 +154,8 @@ public class SystemStateManager {
     // Adds a string if of a client of a packet received during emergency mode to
     // the emergency mode message queue
     public void sendEmergencyPacketClientID(String id) {
-        EmergencyState.addMessage(id);
-    }
-
-    // returns the current timer for the current state
-    // if returns -1 means state has no appropriate time,
-    public long getCurrentStateTimeout() {
-        return currentStateConcrete.getStateTimeout();
+        if (db.isClientUnresponsive(id)) {
+            EmergencyState.addMessage(id);
+        }
     }
 }
