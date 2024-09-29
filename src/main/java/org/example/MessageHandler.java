@@ -52,7 +52,7 @@ public class MessageHandler {
                 case "TRIP":
                     if (!client.isTripped()) {
                         client.setTripped();
-                        processor.checkpointTripped(client.getLocation());
+                        processor.checkpointTripped(client.getLocation(), false);
                         logger.log(Level.INFO, "Received TRIP command from Checkpoint: {0}",
                                 receiveMessage.clientID);
                     }
@@ -70,7 +70,7 @@ public class MessageHandler {
                 case "UNTRIP":
                     if (client.isTripped()) {
                         client.resetTrip();
-                        processor.checkpointUntripped(client.getLocation());
+                        processor.checkpointTripped(client.getLocation(), true);
                         logger.log(Level.INFO, "Received UNTRIP command from Checkpoint: {0}",
                                 receiveMessage.clientID);
                     }
