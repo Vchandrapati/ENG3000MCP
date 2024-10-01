@@ -13,12 +13,8 @@ public class Processor {
 
     public void checkpointTripped(int checkpointTripped, boolean untrip) {
         if (!SystemStateManager.getInstance().needsTrip(checkpointTripped, untrip)) {
-            int checkpointTemp = checkpointTripped -1;
-            if (checkpointTemp == 0) {
-                checkpointTemp = HIGHEST_CHECKPOINT;
-            }
 
-            if (!db.isBlockOccupied(checkpointTemp)) {
+            if (!db.isBlockOccupied(calculatePreviousBlock(checkpointTripped))) {
                 logger.log(Level.WARNING, "inconsistent checkpoint trip");
                 String id = (checkpointTripped > 9) ? "CH" + checkpointTripped : "CH0" + checkpointTripped;
                 SystemStateManager.getInstance().addUnresponsiveClient(id, ReasonEnum.INCORTRIP);
@@ -34,62 +30,88 @@ public class Processor {
 
     public void handletrip(int checkpoint, boolean untrip) {
         try {
-            String bladeRunnerID = checkpoint == 1 ? db.getLastBladeRunnerInBlock(HIGHEST_CHECKPOINT)
-                    : db.getLastBladeRunnerInBlock(checkpoint - 1);
-            Optional<BladeRunnerClient> opBladeRunner = db.<BladeRunnerClient>getClient(bladeRunnerID,
-                    BladeRunnerClient.class);
-            System.out.println(bladeRunnerID);
+            Optional<BladeRunnerClient> bladeRunner = getBladeRunner(checkpoint);
 
-            BladeRunnerClient bladeRunner;
-            if (opBladeRunner.isPresent()) {
-                bladeRunner = opBladeRunner.get();
-            } else {
-                logger.log(Level.SEVERE, "Attempted to get non-existant bladerunner: {0}", bladeRunnerID);
-                return;
-            }
+            if (bladeRunner.isPresent()) {
+                if (untrip) {
+                    int checkNextBlock = calculateNextBlock(checkpoint);
+                    // check if next block or current block is occupied
+                    if (db.isBlockOccupied(checkNextBlock) || db.isBlockOccupied(checkpoint)) {
+                        db.updateBladeRunnerBlock(bladeRunner.get().getId(), checkpoint);
+                        bladeRunner.get().changeZone(checkpoint);
+                        bladeRunner.get().sendExecuteMessage(SpeedEnum.STOP);
+                        bladeRunner.get().updateStatus("STOPPED");
+                    } else {
+                        db.updateBladeRunnerBlock(bladeRunner.get().getId(), checkpoint);
+                        bladeRunner.get().changeZone(checkpoint);
+                    }
 
-            if (untrip) {
-                db.updateBladeRunnerBlock(bladeRunnerID, checkpoint);
-                bladeRunner.changeZone(checkpoint);
-
-                int checkNextBlock = calculateNextBlock(checkpoint);
-                // check if next block or current block is occupied
-                if (db.isBlockOccupied(checkNextBlock) || db.isBlockOccupied(checkpoint)) {
-                    bladeRunner.sendExecuteMessage(SpeedEnum.STOP);
-                    bladeRunner.updateStatus("STOPPED");
+                    checkForTraffic(checkpoint);
+                } else {
+                    if (db.isBlockOccupied(checkpoint)) {
+                        bladeRunner.get().sendExecuteMessage(SpeedEnum.STOP);
+                        bladeRunner.get().updateStatus("STOPPED");
+                    }
                 }
-                checkForTraffic(checkpoint);
             } else {
-                if (db.isBlockOccupied(checkpoint)) {
-                    bladeRunner.sendExecuteMessage(SpeedEnum.STOP);
-                    bladeRunner.updateStatus("STOPPED");
-                }
+                logger.log(Level.SEVERE, "Attempted to get non-existant bladerunner");
             }
-
-        }catch (Exception e) {
+        } catch (Exception e) {
             logger.log(Level.SEVERE, "Unexpected error: ", e);
         }
     }
 
-    public void checkForTraffic(int block) {
-        int currentBlock = block;
-        // Check if block is occupied, if it is rerun handle BladeRunner speed for that
-        // BladeRunner
+        public Optional<BladeRunnerClient> getBladeRunner ( int checkpoint){
+            String bladeRunnerID = checkpoint == 1 ? db.getLastBladeRunnerInBlock(HIGHEST_CHECKPOINT)
+                    : db.getLastBladeRunnerInBlock(checkpoint - 1);
+            Optional<BladeRunnerClient> opBladeRunner = Optional.empty();
 
-        if (db.isBlockOccupied(currentBlock - 2)) {
-            handletrip(currentBlock - 1, true);
+
+            if(db.isBlockOccupied(calculatePreviousBlock(checkpoint))){
+                opBladeRunner = db.getClient(bladeRunnerID,BladeRunnerClient.class);
+            }
+            Optional<BladeRunnerClient> bladeRunner = Optional.empty();
+            if (opBladeRunner.isPresent()) {
+                bladeRunner = Optional.of(opBladeRunner.get());
+            }
+            return bladeRunner;
         }
-    }
 
-    private int calculateNextBlock(int checkpoint) {
+        public void checkForTraffic ( int block){
+            // Check if block is occupied, if it is rerun handle BladeRunner speed for that
+            // BladeRunner
+            int trafficBlock = calculatePreviousBlock(block);
+
+            Optional<BladeRunnerClient> bladeRunner = getBladeRunner(trafficBlock);
+            ;
+            if (bladeRunner.isPresent()) {
+                bladeRunner.get().sendExecuteMessage(SpeedEnum.SLOW);
+                bladeRunner.get().updateStatus("STARTED");
+            }
+//no traffic, do nothing
+
+        }
+
+        private int calculateNextBlock ( int checkpoint){
+            totalBlocks = db.getCheckpointCount();
+            int nextBlock = (checkpoint + 1) % totalBlocks;
+            if (nextBlock == 0) {
+                return 1;
+            } else {
+                return nextBlock;
+            }
+
+        }
+
+    private int calculatePreviousBlock ( int checkpoint){
         totalBlocks = db.getCheckpointCount();
-        int nextBlock = (checkpoint) % totalBlocks;
-        if (nextBlock == 0) {
-            return 1;
+        int previousBlock = (checkpoint - 1) % totalBlocks;
+        if (previousBlock == 0) {
+            return totalBlocks;
         } else {
-            return nextBlock;
+            return previousBlock;
         }
     }
 
-}
+    }
 
