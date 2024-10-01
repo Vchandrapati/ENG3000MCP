@@ -35,12 +35,12 @@ public class BladeRunnerClient extends Client {
         return status.toString();
     }
 
+    @Override
     public void updateStatus(String newStatus) {
         try {
             status = Status.valueOf(newStatus);
         } catch (IllegalArgumentException e) {
-            logger.log(Level.SEVERE, "Tried to assign unknown status: {0} for train {1}",
-                    new Object[] { newStatus, id });
+            logger.log(Level.SEVERE, "Tried to assign unknown status: {0} for train {1}", new Object[] { newStatus, id });
         }
     }
 

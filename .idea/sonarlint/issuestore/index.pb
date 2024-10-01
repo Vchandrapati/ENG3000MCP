@@ -1,19 +1,11 @@
 
-W
-'src/main/java/org/example/Database.java,e\3\e30cbeac6330249122db68224054f827aa95efa6
 X
 (src/main/java/org/example/Processor.java,c\4\c473d7ca2e2f6f951c88b1e598902b50771748ae
+`
+0src/main/java/org/example/BladeRunnerClient.java,f\a\fa796b2bf5ba71ffbe2e8528bfde221b9e0f523e
 S
 #.idea/sonarlint/issuestore/index.pb,9\f\9fe84ebb15faf917b7def6236dba604453cc61e0
-X
-(src/main/java/org/example/InfoPanel.java,f\4\f4c6994139fb4966ba8f52c2a200c329a3f13a7f
-Å
-Q.idea/shelf/Uncommitted_changes_before_Update_at_26_09_2024_6_53_pm__Changes_.xml,d\0\d06af1286f07c522556f1e6cf13767d6f9b4b0df
-Y
-)src/main/java/org/example/ReasonEnum.java,5\8\5868211faacf6b789106413dc1dfadcdf26f23d6
-Ç
-R.idea/shelf/Uncommitted_changes_before_Update_at_26_09_2024_6_53_pm__Changes_1.xml,7\9\7985a3985f77e01c5d83e00c66b3c693f46af82f
-]
--src/main/java/org/example/MessageHandler.java,2\a\2aedb1127eeacd09f5aa6fa073768e9eeb41ad5b
+7
+app.log,a\0\a04cdc1b813999384ef385ac5191cbe69e844545
 ]
 -.idea/sonarlint/securityhotspotstore/index.pb,8\8\88a9255124c95bdc913197c120a8d560edc59c8e
