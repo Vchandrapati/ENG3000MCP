@@ -26,7 +26,7 @@ public class EmergencyState implements SystemStateInterface {
 
     // Emergency mode can wait forever until client is fixed or
     // be given a ten minute timeout
-    private final boolean WAIT_FOREVER = true;
+    private static final boolean WAIT_FOREVER = true;
 
     public EmergencyState() {
         timeOnStart = System.currentTimeMillis();
@@ -88,71 +88,79 @@ public class EmergencyState implements SystemStateInterface {
             ReasonEnum reason = reasons.get(i);
             // if client is null then SYSTEM was given
             if (client == null) {
-                switch (reason) {
-                    case ReasonEnum.SYSTEMOVER: {
-                        db.removeReason(client, reason);
-                        break;
-                    }
-                    case ReasonEnum.INTERNAL: {
-                        db.removeReason(client, reason);
-                        break;
-                    }
-                    default: {
-                        logger.log(Level.INFO, "Invalid reason {0} for : {1}",
-                                new Object[] {reason, client});
-                        break;
-                    }
-                }
+                dealSystemReason(client, reason);
             }
             else {
-                switch (reason) {
-                    case ReasonEnum.INVALCONNECT: // same as no stat for now
-                    case ReasonEnum.NOSTAT: {
-                        Client clientInstance = db.getClient(client, Client.class).get();
-                        if (clientInstance.lastStatReturned()) {
-                            clientInstance.setStatReturned(true);
-                            logger.log(Level.INFO, "Has fixed issue {0} for client : {1}",
-                                    new Object[] {reason, client});
-                            db.removeReason(client, reason);
-                        }
-                        break;
-                    }
-                    case ReasonEnum.CLIENTERR: {
-                        Client clientInstance = db.getClient(client, Client.class).get();
-                        if (!clientInstance.getStatus().equals("ERR")) {
-                            db.removeReason(client, reason);
-                        }
-                        break;
-                    }
-                    case ReasonEnum.COLLISION: {
-                        // set collision boolean to true for mapping
-                        BladeRunnerClient clientInstance =
-                                db.getClient(client, BladeRunnerClient.class).get();
-                        clientInstance.collision(true, new Object());
-                        logger.log(Level.INFO,
-                                "Has recognised issue {0} for client : {1}, will be fixed in mapping",
-                                new Object[] {reason, client});
-                        db.removeReason(client, reason);
-                        break;
-                    }
-                    case ReasonEnum.INCORTRIP: {
-                        // dont really know what to do with this one, same as timeout for now
-                        break;
-                    }
-                    case ReasonEnum.WRONGMESSAGE: {
-                        // dont really know what to do with this one, same as timeout for now
-                        break;
-                    }
-                    case ReasonEnum.MAPTIMEOUT: {
-                        // wait for human override
-                        break;
-                    }
-                    default: {
-                        logger.log(Level.INFO, "Invalid reason {0} for client : {1}",
-                                new Object[] {reason, client});
-                        break;
-                    }
+                dealClientReason(client, reason);
+            }
+        }
+    }
+
+    private void dealSystemReason(String client, ReasonEnum reason) {
+        switch (reason) {
+            case ReasonEnum.SYSTEMOVER: {
+                db.removeReason(client, reason);
+                break;
+            }
+            case ReasonEnum.INTERNAL: {
+                db.removeReason(client, reason);
+                break;
+            }
+            default: {
+                logger.log(Level.INFO, "Invalid reason {0} for : {1}",
+                        new Object[] {reason, client});
+                break;
+            }
+        }
+    }
+
+    private void dealClientReason(String client, ReasonEnum reason) {
+        switch (reason) {
+            case ReasonEnum.INVALCONNECT: // same as no stat for now
+            case ReasonEnum.NOSTAT: {
+                Client clientInstance = db.getClient(client, Client.class).get();
+                if (clientInstance.lastStatReturned()) {
+                    clientInstance.setStatReturned(true);
+                    logger.log(Level.INFO, "Has fixed issue {0} for client : {1}",
+                            new Object[] {reason, client});
+                    db.removeReason(client, reason);
                 }
+                break;
+            }
+            case ReasonEnum.CLIENTERR: {
+                Client clientInstance = db.getClient(client, Client.class).get();
+                if (!clientInstance.getStatus().equals("ERR")) {
+                    db.removeReason(client, reason);
+                }
+                break;
+            }
+            case ReasonEnum.COLLISION: {
+                // set collision boolean to true for mapping
+                BladeRunnerClient clientInstance =
+                        db.getClient(client, BladeRunnerClient.class).get();
+                clientInstance.collision(true, new Object());
+                logger.log(Level.INFO,
+                        "Has recognised issue {0} for client : {1}, will be fixed in mapping",
+                        new Object[] {reason, client});
+                db.removeReason(client, reason);
+                break;
+            }
+            case ReasonEnum.INCORTRIP: {
+                // dont really know what to do with this one, same as timeout for now
+                break;
+            }
+            case ReasonEnum.WRONGMESSAGE: {
+                // dont really know what to do with this one, same as timeout for now
+                break;
+            }
+            case ReasonEnum.MAPTIMEOUT: {
+                // wait for human override
+                break;
+            }
+            default: {
+                logger.log(Level.INFO, "Invalid reason {0} for client : {1}",
+                        new Object[] {reason, client});
+                break;
             }
         }
     }

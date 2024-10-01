@@ -11,7 +11,6 @@ public class MessageHandler {
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private static final ObjectMapper objectMapper = new ObjectMapper();
     private static final Database db = Database.getInstance();
-    private final Processor processor = new Processor();
 
     // Handles messages from CCPs and stations
     public void handleMessage(String message, InetAddress address, int port) {
@@ -51,10 +50,17 @@ public class MessageHandler {
                 case "TRIP":
                     if (!client.isTripped()) {
                         client.setTripped();
-                        processor.checkpointTripped(client.getLocation(), false);
-                        logger.log(Level.INFO, "Received TRIP command from Checkpoint: {0}",
-                                receiveMessage.clientID);
+                        Processor.checkpointTripped(client.getLocation(), false);
                     }
+                    else {
+                        client.resetTrip();
+                        if(client.getId().equals("CP10")) {
+                            System.out.println();
+                        }
+                        Processor.checkpointTripped(client.getLocation(), true);
+                    }
+                    logger.log(Level.INFO, "Received TRIP command from Checkpoint: {0}",
+                                receiveMessage.clientID);
                     break;
                 case "STAT":
                     if (SystemStateManager.getInstance().getState() == SystemState.EMERGENCY) {
@@ -65,14 +71,6 @@ public class MessageHandler {
                     client.setStatSent(true);
                     logger.log(Level.INFO, "Received STAT command from Checkpoint: {0}",
                             receiveMessage.clientID);
-                    break;
-                case "UNTRIP":
-                    if (client.isTripped()) {
-                        client.resetTrip();
-                        processor.checkpointTripped(client.getLocation(), true);
-                        logger.log(Level.INFO, "Received UNTRIP command from Checkpoint: {0}",
-                                receiveMessage.clientID);
-                    }
                     break;
                 default:
                     logger.log(Level.SEVERE, "Failed to handle checkpoint message: {0}",
@@ -213,9 +211,9 @@ public class MessageHandler {
         final String stringERR = "ERR";
         final String stringCRASH = "CRASH";
         //will only check if the current status given is not the same as the clients current status
-        switch (receiveMessage.status.toString().toUpperCase()) {
+        switch (receiveMessage.status.toUpperCase()) {
             case stringERR:
-                if(!client.getStatus().toString().toUpperCase().equals(stringERR)) {
+                if(!client.getStatus().toUpperCase().equals(stringERR)) {
                     SystemStateManager.getInstance().addUnresponsiveClient(receiveMessage.clientID,
                         ReasonEnum.CLIENTERR);
                     logger.log(Level.INFO, "STAT recieved contained {0}: {1}",
@@ -223,7 +221,7 @@ public class MessageHandler {
                 }
                 break;
             case stringCRASH:
-                if(!client.getStatus().toString().toUpperCase().equals(stringCRASH)) {
+                if(!client.getStatus().toUpperCase().equals(stringCRASH)) {
                     SystemStateManager.getInstance().addUnresponsiveClient(receiveMessage.clientID,
                             ReasonEnum.COLLISION);
                     logger.log(Level.INFO, "STAT recieved contained {0}: {1}",

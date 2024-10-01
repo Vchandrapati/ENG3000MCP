@@ -9,6 +9,7 @@ public class StationClient extends CheckpointClient {
         super(clientAddress, clientPort, id, location);
     }
 
+    @Override
     public void updateStatus(String newStatus) {
         try {
             status = StationClient.DoorStatus.valueOf(newStatus);
