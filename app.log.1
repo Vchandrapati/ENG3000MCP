@@ -262,3 +262,22 @@ java.net.BindException: Address already in use: bind
 	at org.example.App.lambda$1(App.java:22)
 	at java.base/java.lang.Thread.run(Thread.java:1583)
 
+15:04:19.822 INFO: org.example.CommandHandler run MCP online, please input a command, type help to see a list of commands
+15:04:19.943 INFO: org.example.SystemStateManager setState Changing to system state WAITING
+15:04:20.234 SEVERE: org.example.Server <init> Error starting up server
+java.net.BindException: Address already in use: bind
+	at java.base/sun.nio.ch.Net.bind0(Native Method)
+	at java.base/sun.nio.ch.Net.bind(Net.java:565)
+	at java.base/sun.nio.ch.DatagramChannelImpl.bindInternal(DatagramChannelImpl.java:1329)
+	at java.base/sun.nio.ch.DatagramChannelImpl.bind(DatagramChannelImpl.java:1299)
+	at java.base/sun.nio.ch.DatagramSocketAdaptor.bind(DatagramSocketAdaptor.java:108)
+	at java.base/java.net.DatagramSocket.createDelegate(DatagramSocket.java:1425)
+	at java.base/java.net.DatagramSocket.<init>(DatagramSocket.java:328)
+	at java.base/java.net.DatagramSocket.<init>(DatagramSocket.java:387)
+	at java.base/java.net.DatagramSocket.<init>(DatagramSocket.java:353)
+	at org.example.Server.<init>(Server.java:41)
+	at org.example.Server$Holder.<clinit>(Server.java:193)
+	at org.example.Server.getInstance(Server.java:54)
+	at org.example.App.lambda$1(App.java:22)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+

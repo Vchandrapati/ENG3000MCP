@@ -62,7 +62,8 @@ public class Processor {
     }
 
         public Optional<BladeRunnerClient> getBladeRunner ( int checkpoint){
-            String bladeRunnerID = checkpoint == 1 ? db.getLastBladeRunnerInBlock(HIGHEST_CHECKPOINT)
+        totalBlocks = db.getCheckpointCount();
+            String bladeRunnerID = checkpoint == 1 ? db.getLastBladeRunnerInBlock(totalBlocks)
                     : db.getLastBladeRunnerInBlock(checkpoint - 1);
             Optional<BladeRunnerClient> opBladeRunner = Optional.empty();
 
