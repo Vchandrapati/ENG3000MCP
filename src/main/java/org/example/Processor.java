@@ -91,6 +91,7 @@ public class Processor {
     }
 
     public static int calculatePreviousBlock(int checkpoint) {
+        totalBlocks = db.getCheckpointCount();
         checkpoint = ((checkpoint + totalBlocks - 2) % totalBlocks) + 1;
         while (!isCheckpointValid(checkpoint)) {
             checkpoint = ((checkpoint + totalBlocks - 2) % totalBlocks) + 1;
