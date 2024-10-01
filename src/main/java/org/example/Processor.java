@@ -31,21 +31,30 @@ public class Processor {
         try {
             Optional<BladeRunnerClient> bladeRunner = getBladeRunner(checkpoint);
 
+
             if (bladeRunner.isPresent()) {
+                BladeRunnerClient bladeRunnerClient = bladeRunner.get();
+
                 if (untrip) {
                     int checkNextBlock = calculateNextBlock(checkpoint);
                     // check if next block or current block is occupied
-                    if (db.isBlockOccupied(checkNextBlock) || db.isBlockOccupied(checkpoint)) {
-                        bladeRunner.get().sendExecuteMessage(SpeedEnum.STOP);
-                        bladeRunner.get().updateStatus("STOPPED");
+                    if(db.isBlockOccupied(checkpoint)){
+                        bladeRunnerClient.sendExecuteMessage(SpeedEnum.STOP);
+                        bladeRunnerClient.updateStatus("STOPPED");
+                        SystemStateManager.getInstance().setState(SystemState.EMERGENCY);
                     }
-                    db.updateBladeRunnerBlock(bladeRunner.get().getId(), checkpoint);
-                    bladeRunner.get().changeZone(checkpoint);
+
+                    if (db.isBlockOccupied(checkNextBlock)) {
+                        bladeRunnerClient.sendExecuteMessage(SpeedEnum.STOP);
+                        bladeRunnerClient.updateStatus("STOPPED");
+                    }
+                    db.updateBladeRunnerBlock(bladeRunnerClient.getId(), checkpoint);
+                    bladeRunnerClient.changeZone(checkpoint);
                     checkForTraffic(checkpoint);
                 } else {
                     if (db.isBlockOccupied(checkpoint)) {
-                        bladeRunner.get().sendExecuteMessage(SpeedEnum.STOP);
-                        bladeRunner.get().updateStatus("STOPPED");
+                        bladeRunnerClient.sendExecuteMessage(SpeedEnum.STOP);
+                        bladeRunnerClient.updateStatus("STOPPED");
                     }
                 }
             } else {
