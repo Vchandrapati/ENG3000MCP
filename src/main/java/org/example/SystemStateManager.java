@@ -15,9 +15,7 @@ public class SystemStateManager {
     private static final Map<SystemState, Supplier<SystemStateInterface>> stateMap;
 
     // singleton instance of class
-    private static volatile SystemStateManager instance;
-
-    private static final Object lock = new Object();
+    private static SystemStateManager instance;
 
     static {
         stateMap = new EnumMap<>(SystemState.class);
@@ -41,14 +39,8 @@ public class SystemStateManager {
 
     // gets instance of system state manager, if none makes one
     public static synchronized SystemStateManager getInstance() {
-        SystemStateManager tempInstance = instance;
-        if (tempInstance == null) {
-            synchronized (lock) {
-                tempInstance = instance;
-                if (tempInstance == null) {
-                    instance = tempInstance = new SystemStateManager();
-                }
-            }
+        if (instance == null) {
+            instance = new SystemStateManager();
         }
         return instance;
     }
