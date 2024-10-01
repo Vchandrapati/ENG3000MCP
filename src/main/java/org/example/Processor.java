@@ -18,7 +18,7 @@ public class Processor {
                 String id = (checkpointTripped > 9) ? "CH" + checkpointTripped : "CH0" + checkpointTripped;
                 SystemStateManager.getInstance().addUnresponsiveClient(id, ReasonEnum.INCORTRIP);
             } else {
-                if(!untrip) {
+                if (!untrip) {
                     handletrip(checkpointTripped, false);
                 } else {
                     handletrip(checkpointTripped, true);
@@ -38,7 +38,7 @@ public class Processor {
                 if (untrip) {
                     int checkNextBlock = calculateNextBlock(checkpoint);
                     // check if next block or current block is occupied
-                    if(db.isBlockOccupied(checkpoint)){
+                    if (db.isBlockOccupied(checkpoint)) {
                         bladeRunnerClient.sendExecuteMessage(SpeedEnum.STOP);
                         bladeRunnerClient.updateStatus("STOPPED");
                         SystemStateManager.getInstance().setState(SystemState.EMERGENCY);
@@ -66,7 +66,6 @@ public class Processor {
     }
 
     public Optional<BladeRunnerClient> getBladeRunner(int checkpoint) {
-        totalBlocks = db.getCheckpointCount();
         String bladeRunnerID = checkpoint == 1 ? db.getLastBladeRunnerInBlock(totalBlocks)
                 : db.getLastBladeRunnerInBlock(checkpoint - 1);
         Optional<BladeRunnerClient> opBladeRunner = Optional.empty();
