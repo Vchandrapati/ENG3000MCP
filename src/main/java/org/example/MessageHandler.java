@@ -44,8 +44,7 @@ public class MessageHandler {
     }
 
     // Handles all checkpoint messages
-    private void handleCheckpointMessage(ReceiveMessage receiveMessage, InetAddress address,
-            int port) {
+    private void handleCheckpointMessage(ReceiveMessage receiveMessage, InetAddress address, int port) {
         db.getClient(receiveMessage.clientID, CheckpointClient.class).ifPresentOrElse(client -> {
             // Client is present
             switch (receiveMessage.message) {

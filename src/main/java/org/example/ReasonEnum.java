@@ -1,7 +1,6 @@
 package org.example;
 
-// reasons why a client or the system could go into emergency mode
-// emergency mode will fix each
+// reasons why a client or the system could go into emergency mode which will fix each
 public enum ReasonEnum {
     COLLISION, // if a BR detects a collision
     NOSTAT, // if a client has not returned their stat message

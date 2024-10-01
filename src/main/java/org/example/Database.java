@@ -86,18 +86,15 @@ public class Database {
 
         if (type.isInstance(c)) {
             return Optional.of(type.cast(c));
-        } else {
-            String[] temp = {id, type.getName()};
-            logger.log(Level.SEVERE, "Client with ID: {0} is not of type: {1}", temp);
-            return Optional.empty();
-        }
+        } else
+            logger.log(Level.SEVERE, "Client with ID: {0} is not of type: {1}", new Object[]{id, type.getName()});
+
+        return Optional.empty();
     }
 
     public List<String> getAllUnresponsiveClientStrings() {
         List<String> arrayOfErrorsAndReasons = new ArrayList<>();
-        for (String string : unresponsiveClients.keySet()) {
-            arrayOfErrorsAndReasons.add(string + " " + unresponsiveClients.get(string).toString());
-        }
+        unresponsiveClients.forEach((client, reason) -> arrayOfErrorsAndReasons.add(client + " " + reason.toString()));
         return arrayOfErrorsAndReasons;
     }
 
@@ -105,23 +102,15 @@ public class Database {
         return unresponsiveClients.keySet();
     }
 
-    public void addUnresponsiveClient(String id, ReasonEnum reason) {
-        unresponsiveClients.computeIfPresent(id, (k, v) -> {
-            v.add(reason);
-            return v;
-        });
-        unresponsiveClients.putIfAbsent(id, new HashSet<>(List.of(reason)));
+    public void addUnresponsiveClient(String id, ReasonEnum newReason) {
+        unresponsiveClients.computeIfAbsent(id, reason -> new HashSet<>()).add(newReason);
     }
 
     public void removeReason(String id, ReasonEnum reason) {
-        unresponsiveClients.get(id).remove(reason);
-        if (unresponsiveClients.get(id).isEmpty()) {
-            unresponsiveClients.remove(id);
-        }
-    }
-
-    public void removeClientFromUnresponsive(String id) {
-        unresponsiveClients.remove(id);
+        unresponsiveClients.computeIfPresent(id, (key, reasons) -> {
+            reasons.remove(reason);
+            return reasons.isEmpty() ? null : reasons;
+        });
     }
 
     public Set<ReasonEnum> getClientReasons(String id) {
@@ -178,6 +167,4 @@ public class Database {
     public Integer getStationCount() {
         return numberOfStations.get();
     }
-
-
 }
