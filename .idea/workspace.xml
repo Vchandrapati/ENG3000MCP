@@ -4,18 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1d9b5952-4092-4fc7-8340-7dd220ada861" name="Changes" comment="Refactored some processor code">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/ClientsPanel.java" afterDir="false" />
+    <list default="true" id="1d9b5952-4092-4fc7-8340-7dd220ada861" name="Changes" comment="Added cool new panel">
       <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/2/a/2aedb1127eeacd09f5aa6fa073768e9eeb41ad5b" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/2/a/2aedb1127eeacd09f5aa6fa073768e9eeb41ad5b" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/f/4/f4c6994139fb4966ba8f52c2a200c329a3f13a7f" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/f/4/f4c6994139fb4966ba8f52c2a200c329a3f13a7f" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/c/4/c473d7ca2e2f6f951c88b1e598902b50771748ae" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/c/4/c473d7ca2e2f6f951c88b1e598902b50771748ae" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.log" beforeDir="false" afterPath="$PROJECT_DIR$/app.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/InfoPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/InfoPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/VisualiserScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/VisualiserScreen.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -104,7 +96,7 @@
       <workItem from="1727423267711" duration="1774000" />
       <workItem from="1727610779503" duration="107000" />
       <workItem from="1727756919956" duration="5487000" />
-      <workItem from="1727784351705" duration="3173000" />
+      <workItem from="1727784351705" duration="3450000" />
     </task>
     <task id="LOCAL-00001" summary="Made some changes to comply with sonarlint">
       <option name="closed" value="true" />
@@ -242,7 +234,15 @@
       <option name="project" value="LOCAL" />
       <updated>1727770188427</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="Added cool new panel">
+      <option name="closed" value="true" />
+      <created>1727792285045</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1727792285045</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -270,6 +270,7 @@
     <MESSAGE value="Refactored Database" />
     <MESSAGE value="Fixed optional bug" />
     <MESSAGE value="Refactored some processor code" />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactored some processor code" />
+    <MESSAGE value="Added cool new panel" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added cool new panel" />
   </component>
 </project>
