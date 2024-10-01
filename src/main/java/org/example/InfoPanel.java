@@ -3,9 +3,9 @@ package org.example;
 import javax.swing.*;
 import java.awt.*;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.ArrayList;
 
 
 public class InfoPanel extends JPanel {
@@ -19,8 +19,7 @@ public class InfoPanel extends JPanel {
     private final JLabel waitingTimer;
     private final JLabel errorClientList;
     private long startTime = -1;
-
-    private List<JLabel> errorClients;
+    private final List<JLabel> errorClients;
 
     public InfoPanel(long startupTime) {
         this.startupTime = startupTime;
@@ -70,9 +69,6 @@ public class InfoPanel extends JPanel {
     }
 
     public void updateInfo() {
-
-
-
         // Update time labels
         long currentTimeMillis = System.currentTimeMillis();
         String currentTimeStr = formatTime(currentTimeMillis);
@@ -103,17 +99,18 @@ public class InfoPanel extends JPanel {
             long remainingTime = countdownTimeDuration - (currentTimeMillis - startTime);
             String timer = formatElapsedTime(remainingTime, true);
             waitingTimer.setText("Time remaining for clients to connect: " + timer);
-        } 
-        else {
+        } else {
             waitingTimer.setVisible(false);
             if (currState == SystemState.EMERGENCY) {
                 errorClientList.setText("Clients experiencing an error");
                 Font font = new Font("Arial", Font.BOLD, 16);
+
                 List<String> clients = Database.getInstance().getAllUnresponsiveClientStrings();
                 for (JLabel label : errorClients) {
                     label.setVisible(false);
                     remove(label);
                 }
+
                 errorClients.clear();
                 for (int i = 0; i < clients.size(); i++) {
                     JLabel temp = new JLabel(clients.get(i));
@@ -121,8 +118,8 @@ public class InfoPanel extends JPanel {
                     errorClients.add(temp);
                     add(errorClients.get(i));
                 }
-            }
-            else {
+
+            } else {
                 errorClientList.setText("");
                 for (JLabel label : errorClients) {
                     label.setVisible(false);

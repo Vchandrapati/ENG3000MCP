@@ -1,7 +1,7 @@
 
-L
-java:S1066+"/Merge this if statement with the enclosing one.(ñêÓã8Ò½Î“£2
->
-java:S1170"!Make this final field static too.(µÉæù8Ú½Î“£2
-O
-java:S1135)"2Complete the task associated to this TODO comment.(…ïœ†8İ½Î“£2
+
+java:S1450"ZRemove the "totalBlocks" field and declare it as a local variable in the relevant methods.(ÿ–¶ş8Õõ¨·¤2J$9f25b837-e582-4a30-bf51-35c7570a3ac8
+‡
+java:S1117Z"?Rename "totalBlocks" which hides the field declared at line 12.(¶Î‘üıÿÿÿÿ8Üõ¨·¤2J$0a3ed27c-42c0-4b03-9d5f-adad58775e2c
+y
+java:S1068"6Remove this unused "HIGHEST_CHECKPOINT" private field.(ÜÇ§½8Şõ¨·¤2J$7b6e5ea6-11aa-4949-9d70-1700dbf17049

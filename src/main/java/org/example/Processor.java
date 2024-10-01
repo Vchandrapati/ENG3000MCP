@@ -13,28 +13,23 @@ public class Processor {
 
     public void checkpointTripped(int checkpointTripped, boolean untrip) {
         if (!SystemStateManager.getInstance().needsTrip(checkpointTripped, untrip)) {
-
-            if (!db.isBlockOccupied(calculatePreviousBlock(checkpointTripped))) {
-                logger.log(Level.WARNING, "inconsistent checkpoint trip");
-                String id = (checkpointTripped > 9) ? "CH" + checkpointTripped : "CH0" + checkpointTripped;
+            if (!db.isBlockOccupied(calculateNextBlock(checkpointTripped, false))) {
+                logger.log(Level.WARNING, "Inconsistent checkpoint trip");
+                String id = checkpointTripped > 9 ? "CH" + checkpointTripped : "CH0" + checkpointTripped;
                 SystemStateManager.getInstance().addUnresponsiveClient(id, ReasonEnum.INCORTRIP);
             } else {
-                if (!untrip) {
-                    handletrip(checkpointTripped, false);
-                } else {
-                    handletrip(checkpointTripped, true);
-                }
+                handleTrip(checkpointTripped, untrip);
             }
         }
     }
 
-    public void handletrip(int checkpoint, boolean untrip) {
+    public void handleTrip(int checkpoint, boolean untrip) {
         try {
             Optional<BladeRunnerClient> bladeRunner = getBladeRunner(checkpoint);
 
             if (bladeRunner.isPresent()) {
                 if (untrip) {
-                    int checkNextBlock = calculateNextBlock(checkpoint);
+                    int checkNextBlock = calculateNextBlock(checkpoint, true);
                     // check if next block or current block is occupied
                     if (db.isBlockOccupied(checkNextBlock) || db.isBlockOccupied(checkpoint)) {
                         db.updateBladeRunnerBlock(bladeRunner.get().getId(), checkpoint);
@@ -54,7 +49,7 @@ public class Processor {
                     }
                 }
             } else {
-                logger.log(Level.SEVERE, "Attempted to get non-existant bladerunner");
+                logger.log(Level.SEVERE, "Attempted to get non-existent bladerunner");
             }
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Unexpected error: ", e);
@@ -63,56 +58,41 @@ public class Processor {
 
         public Optional<BladeRunnerClient> getBladeRunner ( int checkpoint){
         totalBlocks = db.getCheckpointCount();
-            String bladeRunnerID = checkpoint == 1 ? db.getLastBladeRunnerInBlock(totalBlocks)
-                    : db.getLastBladeRunnerInBlock(checkpoint - 1);
-            Optional<BladeRunnerClient> opBladeRunner = Optional.empty();
 
+        String bladeRunnerID = checkpoint == 1 ? db.getLastBladeRunnerInBlock(totalBlocks) : db.getLastBladeRunnerInBlock(checkpoint - 1);
+        Optional<BladeRunnerClient> opBladeRunner = Optional.empty();
 
-            if(db.isBlockOccupied(calculatePreviousBlock(checkpoint))){
+        if (db.isBlockOccupied(calculateNextBlock(checkpoint, false)))
                 opBladeRunner = db.getClient(bladeRunnerID,BladeRunnerClient.class);
-            }
-            Optional<BladeRunnerClient> bladeRunner = Optional.empty();
-            if (opBladeRunner.isPresent()) {
-                bladeRunner = Optional.of(opBladeRunner.get());
-            }
-            return bladeRunner;
-        }
 
-        public void checkForTraffic ( int block){
-            // Check if block is occupied, if it is rerun handle BladeRunner speed for that
-            // BladeRunner
-            int trafficBlock = calculatePreviousBlock(block);
+        Optional<BladeRunnerClient> bladeRunner = Optional.empty();
+        if (opBladeRunner.isPresent())
+            bladeRunner = opBladeRunner;
 
-            Optional<BladeRunnerClient> bladeRunner = getBladeRunner(trafficBlock);
-            ;
-            if (bladeRunner.isPresent()) {
-                bladeRunner.get().sendExecuteMessage(SpeedEnum.SLOW);
-                bladeRunner.get().updateStatus("STARTED");
-            }
-//no traffic, do nothing
-
-        }
-
-        private int calculateNextBlock ( int checkpoint){
-            totalBlocks = db.getCheckpointCount();
-            int nextBlock = (checkpoint + 1) % totalBlocks;
-            if (nextBlock == 0) {
-                return 1;
-            } else {
-                return nextBlock;
-            }
-
-        }
-
-    private int calculatePreviousBlock ( int checkpoint){
-        totalBlocks = db.getCheckpointCount();
-        int previousBlock = (checkpoint - 1) % totalBlocks;
-        if (previousBlock == 0) {
-            return totalBlocks;
-        } else {
-            return previousBlock;
-        }
+        return bladeRunner;
     }
 
+    public void checkForTraffic(int block) {
+        // Check if block is occupied, if it is rerun handle BladeRunner speed for that
+        // BladeRunner
+        int trafficBlock = calculateNextBlock(block, false);
+        Optional<BladeRunnerClient> bladeRunner = getBladeRunner(trafficBlock);
+
+        if (bladeRunner.isPresent()) {
+            bladeRunner.get().sendExecuteMessage(SpeedEnum.SLOW);
+            bladeRunner.get().updateStatus("STARTED");
+        }
+
+        //no traffic, do nothing
     }
+
+    private int calculateNextBlock(int checkpoint, boolean next) {
+        int totalBlocks = db.getCheckpointCount();
+
+        if (next) // Calculate next block
+            return (checkpoint % totalBlocks) + 1;
+        else // Calculate previous block
+            return ((checkpoint + totalBlocks - 2) % totalBlocks) + 1;
+    }
+}
 
