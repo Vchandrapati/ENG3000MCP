@@ -8,18 +8,17 @@ public class Processor {
 
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private static final Database db = Database.getInstance();
-    private static final int HIGHEST_CHECKPOINT = 10;
     private int totalBlocks = db.getCheckpointCount();
 
     public void checkpointTripped(int checkpointTripped, boolean untrip) {
         if (!SystemStateManager.getInstance().needsTrip(checkpointTripped, untrip)) {
-
+            totalBlocks = db.getCheckpointCount();
             if (!db.isBlockOccupied(calculatePreviousBlock(checkpointTripped))) {
                 logger.log(Level.WARNING, "inconsistent checkpoint trip");
                 String id = (checkpointTripped > 9) ? "CH" + checkpointTripped : "CH0" + checkpointTripped;
                 SystemStateManager.getInstance().addUnresponsiveClient(id, ReasonEnum.INCORTRIP);
             } else {
-                if (!untrip) {
+                if(!untrip) {
                     handletrip(checkpointTripped, false);
                 } else {
                     handletrip(checkpointTripped, true);
@@ -90,7 +89,6 @@ public class Processor {
     }
 
     private int calculateNextBlock(int checkpoint) {
-        totalBlocks = db.getCheckpointCount();
         int nextBlock = (checkpoint + 1) % totalBlocks;
         if (nextBlock == 0) {
             return 1;
@@ -101,7 +99,6 @@ public class Processor {
     }
 
     private int calculatePreviousBlock(int checkpoint) {
-        totalBlocks = db.getCheckpointCount();
         int previousBlock = (checkpoint - 1) % totalBlocks;
         if (previousBlock == 0) {
             return totalBlocks;
