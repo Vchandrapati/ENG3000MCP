@@ -8,11 +8,12 @@ public class Processor {
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private static final Database db = Database.getInstance();
     private static int totalBlocks;
+    private static SystemStateManager systemStateManager;
 
     private Processor() {}
 
     public static void checkpointTripped(int checkpointTripped, boolean untrip) {
-        SystemStateManager systemStateManager = SystemStateManager.getInstance();
+        systemStateManager = SystemStateManager.getInstance();
         totalBlocks = db.getCheckpointCount();
 
         if (checkpointTripped < 1 || checkpointTripped > totalBlocks) {
@@ -48,21 +49,18 @@ public class Processor {
 
         BladeRunnerClient bladeRunner = bladeRunnerOptional.get();
 
+        // checks if tripped block is full, if so stop
         if (db.isBlockOccupied(checkpointTripped)) {
-            // checks if tripped block is full, if so stop
             bladeRunnerOptional.get().sendExecuteMessage(SpeedEnum.STOP);
-            logger.log(Level.WARNING, "Multiple blade runners in the same zone, includes : {0}",
-                    bladeRunnerOptional.get().getId());
-            bladeRunner.sendExecuteMessage(SpeedEnum.STOP);
+            if (untrip) {
+                String id = bladeRunnerOptional.get().getId();
+                logger.log(Level.WARNING, "Multiple blade runners in the same zone, includes : {0}",
+                        id);
+                systemStateManager.addUnresponsiveClient(id, ReasonEnum.COLLISION);
+            }
         }
 
         if (untrip) {
-            // check if next block or current block is occupied
-            int nextBlock = calculateNextBlock(checkpointTripped);
-            if (db.isBlockOccupied(nextBlock)) {
-                bladeRunner.sendExecuteMessage(SpeedEnum.STOP);
-            }
-
             db.updateBladeRunnerBlock(bladeRunner.getId(), checkpointTripped);
             bladeRunner.changeZone(checkpointTripped);
             checkForTraffic(previousCheckpoint);
@@ -91,10 +89,6 @@ public class Processor {
                 br.sendExecuteMessage(SpeedEnum.SLOW);
             });
         }
-    }
-
-    private static int calculateNextBlock(int checkpoint) {
-        return (checkpoint % totalBlocks) + 1;
     }
 
     private static int calculatePreviousBlock(int checkpoint) {
