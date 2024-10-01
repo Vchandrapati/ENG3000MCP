@@ -37,15 +37,11 @@ public class Processor {
                     int checkNextBlock = calculateNextBlock(checkpoint);
                     // check if next block or current block is occupied
                     if (db.isBlockOccupied(checkNextBlock) || db.isBlockOccupied(checkpoint)) {
-                        db.updateBladeRunnerBlock(bladeRunner.get().getId(), checkpoint);
-                        bladeRunner.get().changeZone(checkpoint);
                         bladeRunner.get().sendExecuteMessage(SpeedEnum.STOP);
                         bladeRunner.get().updateStatus("STOPPED");
-                    } else {
-                        db.updateBladeRunnerBlock(bladeRunner.get().getId(), checkpoint);
-                        bladeRunner.get().changeZone(checkpoint);
                     }
-
+                    db.updateBladeRunnerBlock(bladeRunner.get().getId(), checkpoint);
+                    bladeRunner.get().changeZone(checkpoint);
                     checkForTraffic(checkpoint);
                 } else {
                     if (db.isBlockOccupied(checkpoint)) {
@@ -61,50 +57,50 @@ public class Processor {
         }
     }
 
-        public Optional<BladeRunnerClient> getBladeRunner ( int checkpoint){
+    public Optional<BladeRunnerClient> getBladeRunner(int checkpoint) {
         totalBlocks = db.getCheckpointCount();
-            String bladeRunnerID = checkpoint == 1 ? db.getLastBladeRunnerInBlock(totalBlocks)
-                    : db.getLastBladeRunnerInBlock(checkpoint - 1);
-            Optional<BladeRunnerClient> opBladeRunner = Optional.empty();
+        String bladeRunnerID = checkpoint == 1 ? db.getLastBladeRunnerInBlock(totalBlocks)
+                : db.getLastBladeRunnerInBlock(checkpoint - 1);
+        Optional<BladeRunnerClient> opBladeRunner = Optional.empty();
 
 
-            if(db.isBlockOccupied(calculatePreviousBlock(checkpoint))){
-                opBladeRunner = db.getClient(bladeRunnerID,BladeRunnerClient.class);
-            }
-            Optional<BladeRunnerClient> bladeRunner = Optional.empty();
-            if (opBladeRunner.isPresent()) {
-                bladeRunner = Optional.of(opBladeRunner.get());
-            }
-            return bladeRunner;
+        if (db.isBlockOccupied(calculatePreviousBlock(checkpoint))) {
+            opBladeRunner = db.getClient(bladeRunnerID, BladeRunnerClient.class);
         }
+        Optional<BladeRunnerClient> bladeRunner = Optional.empty();
+        if (opBladeRunner.isPresent()) {
+            bladeRunner = Optional.of(opBladeRunner.get());
+        }
+        return bladeRunner;
+    }
 
-        public void checkForTraffic ( int block){
-            // Check if block is occupied, if it is rerun handle BladeRunner speed for that
-            // BladeRunner
-            int trafficBlock = calculatePreviousBlock(block);
+    public void checkForTraffic(int block) {
+        // Check if block is occupied, if it is rerun handle BladeRunner speed for that
+        // BladeRunner
+        int trafficBlock = calculatePreviousBlock(block);
 
-            Optional<BladeRunnerClient> bladeRunner = getBladeRunner(trafficBlock);
-            ;
-            if (bladeRunner.isPresent()) {
-                bladeRunner.get().sendExecuteMessage(SpeedEnum.SLOW);
-                bladeRunner.get().updateStatus("STARTED");
-            }
+        Optional<BladeRunnerClient> bladeRunner = getBladeRunner(trafficBlock);
+        ;
+        if (bladeRunner.isPresent()) {
+            bladeRunner.get().sendExecuteMessage(SpeedEnum.SLOW);
+            bladeRunner.get().updateStatus("STARTED");
+        }
 //no traffic, do nothing
 
+    }
+
+    private int calculateNextBlock(int checkpoint) {
+        totalBlocks = db.getCheckpointCount();
+        int nextBlock = (checkpoint + 1) % totalBlocks;
+        if (nextBlock == 0) {
+            return 1;
+        } else {
+            return nextBlock;
         }
 
-        private int calculateNextBlock ( int checkpoint){
-            totalBlocks = db.getCheckpointCount();
-            int nextBlock = (checkpoint + 1) % totalBlocks;
-            if (nextBlock == 0) {
-                return 1;
-            } else {
-                return nextBlock;
-            }
+    }
 
-        }
-
-    private int calculatePreviousBlock ( int checkpoint){
+    private int calculatePreviousBlock(int checkpoint) {
         totalBlocks = db.getCheckpointCount();
         int previousBlock = (checkpoint - 1) % totalBlocks;
         if (previousBlock == 0) {
@@ -114,5 +110,5 @@ public class Processor {
         }
     }
 
-    }
+}
 
