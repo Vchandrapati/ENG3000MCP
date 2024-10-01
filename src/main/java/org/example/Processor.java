@@ -8,12 +8,11 @@ public class Processor {
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private static final Database db = Database.getInstance();
     private static int totalBlocks;
-    private static SystemStateManager systemStateManager;
 
     private Processor() {}
 
     public static void checkpointTripped(int checkpointTripped, boolean untrip) {
-        systemStateManager = SystemStateManager.getInstance();
+        SystemStateManager systemStateManager = SystemStateManager.getInstance();
         totalBlocks = db.getCheckpointCount();
 
         if (checkpointTripped < 1 || checkpointTripped > totalBlocks) {
@@ -56,7 +55,7 @@ public class Processor {
                 String id = bladeRunnerOptional.get().getId();
                 logger.log(Level.WARNING, "Multiple blade runners in the same zone, includes : {0}",
                         id);
-                systemStateManager.addUnresponsiveClient(id, ReasonEnum.COLLISION);
+                SystemStateManager.getInstance().addUnresponsiveClient(id, ReasonEnum.COLLISION);
             }
         }
 
