@@ -162,8 +162,7 @@ public class MappingState implements SystemStateInterface {
     // Tells the current BladeRunner to stop when a checkpoint has been detected
     private void stopBladeRunnerAtCheckpoint(int zone) {
         if (currentBladeRunner.collision(false, null)) {
-            int totalBlocks = db.getCheckpointCount();
-            zone = ((zone + totalBlocks - 2) % totalBlocks) + 1;
+            zone = Processor.calculatePreviousBlock(zone);
         }
         logger.log(Level.INFO, "BladeRunner {0} mapped to zone {1}",
                 new Object[] {currentBladeRunner.getId(), zone});

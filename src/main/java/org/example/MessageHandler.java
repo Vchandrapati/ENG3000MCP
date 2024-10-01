@@ -54,6 +54,9 @@ public class MessageHandler {
                     }
                     else {
                         client.resetTrip();
+                        if(client.getId().equals("CP10")) {
+                            System.out.println();
+                        }
                         Processor.checkpointTripped(client.getLocation(), true);
                     }
                     logger.log(Level.INFO, "Received TRIP command from Checkpoint: {0}",

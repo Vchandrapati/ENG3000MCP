@@ -8,6 +8,7 @@ public class Processor {
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private static final Database db = Database.getInstance();
     private static int totalBlocks;
+    private static final int MAX_BLOCKS = 10;
 
     private Processor() {}
 
@@ -15,7 +16,7 @@ public class Processor {
         SystemStateManager systemStateManager = SystemStateManager.getInstance();
         totalBlocks = db.getCheckpointCount();
 
-        if (checkpointTripped < 1 || checkpointTripped > totalBlocks) {
+        if (!isCheckpointValid(checkpointTripped)) {
             return;
         }
 
@@ -27,7 +28,7 @@ public class Processor {
         int previousCheckpoint = calculatePreviousBlock(checkpointTripped);
         if (!db.isBlockOccupied(previousCheckpoint)) {
             String id =
-                    (checkpointTripped > 9) ? "CH" + checkpointTripped : "CH0" + checkpointTripped;
+                    (checkpointTripped > 9) ? "CP" + checkpointTripped : "CP0" + checkpointTripped;
             logger.log(Level.WARNING, "Inconsistent checkpoint trip : {0} on trip boolean : {1}",
                     new Object[] {id, untrip});
             systemStateManager.addUnresponsiveClient(id, ReasonEnum.INCORTRIP);
@@ -85,13 +86,28 @@ public class Processor {
         int blockBefore = calculatePreviousBlock(checkpoint);
         if (db.isBlockOccupied(blockBefore)) {
             Optional<BladeRunnerClient> bladeRunnerOptional = getBladeRunner(blockBefore);
-            bladeRunnerOptional.ifPresent(br -> {
-                br.sendExecuteMessage(SpeedEnum.SLOW);
-            });
+            bladeRunnerOptional.ifPresent(br -> br.sendExecuteMessage(SpeedEnum.SLOW));
         }
     }
 
-    private static int calculatePreviousBlock(int checkpoint) {
-        return ((checkpoint + totalBlocks - 2) % totalBlocks) + 1;
+    public static int calculatePreviousBlock(int checkpoint) {
+        checkpoint = ((checkpoint + totalBlocks - 2) % totalBlocks) + 1;
+        while (!isCheckpointValid(checkpoint)) {
+            checkpoint = ((checkpoint + totalBlocks - 2) % totalBlocks) + 1;
+        }
+        return checkpoint;
+    }
+
+    private static boolean isCheckpointValid(int checkpoint) {
+        if (checkpoint < 1 || checkpoint > MAX_BLOCKS) {
+            return false;
+        }
+
+        String id = (checkpoint > 9) ? "CP" + checkpoint : "CP0" + checkpoint;
+        if (db.getClient(id, CheckpointClient.class).isEmpty()) {
+            return false;
+        }
+
+        return true;
     }
 }
