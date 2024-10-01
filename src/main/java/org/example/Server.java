@@ -87,10 +87,10 @@ public class Server implements Runnable {
     private void packetProcessor() {
         while (serverRunning.get()) {
             try {
-                //if the server cannot process requests fast enough
-                if(mailbox.size() > MAX_THROUGHPUT) {
+                // If the server cannot process requests fast enough
+                if(mailbox.size() > MAX_THROUGHPUT)
                     SystemStateManager.getInstance().addUnresponsiveClient("SYSTEM", ReasonEnum.SYSTEMOVER);
-                }
+
                 DatagramPacket receivePacket = mailbox.take();
                 String message = new String(receivePacket.getData(), 0, receivePacket.getLength(),
                         StandardCharsets.UTF_8);
@@ -163,7 +163,7 @@ public class Server implements Runnable {
             DatagramPacket sendPacket = new DatagramPacket(buffer, buffer.length, client.getClientAddress(),
                     client.getClientPort());
             serverSocket.send(sendPacket);
-            logger.log(Level.INFO, "Sent {0} to client: {1}", new Object[] { type, client.id });
+            logger.log(Level.INFO, "Sent {0} to client: {1}", new Object[] {type, client.id});
         } catch (IOException e) {
             logger.log(Level.SEVERE, "Failed to send message to client {0}", client.getId());
             logger.log(Level.SEVERE, "Exception: ", e);

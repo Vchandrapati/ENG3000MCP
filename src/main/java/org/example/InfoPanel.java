@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 
 public class InfoPanel extends JPanel {
@@ -20,6 +21,7 @@ public class InfoPanel extends JPanel {
     private final JLabel errorClientList;
     private long startTime = -1;
     private final List<JLabel> errorClients;
+    private final transient Database db = Database.getInstance();
 
     public InfoPanel(long startupTime) {
         this.startupTime = startupTime;
@@ -70,6 +72,12 @@ public class InfoPanel extends JPanel {
 
     public void updateInfo() {
         // Update time labels
+        long currentTimeMillis = updateTime();
+        updateCounts();
+        updateCurrentStateData(currentTimeMillis);
+    }
+
+    private long updateTime() {
         long currentTimeMillis = System.currentTimeMillis();
         String currentTimeStr = formatTime(currentTimeMillis);
 
@@ -78,13 +86,10 @@ public class InfoPanel extends JPanel {
 
         currentTimeLabel.setText("Current Time: " + currentTimeStr);
         elapsedTimeLabel.setText("Time Since Startup: " + elapsedTimeStr);
+        return currentTimeMillis;
+    }
 
-        // Update counts
-        Database db = Database.getInstance();
-        connectedBladeRunnersLabel.setText("Connected BladeRunners: " + db.getBladeRunnerCount());
-        connectedCheckpointsLabel.setText("Connected checkpoints: " + db.getCheckpointCount());
-        connectedStationsLabel.setText("Connected stations: " + db.getStationCount());
-
+    private void updateCurrentStateData(long currentTimeMillis) {
         SystemState currState = SystemStateManager.getInstance().getState();
         currentState.setText("Current System State: " + currState);
 
@@ -95,38 +100,48 @@ public class InfoPanel extends JPanel {
                 startTime = currentTimeMillis;
 
             // 10 minutes in millis
-            long countdownTimeDuration = 10 * 60 * 1000L;
+            long countdownTimeDuration = TimeUnit.MINUTES.toMillis(10);
             long remainingTime = countdownTimeDuration - (currentTimeMillis - startTime);
             String timer = formatElapsedTime(remainingTime, true);
             waitingTimer.setText("Time remaining for clients to connect: " + timer);
+
+            clearErrorClientLabels();
         } else {
             waitingTimer.setVisible(false);
             if (currState == SystemState.EMERGENCY) {
-                errorClientList.setText("Clients experiencing an error");
-                Font font = new Font("Arial", Font.BOLD, 16);
+                errorClientList.setText("Following clients are experiencing an error: ");
+                List<String> clients = db.getAllUnresponsiveClientStrings();
+                clearErrorClientLabels();
+                createErrorClientLabels(clients);
+            } else
+                clearErrorClientLabels();
+        }
+    }
 
-                List<String> clients = Database.getInstance().getAllUnresponsiveClientStrings();
-                for (JLabel label : errorClients) {
-                    label.setVisible(false);
-                    remove(label);
-                }
+    private void createErrorClientLabels(List<String> clients) {
+        Font font = new Font("Arial", Font.BOLD, 16);
 
-                errorClients.clear();
-                for (int i = 0; i < clients.size(); i++) {
-                    JLabel temp = new JLabel(clients.get(i));
-                    temp.setFont(font);
-                    errorClients.add(temp);
-                    add(errorClients.get(i));
-                }
+        for (String client : clients) {
+            JLabel label = new JLabel(client);
+            label.setFont(font);
+            errorClients.add(label);
+            add(label);
+        }
+    }
 
-            } else {
-                errorClientList.setText("");
-                for (JLabel label : errorClients) {
-                    label.setVisible(false);
-                    remove(label);
-                }
-            }
-        } 
+    private void clearErrorClientLabels() {
+        for (JLabel label : errorClients) {
+            label.setVisible(false);
+            remove(label);
+        }
+
+        errorClients.clear();
+    }
+
+    private void updateCounts() {
+        connectedBladeRunnersLabel.setText("Connected BladeRunners: " + db.getBladeRunnerCount());
+        connectedCheckpointsLabel.setText("Connected checkpoints: " + db.getCheckpointCount());
+        connectedStationsLabel.setText("Connected stations: " + db.getStationCount());
     }
 
     private String formatTime(long timeMillis) {

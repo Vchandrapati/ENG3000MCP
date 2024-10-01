@@ -14,6 +14,7 @@ public abstract class Client {
     private final AtomicBoolean statSent = new AtomicBoolean(false);
     protected boolean registered = false;
     private volatile Status status;
+    private String lastMessageSent;
 
     private enum Status {
         ON,
@@ -29,8 +30,8 @@ public abstract class Client {
     }
 
     public void sendMessage(String message, String type) {
+        lastMessageSent = type;
         Server.getInstance().sendMessageToClient(this, message, type);
-
     }
 
     public boolean isBladeRunnerClient() {
@@ -79,12 +80,15 @@ public abstract class Client {
         try {
             status = Status.valueOf(newStatus);
         } catch (IllegalArgumentException e) {
-            logger.log(Level.SEVERE, "Tried to assign unknown status: {0} for train {1}",
-                    new Object[] { newStatus, id });
+            logger.log(Level.SEVERE, "Tried to assign unknown status: {0} for train {1}", new Object[]{newStatus, id});
         }
     }
 
     public String getStatus() {
         return status.toString();
+    }
+
+    public String getLastMessageSent() {
+        return lastMessageSent;
     }
 }
