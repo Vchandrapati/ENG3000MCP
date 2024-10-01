@@ -57,6 +57,7 @@ public class Processor {
                         id);
                 SystemStateManager.getInstance().addUnresponsiveClient(id, ReasonEnum.COLLISION);
             }
+            return;
         }
 
         if (untrip) {

@@ -49,7 +49,7 @@ public class MappingState implements SystemStateInterface {
             startMapping = true;
         }
 
-        if(startMapping) {
+        if (startMapping) {
             // If the blade runner timeout has occured
             // will change the state
             checkIfBladeRunnerIsDead();
@@ -97,7 +97,7 @@ public class MappingState implements SystemStateInterface {
         for (BladeRunnerClient BladeRunnerClient : tempBladeRunnersToMap) {
             // returns true if the blade runner has had a collision
             if (BladeRunnerClient.collision(false, null)) {
-                //bladeRunnersToMap.addFirst(BladeRunnerClient);
+                bladeRunnersToMap.addFirst(BladeRunnerClient);
             }
             // returns true if the blade runner is unmapped
             else if (BladeRunnerClient.isUnmapped()) {
@@ -161,12 +161,16 @@ public class MappingState implements SystemStateInterface {
 
     // Tells the current BladeRunner to stop when a checkpoint has been detected
     private void stopBladeRunnerAtCheckpoint(int zone) {
+        if (currentBladeRunner.collision(false, null)) {
+            int totalBlocks = db.getCheckpointCount();
+            zone = ((zone + totalBlocks - 2) % totalBlocks) + 1;
+        }
         logger.log(Level.INFO, "BladeRunner {0} mapped to zone {1}",
                 new Object[] {currentBladeRunner.getId(), zone});
         currentBladeRunner.sendExecuteMessage(SpeedEnum.STOP);
         currentBladeRunner.changeZone(zone);
         currentBladeRunner.collision(false, new Object());
-        Database.getInstance().updateBladeRunnerBlock(currentBladeRunner.getId(), zone);
+        db.updateBladeRunnerBlock(currentBladeRunner.getId(), zone);
     }
 
     @Override
