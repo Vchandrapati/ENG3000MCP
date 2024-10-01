@@ -9,7 +9,7 @@ public class CheckpointClient {
     volatile Boolean listen = false;
     private InetAddress sendAddress;
     private Integer sendPort;
-    private String myID;
+    String myID;
     private boolean living;
 
     // Creates a client on specified port and send to specified address
@@ -89,11 +89,11 @@ public class CheckpointClient {
     // Sends a stat message
     public void sendTRIPMsg(boolean tripped) {
         String trip = "TRIP";
-        if (!tripped) {
+        if(!tripped) {
             trip = "UNTRIP";
         }
         byte[] buffer = ("{\"client_type\":\"checkpoint\", \"message\":\"" + trip + "\", \"client_id\":\"" + myID
-                + "\", \"timestamp\":\"2019-09-07T15:50+00Z\", \"status\":\"ERR\"}").getBytes();
+                + "\", \"timestamp\":\"2019-09-07T15:50+00Z\", \"status\":\"ON\"}").getBytes();
         sendMsg(buffer);
     }
 

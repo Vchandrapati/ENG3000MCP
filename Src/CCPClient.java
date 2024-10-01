@@ -2,6 +2,7 @@ package Src;
 
 import java.io.IOException;
 import java.net.*;
+import java.util.Arrays;
 
 public class CCPClient {
 
@@ -11,6 +12,7 @@ public class CCPClient {
     private Integer sendPort;
     private String myID;
     private boolean living;
+    private String STATUS = "\"STOPPED\"";
 
     // Creates a client on specified port and send to specified address
     public CCPClient(Integer port, InetAddress addLoc, Integer snedPort, String id) {
@@ -62,6 +64,14 @@ public class CCPClient {
                         this.sendStatMsg();
                     }
 
+                    if(message.contains("STOP")) {
+                        this.STATUS = "\"STOPPED\"";
+                    }
+
+                    if(message.contains("SLOW") || message.contains("BACKWARDS")) {
+                        this.STATUS = "\"ON\"";
+                    }
+
                 } catch (IOException e) {
                     System.out.println(myID + " Failed to get message or unpack");
                 }
@@ -81,15 +91,15 @@ public class CCPClient {
     // Sends an initialise connection message
     public void sendInitialiseConnectionMsg() {
         byte[] buffer = ("{\"client_type\":\"ccp\", \"message\":\"CCIN\", \"client_id\":\"" + myID
-                + "\", \"timestamp\":\"2019-09-07T15:50+00Z\"}")
-                .getBytes();
+                + "\", \"timestamp\":\"2019-09-07T15:50+00Z\"}").getBytes();
         sendMsg(buffer);
     }
 
     // Sends a stat message
     public void sendStatMsg() {
         byte[] buffer = ("{\"client_type\":\"ccp\", \"message\":\"STAT\", \"client_id\":\"" + myID
-                + "\", \"timestamp\":\"2019-09-07T15:50+00Z\", \"status\":\"ON\"}").getBytes();
+                + "\", \"timestamp\":\"2019-09-07T15:50+00Z\", \"status\":" + STATUS + "}")
+                        .getBytes();
         sendMsg(buffer);
     }
 
@@ -99,7 +109,8 @@ public class CCPClient {
         }
 
         try {
-            DatagramPacket sendPacket = new DatagramPacket(buffer, buffer.length, sendAddress, sendPort);
+            DatagramPacket sendPacket =
+                    new DatagramPacket(buffer, buffer.length, sendAddress, sendPort);
             socket.send(sendPacket);
             System.out.println(myID + " Sent msg " + new String(buffer));
         } catch (Exception e) {

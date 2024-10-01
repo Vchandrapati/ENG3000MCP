@@ -19,6 +19,9 @@ public class Main {
 
     Scanner s = new Scanner(System.in);
 
+    private int currentCheckpoint = 2;
+    private long lastRun = 0;
+
     public void Run() {
         System.out.print("How many CCP clients: ");
         numCCPClinets = s.nextInt();
@@ -78,8 +81,21 @@ public class Main {
     public void Commands(String input) {
         String[] inputs = input.split(" ");
         if (inputs.length == 2 && inputs[0].equals("trip")) {
+            for (CheckpointClient cp : Checkclients) {
+                if (cp.myID.contains("CP0" + inputs[1]) || cp.myID.contains("CP" + inputs[1])) {
+                    cp.sendTRIPMsg(true);
+                    break;
+                }
+            }
+        }
+
+        if (inputs.length == 1 && inputs[0].equals("run")) {
             try {
-                Checkclients.get(Integer.parseInt(inputs[1]) - 1).sendTRIPMsg(true);
+                new Thread(() -> {
+                    while (true) {
+                        runn();
+                    }
+                }).start();
             } catch (Exception e) {
                 System.out.println("NO! bad user");
             }
@@ -114,7 +130,23 @@ public class Main {
                 ID = "CP" + (Checkglobal + 1);
             }
             Checkclients.add(new CheckpointClient(3001 + Checkglobal, add, port, ID));
-            Checkclients.get(Checkclients.size() - 1).sendInitialiseConnectionMsg(Checkclients.size());
+            Checkclients.get(Checkclients.size() - 1)
+                    .sendInitialiseConnectionMsg(Checkclients.size());
+            Checkglobal++;
+            numcheckClinets++;
+        }
+
+        if (inputs.length == 2 && inputs[0].equals("cp") && inputs[1].matches("[1-9]|10")) {
+            String ID = inputs[1];
+            if (Integer.parseInt(ID) != 10) {
+                ID = "CP0" + ID;
+            } else {
+                ID = "CP" + ID;
+            }
+
+            Checkclients.add(new CheckpointClient(3001 + Checkglobal, add, port, ID));
+            Checkclients.get(Checkclients.size() - 1)
+                    .sendInitialiseConnectionMsg(Integer.parseInt(inputs[1]));
             Checkglobal++;
             numcheckClinets++;
         }
@@ -151,5 +183,16 @@ public class Main {
             s.close();
             System.exit(0);
         }
+    }
+
+    public void runn() {
+        // if(lastRun == 0 || System.currentTimeMillis() - lastRun >= 1) {
+        // lastRun = System.currentTimeMillis();
+        Checkclients.get(currentCheckpoint - 1).sendTRIPMsg(true);
+        Checkclients.get(currentCheckpoint - 1).sendTRIPMsg(false);
+        currentCheckpoint++;
+        if (currentCheckpoint > 10)
+            currentCheckpoint = 1;
+        // }
     }
 }
