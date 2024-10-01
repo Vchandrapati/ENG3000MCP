@@ -38,6 +38,7 @@ public class Processor {
 
     private static void handleTrip(int checkpointTripped, int previousCheckpoint, boolean untrip) {
         // get the blade runner of the block before the current tripped block
+        SystemStateManager systemStateManager = SystemStateManager.getInstance();
         Optional<BladeRunnerClient> bladeRunnerOptional = getBladeRunner(previousCheckpoint);
 
         if (bladeRunnerOptional.isEmpty()) {
@@ -54,6 +55,7 @@ public class Processor {
             logger.log(Level.WARNING, "Multiple blade runners in the same zone, includes : {0}",
                     bladeRunnerOptional.get().getId());
             bladeRunner.sendExecuteMessage(SpeedEnum.STOP);
+            systemStateManager.addUnresponsiveClient(bladeRunnerOptional.get().getId(), ReasonEnum.COLLISION);
         }
 
         if (untrip) {
