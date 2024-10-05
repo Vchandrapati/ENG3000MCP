@@ -1,6 +1,8 @@
 package org.example;
 
 import java.net.InetAddress;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Logger;
 import java.util.logging.Level;
@@ -15,11 +17,10 @@ public abstract class Client {
     protected boolean registered = false;
     private volatile Status status;
     private String lastMessageSent;
+    protected HashSet<ReasonEnum> unresponsiveReasons;
 
     private enum Status {
-        ON,
-        OFF,
-        ERR,
+        ON, OFF, ERR,
     }
 
     protected Client(InetAddress clientAddress, int clientPort, String id) {
@@ -27,6 +28,7 @@ public abstract class Client {
         this.id = id;
         this.clientAddress = clientAddress;
         this.clientPort = clientPort;
+        unresponsiveReasons = new HashSet<>();
     }
 
     public void sendMessage(String message, String type) {
@@ -43,6 +45,16 @@ public abstract class Client {
     protected abstract void sendStatusMessage(long timestamp);
 
     protected abstract void sendAcknowledgeMessage();
+
+    protected abstract void addReason(ReasonEnum r);
+
+    public HashSet<ReasonEnum> getUnresponsiveReasons() {
+        return unresponsiveReasons;
+    }
+
+    public void removeReason(ReasonEnum r) {
+        unresponsiveReasons.remove(r);
+    }
 
     public boolean lastStatReturned() {
         return statReturned.get();
@@ -80,7 +92,7 @@ public abstract class Client {
         try {
             status = Status.valueOf(newStatus);
         } catch (IllegalArgumentException e) {
-            logger.log(Level.SEVERE, "Tried to assign unknown status: {0} for train {1}", new Object[]{newStatus, id});
+            logger.log(Level.SEVERE, "Tried to assign unknown status: {0} for train {1}", new Object[] {newStatus, id});
         }
     }
 

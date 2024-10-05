@@ -1,6 +1,7 @@
 package org.example;
 
 import java.net.InetAddress;
+import java.util.logging.Level;
 
 public class CheckpointClient extends Client {
     private final Integer location;
@@ -45,5 +46,32 @@ public class CheckpointClient extends Client {
 
     public boolean isTripped() {
         return tripped;
+    }
+
+    @Override
+    public void addReason(ReasonEnum r) {
+        String[] temp = {id, r.toString()};
+        Boolean valid = true;
+        switch (r) {
+            case ReasonEnum.NOSTAT:
+                break;
+            case ReasonEnum.WRONGMESSAGE:
+                break;
+            case ReasonEnum.INVALCONNECT:
+                break;
+            case ReasonEnum.CLIENTERR:
+                break;
+            case ReasonEnum.INCORTRIP:
+                break;
+            default:
+                valid = false;
+                logger.log(Level.WARNING, "Attempted to add error {1} to {0} which is invalid", temp);
+                break;
+        }
+
+        if (valid) {
+            unresponsiveReasons.add(r);
+        }
+
     }
 }

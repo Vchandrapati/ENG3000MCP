@@ -7,14 +7,9 @@ import java.util.logging.Level;
 public class BladeRunnerClient extends Client {
 
     private enum Status {
-        STOPPED,
-        STARTED,
-        ON,
-        OFF,
-        ERR,
-        CRASH,
-        STOPPED_AT_STATION
+        STOPPED, STARTED, ON, OFF, ERR, CRASH, STOPPED_AT_STATION
     }
+
     private final AtomicInteger zone = new AtomicInteger();
     private volatile Status status;
     private volatile boolean isCurrentlyMapped;
@@ -40,7 +35,7 @@ public class BladeRunnerClient extends Client {
         try {
             status = Status.valueOf(newStatus);
         } catch (IllegalArgumentException e) {
-            logger.log(Level.SEVERE, "Tried to assign unknown status: {0} for train {1}", new Object[] { newStatus, id });
+            logger.log(Level.SEVERE, "Tried to assign unknown status: {0} for train {1}", new Object[] {newStatus, id});
         }
     }
 
@@ -97,9 +92,38 @@ public class BladeRunnerClient extends Client {
     }
 
     public boolean collision(boolean hasCollide, Object o) {
-        if(o != null) {
+        if (o != null) {
             collision = hasCollide;
         }
         return collision;
+    }
+
+    @Override
+    public void addReason(ReasonEnum r) {
+        String[] temp = {id, r.toString()};
+        Boolean valid = true;
+        switch (r) {
+            case ReasonEnum.NOSTAT:
+                break;
+            case ReasonEnum.WRONGMESSAGE:
+                break;
+            case ReasonEnum.INVALCONNECT:
+                break;
+            case ReasonEnum.CLIENTERR:
+                break;
+            case ReasonEnum.COLLISION:
+                break;
+            case ReasonEnum.MAPTIMEOUT:
+                break;
+            default:
+                valid = false;
+                logger.log(Level.WARNING, "Attempted to add error {1} to {0} which is invalid", temp);
+                break;
+        }
+
+        if (valid) {
+            unresponsiveReasons.add(r);
+        }
+
     }
 }
