@@ -4,6 +4,8 @@ import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+// [x] need to check backwards
+
 public class Processor {
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private static final Database db = Database.getInstance();
@@ -61,6 +63,12 @@ public class Processor {
             return;
         }
 
+        // checks if next block is full, if so stop only if untrip
+        if (db.isBlockOccupied(calculateNextBlock(checkpointTripped)) && untrip) {
+            bladeRunnerOptional.get().sendExecuteMessage(SpeedEnum.STOP);
+        }
+
+        // only change zone if untrip
         if (untrip) {
             db.updateBladeRunnerBlock(bladeRunner.getId(), checkpointTripped);
             bladeRunner.changeZone(checkpointTripped);
@@ -92,11 +100,32 @@ public class Processor {
 
     public static int calculatePreviousBlock(int checkpoint) {
         totalBlocks = db.getCheckpointCount();
-        checkpoint = ((checkpoint + totalBlocks - 2) % totalBlocks) + 1;
-        while (!isCheckpointValid(checkpoint)) {
-            checkpoint = ((checkpoint + totalBlocks - 2) % totalBlocks) + 1;
+
+        while(true) {
+            checkpoint--;
+            if (checkpoint == 0) {
+                checkpoint = MAX_BLOCKS;
+            }
+            
+            if(isCheckpointValid(checkpoint)) {
+                return checkpoint;
+            }
         }
-        return checkpoint;
+    }
+
+    public static int calculateNextBlock(int checkpoint) {
+        totalBlocks = db.getCheckpointCount();
+
+        while(true) {
+            checkpoint++;
+            if (checkpoint == MAX_BLOCKS) {
+                checkpoint = 1;
+            }
+            
+            if(isCheckpointValid(checkpoint)) {
+                return checkpoint;
+            }
+        }
     }
 
     private static boolean isCheckpointValid(int checkpoint) {
@@ -104,7 +133,7 @@ public class Processor {
             return false;
         }
 
-        String id = (checkpoint > 9) ? "CP" + checkpoint : "CP0" + checkpoint;
+        String id = (checkpoint == MAX_BLOCKS) ? "CP" + checkpoint : "CP0" + checkpoint;
         if (db.getClient(id, CheckpointClient.class).isEmpty()) {
             return false;
         }

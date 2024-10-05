@@ -38,11 +38,13 @@ public class VisualiserScreen extends JFrame {
         userPanel.add(logScroller, BorderLayout.CENTER);
 
         // Create a horizontal split pane for the bottom half
-        JSplitPane sideSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, trackPanel, userPanel);
+        JSplitPane sideSplitPane =
+                new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, trackPanel, userPanel);
         sideSplitPane.setDividerLocation(800); // Adjust as needed
         sideSplitPane.setOneTouchExpandable(true);
 
-        JSplitPane mainSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, infoPanel, sideSplitPane);
+        JSplitPane mainSplitPane =
+                new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, infoPanel, sideSplitPane);
         mainSplitPane.setDividerLocation(380); // Adjust as needed
         mainSplitPane.setOneTouchExpandable(true);
 
