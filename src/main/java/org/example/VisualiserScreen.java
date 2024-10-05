@@ -7,10 +7,11 @@ public class VisualiserScreen extends JFrame {
     private final VisualiserPanel trackPanel;
     private final JTextField commandInput;
     private final transient CommandHandler commandHandler;
+    private final ClientsPanel clientsPanel;
 
     public VisualiserScreen() {
         setTitle("Master Control Protocol");
-        setSize(1900, 800);
+        setSize(1900, 1200);
         setResizable(false);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -48,7 +49,13 @@ public class VisualiserScreen extends JFrame {
         mainSplitPane.setDividerLocation(380); // Adjust as needed
         mainSplitPane.setOneTouchExpandable(true);
 
-        getContentPane().add(mainSplitPane);
+        clientsPanel = new ClientsPanel();
+        JSplitPane verticalSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, mainSplitPane, clientsPanel);
+        verticalSplitPane.setDividerLocation(600);
+        verticalSplitPane.setOneTouchExpandable(true);
+
+        getContentPane().add(verticalSplitPane);
+
         LoggerConfig.setupLogger(logArea);
         startVisualizerUpdater();
         commandHandler = new CommandHandler();
@@ -63,7 +70,12 @@ public class VisualiserScreen extends JFrame {
 
     private void startVisualizerUpdater() {
         int delay = 1000; // milliseconds
-        Timer timer = new Timer(delay, e -> updateVisualizer());
+
+        Timer timer = new Timer(delay, e -> {
+            updateVisualizer();
+            clientsPanel.updateClientsData();
+        });
+
         timer.start();
     }
 

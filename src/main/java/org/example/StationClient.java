@@ -1,6 +1,7 @@
 package org.example;
 
 import java.net.InetAddress;
+import java.util.logging.Level;
 
 public class StationClient extends CheckpointClient {
     private volatile DoorStatus status;
@@ -40,8 +41,32 @@ public class StationClient extends CheckpointClient {
         logger.info("Added new station to database: " + Database.getInstance().getStationCount());
     }
 
+    @Override
+    public void addReason(ReasonEnum r) {
+        String[] temp = {id, r.toString()};
+        Boolean valid = true;
+        switch (r) {
+            case ReasonEnum.NOSTAT:
+                break;
+            case ReasonEnum.WRONGMESSAGE:
+                break;
+            case ReasonEnum.INVALCONNECT:
+                break;
+            case ReasonEnum.CLIENTERR:
+                break;
+            default:
+                valid = false;
+                logger.log(Level.WARNING, "Attempted to add error {1} to {0} which is invalid", temp);
+                break;
+        }
+
+        if (valid) {
+            unresponsiveReasons.add(r);
+        }
+
+    }
+
     private enum DoorStatus {
-        OPEN,
-        CLOSE
+        OPEN, CLOSE
     }
 }

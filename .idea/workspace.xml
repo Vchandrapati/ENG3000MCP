@@ -4,14 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1d9b5952-4092-4fc7-8340-7dd220ada861" name="Changes" comment="Refactored some processor code">
+    <list default="true" id="1d9b5952-4092-4fc7-8340-7dd220ada861" name="Changes" comment="Added cool new panel">
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/2/a/2aedb1127eeacd09f5aa6fa073768e9eeb41ad5b" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/2/a/2aedb1127eeacd09f5aa6fa073768e9eeb41ad5b" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/c/4/c473d7ca2e2f6f951c88b1e598902b50771748ae" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/c/4/c473d7ca2e2f6f951c88b1e598902b50771748ae" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.log" beforeDir="false" afterPath="$PROJECT_DIR$/app.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/BladeRunnerClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/BladeRunnerClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Processor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Processor.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,8 +71,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-b114ca120d71-intellij.indexing.shared.core-IU-242.21829.142" />
-        <option value="bundled-js-predefined-d6986cc7102b-7c0b70fcd90d-JavaScript-IU-242.21829.142" />
+        <option value="jdk-21.0.2-openjdk-21.0.2-4caba194b151-4f524021" />
       </set>
     </attachedChunks>
   </component>
@@ -101,6 +96,7 @@
       <workItem from="1727423267711" duration="1774000" />
       <workItem from="1727610779503" duration="107000" />
       <workItem from="1727756919956" duration="5487000" />
+      <workItem from="1727784351705" duration="3450000" />
     </task>
     <task id="LOCAL-00001" summary="Made some changes to comply with sonarlint">
       <option name="closed" value="true" />
@@ -230,7 +226,23 @@
       <option name="project" value="LOCAL" />
       <updated>1727424352865</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Refactored some processor code">
+      <option name="closed" value="true" />
+      <created>1727770188427</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1727770188427</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Added cool new panel">
+      <option name="closed" value="true" />
+      <created>1727792285045</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1727792285045</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -258,17 +270,7 @@
     <MESSAGE value="Refactored Database" />
     <MESSAGE value="Fixed optional bug" />
     <MESSAGE value="Refactored some processor code" />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactored some processor code" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/example/Client.java</url>
-          <line>41</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="Added cool new panel" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added cool new panel" />
   </component>
 </project>

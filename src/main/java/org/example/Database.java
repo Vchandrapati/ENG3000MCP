@@ -15,7 +15,8 @@ public class Database {
     // Set of all BladeRunner client IDs
     private final HashSet<String> allBladeRunners;
     // Set of all unresponsive or "dead" clients
-    private final HashMap<String, Set<ReasonEnum>> unresponsiveClients;
+
+    private final HashSet<String> unresponsiveClients; // Change temp
 
     private final AtomicInteger numberOfCheckpoints;
     private final AtomicInteger numberOfStations;
@@ -25,7 +26,7 @@ public class Database {
         bladeRunnerBlockMap = new ConcurrentHashMap<>();
 
         allBladeRunners = new HashSet<>();
-        unresponsiveClients = new HashMap<>();
+        unresponsiveClients = new HashSet<>();
 
         numberOfCheckpoints = new AtomicInteger(0);
         numberOfStations = new AtomicInteger(0);
@@ -87,38 +88,81 @@ public class Database {
         if (type.isInstance(c)) {
             return Optional.of(type.cast(c));
         } else
-            logger.log(Level.SEVERE, "Client with ID: {0} is not of type: {1}", new Object[]{id, type.getName()});
+            logger.log(Level.SEVERE, "Client with ID: {0} is not of type: {1}", new Object[] {id, type.getName()});
 
         return Optional.empty();
     }
 
-    public List<String> getAllUnresponsiveClientStrings() {
-        List<String> arrayOfErrorsAndReasons = new ArrayList<>();
-        unresponsiveClients.forEach((client, reason) -> arrayOfErrorsAndReasons.add(client + " " + reason.toString()));
-        return arrayOfErrorsAndReasons;
-    }
+    // Vikil remove
+    // public List<String> getAllUnresponsiveClientStrings() {
+    // List<String> arrayOfErrorsAndReasons = new ArrayList<>();
+    // unresponsiveClients.forEach((client, reason) -> arrayOfErrorsAndReasons.add(client + " " +
+    // reason.toString()));
+    // return arrayOfErrorsAndReasons;
+    // }
 
-    public Set<String> getAllUnresponsiveClientIDs() {
-        return unresponsiveClients.keySet();
+    public HashSet<String> getAllUnresponsiveClientIDs() {
+        return unresponsiveClients;
     }
 
     public void addUnresponsiveClient(String id, ReasonEnum newReason) {
-        unresponsiveClients.computeIfAbsent(id, reason -> new HashSet<>()).add(newReason);
+
+        Optional<Client> cOptional = getClient(id, Client.class);
+        Client c;
+
+        if (cOptional.isPresent()) {
+            c = cOptional.get();
+
+        } else {
+            logger.log(Level.WARNING, "Attempted to get non-existent client", id);
+            return;
+        }
+
+        c.addReason(newReason);
+        unresponsiveClients.add(id);
     }
 
     public void removeReason(String id, ReasonEnum reason) {
-        unresponsiveClients.computeIfPresent(id, (key, reasons) -> {
-            reasons.remove(reason);
-            return reasons.isEmpty() ? null : reasons;
-        });
+        if (!isClientUnresponsive(id)) {
+            logger.log(Level.WARNING, "{0} is not an unresponsive client", id);
+            return;
+        }
+
+        Optional<Client> cOptional = getClient(id, Client.class);
+        Client c;
+
+        if (cOptional.isPresent()) {
+            c = cOptional.get();
+
+        } else {
+            logger.log(Level.WARNING, "Attempted to get non-existent client", id);
+            return;
+        }
+
+        c.removeReason(reason);
     }
 
-    public Set<ReasonEnum> getClientReasons(String id) {
-        return unresponsiveClients.get(id);
+    public HashSet<ReasonEnum> getClientReasons(String id) {
+        if (!isClientUnresponsive(id)) {
+            logger.log(Level.WARNING, "{0} is not an unresponsive client", id);
+            return new HashSet<>();
+        }
+
+        Optional<Client> cOptional = getClient(id, Client.class);
+        Client c;
+
+        if (cOptional.isPresent()) {
+            c = cOptional.get();
+            return c.getUnresponsiveReasons();
+        } else {
+            logger.log(Level.WARNING, "Attempted to get non-existent client", id);
+        }
+
+        return new HashSet<>();
     }
 
     public boolean isClientUnresponsive(String id) {
-        return unresponsiveClients.containsKey(id);
+        return unresponsiveClients.contains(id);
     }
 
     public boolean isUnresponsiveEmpty() {
@@ -134,8 +178,7 @@ public class Database {
     }
 
     public String getLastBladeRunnerInBlock(int blockId) {
-        return bladeRunnerBlockMap.entrySet().stream()
-                .filter(entry -> entry.getValue().equals(blockId)).map(Map.Entry::getKey)
+        return bladeRunnerBlockMap.entrySet().stream().filter(entry -> entry.getValue().equals(blockId)).map(Map.Entry::getKey)
                 .reduce((first, second) -> second).orElse(null);
     }
 
