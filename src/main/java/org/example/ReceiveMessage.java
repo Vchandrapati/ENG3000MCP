@@ -10,7 +10,7 @@ public class ReceiveMessage {
     public String message;
     @JsonProperty("client_id")
     public String clientID;
-    public String timestamp;
-    public String status;
-    public int location;
+    @JsonProperty("sequence_number")
+    public Integer sequenceNumber;
+    public Statuses status;
 }

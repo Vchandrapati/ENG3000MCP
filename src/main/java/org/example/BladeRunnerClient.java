@@ -31,7 +31,7 @@ public class BladeRunnerClient extends Client {
     }
 
     @Override
-    public void updateStatus(String newStatus) {
+    public void updateStatus(Statuses newStatus) {
         try {
             status = Status.valueOf(newStatus);
         } catch (IllegalArgumentException e) {

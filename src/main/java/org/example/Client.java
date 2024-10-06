@@ -15,16 +15,14 @@ public abstract class Client {
     private final AtomicBoolean statReturned = new AtomicBoolean(false);
     private final AtomicBoolean statSent = new AtomicBoolean(false);
     protected boolean registered = false;
-    private volatile Status status;
+    private volatile Statuses status;
     private String lastMessageSent;
     protected HashSet<ReasonEnum> unresponsiveReasons;
 
-    private enum Status {
-        ON, OFF, ERR,
-    }
+
 
     protected Client(InetAddress clientAddress, int clientPort, String id) {
-        status = Status.ON;
+        status = Statuses.ON;
         this.id = id;
         this.clientAddress = clientAddress;
         this.clientPort = clientPort;
@@ -88,9 +86,9 @@ public abstract class Client {
         return registered;
     }
 
-    public void updateStatus(String newStatus) {
+    public void updateStatus(Statuses newStatus) {
         try {
-            status = Status.valueOf(newStatus);
+            status = newStatus;
         } catch (IllegalArgumentException e) {
             logger.log(Level.SEVERE, "Tried to assign unknown status: {0} for train {1}", new Object[] {newStatus, id});
         }

@@ -41,29 +41,11 @@ public class MessageGenerator {
         return convertToJson(message);
     }
 
-    public static String generateCCPExecuteMessage(String clientType, String clientID, Integer sequenceNumber, CCPActionEnum action) {
+    // This will need refactoring
+    public static String generateCCPExecuteMessage(String clientType, String clientID, Integer sequenceNumber, ActionEnum action) {
         SendMessage message = preGen(clientType, clientID, sequenceNumber);
         message.message = "EXEC";
-        message.CCPAction = action;
-        return convertToJson(message);
-    }
-
-    public static String generateCPCandSTExecuteMessage(String clientType, String clientID, Integer sequenceNumber, CPCActionEnum action) {
-        SendMessage message = preGen(clientType, clientID, sequenceNumber);
-        message.message = "EXEC";
-        message.CPCAction = action;
-        return convertToJson(message);
-    }
-
-    public static String generateDoorMessage(String clientType, String clientID, Integer sequenceNumber, boolean doorOpen) {
-        SendMessage message = preGen(clientType, clientID, sequenceNumber);
-        message.message = "DOOR";
-        if (doorOpen) {
-            message.STCAction = StationActionEnum.OPEN;
-        } else {
-            message.STCAction = StationActionEnum.CLOSE;
-        }
-
+        message.action = action;
         return convertToJson(message);
     }
 
