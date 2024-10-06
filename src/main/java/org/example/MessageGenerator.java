@@ -3,10 +3,6 @@ package org.example;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.time.Instant;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -18,74 +14,57 @@ public class MessageGenerator {
         throw new IllegalStateException("Utility class");
     }
 
-    public static String generateAcknowledgesMessage(String clientType, String clientID, Long timestamp) {
+    private static SendMessage preGen(String clientType, String clientID, Integer sequenceNumber) {
         SendMessage message = new SendMessage();
         message.clientType = clientType;
+        message.clientID = clientID;
+        message.sequenceNumber = sequenceNumber;
+        return message;
+    }
+
+    // Used to ack initialisation
+    public static String generateAcknowledgeInitiationMessage(String clientType, String clientID, Integer sequenceNumber) {
+        SendMessage message = preGen(clientType, clientID, sequenceNumber);
         message.message = "AKIN";
-        message.clientID = clientID;
-        message.timestamp = convertToProperTime(timestamp);
         return convertToJson(message);
     }
 
-    public static String generateStatusMessage(String clientType, String clientID, Long timestamp) {
-        SendMessage message = new SendMessage();
-        message.clientType = clientType;
-        message.message = "STAT";
-        message.clientID = clientID;
-        message.timestamp = convertToProperTime(timestamp);
-
+    public static String generateAcknowledgeStatusMessage(String clientType, String clientID, Integer sequenceNumber) {
+        SendMessage message = preGen(clientType, clientID, sequenceNumber);
+        message.message = "AKST";
         return convertToJson(message);
     }
 
-    public static String generateExecuteMessage(String clientType, String clientID, Long timestamp, SpeedEnum speed) {
-        SendMessage message = new SendMessage();
-        message.clientType = clientType;
+    public static String generateStatusMessage(String clientType, String clientID, Integer sequenceNumber) {
+        SendMessage message = preGen(clientType, clientID, sequenceNumber);
+        message.message = "STRQ";
+        return convertToJson(message);
+    }
+
+    public static String generateCCPExecuteMessage(String clientType, String clientID, Integer sequenceNumber, CCPActionEnum action) {
+        SendMessage message = preGen(clientType, clientID, sequenceNumber);
         message.message = "EXEC";
-        message.clientID = clientID;
-        message.timestamp = convertToProperTime(timestamp);
-        message.action = speed.toString();
-
+        message.CCPAction = action;
         return convertToJson(message);
     }
 
-    public static String generateDoorMessage(String clientType, String clientID, Long timestamp, boolean doorOpen) {
-        SendMessage message = new SendMessage();
-        message.clientType = clientType;
+    public static String generateCPCandSTExecuteMessage(String clientType, String clientID, Integer sequenceNumber, CPCActionEnum action) {
+        SendMessage message = preGen(clientType, clientID, sequenceNumber);
+        message.message = "EXEC";
+        message.CPCAction = action;
+        return convertToJson(message);
+    }
+
+    public static String generateDoorMessage(String clientType, String clientID, Integer sequenceNumber, boolean doorOpen) {
+        SendMessage message = preGen(clientType, clientID, sequenceNumber);
         message.message = "DOOR";
-        message.clientID = clientID;
-        message.timestamp = convertToProperTime(timestamp);
-
         if (doorOpen) {
-            message.action = "OPEN";
+            message.STCAction = StationActionEnum.OPEN;
         } else {
-            message.action = "CLOSE";
+            message.STCAction = StationActionEnum.CLOSE;
         }
 
         return convertToJson(message);
-    }
-
-    public static String generateIRLEDMessage(String clientType, String clientID, Long timestamp, boolean on) {
-        SendMessage message = new SendMessage();
-        message.clientType = clientType;
-        message.message = "IRLD";
-        message.clientID = clientID;
-        message.timestamp = convertToProperTime(timestamp);
-
-        if (on) {
-            message.action = "ON";
-        } else {
-            message.action = "OFF";
-        }
-
-        return convertToJson(message);
-
-    }
-
-    private static String convertToProperTime(long time) {
-        Instant instant = Instant.ofEpochMilli(time);
-        ZonedDateTime zonedDateTime = instant.atZone(ZoneOffset.UTC);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mmXXX");
-        return zonedDateTime.format(formatter);
     }
 
     private static String convertToJson(SendMessage message) {
