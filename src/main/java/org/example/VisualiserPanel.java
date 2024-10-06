@@ -11,7 +11,8 @@ public class VisualiserPanel extends JPanel {
     private static final double SEGMENT_DRAW_LENGTH = 10;
     private transient List<BladeRunnerClient> bladeRunnerZones = new ArrayList<>();
 
-    private static void drawSegments(double angleIncrement, int centerX, double radiusX, int centerY, double radiusY, Graphics2D g2d) {
+    private static void drawSegments(double angleIncrement, int centerX, double radiusX,
+            int centerY, double radiusY, Graphics2D g2d) {
         for (int i = 1; i <= SEGMENTS; i++) {
             // Current angle for this segment
             double angle = i * angleIncrement;
@@ -41,7 +42,8 @@ public class VisualiserPanel extends JPanel {
             FontMetrics fm = g2d.getFontMetrics();
             int labelWidth = fm.stringWidth(zoneNumber);
             int labelHeight = fm.getAscent();
-            g2d.drawString(zoneNumber, (float) labelX - (float) labelWidth / 2, (float) labelY + (float) labelHeight / 2);
+            g2d.drawString(zoneNumber, (float) labelX - (float) labelWidth / 2,
+                    (float) labelY + (float) labelHeight / 2);
         }
     }
 
@@ -71,7 +73,8 @@ public class VisualiserPanel extends JPanel {
         // Draw the ellipse
         g2d.setStroke(new BasicStroke(3));
         g2d.setColor(Color.BLACK);
-        Ellipse2D.Double outerEllipse = new Ellipse2D.Double(ellipseX, ellipseY, ellipseWidth, ellipseHeight);
+        Ellipse2D.Double outerEllipse =
+                new Ellipse2D.Double(ellipseX, ellipseY, ellipseWidth, ellipseHeight);
         g2d.draw(outerEllipse);
 
         // Calculate where to draw lines
@@ -85,11 +88,13 @@ public class VisualiserPanel extends JPanel {
         drawBladeRunnerLocations(angleIncrement, centerX, radiusX, centerY, radiusY, g2d);
     }
 
-    private void drawBladeRunnerLocations(double angleIncrement, int centerX, double radiusX, int centerY, double radiusY, Graphics2D g2d) {
+    private void drawBladeRunnerLocations(double angleIncrement, int centerX, double radiusX,
+            int centerY, double radiusY, Graphics2D g2d) {
         for (BladeRunnerClient BladeRunner : bladeRunnerZones) {
-            if (BladeRunner.isUnmapped()) continue;
+            if (BladeRunner.isUnmapped())
+                continue;
 
-            String status = BladeRunner.getStatus();
+            String status = BladeRunner.getExpectedStatus();
             int zone = BladeRunner.getZone();
 
             // Calculate the angle at the center of the zone
@@ -109,7 +114,8 @@ public class VisualiserPanel extends JPanel {
             int rectHeight = 10;
 
             // Create the rectangle centered at (0, 0)
-            Rectangle2D rect = new Rectangle2D.Double(-rectWidth / 2.0, -rectHeight / 2.0, rectWidth, rectHeight);
+            Rectangle2D rect = new Rectangle2D.Double(-rectWidth / 2.0, -rectHeight / 2.0,
+                    rectWidth, rectHeight);
 
             // Create a transform to position and rotate the rectangle
             AffineTransform transform = new AffineTransform();

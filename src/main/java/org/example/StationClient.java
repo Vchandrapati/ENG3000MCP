@@ -6,7 +6,8 @@ import java.util.logging.Level;
 public class StationClient extends Client<MessageEnums.STCStatus, MessageEnums.STCAction> {
     private final int location;
 
-    public StationClient(InetAddress clientAddress, int clientPort, String id, int sequenceNumber, int location) {
+    public StationClient(InetAddress clientAddress, int clientPort, String id, int sequenceNumber,
+            int location) {
         super(clientAddress, clientPort, id, sequenceNumber);
         this.location = location;
     }
@@ -16,8 +17,8 @@ public class StationClient extends Client<MessageEnums.STCStatus, MessageEnums.S
     }
 
     @Override
-    public String getStatus() {
-        return status.toString();
+    public String getExpectedStatus() {
+        return expectedStatus.toString();
     }
 
     public void updateStatus(MessageEnums.STCStatus newStatus) {

@@ -22,19 +22,23 @@ public class MessageGenerator {
         return message;
     }
 
-    public static String generateAcknowledgeMessage(String clientType, String clientID, Integer sequenceNumber, MessageEnums.AKType akType) {
+    public static String generateAcknowledgeMessage(String clientType, String clientID,
+            Integer sequenceNumber, MessageEnums.AKType akType) {
         SendMessage message = preGen(clientType, clientID, sequenceNumber);
         message.message = akType.toString();
         return convertToJson(message);
     }
 
-    public static String generateStatusMessage(String clientType, String clientID, Integer sequenceNumber) {
+    public static String generateStatusMessage(String clientType, String clientID,
+            Integer sequenceNumber) {
         SendMessage message = preGen(clientType, clientID, sequenceNumber);
         message.message = "STRQ";
         return convertToJson(message);
     }
 
-    public static String generateExecuteMessage(String clientType, String clientID, Integer sequenceNumber, String action) {
+
+    public static String generateExecuteMessage(String clientType, String clientID,
+            Integer sequenceNumber, String action) {
         SendMessage message = preGen(clientType, clientID, sequenceNumber);
         message.message = "EXEC";
         message.action = action;

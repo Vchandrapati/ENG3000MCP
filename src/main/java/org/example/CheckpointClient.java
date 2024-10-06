@@ -7,7 +7,8 @@ public class CheckpointClient extends Client<MessageEnums.CPCStatus, MessageEnum
     private boolean tripped;
     private final int location;
 
-    public CheckpointClient(InetAddress clientAddress, int clientPort, String id, int sequenceNumber, int location) {
+    public CheckpointClient(InetAddress clientAddress, int clientPort, String id,
+            int sequenceNumber, int location) {
         super(clientAddress, clientPort, id, sequenceNumber);
         this.location = location;
         this.tripped = false;
@@ -18,8 +19,8 @@ public class CheckpointClient extends Client<MessageEnums.CPCStatus, MessageEnum
     }
 
     @Override
-    public String getStatus() {
-        return status.toString();
+    public String getExpectedStatus() {
+        return expectedStatus.toString();
     }
 
     public void updateStatus(MessageEnums.CPCStatus newStatus) {
@@ -42,15 +43,15 @@ public class CheckpointClient extends Client<MessageEnums.CPCStatus, MessageEnum
         super.registerClient("Checkpoint");
     }
 
-    public void setTripped() {
-        this.tripped = true;
-    }
+    // public void setTripped() {
+    // this.tripped = true;
+    // }
 
-    public void resetTrip() {
-        this.tripped = false;
-    }
+    // public void resetTrip() {
+    // this.tripped = false;
+    // }
 
-    public boolean isTripped() {
-        return tripped;
-    }
+    // public boolean isTripped() {
+    // return tripped;
+    // }
 }

@@ -13,4 +13,5 @@ public class SendMessage {
     @JsonProperty("sequence_number")
     public int sequenceNumber;
     public String action;
+    public String arrivingBR;
 }

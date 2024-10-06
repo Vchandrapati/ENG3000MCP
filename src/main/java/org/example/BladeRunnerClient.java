@@ -9,7 +9,8 @@ public class BladeRunnerClient extends Client<MessageEnums.CCPStatus, MessageEnu
     private volatile boolean isCurrentlyMapped;
     private volatile boolean collision;
 
-    public BladeRunnerClient(InetAddress clientAddress, int clientPort, String id, int sequenceNumber) {
+    public BladeRunnerClient(InetAddress clientAddress, int clientPort, String id,
+            int sequenceNumber) {
         super(clientAddress, clientPort, id, sequenceNumber);
         this.isCurrentlyMapped = false;
     }
@@ -19,8 +20,8 @@ public class BladeRunnerClient extends Client<MessageEnums.CCPStatus, MessageEnu
     }
 
     @Override
-    public String getStatus() {
-        return status.toString();
+    public String getExpectedStatus() {
+        return expectedStatus.toString();
     }
 
     public void updateStatus(MessageEnums.CCPStatus newStatus) {

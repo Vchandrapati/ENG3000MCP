@@ -89,8 +89,7 @@ public class EmergencyState implements SystemStateInterface {
             // if client is null then SYSTEM was given
             if (client == null) {
                 dealSystemReason(client, reason);
-            }
-            else {
+            } else {
                 dealClientReason(client, reason);
             }
         }
@@ -119,6 +118,7 @@ public class EmergencyState implements SystemStateInterface {
             case ReasonEnum.INVALCONNECT: // same as no stat for now
             case ReasonEnum.NOSTAT: {
                 Client clientInstance = db.getClient(client, Client.class).get();
+                // No more stat returned need to check current status, look at MessageEnum - Eugene
                 if (clientInstance.lastStatReturned()) {
                     clientInstance.setStatReturned(true);
                     logger.log(Level.INFO, "Has fixed issue {0} for client : {1}",
@@ -129,7 +129,7 @@ public class EmergencyState implements SystemStateInterface {
             }
             case ReasonEnum.CLIENTERR: {
                 Client clientInstance = db.getClient(client, Client.class).get();
-                if (!clientInstance.getStatus().equals("ERR")) {
+                if (!clientInstance.getExpectedStatus().equals("ERR")) {
                     db.removeReason(client, reason);
                 }
                 break;

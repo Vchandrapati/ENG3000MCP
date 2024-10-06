@@ -12,50 +12,90 @@ import java.util.logging.Logger;
 
 public abstract class Client<S extends Enum<S>, A extends Enum<A>> {
     protected static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-    S status;
+    S expectedStatus;
     private final String id;
     private final InetAddress clientAddress;
     private final int clientPort;
-    private final AtomicBoolean statReturned = new AtomicBoolean(false);
-    private final AtomicBoolean statSent = new AtomicBoolean(false);
-    protected final AtomicInteger sequenceNumber;
+
+    protected AtomicInteger sequenceNumberOutgoing;
+    protected AtomicInteger sequenceNumberIncoming;
+    protected Integer latestStatusMessage;
+    private AtomicInteger missedStats;
+
+    protected HashMap<Integer, String> incomingMessages;
+    protected HashMap<Integer, String> outgoingMessages;
+
     protected boolean registered = false;
-    private String lastMessageSent;
     protected Set<ReasonEnum> unresponsiveReasons;
 
     protected Client(InetAddress clientAddress, int clientPort, String id, int sequenceNumber) {
         this.id = id;
         this.clientAddress = clientAddress;
         this.clientPort = clientPort;
-        this.sequenceNumber = new AtomicInteger(sequenceNumber + 1);
+
+        // May or may not need
+        this.sequenceNumberIncoming = new AtomicInteger(sequenceNumber);
+        this.sequenceNumberOutgoing = new AtomicInteger(0);
+        this.latestStatusMessage = -1;
+        this.missedStats = new AtomicInteger(0);
+
+        incomingMessages = new HashMap<>();
+        outgoingMessages = new HashMap<>();
         unresponsiveReasons = new HashSet<>();
     }
 
-    public abstract String getStatus();
+    // Why is this needed? -Eugene
+    public abstract String getExpectedStatus();
 
     public void updateStatus(S newStatus, String clientType) {
-        this.status = newStatus;
-        logger.log(Level.INFO, "Updated status for {0}{1} to {2}", new Object[] {clientType, id, newStatus});
+        this.expectedStatus = newStatus;
+        logger.log(Level.INFO, "Updated status for {0}{1} to {2}",
+                new Object[] {clientType, id, newStatus});
+    }
+
+    public S getStatus() {
+        return expectedStatus;
+    }
+
+    public void updateLatestStatusMessageCount(Integer count) {
+        latestStatusMessage = count;
+    }
+
+    public void incrementMissedStats() {
+        this.missedStats.getAndIncrement();
+    }
+
+    // Is this fine vikil? - Eugene
+    public void resetMissedStats() {
+        this.missedStats = new AtomicInteger(0);
+    }
+
+    public Integer getLatestStatusMessageCount() {
+        return latestStatusMessage;
     }
 
     public void sendExecuteMessage(A action, String clientType) {
-        String message = MessageGenerator.generateExecuteMessage(clientType, id, sequenceNumber.getAndIncrement(), String.valueOf(action));
+        String message = MessageGenerator.generateExecuteMessage(clientType, id,
+                sequenceNumberOutgoing.getAndIncrement(), String.valueOf(action));
         sendMessage(message, "EXEC");
+        // Anytime we send an execute message we need to update client status - Eugene
+        // I wil do it later
     }
 
     public void sendAcknowledgeMessage(String clientType, MessageEnums.AKType akType) {
-        String message = MessageGenerator.generateAcknowledgeMessage(clientType, id, sequenceNumber.getAndIncrement(), akType);
+        String message = MessageGenerator.generateAcknowledgeMessage(clientType, id,
+                sequenceNumberOutgoing.getAndIncrement(), akType);
         sendMessage(message, String.valueOf(akType));
         registered = true;
     }
 
     public void sendStatusMessage(String clientType) {
-        String message = MessageGenerator.generateStatusMessage(clientType, id, sequenceNumber.getAndIncrement());
+        String message = MessageGenerator.generateStatusMessage(clientType, id,
+                sequenceNumberOutgoing.getAndIncrement());
         sendMessage(message, "STAT");
     }
 
     public void sendMessage(String message, String type) {
-        lastMessageSent = type;
         Server.getInstance().sendMessageToClient(this, message, type);
     }
 
@@ -77,22 +117,6 @@ public abstract class Client<S extends Enum<S>, A extends Enum<A>> {
         unresponsiveReasons.remove(r);
     }
 
-    public boolean lastStatReturned() {
-        return statReturned.get();
-    }
-
-    public boolean lastStatMSGSent() {
-        return statSent.get();
-    }
-
-    public void setStatReturned(boolean statReturned) {
-        this.statReturned.set(statReturned);
-    }
-
-    public void setStatSent(boolean statSent) {
-        this.statSent.set(statSent);
-    }
-
     public InetAddress getClientAddress() {
         return clientAddress;
     }
@@ -110,6 +134,6 @@ public abstract class Client<S extends Enum<S>, A extends Enum<A>> {
     }
 
     public String getLastMessageSent() {
-        return lastMessageSent;
+        return incomingMessages.get(sequenceNumberIncoming.get());
     }
 }

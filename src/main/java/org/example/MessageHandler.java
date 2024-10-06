@@ -11,6 +11,14 @@ public class MessageHandler {
     private static final ObjectMapper objectMapper = new ObjectMapper();
     private static final Database db = Database.getInstance();
 
+
+    // ET plans
+
+    // 1. Cut based on message type
+    // 2. Cut based on client type
+    // 3. Update related data and notify correct subsystems
+
+
     // Handles messages from CCPs and stations
     public void handleMessage(String message, InetAddress address, int port) {
         try {
@@ -28,7 +36,8 @@ public class MessageHandler {
                     handleCPCMessage(receiveMessage, address, port);
                     break;
                 default:
-                    logger.log(Level.WARNING, "Unknown client type: {0}", receiveMessage.clientType);
+                    logger.log(Level.WARNING, "Unknown client type: {0}",
+                            receiveMessage.clientType);
             }
         } catch (JsonProcessingException e) {
             logger.log(Level.SEVERE, "Failed to parse message: {0} \nException: {1}",
@@ -46,16 +55,27 @@ public class MessageHandler {
             // Client is present
             switch (receiveMessage.message) {
                 case "TRIP":
-                    if (!client.isTripped()) {
-                        client.setTripped();
-                        Processor.checkpointTripped(client.getLocation(), false);
+                    switch (MessageEnums.CPCStatus.valueOf(receiveMessage.action)) {
+                        case MessageEnums.CPCStatus.ON:
+                            client.updateStatus(MessageEnums.CPCStatus.ON);
+                            Processor.checkpointTripped(client.getLocation(), false);
+                            break;
+
+                        case MessageEnums.CPCStatus.OFF:
+                            client.updateStatus(MessageEnums.CPCStatus.OFF);
+                            Processor.checkpointTripped(client.getLocation(), true);
+                            break;
+
+                        case MessageEnums.CPCStatus.ERR:
+                            // Thomas
+                            break;
+
+                        default:
+                            break;
                     }
-                    else {
-                        client.resetTrip();
-                        Processor.checkpointTripped(client.getLocation(), true);
-                    }
+
                     logger.log(Level.INFO, "Received TRIP command from Checkpoint: {0}",
-                                receiveMessage.clientID);
+                            receiveMessage.clientID);
                     break;
                 case "STAT":
                     if (SystemStateManager.getInstance().getState() == SystemState.EMERGENCY) {
@@ -63,9 +83,18 @@ public class MessageHandler {
                                 .sendEmergencyPacketClientID(receiveMessage.clientID);
                     }
 
-                    client.updateStatus(MessageEnums.CPCStatus.valueOf(receiveMessage.status));
-                    client.setStatReturned(true);
-                    client.setStatSent(true);
+                    // If different status to expected
+                    if (!client.getStatus()
+                            .equals(MessageEnums.CPCStatus.valueOf(receiveMessage.action))) {
+                        // Thomas problems
+                    }
+
+                    // Reset the count
+                    if (client.getLatestStatusMessageCount() < receiveMessage.sequenceNumber) {
+                        client.updateLatestStatusMessageCount(receiveMessage.sequenceNumber);
+                        client.resetMissedStats();
+                    }
+
                     logger.log(Level.INFO, "Received STAT command from Checkpoint: {0}",
                             receiveMessage.clientID);
                     break;
@@ -76,7 +105,7 @@ public class MessageHandler {
             }
         }, () -> {
             // Client is not present
-            if ("CHIN".equals(receiveMessage.message)) {
+            if ("CPIN".equals(receiveMessage.message)) {
                 handleInitialise(receiveMessage, address, port);
                 logger.log(Level.INFO, "Received CHIN message from Checkpoint: {0}",
                         receiveMessage.clientID);
@@ -93,18 +122,34 @@ public class MessageHandler {
             // Client is present
             switch (receiveMessage.message) {
                 case "STAT":
+                    // I assume stuff is still redirected? - Eugene
                     if (SystemStateManager.getInstance().getState() == SystemState.EMERGENCY) {
                         SystemStateManager.getInstance()
                                 .sendEmergencyPacketClientID(receiveMessage.clientID);
                     }
 
-                    client.updateStatus(MessageEnums.CCPStatus.valueOf(receiveMessage.status));
-                    client.setStatReturned(true);
-                    client.setStatSent(true);
-                    logger.log(Level.INFO, "Received STAT message from Blade Runner: {0}", receiveMessage.clientID);
+                    // If client reports ERR
+                    if (client.getStatus().equals(MessageEnums.CCPStatus.ERR)) {
+                        // Thomas resolve
+                    }
+
+                    // If client is not in expected state then there is a probelm
+                    if (!client.getStatus()
+                            .equals(MessageEnums.CCPStatus.valueOf(receiveMessage.status))) {
+                        // There is a problem (Thomas resolve, emergency) or (Resend last Exec
+                        // message) or (Uh OH!)
+                    }
+
+                    // If the current stat message sequence number is the highest then the stats
+                    // missed should = 0
+                    if (client.getLatestStatusMessageCount() < receiveMessage.sequenceNumber) {
+                        client.updateLatestStatusMessageCount(receiveMessage.sequenceNumber);
+                        client.resetMissedStats();
+                    }
+
+                    logger.log(Level.INFO, "Received STAT message from Blade Runner: {0}",
+                            receiveMessage.clientID);
                     client.sendAcknowledgeMessage(MessageEnums.AKType.AKST);
-                    // if STAT message contains ERR or CRASH
-                    checkCCPStatus(receiveMessage, client);
                     break;
                 default:
                     logger.log(Level.WARNING, "Unknown CCP message: {0}", receiveMessage.message);
@@ -123,8 +168,7 @@ public class MessageHandler {
         });
     }
 
-    private void handleSTCMessage(ReceiveMessage receiveMessage, InetAddress address,
-                                  int port) {
+    private void handleSTCMessage(ReceiveMessage receiveMessage, InetAddress address, int port) {
         db.getClient(receiveMessage.clientID, StationClient.class).ifPresentOrElse(client -> {
             // Client is present
             switch (receiveMessage.message) {
@@ -133,8 +177,26 @@ public class MessageHandler {
                         SystemStateManager.getInstance()
                                 .sendEmergencyPacketClientID(receiveMessage.clientID);
                     }
-                    client.setStatReturned(true);
-                    client.setStatSent(true);
+
+                    // If client reports ERR
+                    if (client.getStatus().equals(MessageEnums.STCStatus.ERR)) {
+                        // Thomas resolve
+                    }
+
+                    // If client is not in expected state then there is a probelm
+                    if (!client.getStatus()
+                            .equals(MessageEnums.STCStatus.valueOf(receiveMessage.status))) {
+                        // There is a problem (Thomas resolve, emergency) or (Resend last Exec
+                        // message) or (Uh OH!)
+                    }
+
+                    // If the current stat message sequence number is the highest then the stats
+                    // missed should = 0
+                    if (client.getLatestStatusMessageCount() < receiveMessage.sequenceNumber) {
+                        client.updateLatestStatusMessageCount(receiveMessage.sequenceNumber);
+                        client.resetMissedStats();
+                    }
+
                     logger.log(Level.INFO, "Received STAT message from Station: {0}",
                             receiveMessage.clientID);
                     break;
@@ -156,18 +218,22 @@ public class MessageHandler {
         });
     }
 
+    // I dont think anything needs to change here except location
     private void handleInitialise(ReceiveMessage receiveMessage, InetAddress address, int port) {
         try {
             Client<?, ?> client = null;
             switch (receiveMessage.clientType) {
                 case "ccp":
-                    client = new BladeRunnerClient(address, port, receiveMessage.clientID, receiveMessage.sequenceNumber);
+                    client = new BladeRunnerClient(address, port, receiveMessage.clientID,
+                            receiveMessage.sequenceNumber);
                     break;
                 case "checkpoint":
-                    client = new CheckpointClient(address, port, receiveMessage.clientID, receiveMessage.sequenceNumber,0 );
+                    client = new CheckpointClient(address, port, receiveMessage.clientID,
+                            receiveMessage.sequenceNumber, 0);
                     break;
                 case "station":
-                    client = new StationClient(address, port, receiveMessage.clientID, receiveMessage.sequenceNumber, 0);
+                    client = new StationClient(address, port, receiveMessage.clientID,
+                            receiveMessage.sequenceNumber, 0);
                     break;
                 default:
                     logger.log(Level.WARNING, "Unknown client type: {0}",
@@ -189,34 +255,6 @@ public class MessageHandler {
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Failed to handle message");
             logger.log(Level.SEVERE, "Exception: ", e);
-        }
-    }
-
-    //checks the status of the CCP stat message
-    private void checkCCPStatus(ReceiveMessage receiveMessage, BladeRunnerClient client) {
-        final String stringERR = "ERR";
-        final String stringCRASH = "CRASH";
-        //will only check if the current status given is not the same as the clients current status
-        switch (receiveMessage.status) {
-            case stringERR:
-                if(!client.getStatus().equalsIgnoreCase(stringERR)) {
-                    SystemStateManager.getInstance().addUnresponsiveClient(receiveMessage.clientID,
-                        ReasonEnum.CLIENTERR);
-                    logger.log(Level.INFO, "STAT recieved contained {0}: {1}",
-                            new Object[] {stringERR, receiveMessage.clientID});
-                }
-                break;
-            case stringCRASH:
-                if(!client.getStatus().equalsIgnoreCase(stringCRASH)) {
-                    SystemStateManager.getInstance().addUnresponsiveClient(receiveMessage.clientID,
-                            ReasonEnum.COLLISION);
-                    logger.log(Level.INFO, "STAT recieved contained {0}: {1}",
-                            new Object[] {stringCRASH, receiveMessage.clientID});
-                }
-                break;
-            default:
-                // should do nothing
-                break;
         }
     }
 }
