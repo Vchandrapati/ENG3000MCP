@@ -108,11 +108,10 @@ public class MappingState implements SystemStateInterface {
 
     // if a BladeRunner does not map in a minute time, send stop message to current
     // BladeRunner and go to waiting state
-    // * Returns true if the timeout has occured */
+    // * Returns true if the timeout has occurred */
     private void checkIfBladeRunnerIsDead() {
         if (retryAttemps > MAX_RETRIES) {
-            SystemStateManager.getInstance().addUnresponsiveClient(currentBladeRunner.getId(),
-                    ReasonEnum.MAPTIMEOUT);
+            SystemStateManager.getInstance().addUnresponsiveClient(currentBladeRunner.getId(), ReasonEnum.MAPTIMEOUT);
             logger.log(Level.SEVERE, "Blade runner failed to be mapped in time");
         }
     }
@@ -151,9 +150,9 @@ public class MappingState implements SystemStateInterface {
                 new Object[] {retryString, currentBladeRunner.getId()});
 
         if (currentBladeRunner.collision(false, null)) {
-            currentBladeRunner.sendExecuteMessage(SpeedEnum.BACKWARDS);
+            currentBladeRunner.sendExecuteMessage(MessageEnums.CCPAction.RSLOWC);
         } else {
-            currentBladeRunner.sendExecuteMessage(SpeedEnum.SLOW);
+            currentBladeRunner.sendExecuteMessage(MessageEnums.CCPAction.FFASTC);
         }
 
         hasSent = true;
@@ -166,7 +165,7 @@ public class MappingState implements SystemStateInterface {
         }
         logger.log(Level.INFO, "BladeRunner {0} mapped to zone {1}",
                 new Object[] {currentBladeRunner.getId(), zone});
-        currentBladeRunner.sendExecuteMessage(SpeedEnum.STOP);
+        currentBladeRunner.sendExecuteMessage(MessageEnums.CCPAction.STOPC);
         currentBladeRunner.changeZone(zone);
         currentBladeRunner.collision(false, new Object());
         db.updateBladeRunnerBlock(currentBladeRunner.getId(), zone);

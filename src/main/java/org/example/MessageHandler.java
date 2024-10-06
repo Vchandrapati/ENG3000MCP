@@ -2,7 +2,6 @@ package org.example;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import java.net.InetAddress;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,14 +22,13 @@ public class MessageHandler {
                     handleCCPMessage(receiveMessage, address, port);
                     break;
                 case "station":
-                    handleStationMessage(receiveMessage, address, port);
+                    handleSTCMessage(receiveMessage, address, port);
                     break;
                 case "checkpoint":
-                    handleCheckpointMessage(receiveMessage, address, port);
+                    handleCPCMessage(receiveMessage, address, port);
                     break;
                 default:
-                    logger.log(Level.WARNING, "Unknown client type: {0}",
-                            receiveMessage.clientType);
+                    logger.log(Level.WARNING, "Unknown client type: {0}", receiveMessage.clientType);
             }
         } catch (JsonProcessingException e) {
             logger.log(Level.SEVERE, "Failed to parse message: {0} \nException: {1}",
@@ -43,7 +41,7 @@ public class MessageHandler {
     }
 
     // Handles all checkpoint messages
-    private void handleCheckpointMessage(ReceiveMessage receiveMessage, InetAddress address, int port) {
+    private void handleCPCMessage(ReceiveMessage receiveMessage, InetAddress address, int port) {
         db.getClient(receiveMessage.clientID, CheckpointClient.class).ifPresentOrElse(client -> {
             // Client is present
             switch (receiveMessage.message) {
@@ -54,9 +52,6 @@ public class MessageHandler {
                     }
                     else {
                         client.resetTrip();
-                        if(client.getId().equals("CP10")) {
-                            System.out.println();
-                        }
                         Processor.checkpointTripped(client.getLocation(), true);
                     }
                     logger.log(Level.INFO, "Received TRIP command from Checkpoint: {0}",
@@ -67,6 +62,8 @@ public class MessageHandler {
                         SystemStateManager.getInstance()
                                 .sendEmergencyPacketClientID(receiveMessage.clientID);
                     }
+
+                    client.updateStatus(MessageEnums.CPCStatus.valueOf(receiveMessage.status));
                     client.setStatReturned(true);
                     client.setStatSent(true);
                     logger.log(Level.INFO, "Received STAT command from Checkpoint: {0}",
@@ -100,18 +97,14 @@ public class MessageHandler {
                         SystemStateManager.getInstance()
                                 .sendEmergencyPacketClientID(receiveMessage.clientID);
                     }
-                    client.updateStatus(receiveMessage.status.toUpperCase());
+
+                    client.updateStatus(MessageEnums.CCPStatus.valueOf(receiveMessage.status));
                     client.setStatReturned(true);
                     client.setStatSent(true);
-                    logger.log(Level.INFO, "Received STAT message from Blade Runner: {0}",
-                            receiveMessage.clientID);
+                    logger.log(Level.INFO, "Received STAT message from Blade Runner: {0}", receiveMessage.clientID);
+                    client.sendAcknowledgeMessage(MessageEnums.AKType.AKST);
                     // if STAT message contains ERR or CRASH
                     checkCCPStatus(receiveMessage, client);
-                    break;
-                case "DOOR":
-                    client.updateStatus(receiveMessage.status.toUpperCase());
-                    logger.log(Level.INFO, "Received DOOR message from Blade Runner: {0}",
-                            receiveMessage.clientID);
                     break;
                 default:
                     logger.log(Level.WARNING, "Unknown CCP message: {0}", receiveMessage.message);
@@ -130,16 +123,11 @@ public class MessageHandler {
         });
     }
 
-    private void handleStationMessage(ReceiveMessage receiveMessage, InetAddress address,
-            int port) {
+    private void handleSTCMessage(ReceiveMessage receiveMessage, InetAddress address,
+                                  int port) {
         db.getClient(receiveMessage.clientID, StationClient.class).ifPresentOrElse(client -> {
             // Client is present
             switch (receiveMessage.message) {
-                case "DOOR":
-                    client.updateStatus(receiveMessage.status.toUpperCase());
-                    logger.log(Level.INFO, "Received DOOR message from Station: {0}",
-                            receiveMessage.clientID);
-                    break;
                 case "STAT":
                     if (SystemStateManager.getInstance().getState() == SystemState.EMERGENCY) {
                         SystemStateManager.getInstance()
@@ -170,18 +158,16 @@ public class MessageHandler {
 
     private void handleInitialise(ReceiveMessage receiveMessage, InetAddress address, int port) {
         try {
-            Client client = null;
+            Client<?, ?> client = null;
             switch (receiveMessage.clientType) {
                 case "ccp":
-                    client = new BladeRunnerClient(address, port, receiveMessage.clientID);
+                    client = new BladeRunnerClient(address, port, receiveMessage.clientID, receiveMessage.sequenceNumber);
                     break;
                 case "checkpoint":
-                    client = new CheckpointClient(address, port, receiveMessage.clientID,
-                            receiveMessage.location);
+                    client = new CheckpointClient(address, port, receiveMessage.clientID, receiveMessage.sequenceNumber,0 );
                     break;
                 case "station":
-                    client = new StationClient(address, port, receiveMessage.clientID,
-                            receiveMessage.location);
+                    client = new StationClient(address, port, receiveMessage.clientID, receiveMessage.sequenceNumber, 0);
                     break;
                 default:
                     logger.log(Level.WARNING, "Unknown client type: {0}",
@@ -190,8 +176,8 @@ public class MessageHandler {
             }
 
             if (client != null) {
-                client.registerClient();
-                client.sendAcknowledgeMessage();
+                client.registerClient(receiveMessage.clientType);
+                client.sendAcknowledgeMessage(receiveMessage.clientType, MessageEnums.AKType.AKIN);
                 logger.log(Level.INFO, "Initialised new client: {0}", receiveMessage.clientID);
                 // if a client joins while not in waiting state, goes to emergency mode
                 if (SystemStateManager.getInstance().getState() != SystemState.WAITING) {
@@ -211,9 +197,9 @@ public class MessageHandler {
         final String stringERR = "ERR";
         final String stringCRASH = "CRASH";
         //will only check if the current status given is not the same as the clients current status
-        switch (receiveMessage.status.toUpperCase()) {
+        switch (receiveMessage.status) {
             case stringERR:
-                if(!client.getStatus().toUpperCase().equals(stringERR)) {
+                if(!client.getStatus().equalsIgnoreCase(stringERR)) {
                     SystemStateManager.getInstance().addUnresponsiveClient(receiveMessage.clientID,
                         ReasonEnum.CLIENTERR);
                     logger.log(Level.INFO, "STAT recieved contained {0}: {1}",
@@ -221,7 +207,7 @@ public class MessageHandler {
                 }
                 break;
             case stringCRASH:
-                if(!client.getStatus().toUpperCase().equals(stringCRASH)) {
+                if(!client.getStatus().equalsIgnoreCase(stringCRASH)) {
                     SystemStateManager.getInstance().addUnresponsiveClient(receiveMessage.clientID,
                             ReasonEnum.COLLISION);
                     logger.log(Level.INFO, "STAT recieved contained {0}: {1}",

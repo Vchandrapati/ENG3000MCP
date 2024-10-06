@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 
@@ -110,7 +111,7 @@ public class InfoPanel extends JPanel {
             waitingTimer.setVisible(false);
             if (currState == SystemState.EMERGENCY) {
                 errorClientList.setText("Following clients are experiencing an error: ");
-                List<String> clients = db.getAllUnresponsiveClientStrings();
+                Set<String> clients = db.getAllUnresponsiveClientIDs();
                 clearErrorClientLabels();
                 createErrorClientLabels(clients);
             } else
@@ -118,7 +119,7 @@ public class InfoPanel extends JPanel {
         }
     }
 
-    private void createErrorClientLabels(List<String> clients) {
+    private void createErrorClientLabels(Set<String> clients) {
         Font font = new Font("Arial", Font.BOLD, 16);
 
         for (String client : clients) {

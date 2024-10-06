@@ -11,6 +11,7 @@ public class ReceiveMessage {
     @JsonProperty("client_id")
     public String clientID;
     @JsonProperty("sequence_number")
-    public Integer sequenceNumber;
-    public Statuses status;
+    public int sequenceNumber;
+    public String action;
+    public String status;
 }

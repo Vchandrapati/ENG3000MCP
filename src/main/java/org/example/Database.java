@@ -101,7 +101,7 @@ public class Database {
     // return arrayOfErrorsAndReasons;
     // }
 
-    public HashSet<String> getAllUnresponsiveClientIDs() {
+    public Set<String> getAllUnresponsiveClientIDs() {
         return unresponsiveClients;
     }
 
@@ -135,14 +135,14 @@ public class Database {
             c = cOptional.get();
 
         } else {
-            logger.log(Level.WARNING, "Attempted to get non-existent client", id);
+            logger.log(Level.WARNING, "Attempted to get non-existent client {0}", id);
             return;
         }
 
         c.removeReason(reason);
     }
 
-    public HashSet<ReasonEnum> getClientReasons(String id) {
+    public Set<ReasonEnum> getClientReasons(String id) {
         if (!isClientUnresponsive(id)) {
             logger.log(Level.WARNING, "{0} is not an unresponsive client", id);
             return new HashSet<>();
@@ -155,7 +155,7 @@ public class Database {
             c = cOptional.get();
             return c.getUnresponsiveReasons();
         } else {
-            logger.log(Level.WARNING, "Attempted to get non-existent client", id);
+            logger.log(Level.WARNING, "Attempted to get non-existent client {0}t", id);
         }
 
         return new HashSet<>();

@@ -3,37 +3,43 @@ package org.example;
 import java.net.InetAddress;
 import java.util.logging.Level;
 
-public class CheckpointClient extends Client {
-    private final Integer location;
+public class CheckpointClient extends Client<MessageEnums.CPCStatus, MessageEnums.CPCAction> {
     private boolean tripped;
+    private final int location;
 
-    public CheckpointClient(InetAddress clientAddress, int clientPort, String id, int location) {
-        super(clientAddress, clientPort, id);
+    public CheckpointClient(InetAddress clientAddress, int clientPort, String id, int sequenceNumber, int location) {
+        super(clientAddress, clientPort, id, sequenceNumber);
         this.location = location;
         this.tripped = false;
     }
 
-    public Integer getLocation() {
+    public int getLocation() {
         return location;
     }
 
     @Override
-    public void sendStatusMessage(long timestamp) {
-        String message = MessageGenerator.generateStatusMessage("ccp", id, System.currentTimeMillis());
-        sendMessage(message, "STAT");
+    public String getStatus() {
+        return status.toString();
     }
 
-    @Override
-    public void sendAcknowledgeMessage() {
-        String message = MessageGenerator.generateAcknowledgesMessage("checkpoint", id, System.currentTimeMillis());
-        sendMessage(message, "ACK");
-        registered = true;
+    public void updateStatus(MessageEnums.CPCStatus newStatus) {
+        super.updateStatus(newStatus, "CP");
     }
 
-    @Override
+    public void sendExecuteMessage(MessageEnums.CPCAction action) {
+        super.sendExecuteMessage(action, "CPC");
+    }
+
+    public void sendStatusMessage() {
+        super.sendStatusMessage("CPC");
+    }
+
+    public void sendAcknowledgeMessage(String clientType, MessageEnums.AKType akType) {
+        super.sendAcknowledgeMessage(clientType, akType);
+    }
+
     public void registerClient() {
-        Database.getInstance().addClient(this.id, this);
-        logger.info("Added new checkpoint to database: " + Database.getInstance().getCheckpointCount());
+        super.registerClient("Checkpoint");
     }
 
     public void setTripped() {
@@ -46,32 +52,5 @@ public class CheckpointClient extends Client {
 
     public boolean isTripped() {
         return tripped;
-    }
-
-    @Override
-    public void addReason(ReasonEnum r) {
-        String[] temp = {id, r.toString()};
-        Boolean valid = true;
-        switch (r) {
-            case ReasonEnum.NOSTAT:
-                break;
-            case ReasonEnum.WRONGMESSAGE:
-                break;
-            case ReasonEnum.INVALCONNECT:
-                break;
-            case ReasonEnum.CLIENTERR:
-                break;
-            case ReasonEnum.INCORTRIP:
-                break;
-            default:
-                valid = false;
-                logger.log(Level.WARNING, "Attempted to add error {1} to {0} which is invalid", temp);
-                break;
-        }
-
-        if (valid) {
-            unresponsiveReasons.add(r);
-        }
-
     }
 }

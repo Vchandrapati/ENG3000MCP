@@ -53,11 +53,10 @@ public class Processor {
 
         // checks if tripped block is full, if so stop
         if (db.isBlockOccupied(checkpointTripped)) {
-            bladeRunnerOptional.get().sendExecuteMessage(SpeedEnum.STOP);
+            bladeRunnerOptional.get().sendExecuteMessage(MessageEnums.CCPAction.STOPC);
             if (untrip) {
                 String id = bladeRunnerOptional.get().getId();
-                logger.log(Level.WARNING, "Multiple blade runners in the same zone, includes : {0}",
-                        id);
+                logger.log(Level.WARNING, "Multiple blade runners in the same zone, includes : {0}", id);
                 SystemStateManager.getInstance().addUnresponsiveClient(id, ReasonEnum.COLLISION);
             }
             return;
@@ -65,7 +64,7 @@ public class Processor {
 
         // checks if next block is full, if so stop only if untrip
         if (db.isBlockOccupied(calculateNextBlock(checkpointTripped)) && untrip) {
-            bladeRunnerOptional.get().sendExecuteMessage(SpeedEnum.STOP);
+            bladeRunnerOptional.get().sendExecuteMessage(MessageEnums.CCPAction.STOPC);
         }
 
         // only change zone if untrip
@@ -94,7 +93,7 @@ public class Processor {
         int blockBefore = calculatePreviousBlock(checkpoint);
         if (db.isBlockOccupied(blockBefore)) {
             Optional<BladeRunnerClient> bladeRunnerOptional = getBladeRunner(blockBefore);
-            bladeRunnerOptional.ifPresent(br -> br.sendExecuteMessage(SpeedEnum.SLOW));
+            bladeRunnerOptional.ifPresent(br -> br.sendExecuteMessage(MessageEnums.CCPAction.FSLOWC));
         }
     }
 

@@ -124,7 +124,7 @@ public class VisualiserPanel extends JPanel {
             // Draw the BladeRunner ID near the BladeRunner
             g2d.setColor(Color.BLACK);
             FontMetrics fm = g2d.getFontMetrics();
-            int idWidth = fm.stringWidth(BladeRunner.id);
+            int idWidth = fm.stringWidth(BladeRunner.getId());
 
             double idOffsetX = -idWidth / 2.0;
             double idOffsetY = -rectHeight / 2.0 - 5;
@@ -134,7 +134,7 @@ public class VisualiserPanel extends JPanel {
             idTransform.rotate(angleOfTangent);
             Point2D idPoint = idTransform.transform(new Point2D.Double(idOffsetX, idOffsetY), null);
 
-            g2d.drawString(BladeRunner.id, (float) idPoint.getX(), (float) idPoint.getY());
+            g2d.drawString(BladeRunner.getId(), (float) idPoint.getX(), (float) idPoint.getY());
             g2d.drawString(status, (float) idPoint.getX(), (float) idPoint.getY() - 10);
         }
     }

@@ -62,7 +62,7 @@ public class RunningState implements SystemStateInterface {
         if (System.currentTimeMillis() - startTime >= TIME_BETWEEN_SENDING || startTime == 0) {
             if (curBR < bladeRunners.size()) {
                 startTime = System.currentTimeMillis();
-                bladeRunners.get(curBR++).sendExecuteMessage(SpeedEnum.SLOW);
+                bladeRunners.get(curBR++).sendExecuteMessage(MessageEnums.CCPAction.FSLOWC);
                 return;
             }
             allRunning = true;

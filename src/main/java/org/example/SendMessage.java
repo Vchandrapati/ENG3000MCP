@@ -11,9 +11,6 @@ public class SendMessage {
     @JsonProperty("client_id")
     public String clientID;
     @JsonProperty("sequence_number")
-    public Integer sequenceNumber;
-    public CCPActionEnum CCPAction;
-    public CPCActionEnum CPCAction;
-    public StationActionEnum STCAction;
-    public String arrivingBR;
+    public int sequenceNumber;
+    public String action;
 }

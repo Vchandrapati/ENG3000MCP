@@ -174,7 +174,7 @@ public class EmergencyState implements SystemStateInterface {
             List<BladeRunnerClient> bladeRunners = db.getBladeRunnerClients();
             timeOnStop = System.currentTimeMillis();
             for (BladeRunnerClient BladeRunnerClient : bladeRunners) {
-                BladeRunnerClient.sendExecuteMessage(SpeedEnum.STOP);
+                BladeRunnerClient.sendExecuteMessage(MessageEnums.CCPAction.FSLOWC);
             }
         }
     }
