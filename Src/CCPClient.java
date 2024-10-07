@@ -99,7 +99,7 @@ public class CCPClient {
 
     // Sends an initialise connection message
     public void sendInitialiseConnectionMsg() {
-        byte[] buffer = ("{\"client_type\":\"ccp\", \"message\":\"CCIN\", \"client_id\":\"" + myID
+        byte[] buffer = ("{\"client_type\":\"CCP\", \"message\":\"CCIN\", \"client_id\":\"" + myID
                 + "\", \"sequence_number\":\"" + sequenceNum + "\"}").getBytes();
         sendMsg(buffer);
         CCINStartTime = System.currentTimeMillis();
@@ -107,14 +107,14 @@ public class CCPClient {
 
     // Sends a stat message
     public void sendStatMsg() {
-        byte[] buffer = ("{\"client_type\":\"ccp\", \"message\":\"STAT\", \"client_id\":\"" + myID
+        byte[] buffer = ("{\"client_type\":\"CCP\", \"message\":\"STAT\", \"client_id\":\"" + myID
                 + "\", \"sequence_number\":\"" + sequenceNum + "\", \"status\":\"" + curStat
                 + "\"}").getBytes();
         sendMsg(buffer);
     }
 
     public void sendAKEX() {
-        byte[] buffer = ("{\"client_type\":\"ccp\", \"message\":\"AKEX\", \"client_id\":\"" + myID
+        byte[] buffer = ("{\"client_type\":\"CCP\", \"message\":\"AKEX\", \"client_id\":\"" + myID
                 + "\", \"sequence_number\":\"" + sequenceNum + "\"}").getBytes();
         sendMsg(buffer);
     }
