@@ -19,6 +19,8 @@ public class Main {
 
     Scanner s = new Scanner(System.in);
 
+    Text t;
+
     public void Run() {
         System.out.print("How many CCP clients: ");
         numCCPClinets = s.nextInt();
@@ -26,7 +28,7 @@ public class Main {
         System.out.print("How many checkpoints clients: ");
         numcheckClinets = s.nextInt();
 
-        Text t = new Text(this);
+        t = new Text(this);
         t.display();
 
         try {
@@ -42,7 +44,7 @@ public class Main {
                     ID = "BR" + (i + 1);
                 }
 
-                CCPclients.add(new CCPClient(5001 + CCPglobal, add, port, ID));
+                CCPclients.add(new CCPClient(5001 + CCPglobal, add, port, ID, t));
                 CCPglobal++;
             }
 
@@ -66,6 +68,11 @@ public class Main {
         // Starts by having every client send a fake connection msg
         for (int i = 0; i < numCCPClinets; i++) {
             CCPclients.get(i).sendInitialiseConnectionMsg();
+            try {
+                Thread.sleep(1000);
+            } catch (Exception e) {
+                // TODO: handle exception
+            }
         }
 
         // Starts by having every client send a fake connection msg
@@ -100,7 +107,30 @@ public class Main {
             } else {
                 ID = "BR" + (CCPglobal + 1);
             }
-            CCPclients.add(new CCPClient(5001 + CCPglobal, add, port, ID));
+            CCPclients.add(new CCPClient(5001 + CCPglobal, add, port, ID, t));
+            CCPclients.get(CCPclients.size() - 1).sendInitialiseConnectionMsg();
+            CCPglobal++;
+            numCCPClinets++;
+        }
+
+        if (inputs.length == 1 && inputs[0].equals("ccpccp")) {
+            String ID = "";
+            if (CCPglobal < 9) {
+                ID = "BR0" + (CCPglobal + 1);
+            } else {
+                ID = "BR" + (CCPglobal + 1);
+            }
+            CCPclients.add(new CCPClient(5001 + CCPglobal, add, port, ID, t));
+            CCPclients.get(CCPclients.size() - 1).sendInitialiseConnectionMsg();
+            CCPglobal++;
+            numCCPClinets++;
+
+            if (CCPglobal < 9) {
+                ID = "BR0" + (CCPglobal + 1);
+            } else {
+                ID = "BR" + (CCPglobal + 1);
+            }
+            CCPclients.add(new CCPClient(5001 + CCPglobal, add, port, ID, t));
             CCPclients.get(CCPclients.size() - 1).sendInitialiseConnectionMsg();
             CCPglobal++;
             numCCPClinets++;

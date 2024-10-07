@@ -59,7 +59,7 @@ class Text extends JFrame implements ActionListener, KeyListener {
         f.setLocationRelativeTo(null);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setAlwaysOnTop(true);
-        f.setResizable(false);
+        f.setResizable(true);
     }
 
     public void display() {
@@ -72,14 +72,15 @@ class Text extends JFrame implements ActionListener, KeyListener {
         String text = t.getText();
         System.out.println(text);
         main.Commands(text);
+    }
 
+    public synchronized void addtext(String text) {
         fullText = fullText + text + "<br/>";
 
         l.setText("<html>" + fullText + "</html>");
 
         // set the text of field to blank
         t.setText("");
-
     }
 
     // if the button is pressed

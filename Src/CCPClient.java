@@ -4,6 +4,10 @@ import java.io.IOException;
 import java.net.*;
 
 public class CCPClient {
+    private enum Status {
+        STOPC, STOPO, FSLOWC, FFASTC, RSLOWC, ERR
+
+    }
 
     DatagramSocket socket;
     private volatile Boolean listen;
@@ -11,16 +15,24 @@ public class CCPClient {
     private Integer sendPort;
     private String myID;
     private boolean living;
+    private Long CCINStartTime;
+    private Text txt;
+    private Integer sequenceNum;
+    private Status curStat;
+
 
     // Creates a client on specified port and send to specified address
-    public CCPClient(Integer port, InetAddress addLoc, Integer snedPort, String id) {
+    public CCPClient(Integer port, InetAddress addLoc, Integer snedPort, String id, Text txt) {
 
         try {
+            this.txt = txt;
             living = true;
             myID = id;
             sendPort = snedPort;
             sendAddress = addLoc;
             socket = new DatagramSocket(port);
+            sequenceNum = 10;
+            curStat = Status.STOPC;
 
             this.beginListen();
         } catch (Exception e) {
@@ -51,15 +63,21 @@ public class CCPClient {
 
                     // If the message is an AKIN msg will get the ID
                     if (c[1].equals("\"AKIN\"")) {
-                        String[] temp2 = temp[3].split(":");
+                        String[] temp2 = temp[2].split(":");
                         String[] temp3 = temp2[1].split("\"");
                         myID = temp3[1];
 
+                        txt.addtext("Time taken for " + myID + ": "
+                                + (System.currentTimeMillis() - CCINStartTime));
                     }
 
                     // If the message is a STAT msg will respond with a stat
-                    if (c[1].equals("\"STAT\"")) {
+                    if (c[1].equals("\"STRQ\"")) {
                         this.sendStatMsg();
+                    }
+
+                    if (c[1].equals("\"EXEC\"")) {
+                        this.sendAKEX();;
                     }
 
                 } catch (IOException e) {
@@ -81,15 +99,22 @@ public class CCPClient {
     // Sends an initialise connection message
     public void sendInitialiseConnectionMsg() {
         byte[] buffer = ("{\"client_type\":\"ccp\", \"message\":\"CCIN\", \"client_id\":\"" + myID
-                + "\", \"timestamp\":\"2019-09-07T15:50+00Z\"}")
-                .getBytes();
+                + "\", \"sequence_number\":\"" + sequenceNum + "\"}").getBytes();
         sendMsg(buffer);
+        CCINStartTime = System.currentTimeMillis();
     }
 
     // Sends a stat message
     public void sendStatMsg() {
         byte[] buffer = ("{\"client_type\":\"ccp\", \"message\":\"STAT\", \"client_id\":\"" + myID
-                + "\", \"timestamp\":\"2019-09-07T15:50+00Z\", \"status\":\"ON\"}").getBytes();
+                + "\", \"sequence_number\":\"" + sequenceNum + "\", \"status\":\"" + curStat
+                + "\"}").getBytes();
+        sendMsg(buffer);
+    }
+
+    public void sendAKEX() {
+        byte[] buffer = ("{\"client_type\":\"ccp\", \"message\":\"AKEX\", \"client_id\":\"" + myID
+                + "\", \"sequence_number\":\"" + sequenceNum + "\"}").getBytes();
         sendMsg(buffer);
     }
 
@@ -99,9 +124,11 @@ public class CCPClient {
         }
 
         try {
-            DatagramPacket sendPacket = new DatagramPacket(buffer, buffer.length, sendAddress, sendPort);
+            DatagramPacket sendPacket =
+                    new DatagramPacket(buffer, buffer.length, sendAddress, sendPort);
             socket.send(sendPacket);
             System.out.println(myID + " Sent msg " + new String(buffer));
+            sequenceNum++;
         } catch (Exception e) {
             System.out.println("Failed to send packet");
         }
