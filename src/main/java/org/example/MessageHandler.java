@@ -10,6 +10,7 @@ public class MessageHandler {
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private static final ObjectMapper objectMapper = new ObjectMapper();
     private static final Database db = Database.getInstance();
+    private static final SystemStateManager systemStateManager = SystemStateManager.getInstance();
 
 
     // ET plans
@@ -67,7 +68,8 @@ public class MessageHandler {
                             break;
 
                         case MessageEnums.CPCStatus.ERR:
-                            // Thomas
+                            systemStateManager.addUnresponsiveClient(client.getId(),
+                                    ReasonEnum.CLIENTERR);
                             break;
 
                         default:
@@ -78,15 +80,21 @@ public class MessageHandler {
                             receiveMessage.clientID);
                     break;
                 case "STAT":
-                    if (SystemStateManager.getInstance().getState() == SystemState.EMERGENCY) {
-                        SystemStateManager.getInstance()
-                                .sendEmergencyPacketClientID(receiveMessage.clientID);
+                    if (systemStateManager.getState() == SystemState.EMERGENCY) {
+                        systemStateManager.sendEmergencyPacketClientID(receiveMessage.clientID);
+                    }
+
+                    // If client reports ERR
+                    if (client.getStatus().equals(MessageEnums.CPCStatus.ERR)) {
+                        systemStateManager.addUnresponsiveClient(client.getId(),
+                                ReasonEnum.CLIENTERR);
                     }
 
                     // If different status to expected
                     if (!client.getStatus()
                             .equals(MessageEnums.CPCStatus.valueOf(receiveMessage.action))) {
-                        // Thomas problems
+                        systemStateManager.addUnresponsiveClient(client.getId(),
+                                ReasonEnum.WRONGSTATUS);
                     }
 
                     // Reset the count
@@ -123,21 +131,21 @@ public class MessageHandler {
             switch (receiveMessage.message) {
                 case "STAT":
                     // I assume stuff is still redirected? - Eugene
-                    if (SystemStateManager.getInstance().getState() == SystemState.EMERGENCY) {
-                        SystemStateManager.getInstance()
-                                .sendEmergencyPacketClientID(receiveMessage.clientID);
+                    if (systemStateManager.getState() == SystemState.EMERGENCY) {
+                        systemStateManager.sendEmergencyPacketClientID(receiveMessage.clientID);
                     }
 
                     // If client reports ERR
                     if (client.getStatus().equals(MessageEnums.CCPStatus.ERR)) {
-                        // Thomas resolve
+                        systemStateManager.addUnresponsiveClient(client.getId(),
+                                ReasonEnum.CLIENTERR);
                     }
 
                     // If client is not in expected state then there is a probelm
                     if (!client.getStatus()
                             .equals(MessageEnums.CCPStatus.valueOf(receiveMessage.status))) {
-                        // There is a problem (Thomas resolve, emergency) or (Resend last Exec
-                        // message) or (Uh OH!)
+                        systemStateManager.addUnresponsiveClient(client.getId(),
+                                ReasonEnum.WRONGSTATUS);
                     }
 
                     // If the current stat message sequence number is the highest then the stats
@@ -173,21 +181,21 @@ public class MessageHandler {
             // Client is present
             switch (receiveMessage.message) {
                 case "STAT":
-                    if (SystemStateManager.getInstance().getState() == SystemState.EMERGENCY) {
-                        SystemStateManager.getInstance()
-                                .sendEmergencyPacketClientID(receiveMessage.clientID);
+                    if (systemStateManager.getState() == SystemState.EMERGENCY) {
+                        systemStateManager.sendEmergencyPacketClientID(receiveMessage.clientID);
                     }
 
                     // If client reports ERR
                     if (client.getStatus().equals(MessageEnums.STCStatus.ERR)) {
-                        // Thomas resolve
+                        systemStateManager.addUnresponsiveClient(client.getId(),
+                                ReasonEnum.CLIENTERR);
                     }
 
                     // If client is not in expected state then there is a probelm
                     if (!client.getStatus()
                             .equals(MessageEnums.STCStatus.valueOf(receiveMessage.status))) {
-                        // There is a problem (Thomas resolve, emergency) or (Resend last Exec
-                        // message) or (Uh OH!)
+                        systemStateManager.addUnresponsiveClient(client.getId(),
+                                ReasonEnum.WRONGSTATUS);
                     }
 
                     // If the current stat message sequence number is the highest then the stats
