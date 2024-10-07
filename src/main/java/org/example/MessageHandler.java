@@ -88,14 +88,14 @@ public class MessageHandler {
                     if (client.getStatus().equals(MessageEnums.CPCStatus.ERR)) {
                         systemStateManager.addUnresponsiveClient(client.getId(),
                                 ReasonEnum.CLIENTERR);
-                    }
-
-                    // If different status to expected
-                    if (!client.getStatus()
+                        // If different status to expected
+                    } else if (!client.getStatus()
                             .equals(MessageEnums.CPCStatus.valueOf(receiveMessage.action))) {
                         systemStateManager.addUnresponsiveClient(client.getId(),
                                 ReasonEnum.WRONGSTATUS);
                     }
+
+
 
                     // Reset the count
                     if (client.getLatestStatusMessageCount() < receiveMessage.sequenceNumber) {
@@ -139,14 +139,13 @@ public class MessageHandler {
                     if (client.getStatus().equals(MessageEnums.CCPStatus.ERR)) {
                         systemStateManager.addUnresponsiveClient(client.getId(),
                                 ReasonEnum.CLIENTERR);
-                    }
-
-                    // If client is not in expected state then there is a probelm
-                    if (!client.getStatus()
+                        // If client is not in expected state then there is a probelm
+                    } else if (!client.getStatus()
                             .equals(MessageEnums.CCPStatus.valueOf(receiveMessage.status))) {
                         systemStateManager.addUnresponsiveClient(client.getId(),
                                 ReasonEnum.WRONGSTATUS);
                     }
+
 
                     // If the current stat message sequence number is the highest then the stats
                     // missed should = 0
@@ -189,14 +188,14 @@ public class MessageHandler {
                     if (client.getStatus().equals(MessageEnums.STCStatus.ERR)) {
                         systemStateManager.addUnresponsiveClient(client.getId(),
                                 ReasonEnum.CLIENTERR);
-                    }
-
-                    // If client is not in expected state then there is a probelm
-                    if (!client.getStatus()
+                        // If client is not in expected state then there is a probelm
+                    } else if (!client.getStatus()
                             .equals(MessageEnums.STCStatus.valueOf(receiveMessage.status))) {
                         systemStateManager.addUnresponsiveClient(client.getId(),
                                 ReasonEnum.WRONGSTATUS);
                     }
+
+
 
                     // If the current stat message sequence number is the highest then the stats
                     // missed should = 0
