@@ -12,7 +12,6 @@ public class VisualiserScreen extends JFrame {
     public VisualiserScreen() {
         setSize(Toolkit.getDefaultToolkit().getScreenSize());
         setTitle("Master Control Protocol");
-        // setSize(Toolkit.getDefaultToolkit().getScreenSize());
 
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         // Get all screen devices (monitors)
@@ -28,13 +27,18 @@ public class VisualiserScreen extends JFrame {
             // Set the frame size to the size of the second monitor
             setBounds(secondMonitorBounds);
             setLocation(secondMonitorBounds.x, secondMonitorBounds.y);
-        } else {
+        } else if (username.equalsIgnoreCase("xtheg")) {
+            setSize(1800, 900);
+            setLocationRelativeTo(null);
+        }
+        else {
+            setLocationRelativeTo(null);
             System.out.println("No second monitor detected.");
         }
 
+
         setResizable(false);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        // setLocationRelativeTo(null);
         long startupTime = System.currentTimeMillis();
 
         trackPanel = new VisualiserPanel();

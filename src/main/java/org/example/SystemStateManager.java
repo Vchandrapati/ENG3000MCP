@@ -140,14 +140,4 @@ public class SystemStateManager {
             db.addUnresponsiveClient(id, reason);
         }
     }
-
-    // For every stat message received during emergency mode
-    // Takes a string id of a client id
-    // Adds a string if of a client of a packet received during emergency mode to
-    // the emergency mode message queue
-    public void sendEmergencyPacketClientID(String id) {
-        if (db.isClientUnresponsive(id)) {
-            EmergencyState.addMessage(id);
-        }
-    }
 }
