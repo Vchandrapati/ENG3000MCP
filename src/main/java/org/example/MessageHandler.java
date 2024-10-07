@@ -80,9 +80,6 @@ public class MessageHandler {
                             receiveMessage.clientID);
                     break;
                 case "STAT":
-                    if (systemStateManager.getState() == SystemState.EMERGENCY) {
-                        systemStateManager.sendEmergencyPacketClientID(receiveMessage.clientID);
-                    }
 
                     // If client reports ERR
                     if (client.getStatus().equals(MessageEnums.CPCStatus.ERR)) {
@@ -130,10 +127,6 @@ public class MessageHandler {
             // Client is present
             switch (receiveMessage.message) {
                 case "STAT":
-                    // I assume stuff is still redirected? - Eugene
-                    if (systemStateManager.getState() == SystemState.EMERGENCY) {
-                        systemStateManager.sendEmergencyPacketClientID(receiveMessage.clientID);
-                    }
 
                     // If client reports ERR
                     if (client.getStatus().equals(MessageEnums.CCPStatus.ERR)) {
@@ -180,9 +173,6 @@ public class MessageHandler {
             // Client is present
             switch (receiveMessage.message) {
                 case "STAT":
-                    if (systemStateManager.getState() == SystemState.EMERGENCY) {
-                        systemStateManager.sendEmergencyPacketClientID(receiveMessage.clientID);
-                    }
 
                     // If client reports ERR
                     if (client.getStatus().equals(MessageEnums.STCStatus.ERR)) {
