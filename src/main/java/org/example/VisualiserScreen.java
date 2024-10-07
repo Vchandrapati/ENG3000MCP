@@ -10,12 +10,35 @@ public class VisualiserScreen extends JFrame {
     private final ClientsPanel clientsPanel;
 
     public VisualiserScreen() {
-        setSize(1600, 800);
+        setSize(Toolkit.getDefaultToolkit().getScreenSize());
+        setTitle("Master Control Protocol");
+
+        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        // Get all screen devices (monitors)
+        GraphicsDevice[] gs = ge.getScreenDevices();
+
+        // Check if we have more than one monitor
+        String username = System.getProperty("user.name");
+        if (gs.length > 1 && username.equalsIgnoreCase("tshie")) {
+            // Get the bounds of the second monitor
+            GraphicsDevice secondMonitor = gs[0];
+            Rectangle secondMonitorBounds = secondMonitor.getDefaultConfiguration().getBounds();
+
+            // Set the frame size to the size of the second monitor
+            setBounds(secondMonitorBounds);
+            setLocation(secondMonitorBounds.x, secondMonitorBounds.y);
+        } else if (username.equalsIgnoreCase("xtheg")) {
+            setSize(1800, 900);
+            setLocationRelativeTo(null);
+        }
+        else {
+            setLocationRelativeTo(null);
+            System.out.println("No second monitor detected.");
+        }
 
 
         setResizable(false);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
         long startupTime = System.currentTimeMillis();
 
         trackPanel = new VisualiserPanel();
