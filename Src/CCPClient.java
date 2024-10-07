@@ -2,6 +2,7 @@ package Src;
 
 import java.io.IOException;
 import java.net.*;
+import java.util.Arrays;
 
 public class CCPClient {
     private enum Status {
@@ -15,11 +16,15 @@ public class CCPClient {
     private Integer sendPort;
     private String myID;
     private boolean living;
+<<<<<<< HEAD
     private Long CCINStartTime;
     private Text txt;
     private Integer sequenceNum;
     private Status curStat;
 
+=======
+    private String STATUS = "\"STOPPED\"";
+>>>>>>> 78230daa382abe5d30a232b1ee7fcdcb7762dd2f
 
     // Creates a client on specified port and send to specified address
     public CCPClient(Integer port, InetAddress addLoc, Integer snedPort, String id, Text txt) {
@@ -76,8 +81,17 @@ public class CCPClient {
                         this.sendStatMsg();
                     }
 
+<<<<<<< HEAD
                     if (c[1].equals("\"EXEC\"")) {
                         this.sendAKEX();;
+=======
+                    if(message.contains("STOP")) {
+                        this.STATUS = "\"STOPPED\"";
+                    }
+
+                    if(message.contains("SLOW") || message.contains("BACKWARDS")) {
+                        this.STATUS = "\"ON\"";
+>>>>>>> 78230daa382abe5d30a232b1ee7fcdcb7762dd2f
                     }
 
                 } catch (IOException e) {
@@ -99,7 +113,11 @@ public class CCPClient {
     // Sends an initialise connection message
     public void sendInitialiseConnectionMsg() {
         byte[] buffer = ("{\"client_type\":\"ccp\", \"message\":\"CCIN\", \"client_id\":\"" + myID
+<<<<<<< HEAD
                 + "\", \"sequence_number\":\"" + sequenceNum + "\"}").getBytes();
+=======
+                + "\", \"timestamp\":\"2019-09-07T15:50+00Z\"}").getBytes();
+>>>>>>> 78230daa382abe5d30a232b1ee7fcdcb7762dd2f
         sendMsg(buffer);
         CCINStartTime = System.currentTimeMillis();
     }
@@ -107,6 +125,7 @@ public class CCPClient {
     // Sends a stat message
     public void sendStatMsg() {
         byte[] buffer = ("{\"client_type\":\"ccp\", \"message\":\"STAT\", \"client_id\":\"" + myID
+<<<<<<< HEAD
                 + "\", \"sequence_number\":\"" + sequenceNum + "\", \"status\":\"" + curStat
                 + "\"}").getBytes();
         sendMsg(buffer);
@@ -115,6 +134,10 @@ public class CCPClient {
     public void sendAKEX() {
         byte[] buffer = ("{\"client_type\":\"ccp\", \"message\":\"AKEX\", \"client_id\":\"" + myID
                 + "\", \"sequence_number\":\"" + sequenceNum + "\"}").getBytes();
+=======
+                + "\", \"timestamp\":\"2019-09-07T15:50+00Z\", \"status\":" + STATUS + "}")
+                        .getBytes();
+>>>>>>> 78230daa382abe5d30a232b1ee7fcdcb7762dd2f
         sendMsg(buffer);
     }
 
