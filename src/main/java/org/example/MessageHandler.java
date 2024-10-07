@@ -103,6 +103,8 @@ public class MessageHandler {
                     logger.log(Level.INFO, "Received STAT command from Checkpoint: {0}",
                             receiveMessage.clientID);
                     break;
+                case "AKEX":
+                    break;
                 default:
                     logger.log(Level.SEVERE, "Failed to handle checkpoint message: {0}",
                             receiveMessage);
@@ -150,6 +152,8 @@ public class MessageHandler {
                     logger.log(Level.INFO, "Received STAT message from Blade Runner: {0}",
                             receiveMessage.clientID);
                     client.sendAcknowledgeMessage(MessageEnums.AKType.AKST);
+                    break;
+                case "AKEX":
                     break;
                 default:
                     logger.log(Level.WARNING, "Unknown CCP message: {0}", receiveMessage.message);
@@ -201,7 +205,11 @@ public class MessageHandler {
                     logger.log(Level.WARNING, "Unknown station message: {0}",
                             receiveMessage.message);
                     break;
+
+                case "AKEX":
+                    break;
             }
+
         }, () -> {
             // Client is not present
             if ("STIN".equals(receiveMessage.message)) {
