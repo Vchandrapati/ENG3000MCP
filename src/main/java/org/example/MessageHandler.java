@@ -27,13 +27,13 @@ public class MessageHandler {
 
             // Handle based on the client type
             switch (receiveMessage.clientType) {
-                case "ccp":
+                case "CCP":
                     handleCCPMessage(receiveMessage, address, port);
                     break;
-                case "station":
+                case "STN":
                     handleSTCMessage(receiveMessage, address, port);
                     break;
-                case "checkpoint":
+                case "CPC":
                     handleCPCMessage(receiveMessage, address, port);
                     break;
                 default:
@@ -228,15 +228,15 @@ public class MessageHandler {
         try {
             Client<?, ?> client = null;
             switch (receiveMessage.clientType) {
-                case "ccp":
+                case "CCP":
                     client = new BladeRunnerClient(address, port, receiveMessage.clientID,
                             receiveMessage.sequenceNumber);
                     break;
-                case "checkpoint":
+                case "CPC":
                     client = new CheckpointClient(address, port, receiveMessage.clientID,
                             receiveMessage.sequenceNumber, 0);
                     break;
-                case "station":
+                case "STN":
                     client = new StationClient(address, port, receiveMessage.clientID,
                             receiveMessage.sequenceNumber, 0);
                     break;
