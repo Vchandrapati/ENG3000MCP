@@ -19,12 +19,7 @@ public class Main {
 
     Scanner s = new Scanner(System.in);
 
-<<<<<<< HEAD
     Text t;
-=======
-    private int currentCheckpoint = 2;
-    private long lastRun = 0;
->>>>>>> 78230daa382abe5d30a232b1ee7fcdcb7762dd2f
 
     public void Run() {
         System.out.print("How many CCP clients: ");
@@ -95,18 +90,6 @@ public class Main {
                     cp.sendTRIPMsg(true);
                     break;
                 }
-            }
-        }
-
-        if (inputs.length == 1 && inputs[0].equals("run")) {
-            try {
-                new Thread(() -> {
-                    while (true) {
-                        runn();
-                    }
-                }).start();
-            } catch (Exception e) {
-                System.out.println("NO! bad user");
             }
         }
 
@@ -215,16 +198,5 @@ public class Main {
             s.close();
             System.exit(0);
         }
-    }
-
-    public void runn() {
-        // if(lastRun == 0 || System.currentTimeMillis() - lastRun >= 1) {
-        // lastRun = System.currentTimeMillis();
-        Checkclients.get(currentCheckpoint - 1).sendTRIPMsg(true);
-        Checkclients.get(currentCheckpoint - 1).sendTRIPMsg(false);
-        currentCheckpoint++;
-        if (currentCheckpoint > 10)
-            currentCheckpoint = 1;
-        // }
     }
 }
