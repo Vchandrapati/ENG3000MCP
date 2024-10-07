@@ -2,7 +2,7 @@ package org.example;
 
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ArrayBlockingQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.ArrayList;
@@ -17,7 +17,6 @@ public class EmergencyState implements SystemStateInterface {
     private static final long MINIMUM_EMERGENCY_TIME = 5000; // 5 seconds
 
     private static final SystemState NEXT_STATE = SystemState.MAPPING;
-    private static final BlockingQueue<String> clientMessageQueue = new LinkedBlockingQueue<>();
 
     // the time when counter started
     private final long timeOnStart;
@@ -117,18 +116,16 @@ public class EmergencyState implements SystemStateInterface {
         switch (reason) {
             case ReasonEnum.INVALCONNECT: // same as no stat for now
             case ReasonEnum.NOSTAT: {
-                Client clientInstance = db.getClient(client, Client.class).get();
+                Client<?, ?> clientInstance = db.getClient(client, Client.class).get();
                 // No more stat returned need to check current status, look at MessageEnum - Eugene
-                if (clientInstance.isUnresponsive()) {
-                    clientInstance.resetMissedStats();
-                    logger.log(Level.INFO, "Has fixed issue {0} for client : {1}",
-                            new Object[] {reason, client});
-                    db.removeReason(client, reason);
-                }
+                //clientInstance.resetMissedStats();
+                logger.log(Level.INFO, "Has fixed issue {0} for client : {1}",
+                        new Object[] {reason, client});
+                db.removeReason(client, reason);
                 break;
             }
             case ReasonEnum.CLIENTERR: {
-                Client clientInstance = db.getClient(client, Client.class).get();
+                Client<?, ?> clientInstance = db.getClient(client, Client.class).get();
                 if (!clientInstance.getExpectedStatus().equals("ERR")) {
                     db.removeReason(client, reason);
                 }
@@ -177,10 +174,6 @@ public class EmergencyState implements SystemStateInterface {
                 BladeRunnerClient.sendExecuteMessage(MessageEnums.CCPAction.FSLOWC);
             }
         }
-    }
-
-    public static void addMessage(String id) {
-        clientMessageQueue.add(id);
     }
 
     @Override

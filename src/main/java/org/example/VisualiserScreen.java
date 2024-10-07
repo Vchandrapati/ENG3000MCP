@@ -10,10 +10,9 @@ public class VisualiserScreen extends JFrame {
     private final ClientsPanel clientsPanel;
 
     public VisualiserScreen() {
-        setTitle("Master Control Protocol");
-        // setSize(1900, 1200);
-        // ET preference
-        setSize(1500, 700);
+        setSize(1600, 800);
+
+
         setResizable(false);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);

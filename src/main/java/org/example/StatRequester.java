@@ -38,8 +38,10 @@ public class StatRequester {
     private void checkForMissingResponse(Client client) {
         client.incrementMissedStats();
         if (client.isUnresponsive()) {
-            // Thomas Things
+            SystemStateManager.getInstance().addUnresponsiveClient(client.getId(),
+                    ReasonEnum.NOSTAT);
         }
+
     }
 
     public void shutdown() {
