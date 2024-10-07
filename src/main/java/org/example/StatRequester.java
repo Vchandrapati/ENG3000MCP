@@ -28,14 +28,14 @@ public class StatRequester {
                 for (Client client : clients) {
                     if (Boolean.TRUE.equals(client.isRegistered())) {
                         client.sendStatusMessage(client.getId());
-                        checkForMissingResponse(client);
+                        checkIfClientIsUnresponsive(client);
                     }
                 }
             }
         }, (long) 0, STAT_INTERVAL_SECONDS, TimeUnit.MILLISECONDS);
     }
 
-    private void checkForMissingResponse(Client client) {
+    private void checkIfClientIsUnresponsive(Client client) {
         client.incrementMissedStats();
         if (client.isUnresponsive()) {
             // Thomas Things
