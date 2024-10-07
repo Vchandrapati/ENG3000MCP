@@ -119,8 +119,8 @@ public class EmergencyState implements SystemStateInterface {
             case ReasonEnum.NOSTAT: {
                 Client clientInstance = db.getClient(client, Client.class).get();
                 // No more stat returned need to check current status, look at MessageEnum - Eugene
-                if (clientInstance.lastStatReturned()) {
-                    clientInstance.setStatReturned(true);
+                if (clientInstance.isUnresponsive()) {
+                    clientInstance.resetMissedStats();
                     logger.log(Level.INFO, "Has fixed issue {0} for client : {1}",
                             new Object[] {reason, client});
                     db.removeReason(client, reason);

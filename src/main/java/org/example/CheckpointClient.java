@@ -10,6 +10,8 @@ public class CheckpointClient extends Client<MessageEnums.CPCStatus, MessageEnum
     public CheckpointClient(InetAddress clientAddress, int clientPort, String id,
             int sequenceNumber, int location) {
         super(clientAddress, clientPort, id, sequenceNumber);
+        // Everyone starts like this but maybe they dont is the thing
+        this.updateStatus(MessageEnums.CPCStatus.OFF);
         this.location = location;
         this.tripped = false;
     }
@@ -28,7 +30,9 @@ public class CheckpointClient extends Client<MessageEnums.CPCStatus, MessageEnum
     }
 
     public void sendExecuteMessage(MessageEnums.CPCAction action) {
+        this.updateStatus(MessageEnums.convertActionToStatus(action));
         super.sendExecuteMessage(action, "CPC");
+
     }
 
     public void sendStatusMessage() {

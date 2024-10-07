@@ -11,21 +11,19 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Manages network communication with clients over UDP.
- * It handles incoming packets, maintains a list of connected clients,
- * and schedules status checks.
+ * Manages network communication with clients over UDP. It handles incoming packets, maintains a
+ * list of connected clients, and schedules status checks.
  *
  * <p>
- * Utilises the Singleton pattern to ensure only one instance of the Server
- * exists.
+ * Utilises the Singleton pattern to ensure only one instance of the Server exists.
  */
 public class Server implements Runnable {
     public static final int PORT = 6666;
-    private static final Database db = Database.getInstance();
+
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-    private static final int TIMEOUT = 5000;
+
     private static final int BUFFER_SIZE = 1024;
-    private static final int STAT_INTERVAL_SECONDS = 5000;
+
     private static final int MAX_THROUGHPUT = 50;
     private static final BlockingQueue<DatagramPacket> mailbox = new LinkedBlockingQueue<>();
     private final AtomicBoolean serverRunning;
@@ -33,7 +31,7 @@ public class Server implements Runnable {
     private final ExecutorService executorService = Executors.newFixedThreadPool(2);
     private final MessageHandler messageHandler = new MessageHandler();
     private DatagramSocket serverSocket;
-    private final Object lock = new Object();
+
 
     private Server() {
         serverRunning = new AtomicBoolean(true);
@@ -65,14 +63,14 @@ public class Server implements Runnable {
     }
 
     /**
-     * Listens for incoming UDP packets and processes them.
-     * If a client is recognized, processes the packet with the existing client.
-     * Otherwise, creates a new client instance and registers it.
+     * Listens for incoming UDP packets and processes them. If a client is recognized, processes the
+     * packet with the existing client. Otherwise, creates a new client instance and registers it.
      */
     private void connectionListener() {
         while (serverRunning.get()) {
             try {
-                DatagramPacket receivePacket = new DatagramPacket(new byte[BUFFER_SIZE], BUFFER_SIZE);
+                DatagramPacket receivePacket =
+                        new DatagramPacket(new byte[BUFFER_SIZE], BUFFER_SIZE);
                 serverSocket.receive(receivePacket);
                 if (receivePacket.getLength() > 0) {
                     mailbox.add(receivePacket);
@@ -87,13 +85,15 @@ public class Server implements Runnable {
         while (serverRunning.get()) {
             try {
                 // If the server cannot process requests fast enough
-                if(mailbox.size() > MAX_THROUGHPUT)
-                    SystemStateManager.getInstance().addUnresponsiveClient("SYSTEM", ReasonEnum.SYSTEMOVER);
+                if (mailbox.size() > MAX_THROUGHPUT)
+                    SystemStateManager.getInstance().addUnresponsiveClient("SYSTEM",
+                            ReasonEnum.SYSTEMOVER);
 
                 DatagramPacket receivePacket = mailbox.take();
                 String message = new String(receivePacket.getData(), 0, receivePacket.getLength(),
                         StandardCharsets.UTF_8);
-                messageHandler.handleMessage(message, receivePacket.getAddress(), receivePacket.getPort());
+                messageHandler.handleMessage(message, receivePacket.getAddress(),
+                        receivePacket.getPort());
             } catch (InterruptedException e) {
                 logger.log(Level.SEVERE, "Packet processor was interrupted", e);
                 Thread.currentThread().interrupt();
@@ -107,8 +107,8 @@ public class Server implements Runnable {
     public void sendMessageToClient(Client client, String message, String type) {
         try {
             byte[] buffer = message.getBytes();
-            DatagramPacket sendPacket = new DatagramPacket(buffer, buffer.length, client.getClientAddress(),
-                    client.getClientPort());
+            DatagramPacket sendPacket = new DatagramPacket(buffer, buffer.length,
+                    client.getClientAddress(), client.getClientPort());
             serverSocket.send(sendPacket);
             logger.log(Level.INFO, "Sent {0} to client: {1}", new Object[] {type, client.getId()});
         } catch (IOException e) {

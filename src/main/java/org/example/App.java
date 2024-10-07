@@ -5,6 +5,7 @@ import javax.swing.*;
 public class App {
     private static volatile boolean isRunning = true;
     private static Server server;
+    private static StatRequester statReq;
     private static SystemStateManager systemStateManager;
     private static VisualiserScreen screen;
 
@@ -20,6 +21,9 @@ public class App {
         new Thread(() -> {
             systemStateManager = SystemStateManager.getInstance();
             server = Server.getInstance();
+            statReq = StatRequester.getInstance();
+            statReq.startStatusScheduler();
+
             // main loop for program
             while (isRunning()) {
                 systemStateManager.run();
@@ -30,6 +34,7 @@ public class App {
     // shutdown entire program
     public static void shutdown() {
         server.shutdown();
+        statReq.shutdown();
         setRunning(false);
         CommandHandler.shutdown();
         Thread.currentThread().interrupt();

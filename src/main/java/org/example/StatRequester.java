@@ -1,57 +1,52 @@
 package org.example;
 
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
 public class StatRequester {
+    private static final long STAT_INTERVAL_SECONDS = 2000; // Set time later
+    private final Object lock = new Object();
+    private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+    private static final Database db = Database.getInstance();
+
+    private StatRequester() {
+
+    }
+
+    public static StatRequester getInstance() {
+        return Holder.INSTANCE;
+    }
+
+    // send stats at specified intervals
     public void startStatusScheduler() {
         scheduler.scheduleAtFixedRate(() -> {
             List<Client> clients = db.getClients();
             synchronized (lock) {
                 for (Client client : clients) {
                     if (Boolean.TRUE.equals(client.isRegistered())) {
-                        client.setStatReturned(false);
-                        client.setStatSent(true);
-                        client.sendStatusMessage();
+                        client.sendStatusMessage(client.getId());
+                        checkForMissingResponse(client);
                     }
                 }
             }
-
-            try {
-                Thread.sleep(TIMEOUT);
-                checkForMissingResponse(clients, );
-            } catch (InterruptedException e) {
-                logger.log(Level.INFO, "Error waiting for stat");
-                Thread.currentThread().interrupt();
-            }
-        }, 0, STAT_INTERVAL_SECONDS, TimeUnit.MILLISECONDS);
+        }, (long) 0, STAT_INTERVAL_SECONDS, TimeUnit.MILLISECONDS);
     }
 
-    /**
-     * Checks for clients that have not responded to a status request sent within a
-     * timeframe.
-     * If a client has not responded, logs an error and updates the system state to
-     * EMERGENCY.
-     * For unresponsive BladeRunner clients, adds them to the unresponsive client
-     * list in
-     * the database.
-     *
-     * @param clients the list of clients to check
-     */
-
-    private void checkForMissingResponse(List<Client> clients, Long sendTime) {
-        synchronized (lock) {
-            for (Client client : clients) {
-                if (Boolean.TRUE.equals(!client.lastStatReturned() && client.isRegistered())
-                        && client.lastStatMSGSent()) {
-                    logger.log(Level.WARNING, "No STAT response from {0} sent at {1}",
-                            new Object[] { client.getId(), sendTime });
-
-                    // If a client is unresponsive
-                    SystemStateManager.getInstance().addUnresponsiveClient(client.getId(), ReasonEnum.NOSTAT);
-                }
-            }
+    private void checkForMissingResponse(Client client) {
+        client.incrementMissedStats();
+        if (client.isUnresponsive()) {
+            // Thomas Things
         }
+    }
+
+    public void shutdown() {
+        scheduler.close();
+    }
+
+    private static class Holder {
+        private static final StatRequester INSTANCE = new StatRequester();
     }
 }

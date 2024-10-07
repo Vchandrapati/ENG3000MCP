@@ -9,6 +9,8 @@ public class StationClient extends Client<MessageEnums.STCStatus, MessageEnums.S
     public StationClient(InetAddress clientAddress, int clientPort, String id, int sequenceNumber,
             int location) {
         super(clientAddress, clientPort, id, sequenceNumber);
+        // Everyone starts like this but maybe they dont is the thing
+        this.updateStatus(MessageEnums.STCStatus.ON);
         this.location = location;
     }
 
@@ -26,6 +28,7 @@ public class StationClient extends Client<MessageEnums.STCStatus, MessageEnums.S
     }
 
     public void sendExecuteMessage(MessageEnums.STCAction action) {
+        this.updateStatus(MessageEnums.convertActionToStatus(action));
         super.sendExecuteMessage(action, "STC");
     }
 

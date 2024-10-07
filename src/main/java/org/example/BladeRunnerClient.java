@@ -1,5 +1,6 @@
 package org.example;
 
+import java.awt.TrayIcon.MessageType;
 import java.net.InetAddress;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
@@ -12,6 +13,8 @@ public class BladeRunnerClient extends Client<MessageEnums.CCPStatus, MessageEnu
     public BladeRunnerClient(InetAddress clientAddress, int clientPort, String id,
             int sequenceNumber) {
         super(clientAddress, clientPort, id, sequenceNumber);
+        // Everyone starts like this but maybe they dont is the thing
+        this.updateStatus(MessageEnums.CCPStatus.STOPC);
         this.isCurrentlyMapped = false;
     }
 
@@ -29,7 +32,9 @@ public class BladeRunnerClient extends Client<MessageEnums.CCPStatus, MessageEnu
     }
 
     public void sendExecuteMessage(MessageEnums.CCPAction action) {
+        this.updateStatus(MessageEnums.convertActionToStatus(action));
         super.sendExecuteMessage(action, "CCP");
+
     }
 
     public void sendAcknowledgeMessage(MessageEnums.AKType akType) {

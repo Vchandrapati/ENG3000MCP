@@ -11,7 +11,9 @@ public class VisualiserScreen extends JFrame {
 
     public VisualiserScreen() {
         setTitle("Master Control Protocol");
-        setSize(1900, 1200);
+        // setSize(1900, 1200);
+        // ET preference
+        setSize(1500, 700);
         setResizable(false);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -23,6 +25,7 @@ public class VisualiserScreen extends JFrame {
         JPanel userPanel = new JPanel();
         userPanel.setLayout(new BorderLayout());
         userPanel.setPreferredSize(new Dimension(800, 300));
+
 
         commandInput = new JTextField();
         Font font = new Font("Arial", Font.PLAIN, 20);
@@ -50,7 +53,8 @@ public class VisualiserScreen extends JFrame {
         mainSplitPane.setOneTouchExpandable(true);
 
         clientsPanel = new ClientsPanel();
-        JSplitPane verticalSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, mainSplitPane, clientsPanel);
+        JSplitPane verticalSplitPane =
+                new JSplitPane(JSplitPane.VERTICAL_SPLIT, mainSplitPane, clientsPanel);
         verticalSplitPane.setDividerLocation(600);
         verticalSplitPane.setOneTouchExpandable(true);
 

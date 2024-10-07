@@ -9,6 +9,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.example.MessageEnums.CCPStatus;
 
 public abstract class Client<S extends Enum<S>, A extends Enum<A>> {
     protected static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
@@ -47,6 +48,13 @@ public abstract class Client<S extends Enum<S>, A extends Enum<A>> {
     // Why is this needed? -Eugene
     public abstract String getExpectedStatus();
 
+    public boolean isUnresponsive() {
+        if (missedStats.get() >= 3) {
+            return true;
+        }
+        return false;
+    }
+
     public void updateStatus(S newStatus, String clientType) {
         this.expectedStatus = newStatus;
         logger.log(Level.INFO, "Updated status for {0}{1} to {2}",
@@ -78,8 +86,6 @@ public abstract class Client<S extends Enum<S>, A extends Enum<A>> {
         String message = MessageGenerator.generateExecuteMessage(clientType, id,
                 sequenceNumberOutgoing.getAndIncrement(), String.valueOf(action));
         sendMessage(message, "EXEC");
-        // Anytime we send an execute message we need to update client status - Eugene
-        // I wil do it later
     }
 
     public void sendAcknowledgeMessage(String clientType, MessageEnums.AKType akType) {
