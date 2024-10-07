@@ -86,7 +86,7 @@ public class MessageEnums {
 
     // Enums for types of AK
     public enum AKType {
-        AKIN, AKEX, AKST
+        AKIN, AKEX, AKST, AKTR
     }
 
     public static <T> T convertActionToStatus(ActionToStatus<T> action) {

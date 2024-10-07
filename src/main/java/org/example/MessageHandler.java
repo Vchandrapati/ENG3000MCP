@@ -46,7 +46,8 @@ public class MessageHandler {
         } catch (Exception e) {
             logger.log(Level.SEVERE,
                     "Unexpected error handling message from {0}:{1} \nException: {2}",
-                    new Object[] {address, port, e.getMessage()});
+                    new Object[] {address, port, e});
+            e.printStackTrace();
         }
     }
 
@@ -56,7 +57,7 @@ public class MessageHandler {
             // Client is present
             switch (receiveMessage.message) {
                 case "TRIP":
-                    switch (MessageEnums.CPCStatus.valueOf(receiveMessage.action)) {
+                    switch (MessageEnums.CPCStatus.valueOf(receiveMessage.status)) {
                         case MessageEnums.CPCStatus.ON:
                             client.updateStatus(MessageEnums.CPCStatus.ON);
                             Processor.checkpointTripped(client.getLocation(), false);
@@ -74,7 +75,9 @@ public class MessageHandler {
 
                         default:
                             break;
+
                     }
+                    client.sendAcknowledgeMessage("CPC", MessageEnums.AKType.AKTR);
 
                     logger.log(Level.INFO, "Received TRIP command from Checkpoint: {0}",
                             receiveMessage.clientID);
@@ -87,7 +90,7 @@ public class MessageHandler {
                                 ReasonEnum.CLIENTERR);
                         // If different status to expected
                     } else if (!client.getStatus()
-                            .equals(MessageEnums.CPCStatus.valueOf(receiveMessage.action))) {
+                            .equals(MessageEnums.CPCStatus.valueOf(receiveMessage.status))) {
                         systemStateManager.addUnresponsiveClient(client.getId(),
                                 ReasonEnum.WRONGSTATUS);
                     }
@@ -114,7 +117,8 @@ public class MessageHandler {
             // Client is not present
             if ("CPIN".equals(receiveMessage.message)) {
                 handleInitialise(receiveMessage, address, port);
-                logger.log(Level.INFO, "Received CHIN message from Checkpoint: {0}",
+
+                logger.log(Level.INFO, "Received CPIN message from Checkpoint: {0}",
                         receiveMessage.clientID);
             } else {
                 logger.log(Level.SEVERE, "Attempted to get non-existent checkpoint: {0}",
@@ -233,8 +237,11 @@ public class MessageHandler {
                             receiveMessage.sequenceNumber);
                     break;
                 case "CPC":
+                    // Temp zone code
+                    String[] id = receiveMessage.clientID.split("CP");
+                    Integer zone = Integer.parseInt(id[1]);
                     client = new CheckpointClient(address, port, receiveMessage.clientID,
-                            receiveMessage.sequenceNumber, 0);
+                            receiveMessage.sequenceNumber, zone);
                     break;
                 case "STN":
                     client = new StationClient(address, port, receiveMessage.clientID,

@@ -57,8 +57,7 @@ public abstract class Client<S extends Enum<S>, A extends Enum<A>> {
 
     public void updateStatus(S newStatus, String clientType) {
         this.expectedStatus = newStatus;
-        logger.log(Level.INFO, "Updated status for {0}{1} to {2}",
-                new Object[] {clientType, id, newStatus});
+        logger.log(Level.INFO, "Updated status for {0} to {1}", new Object[] {id, newStatus});
     }
 
     public S getStatus() {
