@@ -5,12 +5,18 @@ import java.net.*;
 
 public class CheckpointClient {
 
+    public enum Status {
+        ON, OFF, ERR
+    }
+
     DatagramSocket socket;
     volatile Boolean listen = false;
     private InetAddress sendAddress;
     private Integer sendPort;
     String myID;
     private boolean living;
+    private Integer sequenceNum;
+    private Status curStat;
 
     // Creates a client on specified port and send to specified address
     public CheckpointClient(Integer port, InetAddress addLoc, Integer snedPort, String ID) {
@@ -21,6 +27,9 @@ public class CheckpointClient {
             sendPort = snedPort;
             sendAddress = addLoc;
             socket = new DatagramSocket(port);
+
+            curStat = Status.OFF;
+            sequenceNum = 10;
 
             listen = true;
             this.beginListen();
@@ -39,7 +48,8 @@ public class CheckpointClient {
                     DatagramPacket recievePacket = new DatagramPacket(buffer, buffer.length);
                     socket.receive(recievePacket);
 
-                    String message = new String(recievePacket.getData(), 0, recievePacket.getLength(), "UTF-8");
+                    String message = new String(recievePacket.getData(), 0,
+                            recievePacket.getLength(), "UTF-8");
                     if (!message.isEmpty()) {
                         message = message.replaceAll("[^\\x20-\\x7E]", " ");
                         // Print every message received
@@ -50,8 +60,12 @@ public class CheckpointClient {
                     String[] c = temp[0].split(":");
 
                     // If the message is a STAT msg will respond with a stat
-                    if (c[1].equals("\"STAT\"")) {
+                    if (c[1].equals("\"STRQ\"")) {
                         this.sendStatMsg();
+                    }
+
+                    if (c[1].equals("\"EXEC\"")) {
+                        this.sendAKEXMsg();
                     }
 
                 } catch (IOException e) {
@@ -72,28 +86,36 @@ public class CheckpointClient {
 
     // Sends an initialise connection message
     public void sendInitialiseConnectionMsg(Integer num) {
-        byte[] buffer = ("{\"client_type\":\"checkpoint\", \"message\":\"CHIN\", \"client_id\":\"" + myID
-                + "\", \"timestamp\":\"2019-09-07T15:50+00Z\", \"location\":\""
-                + num + "\"}")
-                .getBytes();
+        byte[] buffer = ("{\"client_type\":\"CPC\", \"message\":\"CPIN\", \"client_id\":\"" + myID
+                + "\", \"sequence_number\":\"" + sequenceNum + "\"}").getBytes();
         sendMsg(buffer);
     }
 
     // Sends a stat message
     public void sendStatMsg() {
-        byte[] buffer = ("{\"client_type\":\"checkpoint\", \"message\":\"STAT\", \"client_id\":\"" + myID
-                + "\", \"timestamp\":\"2019-09-07T15:50+00Z\", \"status\":\"ON\"}").getBytes();
+        byte[] buffer = ("{\"client_type\":\"CPC\", \"message\":\"STAT\", \"client_id\":\"" + myID
+                + "\", \"sequence_number\":\"" + sequenceNum + "\", \"status\":\"" + curStat
+                + "\"}").getBytes();
+        sendMsg(buffer);
+    }
+
+    // Sends a AKEX message
+    public void sendAKEXMsg() {
+        byte[] buffer = ("{\"client_type\":\"CPC\", \"message\":\"AKEX\", \"client_id\":\"" + myID
+                + "\", \"sequence_number\":\"" + sequenceNum + "\"}").getBytes();
         sendMsg(buffer);
     }
 
     // Sends a stat message
     public void sendTRIPMsg(boolean tripped) {
-        String trip = "TRIP";
-        if(!tripped) {
-            trip = "UNTRIP";
+        Status trip = Status.ON;
+        if (!tripped) {
+            trip = Status.OFF;
         }
-        byte[] buffer = ("{\"client_type\":\"checkpoint\", \"message\":\"" + trip + "\", \"client_id\":\"" + myID
-                + "\", \"timestamp\":\"2019-09-07T15:50+00Z\", \"status\":\"ON\"}").getBytes();
+        curStat = trip;
+        byte[] buffer = ("{\"client_type\":\"CPC\", \"message\":\"TRIP\", \"client_id\":\"" + myID
+                + "\", \"sequence_number\":\"" + sequenceNum + "\", \"status\":\"" + trip.toString()
+                + "\"}").getBytes();
         sendMsg(buffer);
     }
 
@@ -103,9 +125,11 @@ public class CheckpointClient {
                 return;
             }
 
-            DatagramPacket sendPacket = new DatagramPacket(buffer, buffer.length, sendAddress, sendPort);
+            DatagramPacket sendPacket =
+                    new DatagramPacket(buffer, buffer.length, sendAddress, sendPort);
             socket.send(sendPacket);
             System.out.println(myID + " Sent msg " + new String(buffer));
+            sequenceNum++;
         } catch (Exception e) {
             System.out.println("Failed to send packet");
         }
@@ -115,5 +139,4 @@ public class CheckpointClient {
     public void setLivingStatus(boolean status) {
         living = status;
     }
-
 }
