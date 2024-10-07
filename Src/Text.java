@@ -1,6 +1,6 @@
 package Src;
 
-// Java program to create a blank text 
+// Java program to create a blank text
 // field of definite number of columns.
 import java.awt.event.*;
 import javax.swing.*;
@@ -70,7 +70,7 @@ class Text extends JFrame implements ActionListener, KeyListener {
     public void submit() {
         // set the text of the label to the text of the field
         String text = t.getText();
-        System.out.println(text);
+        addtext(text);
         main.Commands(text);
     }
 

@@ -94,8 +94,8 @@ public class CheckpointClient {
     // Sends a stat message
     public void sendStatMsg() {
         byte[] buffer = ("{\"client_type\":\"CPC\", \"message\":\"STAT\", \"client_id\":\"" + myID
-                + "\", \"sequence_number\":\"" + sequenceNum + "\", \"status\":\"" + curStat
-                + "\"}").getBytes();
+                + "\", \"sequence_number\":\"" + sequenceNum + "\", \"status\":\""
+                + curStat.toString() + "\"}").getBytes();
         sendMsg(buffer);
     }
 
