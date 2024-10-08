@@ -19,7 +19,6 @@ public class MessageHandler {
     // 2. Cut based on client type
     // 3. Update related data and notify correct subsystems
 
-
     // Handles messages from CCPs and stations
     public void handleMessage(String message, InetAddress address, int port) {
         try {
@@ -47,7 +46,6 @@ public class MessageHandler {
             logger.log(Level.SEVERE,
                     "Unexpected error handling message from {0}:{1} \nException: {2}",
                     new Object[] {address, port, e});
-            e.printStackTrace();
         }
     }
 
@@ -62,12 +60,10 @@ public class MessageHandler {
                             client.updateStatus(MessageEnums.CPCStatus.ON);
                             Processor.checkpointTripped(client.getLocation(), false);
                             break;
-
                         case MessageEnums.CPCStatus.OFF:
                             client.updateStatus(MessageEnums.CPCStatus.OFF);
                             Processor.checkpointTripped(client.getLocation(), true);
                             break;
-
                         case MessageEnums.CPCStatus.ERR:
                             systemStateManager.addUnresponsiveClient(client.getId(),
                                     ReasonEnum.CLIENTERR);
@@ -77,7 +73,7 @@ public class MessageHandler {
                             break;
 
                     }
-                    client.sendAcknowledgeMessage("CPC", MessageEnums.AKType.AKTR);
+                    client.sendAcknowledgeMessage(MessageEnums.AKType.AKTR);
 
                     logger.log(Level.INFO, "Received TRIP command from Checkpoint: {0}",
                             receiveMessage.clientID);
@@ -254,8 +250,8 @@ public class MessageHandler {
             }
 
             if (client != null) {
-                client.registerClient(receiveMessage.clientType);
-                client.sendAcknowledgeMessage(receiveMessage.clientType, MessageEnums.AKType.AKIN);
+                client.registerClient();
+                client.sendAcknowledgeMessage(MessageEnums.AKType.AKIN);
                 logger.log(Level.INFO, "Initialised new client: {0}", receiveMessage.clientID);
                 // if a client joins while not in waiting state, goes to emergency mode
                 if (SystemStateManager.getInstance().getState() != SystemState.WAITING) {

@@ -1,13 +1,11 @@
 package org.example;
 
 public class MessageEnums {
-
     // There are certain actions which can not be mapped 1 to 1 to a status
     // Maybe a hashmap implementation?
     public interface ActionToStatus<T> {
         T getStatus();
     }
-
 
     // Enum for CCP Actions
     public enum CCPAction implements ActionToStatus<CCPStatus> {
@@ -15,22 +13,15 @@ public class MessageEnums {
 
         @Override
         public CCPStatus getStatus() {
-            switch (this) {
-                case STOPC:
-                    return CCPStatus.STOPC;
-                case STOPO:
-                    return CCPStatus.STOPO;
-                case FSLOWC:
-                    return CCPStatus.FSLOWC;
-                case FFASTC:
-                    return CCPStatus.FFASTC;
-                case RSLOWC:
-                    return CCPStatus.RSLOWC;
-                default:
-                    return CCPStatus.ERR;
-            }
+            return switch (this) {
+                case STOPC -> CCPStatus.STOPC;
+                case STOPO -> CCPStatus.STOPO;
+                case FSLOWC -> CCPStatus.FSLOWC;
+                case FFASTC -> CCPStatus.FFASTC;
+                case RSLOWC -> CCPStatus.RSLOWC;
+                default -> CCPStatus.ERR;
+            };
         }
-
     }
 
     // Enum for CCP Status
@@ -44,14 +35,11 @@ public class MessageEnums {
 
         @Override
         public CPCStatus getStatus() {
-            switch (this) {
-                case OFF:
-                    return CPCStatus.OFF;
-                case ON:
-                    return CPCStatus.ON;
-                default:
-                    return CPCStatus.ERR;
-            }
+            return switch (this) {
+                case OFF -> CPCStatus.OFF;
+                case ON -> CPCStatus.ON;
+                default -> CPCStatus.ERR;
+            };
         }
     }
 
@@ -66,16 +54,12 @@ public class MessageEnums {
 
         @Override
         public STCStatus getStatus() {
-            switch (this) {
-                case OFF:
-                    return STCStatus.OFF;
-                case ON:
-                    return STCStatus.ON;
-                case OPEN:
-                    return STCStatus.ONOPEN;
-                default:
-                    return STCStatus.ERR;
-            }
+            return switch (this) {
+                case OFF -> STCStatus.OFF;
+                case ON -> STCStatus.ON;
+                case OPEN -> STCStatus.ONOPEN;
+                default -> STCStatus.ERR;
+            };
         }
     }
 

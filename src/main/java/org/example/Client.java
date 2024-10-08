@@ -3,13 +3,10 @@ package org.example;
 import java.net.InetAddress;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.example.MessageEnums.CCPStatus;
 
 public abstract class Client<S extends Enum<S>, A extends Enum<A>> {
     protected static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
@@ -17,6 +14,7 @@ public abstract class Client<S extends Enum<S>, A extends Enum<A>> {
     private final String id;
     private final InetAddress clientAddress;
     private final int clientPort;
+    protected String type;
 
     protected AtomicInteger sequenceNumberOutgoing;
     protected AtomicInteger sequenceNumberIncoming;
@@ -49,13 +47,10 @@ public abstract class Client<S extends Enum<S>, A extends Enum<A>> {
     public abstract String getExpectedStatus();
 
     public boolean isUnresponsive() {
-        if (missedStats.get() >= 3) {
-            return true;
-        }
-        return false;
+        return missedStats.get() >= 3;
     }
 
-    public void updateStatus(S newStatus, String clientType) {
+    public void updateStatus(S newStatus) {
         this.expectedStatus = newStatus;
         logger.log(Level.INFO, "Updated status for {0} to {1}", new Object[] {id, newStatus});
     }
@@ -81,22 +76,21 @@ public abstract class Client<S extends Enum<S>, A extends Enum<A>> {
         return latestStatusMessage;
     }
 
-    public void sendExecuteMessage(A action, String clientType) {
-        String message = MessageGenerator.generateExecuteMessage(clientType, id,
+    public void sendExecuteMessage(A action) {
+        String message = MessageGenerator.generateExecuteMessage(type, id,
                 sequenceNumberOutgoing.getAndIncrement(), String.valueOf(action));
         sendMessage(message, "EXEC");
     }
 
-    public void sendAcknowledgeMessage(String clientType, MessageEnums.AKType akType) {
-        String message = MessageGenerator.generateAcknowledgeMessage(clientType, id,
+    public void sendAcknowledgeMessage(MessageEnums.AKType akType) {
+        String message = MessageGenerator.generateAcknowledgeMessage(type, id,
                 sequenceNumberOutgoing.getAndIncrement(), akType);
         sendMessage(message, String.valueOf(akType));
         registered = true;
     }
 
-    public void sendStatusMessage(String clientType) {
-        String message = MessageGenerator.generateStatusMessage(clientType, id,
-                sequenceNumberOutgoing.getAndIncrement());
+    public void sendStatusMessage() {
+        String message = MessageGenerator.generateStatusMessage(type, id, sequenceNumberOutgoing.getAndIncrement());
         sendMessage(message, "STAT");
     }
 
@@ -104,9 +98,9 @@ public abstract class Client<S extends Enum<S>, A extends Enum<A>> {
         Server.getInstance().sendMessageToClient(this, message, type);
     }
 
-    public void registerClient(String clientType) {
+    public void registerClient() {
         Database.getInstance().addClient(this.id, this);
-        logger.log(Level.INFO, "Added new {0} to database", clientType);
+        logger.log(Level.INFO, "Added new {0} to database", type);
     }
 
     public void addReason(ReasonEnum reason) {

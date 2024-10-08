@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
 
 public class StatRequester {
     private static final long STAT_INTERVAL_SECONDS = 2000; // Set time later
@@ -12,12 +11,12 @@ public class StatRequester {
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
     private static final Database db = Database.getInstance();
 
-    private StatRequester() {
-
-    }
-
     public static StatRequester getInstance() {
         return Holder.INSTANCE;
+    }
+
+    private static class Holder {
+        private static final StatRequester INSTANCE = new StatRequester();
     }
 
     // send stats at specified intervals
@@ -27,12 +26,12 @@ public class StatRequester {
             synchronized (lock) {
                 for (Client client : clients) {
                     if (Boolean.TRUE.equals(client.isRegistered())) {
-                        client.sendStatusMessage(client.getId());
+                        client.sendStatusMessage();
                         checkIfClientIsUnresponsive(client);
                     }
                 }
             }
-        }, (long) 0, STAT_INTERVAL_SECONDS, TimeUnit.MILLISECONDS);
+        }, 0, STAT_INTERVAL_SECONDS, TimeUnit.MILLISECONDS);
     }
 
     private void checkIfClientIsUnresponsive(Client client) {
@@ -45,10 +44,6 @@ public class StatRequester {
     }
 
     public void shutdown() {
-        scheduler.close();
-    }
-
-    private static class Holder {
-        private static final StatRequester INSTANCE = new StatRequester();
+        scheduler.shutdown();
     }
 }
