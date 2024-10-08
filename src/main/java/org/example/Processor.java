@@ -10,22 +10,21 @@ public class Processor {
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private static final Database db = Database.getInstance();
     private static int totalBlocks;
-    private static final int MAX_BLOCKS = 10;
 
     private Processor() {}
 
     public static void checkpointTripped(int checkpointTripped, boolean untrip) {
         SystemStateManager systemStateManager = SystemStateManager.getInstance();
-        totalBlocks = db.getCheckpointCount();
+        totalBlocks = db.getBlockCount();
 
-        if (!isCheckpointValid(checkpointTripped)) {
+        if (!isNextBlockValid(checkpointTripped)) {
             logger.log(Level.WARNING, "Inconsistent checkpoint trip : {0} on trip boolean : {1}",
                     new Object[] { checkpointTripped, untrip });
             return;
         }
 
         if (systemStateManager.needsTrip(checkpointTripped, untrip)) {
-            logger.log(Level.WARNING, "Thomas to do, not sure what needstrip is");
+            logger.log(Level.WARNING, "Thomas to do, not sure what needs trip is");
             return;
         }
 
@@ -63,8 +62,13 @@ public class Processor {
         }
 
         // checks if next block is full, if so stop only if untrip
-        if (db.isBlockOccupied(calculateNextBlock(checkpointTripped, 1)) && untrip) {
+        int nextCheckpoint = calculateNextBlock(checkpointTripped, 1);
+        if (db.isBlockOccupied(nextCheckpoint) && untrip) {
             bladeRunnerOptional.get().sendExecuteMessage(MessageEnums.CCPAction.STOPC);
+        }
+
+        if (isNextCheckpointStation(nextCheckpoint)) {
+            bladeRunner.sendExecuteMessage(MessageEnums.CCPAction.FSLOWC);
         }
 
         // only change zone if untrip
@@ -75,12 +79,16 @@ public class Processor {
         }
     }
 
+    private static boolean isNextCheckpointStation (int nextCheckpoint) {
+        String id = nextCheckpoint > 9 ? "ST" + nextCheckpoint : "ST0" + nextCheckpoint;
+        return db.getClient(id, StationClient.class).isPresent();
+    }
+
     private static Optional<BladeRunnerClient> getBladeRunner(int checkpoint) {
         String bladeRunnerID = db.getLastBladeRunnerInBlock(checkpoint);
 
         if (bladeRunnerID == null) {
-            logger.log(Level.WARNING, "Tried to get blade runner at checkpoint {0} but failed",
-                    checkpoint);
+            logger.log(Level.WARNING, "Tried to get blade runner at checkpoint {0} but failed", checkpoint);
             return Optional.empty();
         }
 
@@ -99,7 +107,7 @@ public class Processor {
     }
 
     public static int calculateNextBlock(int checkpoint, int direction) {
-        totalBlocks = db.getCheckpointCount();
+        totalBlocks = db.getBlockCount();
 
         while(true) {
             checkpoint += direction;
@@ -109,15 +117,16 @@ public class Processor {
             if (checkpoint < 1)
                 checkpoint = totalBlocks;
 
-            if(isCheckpointValid(checkpoint)) {
+            if(isNextBlockValid(checkpoint)) {
                 return checkpoint;
             }
         }
     }
 
-    private static boolean isCheckpointValid(int checkpoint) {
-        String id = (checkpoint == totalBlocks) ? "CP" + checkpoint : "CP0" + checkpoint;
-        return db.getClient(id, CheckpointClient.class).isPresent();
+    private static boolean isNextBlockValid (int checkpoint) {
+        String cpId = checkpoint == totalBlocks ? "CP" + checkpoint : "CP0" + checkpoint;
+        String stId = checkpoint == totalBlocks ? "ST" + checkpoint : "ST0" + checkpoint;
+        return db.getClient(cpId, CheckpointClient.class).isPresent() || db.getClient(stId, StationClient.class).isPresent();
     }
 
     private static void trainAligned() {
@@ -150,7 +159,6 @@ public class Processor {
             brOverShot.get().sendExecuteMessage(MessageEnums.CCPAction.RSLOWC);
             brOverShot.get().updateStatus(MessageEnums.CCPStatus.RSLOWC);
         }
-
     }
 }
 

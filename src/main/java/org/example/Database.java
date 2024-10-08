@@ -214,4 +214,8 @@ public class Database {
     public void clearUnresponsive() {
         unresponsiveClients.clear();
     }
+
+    public Integer getBlockCount() {
+        return getCheckpointCount() + getStationCount();
+    }
 }

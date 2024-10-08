@@ -245,7 +245,6 @@ public class MessageHandler {
                     new Object[] {receiveMessage.status, client.getId()});
         }
 
-        logger.log(Level.INFO, "Received STAT message from Blade Runner: {0}",
-                receiveMessage.clientID);
+        logger.log(Level.INFO, "Received STAT message from Blade Runner: {0}", receiveMessage.clientID);
     }
 }

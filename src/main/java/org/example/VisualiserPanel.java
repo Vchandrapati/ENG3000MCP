@@ -5,15 +5,16 @@ import java.awt.*;
 import java.awt.geom.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class VisualiserPanel extends JPanel {
-    private static final int SEGMENTS = 10;
+    private static final Database db = Database.getInstance();
     private static final double SEGMENT_DRAW_LENGTH = 10;
     private transient List<BladeRunnerClient> bladeRunnerZones = new ArrayList<>();
 
     private static void drawSegments(double angleIncrement, int centerX, double radiusX,
             int centerY, double radiusY, Graphics2D g2d) {
-        for (int i = 1; i <= SEGMENTS; i++) {
+        for (int i = 1; i <= db.getBlockCount(); i++) {
             // Current angle for this segment
             double angle = i * angleIncrement;
 
@@ -44,6 +45,27 @@ public class VisualiserPanel extends JPanel {
             int labelHeight = fm.getAscent();
             g2d.drawString(zoneNumber, (float) labelX - (float) labelWidth / 2,
                     (float) labelY + (float) labelHeight / 2);
+
+            // Check if the current checkpoint has a station
+            Optional<StationClient> stationClientOpt = db.getClient("ST" + (i < 10 ? "0" + i : i), StationClient.class);
+            if (stationClientOpt.isPresent()) {
+                StationClient stationClient = stationClientOpt.get();
+
+                // Calculate the position of the station text box
+                double stationLabelX = centerX + (radiusX - 50) * Math.cos(labelAngle);
+                double stationLabelY = centerY + (radiusY - 50) * Math.sin(labelAngle);
+
+                // Get station ID and status
+                String stationId = stationClient.getId();
+                String stationStatus = stationClient.getStatus().toString();
+
+                // Draw the station ID and status
+                g2d.setFont(new Font("Arial", Font.PLAIN, 12));
+                String stationInfo = stationId + " (" + stationStatus + ")";
+                int stationLabelWidth = fm.stringWidth(stationInfo);
+                g2d.setColor(Color.BLUE);
+                g2d.drawString(stationInfo, (float) stationLabelX - (float) stationLabelWidth / 2, (float) stationLabelY);
+            }
         }
     }
 
@@ -73,12 +95,11 @@ public class VisualiserPanel extends JPanel {
         // Draw the ellipse
         g2d.setStroke(new BasicStroke(3));
         g2d.setColor(Color.BLACK);
-        Ellipse2D.Double outerEllipse =
-                new Ellipse2D.Double(ellipseX, ellipseY, ellipseWidth, ellipseHeight);
+        Ellipse2D.Double outerEllipse = new Ellipse2D.Double(ellipseX, ellipseY, ellipseWidth, ellipseHeight);
         g2d.draw(outerEllipse);
 
         // Calculate where to draw lines
-        double angleIncrement = 2 * Math.PI / SEGMENTS;
+        double angleIncrement = 2 * Math.PI / db.getBlockCount();
 
         // Radii for the ellipse
         double radiusX = ellipseWidth / 2.0;
@@ -90,12 +111,12 @@ public class VisualiserPanel extends JPanel {
 
     private void drawBladeRunnerLocations(double angleIncrement, int centerX, double radiusX,
             int centerY, double radiusY, Graphics2D g2d) {
-        for (BladeRunnerClient BladeRunner : bladeRunnerZones) {
-            if (BladeRunner.isUnmapped())
+        for (BladeRunnerClient bladeRunner : bladeRunnerZones) {
+            if (bladeRunner.isUnmapped())
                 continue;
 
-            String status = BladeRunner.getStatus().toString();
-            int zone = BladeRunner.getZone();
+            String status = bladeRunner.getStatus().toString();
+            int zone = bladeRunner.getZone();
 
             // Calculate the angle at the center of the zone
             double theta = zone * angleIncrement + angleIncrement / 2;
@@ -110,8 +131,8 @@ public class VisualiserPanel extends JPanel {
             double angleOfTangent = Math.atan2(dy, dx);
 
             // Draw the BladeRunner rotated to face the track direction
-            int rectWidth = 20;
-            int rectHeight = 10;
+            int rectWidth = 70;
+            int rectHeight = 30;
 
             // Create the rectangle centered at (0, 0)
             Rectangle2D rect = new Rectangle2D.Double(-rectWidth / 2.0, -rectHeight / 2.0,
@@ -124,24 +145,29 @@ public class VisualiserPanel extends JPanel {
 
             Shape rotatedRect = transform.createTransformedShape(rect);
 
-            g2d.setColor(Color.GREEN);
+            if(bladeRunner.currentStatus != MessageEnums.CCPStatus.ERR)
+                g2d.setColor(Color.GREEN);
+            else
+                g2d.setColor(Color.RED);
+
             g2d.fill(rotatedRect);
 
             // Draw the BladeRunner ID near the BladeRunner
             g2d.setColor(Color.BLACK);
             FontMetrics fm = g2d.getFontMetrics();
-            int idWidth = fm.stringWidth(BladeRunner.getId());
+            int idWidth = fm.stringWidth(bladeRunner.getId());
 
             double idOffsetX = -idWidth / 2.0;
-            double idOffsetY = -rectHeight / 2.0 - 5;
+            double idOffsetY = -rectHeight / 2.0 - 15;  // Move the ID further away from the rectangle
 
             AffineTransform idTransform = new AffineTransform();
             idTransform.translate(bladeRunnerX, bladeRunnerY);
             idTransform.rotate(angleOfTangent);
+
             Point2D idPoint = idTransform.transform(new Point2D.Double(idOffsetX, idOffsetY), null);
 
-            g2d.drawString(BladeRunner.getId(), (float) idPoint.getX(), (float) idPoint.getY());
-            g2d.drawString(status, (float) idPoint.getX(), (float) idPoint.getY() - 10);
+            g2d.drawString(bladeRunner.getId(), (float) idPoint.getX(), (float) idPoint.getY());
+            g2d.drawString(status, (float) idPoint.getX(), (float) idPoint.getY() - 20);
         }
     }
 }
