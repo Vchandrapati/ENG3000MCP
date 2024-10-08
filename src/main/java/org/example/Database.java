@@ -16,7 +16,7 @@ public class Database {
     private final HashSet<String> allBladeRunners;
     // Set of all unresponsive or "dead" clients
 
-    private final HashSet<String> unresponsiveClients; // Change temp
+    private final HashSet<String> unresponsiveClients;
 
     private final AtomicInteger numberOfCheckpoints;
     private final AtomicInteger numberOfStations;
@@ -88,7 +88,8 @@ public class Database {
         if (type.isInstance(c)) {
             return Optional.of(type.cast(c));
         } else
-            logger.log(Level.SEVERE, "Client with ID: {0} is not of type: {1}", new Object[] {id, type.getName()});
+            logger.log(Level.SEVERE, "Client with ID: {0} is not of type: {1}",
+                    new Object[] {id, type.getName()});
 
         return Optional.empty();
     }
@@ -178,7 +179,8 @@ public class Database {
     }
 
     public String getLastBladeRunnerInBlock(int blockId) {
-        return bladeRunnerBlockMap.entrySet().stream().filter(entry -> entry.getValue().equals(blockId)).map(Map.Entry::getKey)
+        return bladeRunnerBlockMap.entrySet().stream()
+                .filter(entry -> entry.getValue().equals(blockId)).map(Map.Entry::getKey)
                 .reduce((first, second) -> second).orElse(null);
     }
 
@@ -209,5 +211,9 @@ public class Database {
 
     public Integer getStationCount() {
         return numberOfStations.get();
+    }
+
+    public void clearUnresponsive() {
+        unresponsiveClients.clear();
     }
 }
