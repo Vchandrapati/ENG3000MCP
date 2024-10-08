@@ -7,7 +7,6 @@ import java.util.Arrays;
 public class CCPClient {
     private enum Status {
         STOPC, STOPO, FSLOWC, FFASTC, RSLOWC, ERR
-
     }
 
     DatagramSocket socket;
@@ -61,6 +60,7 @@ public class CCPClient {
 
                     String[] temp = message.split(",");
                     String[] c = temp[0].split(":");
+                    String[] s = temp[1].split(":");
 
                     // If the message is an AKIN msg will get the ID
                     if (c[1].equals("\"AKIN\"")) {
@@ -78,7 +78,9 @@ public class CCPClient {
                     }
 
                     if (c[1].equals("\"EXEC\"")) {
-                        this.sendAKEX();;
+                        stringToStatus(s[1]);
+                        System.out.println(s[1]);
+                        this.sendAKEX();
                     }
 
                 } catch (IOException e) {
@@ -139,5 +141,36 @@ public class CCPClient {
     public void setLivingStatus(boolean status) {
         living = status;
     }
+
+    public void stringToStatus(String status) {
+        char[] charStatus = status.toCharArray();
+        status = "";
+        for (int i = 1; i < charStatus.length - 1; i++) {
+            status += charStatus[i];
+        }
+        switch(status) {
+            case "STOPC":
+                this.curStat = Status.STOPC;
+                break;
+            case "STOPO":
+                this.curStat = Status.STOPO;
+                break;
+            case "FSLOWC":
+                this.curStat = Status.FSLOWC;
+                break;
+            case "FFASTC":
+                this.curStat = Status.FFASTC;
+                break;
+            case "RSLOWC":
+                this.curStat = Status.RSLOWC;
+                break;
+            case "ERR":
+                this.curStat = Status.ERR;
+                break;
+            default: 
+                System.out.println("ERROR in string to status");
+                break;
+        }
+    }   
 
 }
