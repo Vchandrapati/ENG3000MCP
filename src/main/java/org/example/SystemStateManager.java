@@ -11,7 +11,6 @@ public class SystemStateManager {
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     private static final Database db = Database.getInstance();
-    private static final int NO_TRIP = -1;
     private static final Map<SystemState, Supplier<SystemStateInterface>> stateMap;
 
     // singleton instance of class
@@ -28,7 +27,6 @@ public class SystemStateManager {
     // holds the current state and the current state concrete implementation
     private SystemState currentState;
     private SystemStateInterface currentStateConcrete;
-    private int lastTrip = NO_TRIP;
     private boolean error = false;
     private long timeWaited = System.currentTimeMillis();
 

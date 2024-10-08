@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.concurrent.*;
 
 public class MappingState implements SystemStateInterface {
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
@@ -17,6 +18,8 @@ public class MappingState implements SystemStateInterface {
 
     private static final SystemState NEXT_STATE = SystemState.RUNNING;
 
+    private static final BlockingQueue<String> tripQueue = new LinkedBlockingQueue<>();
+
     private final List<BladeRunnerClient> bladeRunnersToMap;
     private final Database db = Database.getInstance();
     private boolean startMapping;
@@ -26,6 +29,10 @@ public class MappingState implements SystemStateInterface {
     private long currentBladeRunnerStartTime;
     private int retryAttemps;
     private long startTime;
+
+    private boolean forward;
+    private boolean backwards;
+    private boolean hasTripped;
 
     // Constructor
     public MappingState() {
@@ -60,8 +67,6 @@ public class MappingState implements SystemStateInterface {
         return false;
     }
 
-
-
     // proceeds to map all BladeRunner clients one by one, return true if no BladeRunners or all
     // BladeRunners are mapped
     private boolean mapClients() {
@@ -91,31 +96,6 @@ public class MappingState implements SystemStateInterface {
         return false;
     }
 
-    // Grabs all unmapped blade runners, and also blade runners that have collided
-    private void grabBladeRunners() {
-        List<BladeRunnerClient> tempBladeRunnersToMap = db.getBladeRunnerClients();
-        for (BladeRunnerClient BladeRunnerClient : tempBladeRunnersToMap) {
-            // returns true if the blade runner has had a collision
-            if (BladeRunnerClient.collision(false, null)) {
-                bladeRunnersToMap.addFirst(BladeRunnerClient);
-            }
-            // returns true if the blade runner is unmapped
-            else if (BladeRunnerClient.isUnmapped()) {
-                bladeRunnersToMap.add(BladeRunnerClient);
-            }
-        }
-    }
-
-    // if a BladeRunner does not map in a minute time, send stop message to current
-    // BladeRunner and go to waiting state
-    // * Returns true if the timeout has occurred */
-    private void checkIfBladeRunnerIsDead() {
-        if (retryAttemps > MAX_RETRIES) {
-            SystemStateManager.getInstance().addUnresponsiveClient(currentBladeRunner.getId(), ReasonEnum.MAPTIMEOUT);
-            logger.log(Level.SEVERE, "Blade runner failed to be mapped in time");
-        }
-    }
-
     // Processes the current BladeRunner to move to next checkpoint, keeps trying until it reaches
     private boolean processCurrentBladeRunner() {
         if (!hasSent) {
@@ -138,8 +118,6 @@ public class MappingState implements SystemStateInterface {
         return false;
     }
 
-
-
     // Send speed message to the current BladeRunner
     private void sendBladeRunnerToNextCheckpoint(boolean retry) {
         if (!hasSent) {
@@ -149,6 +127,7 @@ public class MappingState implements SystemStateInterface {
         logger.log(Level.INFO, "{0} moving {1}",
                 new Object[] {retryString, currentBladeRunner.getId()});
 
+        //if the blader runner has had a collision go to reverse
         if (currentBladeRunner.collision(false, null)) {
             currentBladeRunner.sendExecuteMessage(MessageEnums.CCPAction.RSLOWC);
         } else {
@@ -169,6 +148,38 @@ public class MappingState implements SystemStateInterface {
         currentBladeRunner.changeZone(zone);
         currentBladeRunner.collision(false, new Object());
         db.updateBladeRunnerBlock(currentBladeRunner.getId(), zone);
+    }
+
+    // if a BladeRunner does not map in a minute time, send stop message to current
+    // BladeRunner and go to waiting state
+    // * Returns true if the timeout has occurred */
+    private void checkIfBladeRunnerIsDead() {
+        if (retryAttemps > MAX_RETRIES) {
+            SystemStateManager.getInstance().addUnresponsiveClient(currentBladeRunner.getId(), ReasonEnum.MAPTIMEOUT);
+            logger.log(Level.SEVERE, "Blade runner failed to be mapped in time");
+        }
+    }
+
+    // Grabs all unmapped blade runners, and also blade runners that have collided
+    private void grabBladeRunners() {
+        List<BladeRunnerClient> tempBladeRunnersToMap = db.getBladeRunnerClients();
+        for (BladeRunnerClient BladeRunnerClient : tempBladeRunnersToMap) {
+            // returns true if the blade runner has had a collision
+            if (BladeRunnerClient.collision(false, null)) {
+                bladeRunnersToMap.addFirst(BladeRunnerClient);
+            }
+            // returns true if the blade runner is unmapped
+            else if (BladeRunnerClient.isUnmapped()) {
+                bladeRunnersToMap.add(BladeRunnerClient);
+            }
+        }
+    }
+
+    public static void addTrip(int trip, boolean untrip) {
+        StringBuilder str = new StringBuilder();
+        str.append(trip);
+        str.append(untrip);
+        tripQueue.add(str.toString());
     }
 
     @Override

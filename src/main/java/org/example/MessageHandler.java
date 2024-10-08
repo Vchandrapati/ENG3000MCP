@@ -153,8 +153,8 @@ public class MessageHandler {
                         client.resetMissedStats();
                     }
 
-                    logger.log(Level.INFO, "Received STAT message from Blade Runner: {0}",
-                            receiveMessage.clientID);
+                    logger.log(Level.INFO, "Received STAT message from Blade Runner: {0}, {1}",
+                            new Object[] {receiveMessage.clientID, receiveMessage.status});
                     client.sendAcknowledgeMessage(MessageEnums.AKType.AKST);
                     break;
                 case "AKEX":
