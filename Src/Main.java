@@ -72,11 +72,11 @@ public class Main {
 
                 if (ID[0].equals("ST")) {
                     numSTNClients++;
-                    STNClients.add(new STNClients(4001 + num, add, port, fullID));
+                    STNClients.add(new STNClients(4000 + num, add, port, fullID));
                 }
                 if (ID[0].equals("CP")) {
                     numcheckClinets++;
-                    Checkclients.add(new CheckpointClient(3001 + num, add, port, fullID));
+                    Checkclients.add(new CheckpointClient(3000 + num, add, port, fullID));
                 }
             }
 
