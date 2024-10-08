@@ -88,7 +88,7 @@ public class Database {
         if (type.isInstance(c)) {
             return Optional.of(type.cast(c));
         } else
-            logger.log(Level.SEVERE, "Client with ID: {0} is not of type: {1}",
+            logger.log(Level.WARNING, "Client with ID: {0} is not of type: {1}",
                     new Object[] {id, type.getName()});
 
         return Optional.empty();
