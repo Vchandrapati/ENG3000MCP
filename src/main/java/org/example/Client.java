@@ -48,7 +48,7 @@ public abstract class Client<S extends Enum<S>, A extends Enum<A>> {
 
     public boolean checkResponsive() {
         this.missedStats.getAndIncrement();
-        if(missedStats.get() >= 3) {
+        if (missedStats.get() >= 3) {
             addReason(ReasonEnum.NOSTAT);
             return true;
         }

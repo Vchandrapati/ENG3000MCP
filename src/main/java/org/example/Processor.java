@@ -19,10 +19,13 @@ public class Processor {
         totalBlocks = db.getCheckpointCount();
 
         if (!isCheckpointValid(checkpointTripped)) {
+            logger.log(Level.WARNING, "Inconsistent checkpoint trip : {0} on trip boolean : {1}",
+                    new Object[] { checkpointTripped, untrip });
             return;
         }
 
         if (systemStateManager.needsTrip(checkpointTripped, untrip)) {
+            logger.log(Level.WARNING, "Thomas to do, not sure what needstrip is");
             return;
         }
 
@@ -84,13 +87,15 @@ public class Processor {
         return db.getClient(bladeRunnerID, BladeRunnerClient.class);
     }
 
-    // frees ONE blade runner behind the current, he will subsequently free the rest by moving
+    // frees ONE blade runner behind the current, he will subsequently free the rest
+    // by moving
     private static void checkForTraffic(int checkpoint) {
         // check block behind
         int blockBefore = calculateNextBlock(checkpoint, -1);
         if (db.isBlockOccupied(blockBefore)) {
             Optional<BladeRunnerClient> bladeRunnerOptional = getBladeRunner(blockBefore);
             bladeRunnerOptional.ifPresent(br -> br.sendExecuteMessage(MessageEnums.CCPAction.FFASTC));
+            bladeRunnerOptional.ifPresent(br -> br.updateStatus(MessageEnums.CCPStatus.FFASTC));
         }
     }
 
@@ -115,4 +120,38 @@ public class Processor {
         String id = (checkpoint == totalBlocks) ? "CP" + checkpoint : "CP0" + checkpoint;
         return db.getClient(id, CheckpointClient.class).isPresent();
     }
+
+    private static void trainAligned() {
+        // Nothing needed at the moment
+    }
+
+    private static void trainUnaligned(int stationCheckpoint) {
+        Optional<BladeRunnerClient> br = getBladeRunner(stationCheckpoint - 1);
+        Optional<BladeRunnerClient> brOverShot = getBladeRunner(stationCheckpoint);
+
+        // stop bladeRunner behind the station checkpoint incase there is one
+        Optional<BladeRunnerClient> bladeRunnerBehind = getBladeRunner(stationCheckpoint - 2);
+
+        if (bladeRunnerBehind.isPresent()) {
+            bladeRunnerBehind.get().sendExecuteMessage(MessageEnums.CCPAction.STOPC);
+            bladeRunnerBehind.get().updateStatus(MessageEnums.CCPStatus.STOPC);
+        }
+
+        if (br.isEmpty() && brOverShot.isEmpty()) {
+            logger.log(Level.WARNING, "Tried to get blade runner at checkpoint {0} but failed",
+                    stationCheckpoint);
+            return;
+        }
+
+        if (br.isPresent()) {
+            // train has undershot, not our responsibility to align i dont think
+        }
+
+        if (brOverShot.isPresent()) { // train has overshot
+            brOverShot.get().sendExecuteMessage(MessageEnums.CCPAction.RSLOWC);
+            brOverShot.get().updateStatus(MessageEnums.CCPStatus.RSLOWC);
+        }
+
+    }
 }
+
