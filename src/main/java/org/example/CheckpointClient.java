@@ -18,20 +18,6 @@ public class CheckpointClient extends Client<MessageEnums.CPCStatus, MessageEnum
         return location;
     }
 
-    @Override
-    public String getExpectedStatus() {
-        return expectedStatus.toString();
-    }
-
-    public void sendExecuteMessage(MessageEnums.CPCAction action) {
-        this.updateStatus(MessageEnums.convertActionToStatus(action));
-        super.sendExecuteMessage(action);
-    }
-
-    public void registerClient() {
-        super.registerClient();
-    }
-
     // public void setTripped() {
     // this.tripped = true;
     // }

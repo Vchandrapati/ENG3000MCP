@@ -35,12 +35,10 @@ public class StatRequester {
     }
 
     private void checkIfClientIsUnresponsive(Client client) {
-        client.incrementMissedStats();
-        if (client.isUnresponsive()) {
+        if (client.checkResponsive()) {
             SystemStateManager.getInstance().addUnresponsiveClient(client.getId(),
                     ReasonEnum.NOSTAT);
         }
-
     }
 
     public void shutdown() {

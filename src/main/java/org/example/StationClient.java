@@ -17,13 +17,4 @@ public class StationClient extends Client<MessageEnums.STCStatus, MessageEnums.S
     public int getLocation() {
         return location;
     }
-
-    public void sendExecuteMessage(MessageEnums.STCAction action) {
-        this.updateStatus(MessageEnums.convertActionToStatus(action));
-        super.sendExecuteMessage(action);
-    }
-
-    public void registerClient() {
-        super.registerClient();
-    }
 }
