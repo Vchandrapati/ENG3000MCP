@@ -115,16 +115,16 @@ public class EmergencyState implements SystemStateInterface {
             case ReasonEnum.INVALCONNECT: // same as no stat for now
             case ReasonEnum.NOSTAT: {
                 Client<?, ?> clientInstance = db.getClient(client, Client.class).get();
-                // No more stat returned need to check current status, look at MessageEnum - Eugene
-                //clientInstance.resetMissedStats();
-                logger.log(Level.INFO, "Has fixed issue {0} for client : {1}",
-                        new Object[] {reason, client});
-                db.removeReason(client, reason);
+                if (!clientInstance.checkResponsive()) {
+                    logger.log(Level.INFO, "Has fixed issue {0} for client : {1}",
+                            new Object[] {reason, client});
+                    db.removeReason(client, reason);
+                }
                 break;
             }
             case ReasonEnum.CLIENTERR: {
                 Client<?, ?> clientInstance = db.getClient(client, Client.class).get();
-                if (!clientInstance.getLastActionSent().equals("ERR")) {
+                if (clientInstance.getLastActionSent() != MessageEnums.CCPStatus.ERR) {
                     db.removeReason(client, reason);
                 }
                 break;
