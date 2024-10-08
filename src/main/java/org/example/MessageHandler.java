@@ -202,20 +202,29 @@ public class MessageHandler {
 
         if (lastAction != null) expectedStatus = lastAction.getStatus();
 
-        // If client reports ERR
-        if (receiveMessage.status.equals("ERR")) {
-            systemStateManager.addUnresponsiveClient(client.getId(), ReasonEnum.CLIENTERR);
-        } else if (expectedStatus != null && !expectedStatus.equals(MessageEnums.CCPStatus.valueOf(receiveMessage.status))) {
-            // If client is not in expected state then there is a problem
-            systemStateManager.addUnresponsiveClient(client.getId(), ReasonEnum.WRONGSTATUS);
-            logger.log(Level.SEVERE, "Client {0} did not update status to {1} from {2}", new Object[]{client.getId(), expectedStatus, receiveMessage.status});
-        }
+        try {
+            S recievedStatus = Enum.valueOf(client.currentStatus.getDeclaringClass(), receiveMessage.status);
 
-        // If the current stat message sequence number is the highest then the stats
-        // missed should = 0
-        if (client.getLatestStatusMessageCount() < receiveMessage.sequenceNumber) {
-            client.updateLatestStatusMessageCount(receiveMessage.sequenceNumber);
-            client.resetMissedStats();
+            // If client reports ERR
+            if (recievedStatus.toString().equals("ERR")) {
+                systemStateManager.addUnresponsiveClient(client.getId(), ReasonEnum.CLIENTERR);
+            } else if (expectedStatus != null && !expectedStatus.equals(recievedStatus)) {
+                // If client is not in expected state then there is a problem
+                systemStateManager.addUnresponsiveClient(client.getId(), ReasonEnum.WRONGSTATUS);
+                logger.log(Level.SEVERE, "Client {0} did not update status to {1} from {2}", new Object[] {client.getId(), expectedStatus, receiveMessage.status});
+            }
+
+            // If the current stat message sequence number is the highest then the stats
+            // missed should = 0
+            if (client.getLatestStatusMessageCount() < receiveMessage.sequenceNumber) {
+                client.updateLatestStatusMessageCount(receiveMessage.sequenceNumber);
+                client.resetMissedStats();
+            }
+
+            client.updateStatus(recievedStatus);
+        } catch (IllegalArgumentException e) {
+            // Handle case where the status in receiveMessage is invalid
+            logger.log(Level.SEVERE, "Invalid status: received {0} for client {1}", new Object[]{receiveMessage.status, client.getId()});
         }
 
         logger.log(Level.INFO, "Received STAT message from Blade Runner: {0}", receiveMessage.clientID);
