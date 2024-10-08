@@ -31,7 +31,7 @@ public class ClientsPanel extends JPanel {
         // Populate the table with updated client data
         for (Client client : updatedClients) {
             Object[] rowData = {client.getId(), client.getClass().getSimpleName(),
-                    client.getExpectedStatus(), client.getLastMessageSent()};
+                    client.getLastActionSent(), client.getLastMessageSent()};
             tableModel.addRow(rowData);
         }
 

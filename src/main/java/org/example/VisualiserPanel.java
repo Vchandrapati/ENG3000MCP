@@ -94,7 +94,7 @@ public class VisualiserPanel extends JPanel {
             if (BladeRunner.isUnmapped())
                 continue;
 
-            String status = BladeRunner.getExpectedStatus();
+            String status = BladeRunner.getStatus().toString();
             int zone = BladeRunner.getZone();
 
             // Calculate the angle at the center of the zone

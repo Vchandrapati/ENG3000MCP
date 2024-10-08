@@ -19,7 +19,7 @@ public class MessageEnums {
                 case FSLOWC -> CCPStatus.FSLOWC;
                 case FFASTC -> CCPStatus.FFASTC;
                 case RSLOWC -> CCPStatus.RSLOWC;
-                default -> CCPStatus.ERR;
+                case DISCONNECT -> null;
             };
         }
     }
@@ -38,7 +38,7 @@ public class MessageEnums {
             return switch (this) {
                 case OFF -> CPCStatus.OFF;
                 case ON -> CPCStatus.ON;
-                default -> CPCStatus.ERR;
+                case BLINK -> null;
             };
         }
     }
@@ -58,7 +58,7 @@ public class MessageEnums {
                 case OFF -> STCStatus.OFF;
                 case ON -> STCStatus.ON;
                 case OPEN -> STCStatus.ONOPEN;
-                default -> STCStatus.ERR;
+                case BLINK, CLOSE -> null;
             };
         }
     }

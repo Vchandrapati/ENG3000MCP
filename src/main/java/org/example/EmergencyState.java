@@ -1,8 +1,6 @@
 package org.example;
 
 import java.util.List;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.ArrayBlockingQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.ArrayList;
@@ -126,7 +124,7 @@ public class EmergencyState implements SystemStateInterface {
             }
             case ReasonEnum.CLIENTERR: {
                 Client<?, ?> clientInstance = db.getClient(client, Client.class).get();
-                if (!clientInstance.getExpectedStatus().equals("ERR")) {
+                if (!clientInstance.getLastActionSent().equals("ERR")) {
                     db.removeReason(client, reason);
                 }
                 break;

@@ -10,7 +10,8 @@ import java.util.logging.Logger;
 
 public abstract class Client<S extends Enum<S>, A extends Enum<A>> {
     protected static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-    S expectedStatus;
+    A lastActionSent;
+    S currentStatus;
     private final String id;
     private final InetAddress clientAddress;
     private final int clientPort;
@@ -19,7 +20,7 @@ public abstract class Client<S extends Enum<S>, A extends Enum<A>> {
     protected AtomicInteger sequenceNumberOutgoing;
     protected AtomicInteger sequenceNumberIncoming;
     protected Integer latestStatusMessage;
-    private AtomicInteger missedStats;
+    private final AtomicInteger missedStats;
 
     protected HashMap<Integer, String> incomingMessages;
     protected HashMap<Integer, String> outgoingMessages;
@@ -43,33 +44,35 @@ public abstract class Client<S extends Enum<S>, A extends Enum<A>> {
         unresponsiveReasons = new HashSet<>();
     }
 
-    // Why is this needed? -Eugene
-    public abstract String getExpectedStatus();
+    public boolean checkResponsive() {
+        this.missedStats.getAndIncrement();
+        if(missedStats.get() >= 3) {
+            addReason(ReasonEnum.NOSTAT);
+            return true;
+        }
 
-    public boolean isUnresponsive() {
-        return missedStats.get() >= 3;
+        return false;
+    }
+
+    public void resetMissedStats() {
+        this.missedStats.set(0);
     }
 
     public void updateStatus(S newStatus) {
-        this.expectedStatus = newStatus;
+        this.currentStatus = newStatus;
         logger.log(Level.INFO, "Updated status for {0} to {1}", new Object[] {id, newStatus});
     }
 
     public S getStatus() {
-        return expectedStatus;
+        return currentStatus;
+    }
+
+    public A getLastActionSent() {
+        return lastActionSent;
     }
 
     public void updateLatestStatusMessageCount(Integer count) {
         latestStatusMessage = count;
-    }
-
-    public void incrementMissedStats() {
-        this.missedStats.getAndIncrement();
-    }
-
-    // Is this fine vikil? - Eugene
-    public void resetMissedStats() {
-        this.missedStats = new AtomicInteger(0);
     }
 
     public Integer getLatestStatusMessageCount() {
@@ -77,6 +80,7 @@ public abstract class Client<S extends Enum<S>, A extends Enum<A>> {
     }
 
     public void sendExecuteMessage(A action) {
+        this.lastActionSent = action;
         String message = MessageGenerator.generateExecuteMessage(type, id,
                 sequenceNumberOutgoing.getAndIncrement(), String.valueOf(action));
         sendMessage(message, "EXEC");

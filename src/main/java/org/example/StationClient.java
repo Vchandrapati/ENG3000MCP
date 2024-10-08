@@ -18,11 +18,6 @@ public class StationClient extends Client<MessageEnums.STCStatus, MessageEnums.S
         return location;
     }
 
-    @Override
-    public String getExpectedStatus() {
-        return expectedStatus.toString();
-    }
-
     public void sendExecuteMessage(MessageEnums.STCAction action) {
         this.updateStatus(MessageEnums.convertActionToStatus(action));
         super.sendExecuteMessage(action);
