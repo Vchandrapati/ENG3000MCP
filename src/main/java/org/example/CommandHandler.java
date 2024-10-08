@@ -21,6 +21,7 @@ public class CommandHandler implements Runnable {
         commands.add("quit");
         commands.add("override emergency");
         commands.add("start waiting");
+        commands.add("disconnect");
         commands.add("help");
     }
 

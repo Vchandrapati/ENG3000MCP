@@ -10,6 +10,7 @@ public class EmergencyState implements SystemStateInterface {
 
     // All time units in milliseconds
     private static final long EMERGENCY_TIMEOUT = 600000; // 10 minutes
+    private static final long EMERGENCY_TIMEOUT_AFTER_WAIT = 300000; // 5 minutes
     private static final long TIME_BETWEEN_RUNNING = 1000;
     private static final long TIME_BETWEEN_SENDING_STOP = 5000; // 5 seconds
     private static final long MINIMUM_EMERGENCY_TIME = 5000; // 5 seconds
@@ -20,14 +21,16 @@ public class EmergencyState implements SystemStateInterface {
     private final long timeOnStart;
     private final Database db = Database.getInstance();
     private long timeOnStop;
+    private boolean afterTimeout;
 
     // Emergency mode can wait forever until client is fixed or
     // be given a ten minute timeout
-    private static final boolean WAIT_FOREVER = true;
+    private static final boolean WAIT_FOREVER = false;
 
     public EmergencyState() {
         timeOnStart = System.currentTimeMillis();
         timeOnStop = 0;
+        afterTimeout = false;
     }
 
     @Override
@@ -42,8 +45,22 @@ public class EmergencyState implements SystemStateInterface {
         } else {
             // continues to wait for 10 minutes until client is fixed
             // if not just proceeds as normal as if the problem did not occur
-            if (System.currentTimeMillis() - timeOnStart >= EMERGENCY_TIMEOUT) {
-                return true;
+            if (afterTimeout || System.currentTimeMillis() - timeOnStart >= EMERGENCY_TIMEOUT) {
+                if (!afterTimeout) {
+                    afterTimeout = true;
+
+                    List<String> clients = new ArrayList<>(db.getAllUnresponsiveClientIDs());
+                    for (int i = clients.size() - 1; i > -1; i--) {
+                        BladeRunnerClient clientInstance = db.getClient(clients.get(i), BladeRunnerClient.class).get();
+                        if(clientInstance != null) {
+                            clientInstance.sendExecuteMessage(MessageEnums.CCPAction.DISCONNECT);
+                            db.purge(clients.get(i));
+                        }
+                    }
+                }
+                else {
+
+                }
             } else {
                 stopAllBladeRunners();
                 return checkIfAllAreFixed();
