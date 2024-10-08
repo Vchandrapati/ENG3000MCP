@@ -55,6 +55,7 @@ public class MessageHandler {
     // Handles all checkpoint messages
     private void handleCPCMessage(ReceiveMessage receiveMessage, InetAddress address, int port) {
         db.getClient(receiveMessage.clientID, CheckpointClient.class).ifPresentOrElse(client -> {
+            client.setLastResponse(receiveMessage.message);
             // Client is present
             switch (receiveMessage.message) {
                 case "TRIP":
@@ -70,12 +71,10 @@ public class MessageHandler {
                         case MessageEnums.CPCStatus.ERR:
                             systemStateManager.addUnresponsiveClient(client.getId(), ReasonEnum.CLIENTERR);
                             break;
-
                         default:
                             break;
 
                     }
-
                     client.sendAcknowledgeMessage(MessageEnums.AKType.AKTR);
                     logger.log(Level.INFO, "Received TRIP command from Checkpoint: {0}", receiveMessage.clientID);
                     break;
@@ -105,6 +104,7 @@ public class MessageHandler {
 
     private void handleCCPMessage(ReceiveMessage receiveMessage, InetAddress address, int port) {
         db.getClient(receiveMessage.clientID, BladeRunnerClient.class).ifPresentOrElse(client -> {
+            client.setLastResponse(receiveMessage.message);
             // Client is present
             switch (receiveMessage.message) {
                 case "STAT":
@@ -132,6 +132,7 @@ public class MessageHandler {
 
     private void handleSTCMessage(ReceiveMessage receiveMessage, InetAddress address, int port) {
         db.getClient(receiveMessage.clientID, StationClient.class).ifPresentOrElse(client -> {
+            client.setLastResponse(receiveMessage.message);
             // Client is present
             switch (receiveMessage.message) {
                 case "STAT":

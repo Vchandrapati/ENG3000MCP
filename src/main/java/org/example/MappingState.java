@@ -160,7 +160,7 @@ public class MappingState implements SystemStateInterface {
         //if this blade runner was detected to be in a collision, it will be going backwards
         //thus want the checkpoint before instead of infront
         if (backwards) {
-            zone = Processor.calculatePreviousBlock(zone);
+            zone = Processor.calculateNextBlock(zone, -1);
         }
 
         //if a normal trip, then change to slow

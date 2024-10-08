@@ -27,12 +27,10 @@ public class Processor {
         }
 
         // checks if the checkpoint before tripped checkpoint contains a blade runner
-        int previousCheckpoint = calculatePreviousBlock(checkpointTripped);
+        int previousCheckpoint = calculateNextBlock(checkpointTripped, -1);
         if (!db.isBlockOccupied(previousCheckpoint)) {
-            String id =
-                    (checkpointTripped > 9) ? "CP" + checkpointTripped : "CP0" + checkpointTripped;
-            logger.log(Level.WARNING, "Inconsistent checkpoint trip : {0} on trip boolean : {1}",
-                    new Object[] {id, untrip});
+            String id = (checkpointTripped > 9) ? "CP" + checkpointTripped : "CP0" + checkpointTripped;
+            logger.log(Level.WARNING, "Inconsistent checkpoint trip : {0} on trip boolean : {1}", new Object[] {id, untrip});
             systemStateManager.addUnresponsiveClient(id, ReasonEnum.INCORTRIP);
         } else {
             handleTrip(checkpointTripped, previousCheckpoint, untrip);
@@ -44,8 +42,7 @@ public class Processor {
         Optional<BladeRunnerClient> bladeRunnerOptional = getBladeRunner(previousCheckpoint);
 
         if (bladeRunnerOptional.isEmpty()) {
-            logger.log(Level.WARNING, "Tried to get blade runner at checkpoint {0} but failed",
-                    previousCheckpoint);
+            logger.log(Level.WARNING, "Tried to get blade runner at checkpoint {0} but failed", previousCheckpoint);
             return;
         }
 
@@ -63,7 +60,7 @@ public class Processor {
         }
 
         // checks if next block is full, if so stop only if untrip
-        if (db.isBlockOccupied(calculateNextBlock(checkpointTripped)) && untrip) {
+        if (db.isBlockOccupied(calculateNextBlock(checkpointTripped, 1)) && untrip) {
             bladeRunnerOptional.get().sendExecuteMessage(MessageEnums.CCPAction.STOPC);
         }
 
@@ -90,37 +87,24 @@ public class Processor {
     // frees ONE blade runner behind the current, he will subsequently free the rest by moving
     private static void checkForTraffic(int checkpoint) {
         // check block behind
-        int blockBefore = calculatePreviousBlock(checkpoint);
+        int blockBefore = calculateNextBlock(checkpoint, -1);
         if (db.isBlockOccupied(blockBefore)) {
             Optional<BladeRunnerClient> bladeRunnerOptional = getBladeRunner(blockBefore);
-            bladeRunnerOptional.ifPresent(br -> br.sendExecuteMessage(MessageEnums.CCPAction.FSLOWC));
+            bladeRunnerOptional.ifPresent(br -> br.sendExecuteMessage(MessageEnums.CCPAction.FFASTC));
         }
     }
 
-    public static int calculatePreviousBlock(int checkpoint) {
+    public static int calculateNextBlock(int checkpoint, int direction) {
         totalBlocks = db.getCheckpointCount();
 
         while(true) {
-            checkpoint--;
-            if (checkpoint == 0) {
-                checkpoint = MAX_BLOCKS;
-            }
-            
-            if(isCheckpointValid(checkpoint)) {
-                return checkpoint;
-            }
-        }
-    }
-
-    public static int calculateNextBlock(int checkpoint) {
-        totalBlocks = db.getCheckpointCount();
-
-        while(true) {
-            checkpoint++;
-            if (checkpoint == MAX_BLOCKS) {
+            checkpoint += direction;
+            if (checkpoint > totalBlocks)
                 checkpoint = 1;
-            }
-            
+
+            if (checkpoint < 1)
+                checkpoint = totalBlocks;
+
             if(isCheckpointValid(checkpoint)) {
                 return checkpoint;
             }
@@ -128,15 +112,7 @@ public class Processor {
     }
 
     private static boolean isCheckpointValid(int checkpoint) {
-        if (checkpoint < 1 || checkpoint > MAX_BLOCKS) {
-            return false;
-        }
-
-        String id = (checkpoint == MAX_BLOCKS) ? "CP" + checkpoint : "CP0" + checkpoint;
-        if (db.getClient(id, CheckpointClient.class).isEmpty()) {
-            return false;
-        }
-
-        return true;
+        String id = (checkpoint == totalBlocks) ? "CP" + checkpoint : "CP0" + checkpoint;
+        return db.getClient(id, CheckpointClient.class).isPresent();
     }
 }

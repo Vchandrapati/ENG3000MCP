@@ -16,6 +16,8 @@ public abstract class Client<S extends Enum<S>, A extends Enum<A>> {
     private final InetAddress clientAddress;
     private final int clientPort;
     protected String type;
+    private String lastExecMessageSent;
+    private String lastResponse;
 
     protected AtomicInteger sequenceNumberOutgoing;
     protected AtomicInteger sequenceNumberIncoming;
@@ -81,6 +83,7 @@ public abstract class Client<S extends Enum<S>, A extends Enum<A>> {
 
     public void sendExecuteMessage(A action) {
         this.lastActionSent = action;
+        lastExecMessageSent = "EXEC " + action.toString();
         String message = MessageGenerator.generateExecuteMessage(type, id,
                 sequenceNumberOutgoing.getAndIncrement(), String.valueOf(action));
         sendMessage(message, "EXEC");
@@ -136,7 +139,23 @@ public abstract class Client<S extends Enum<S>, A extends Enum<A>> {
         return registered;
     }
 
-    public String getLastMessageSent() {
-        return incomingMessages.get(sequenceNumberIncoming.get());
+    public String getLastExecMessageSent () {
+        return lastExecMessageSent;
+    }
+
+    public int getSequenceCount() {
+        return sequenceNumberOutgoing.get();
+    }
+
+    public int getMissedStatCount() {
+        return missedStats.get();
+    }
+
+    public void setLastResponse(String lastResponse) {
+        this.lastResponse = lastResponse;
+    }
+
+    public String getLastResponse() {
+        return lastResponse;
     }
 }
