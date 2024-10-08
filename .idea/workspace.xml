@@ -4,11 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1d9b5952-4092-4fc7-8340-7dd220ada861" name="Changes" comment="Updated message handler to verify execs">
+    <list default="true" id="1d9b5952-4092-4fc7-8340-7dd220ada861" name="Changes" comment="Fixed fuck up">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/CheckpointClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/CheckpointClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/StatRequester.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/StatRequester.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/StationClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/StationClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/MessageHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/MessageHandler.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -118,7 +116,7 @@
       <workItem from="1727784351705" duration="3450000" />
       <workItem from="1728203512376" duration="15480000" />
       <workItem from="1728346527791" duration="4334000" />
-      <workItem from="1728358965380" duration="949000" />
+      <workItem from="1728358965380" duration="3671000" />
     </task>
     <task id="LOCAL-00001" summary="Made some changes to comply with sonarlint">
       <option name="closed" value="true" />
@@ -272,7 +270,15 @@
       <option name="project" value="LOCAL" />
       <updated>1728359031782</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="Fixed fuck up">
+      <option name="closed" value="true" />
+      <created>1728360882451</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1728360882451</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -302,6 +308,7 @@
     <MESSAGE value="Refactored some processor code" />
     <MESSAGE value="Added cool new panel" />
     <MESSAGE value="Updated message handler to verify execs" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated message handler to verify execs" />
+    <MESSAGE value="Fixed fuck up" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed fuck up" />
   </component>
 </project>
