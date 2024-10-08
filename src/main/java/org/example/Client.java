@@ -16,13 +16,13 @@ public abstract class Client<S extends Enum<S>, A extends Enum<A>> {
     private final InetAddress clientAddress;
     private final int clientPort;
     protected String type;
+    private String lastExecMessageSent;
+    private String lastResponse;
 
     protected AtomicInteger sequenceNumberOutgoing;
     protected AtomicInteger sequenceNumberIncoming;
     protected Integer latestStatusMessage;
     private final AtomicInteger missedStats;
-
-    private String lastMessageSent;
 
     protected HashMap<Integer, String> incomingMessages;
     protected HashMap<Integer, String> outgoingMessages;
@@ -41,7 +41,8 @@ public abstract class Client<S extends Enum<S>, A extends Enum<A>> {
         this.latestStatusMessage = -1;
         this.missedStats = new AtomicInteger(0);
 
-        lastMessageSent = "";
+        incomingMessages = new HashMap<>();
+        outgoingMessages = new HashMap<>();
         unresponsiveReasons = new HashSet<>();
     }
 
@@ -82,6 +83,7 @@ public abstract class Client<S extends Enum<S>, A extends Enum<A>> {
 
     public void sendExecuteMessage(A action) {
         this.lastActionSent = action;
+        lastExecMessageSent = "EXEC " + action.toString();
         String message = MessageGenerator.generateExecuteMessage(type, id,
                 sequenceNumberOutgoing.getAndIncrement(), String.valueOf(action));
         sendMessage(message, "EXEC");
@@ -95,14 +97,12 @@ public abstract class Client<S extends Enum<S>, A extends Enum<A>> {
     }
 
     public void sendStatusMessage() {
-        String message = MessageGenerator.generateStatusMessage(type, id,
-                sequenceNumberOutgoing.getAndIncrement());
+        String message = MessageGenerator.generateStatusMessage(type, id, sequenceNumberOutgoing.getAndIncrement());
         sendMessage(message, "STAT");
     }
 
     public void sendMessage(String message, String type) {
         Server.getInstance().sendMessageToClient(this, message, type);
-        lastMessageSent = message;
     }
 
     public void registerClient() {
@@ -139,7 +139,23 @@ public abstract class Client<S extends Enum<S>, A extends Enum<A>> {
         return registered;
     }
 
-    public String getLastMessageSent() {
-        return lastMessageSent;
+    public String getLastExecMessageSent () {
+        return lastExecMessageSent;
+    }
+
+    public int getSequenceCount() {
+        return sequenceNumberOutgoing.get();
+    }
+
+    public int getMissedStatCount() {
+        return missedStats.get();
+    }
+
+    public void setLastResponse(String lastResponse) {
+        this.lastResponse = lastResponse;
+    }
+
+    public String getLastResponse() {
+        return lastResponse;
     }
 }

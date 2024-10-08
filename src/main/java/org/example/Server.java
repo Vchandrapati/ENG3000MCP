@@ -18,7 +18,7 @@ import java.util.logging.Logger;
  * Utilises the Singleton pattern to ensure only one instance of the Server exists.
  */
 public class Server implements Runnable {
-    public static final int PORT = 6666;
+    public static final int PORT = 2000;
 
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 

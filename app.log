@@ -6448,3 +6448,258 @@ override emergency
 00:04:55.317 INFO: org.example.SystemStateManager setState Changing to system state MAPPING
 00:04:57.330 WARNING: org.example.MappingState mapClients No BladeRunners to map
 00:04:57.330 INFO: org.example.SystemStateManager setState Changing to system state RUNNING
+00:07:34.885 INFO: org.example.SystemStateManager setState Changing to system state WAITING
+00:07:34.890 INFO: org.example.CommandHandler run MCP online, please input a command, type help to see a list of commands
+00:07:35.054 INFO: org.example.Server <init> Server completed startup and listening on PORT: 2000
+00:07:58.644 INFO: org.example.SystemStateManager setState Changing to system state WAITING
+00:07:58.648 INFO: org.example.CommandHandler run MCP online, please input a command, type help to see a list of commands
+00:07:58.817 INFO: org.example.Server <init> Server completed startup and listening on PORT: 2000
+00:10:26.265 INFO: org.example.SystemStateManager setState Changing to system state WAITING
+00:10:26.269 INFO: org.example.CommandHandler run MCP online, please input a command, type help to see a list of commands
+00:10:26.437 INFO: org.example.Server <init> Server completed startup and listening on PORT: 2000
+00:11:41.943 INFO: org.example.SystemStateManager setState Changing to system state WAITING
+00:11:41.943 INFO: org.example.CommandHandler run MCP online, please input a command, type help to see a list of commands
+00:11:42.114 INFO: org.example.Server <init> Server completed startup and listening on PORT: 2000
+00:15:17.001 INFO: org.example.SystemStateManager setState Changing to system state WAITING
+00:15:17.005 INFO: org.example.CommandHandler run MCP online, please input a command, type help to see a list of commands
+00:15:17.175 INFO: org.example.Server <init> Server completed startup and listening on PORT: 2000
+00:15:20.178 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+00:15:20.178 INFO: org.example.Client registerClient Added new BR to database
+00:15:20.188 INFO: org.example.Server sendMessageToClient Sent AKIN to client: BR01
+00:15:20.190 INFO: org.example.MessageHandler handleInitialise Initialised new client: BR01
+00:15:20.191 INFO: org.example.MessageHandler lambda$3 Received CCIN message from Blade Runner: BR01
+00:15:20.192 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+00:15:20.193 INFO: org.example.Client registerClient Added new CPC to database
+00:15:20.194 INFO: org.example.Server sendMessageToClient Sent AKIN to client: CP01
+00:15:20.194 INFO: org.example.MessageHandler handleInitialise Initialised new client: CP01
+00:15:20.195 INFO: org.example.MessageHandler lambda$1 Received CPIN message from Checkpoint: CP01
+00:15:21.183 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+00:15:21.184 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+00:15:21.186 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+00:15:21.186 INFO: org.example.MessageHandler handleStatMessage Received STAT message from Blade Runner: CP01
+00:15:21.187 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+00:15:21.188 INFO: org.example.MessageHandler handleStatMessage Received STAT message from Blade Runner: BR01
+00:15:21.188 INFO: org.example.Server sendMessageToClient Sent AKST to client: BR01
+00:15:23.193 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+00:15:23.194 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+00:15:25.241 INFO: org.example.SystemStateManager setState Changing to system state WAITING
+00:15:25.244 INFO: org.example.CommandHandler run MCP online, please input a command, type help to see a list of commands
+00:15:25.418 INFO: org.example.Server <init> Server completed startup and listening on PORT: 2000
+00:15:28.115 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+00:15:28.115 INFO: org.example.Client registerClient Added new BR to database
+00:15:28.127 INFO: org.example.Server sendMessageToClient Sent AKIN to client: BR01
+00:15:28.127 INFO: org.example.MessageHandler handleInitialise Initialised new client: BR01
+00:15:28.128 INFO: org.example.MessageHandler lambda$3 Received CCIN message from Blade Runner: BR01
+00:15:28.129 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+00:15:28.130 INFO: org.example.Client registerClient Added new CPC to database
+00:15:28.131 INFO: org.example.Server sendMessageToClient Sent AKIN to client: CP01
+00:15:28.132 INFO: org.example.MessageHandler handleInitialise Initialised new client: CP01
+00:15:28.132 INFO: org.example.MessageHandler lambda$1 Received CPIN message from Checkpoint: CP01
+00:15:29.430 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+00:15:29.431 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+00:15:29.431 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+00:15:29.433 INFO: org.example.MessageHandler handleStatMessage Received STAT message from Blade Runner: CP01
+00:15:29.434 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+00:15:29.434 INFO: org.example.MessageHandler handleStatMessage Received STAT message from Blade Runner: BR01
+00:15:29.435 INFO: org.example.Server sendMessageToClient Sent AKST to client: BR01
+00:15:31.431 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+00:15:31.432 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+00:15:31.433 INFO: org.example.MessageHandler handleStatMessage Received STAT message from Blade Runner: CP01
+00:15:31.435 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+00:15:31.435 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+00:15:31.436 INFO: org.example.MessageHandler handleStatMessage Received STAT message from Blade Runner: BR01
+00:15:31.436 INFO: org.example.Server sendMessageToClient Sent AKST to client: BR01
+00:15:33.432 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+00:15:33.433 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+00:15:33.433 INFO: org.example.MessageHandler handleStatMessage Received STAT message from Blade Runner: CP01
+00:15:33.433 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+00:15:33.434 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+00:15:33.435 INFO: org.example.MessageHandler handleStatMessage Received STAT message from Blade Runner: BR01
+00:15:33.435 INFO: org.example.Server sendMessageToClient Sent AKST to client: BR01
+00:15:35.433 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+00:15:35.434 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+00:15:35.434 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+00:15:35.434 INFO: org.example.MessageHandler handleStatMessage Received STAT message from Blade Runner: CP01
+00:15:35.435 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+00:15:35.435 INFO: org.example.MessageHandler handleStatMessage Received STAT message from Blade Runner: BR01
+00:15:35.436 INFO: org.example.Server sendMessageToClient Sent AKST to client: BR01
+00:15:37.425 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+00:15:37.426 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+00:15:37.426 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+00:15:37.426 INFO: org.example.MessageHandler handleStatMessage Received STAT message from Blade Runner: CP01
+00:15:37.427 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+00:15:37.427 INFO: org.example.MessageHandler handleStatMessage Received STAT message from Blade Runner: BR01
+00:15:37.428 INFO: org.example.Server sendMessageToClient Sent AKST to client: BR01
+00:15:39.421 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+00:15:39.422 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+00:15:39.422 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+00:15:39.422 INFO: org.example.MessageHandler handleStatMessage Received STAT message from Blade Runner: CP01
+00:15:39.422 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+00:15:39.423 INFO: org.example.MessageHandler handleStatMessage Received STAT message from Blade Runner: BR01
+00:15:39.423 INFO: org.example.Server sendMessageToClient Sent AKST to client: BR01
+00:15:41.433 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+00:15:41.434 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+00:15:41.434 INFO: org.example.MessageHandler handleStatMessage Received STAT message from Blade Runner: CP01
+00:15:41.434 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+00:15:41.435 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+00:15:41.435 INFO: org.example.MessageHandler handleStatMessage Received STAT message from Blade Runner: BR01
+00:15:41.435 INFO: org.example.Server sendMessageToClient Sent AKST to client: BR01
+00:15:43.428 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+00:15:43.429 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+00:15:43.429 INFO: org.example.MessageHandler handleStatMessage Received STAT message from Blade Runner: CP01
+00:15:43.429 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+00:15:43.429 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+00:15:43.430 INFO: org.example.MessageHandler handleStatMessage Received STAT message from Blade Runner: BR01
+00:15:43.430 INFO: org.example.Server sendMessageToClient Sent AKST to client: BR01
+00:15:45.430 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+00:15:45.430 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+00:15:45.431 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+00:15:45.431 INFO: org.example.MessageHandler handleStatMessage Received STAT message from Blade Runner: CP01
+00:15:45.431 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+00:15:45.432 INFO: org.example.MessageHandler handleStatMessage Received STAT message from Blade Runner: BR01
+00:15:45.433 INFO: org.example.Server sendMessageToClient Sent AKST to client: BR01
+00:15:47.423 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+00:15:47.423 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+00:15:47.424 INFO: org.example.MessageHandler handleStatMessage Received STAT message from Blade Runner: CP01
+00:15:47.424 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+00:15:47.424 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+00:15:47.425 INFO: org.example.MessageHandler handleStatMessage Received STAT message from Blade Runner: BR01
+00:15:47.426 INFO: org.example.Server sendMessageToClient Sent AKST to client: BR01
+00:15:49.420 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+00:15:49.420 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+00:15:49.420 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+00:15:49.421 INFO: org.example.MessageHandler handleStatMessage Received STAT message from Blade Runner: CP01
+00:15:49.422 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+00:15:49.422 INFO: org.example.MessageHandler handleStatMessage Received STAT message from Blade Runner: BR01
+00:15:49.423 INFO: org.example.Server sendMessageToClient Sent AKST to client: BR01
+00:15:51.430 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+00:15:51.431 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+00:15:51.431 INFO: org.example.MessageHandler handleStatMessage Received STAT message from Blade Runner: CP01
+00:15:51.431 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+00:15:51.431 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+00:15:51.432 INFO: org.example.MessageHandler handleStatMessage Received STAT message from Blade Runner: BR01
+00:15:51.432 INFO: org.example.Server sendMessageToClient Sent AKST to client: BR01
+00:15:53.433 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+00:15:53.434 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+00:15:53.434 INFO: org.example.MessageHandler handleStatMessage Received STAT message from Blade Runner: CP01
+00:15:53.434 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+00:15:53.434 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+00:15:53.435 INFO: org.example.MessageHandler handleStatMessage Received STAT message from Blade Runner: BR01
+00:15:53.436 INFO: org.example.Server sendMessageToClient Sent AKST to client: BR01
+00:15:55.424 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+00:15:55.424 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+00:15:55.425 INFO: org.example.MessageHandler handleStatMessage Received STAT message from Blade Runner: CP01
+00:15:55.425 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+00:15:55.425 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+00:15:55.426 INFO: org.example.MessageHandler handleStatMessage Received STAT message from Blade Runner: BR01
+00:15:55.426 INFO: org.example.Server sendMessageToClient Sent AKST to client: BR01
+00:15:57.432 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+00:15:57.432 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+00:15:57.433 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+00:15:57.433 INFO: org.example.MessageHandler handleStatMessage Received STAT message from Blade Runner: CP01
+00:15:57.433 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+00:15:57.434 INFO: org.example.MessageHandler handleStatMessage Received STAT message from Blade Runner: BR01
+00:15:57.434 INFO: org.example.Server sendMessageToClient Sent AKST to client: BR01
+00:15:59.430 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+00:15:59.430 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+00:15:59.430 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+00:15:59.431 INFO: org.example.MessageHandler handleStatMessage Received STAT message from Blade Runner: CP01
+00:15:59.431 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+00:15:59.431 INFO: org.example.MessageHandler handleStatMessage Received STAT message from Blade Runner: BR01
+00:15:59.432 INFO: org.example.Server sendMessageToClient Sent AKST to client: BR01
+00:16:01.425 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+00:16:01.426 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+00:16:01.426 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+00:16:01.426 INFO: org.example.MessageHandler handleStatMessage Received STAT message from Blade Runner: CP01
+00:16:01.427 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+00:16:01.427 INFO: org.example.MessageHandler handleStatMessage Received STAT message from Blade Runner: BR01
+00:16:01.428 INFO: org.example.Server sendMessageToClient Sent AKST to client: BR01
+00:16:03.427 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+00:16:03.428 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+00:16:03.428 INFO: org.example.MessageHandler handleStatMessage Received STAT message from Blade Runner: CP01
+00:16:03.428 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+00:16:03.428 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+00:16:03.428 INFO: org.example.MessageHandler handleStatMessage Received STAT message from Blade Runner: BR01
+00:16:03.430 INFO: org.example.Server sendMessageToClient Sent AKST to client: BR01
+00:16:05.423 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+00:16:05.424 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+00:16:05.424 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+00:16:05.424 INFO: org.example.MessageHandler handleStatMessage Received STAT message from Blade Runner: CP01
+00:16:05.424 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+00:16:05.425 INFO: org.example.MessageHandler handleStatMessage Received STAT message from Blade Runner: BR01
+00:16:05.426 INFO: org.example.Server sendMessageToClient Sent AKST to client: BR01
+00:16:07.433 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+00:16:07.434 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+00:16:07.434 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+00:16:07.434 INFO: org.example.MessageHandler handleStatMessage Received STAT message from Blade Runner: CP01
+00:16:07.435 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+00:16:07.436 INFO: org.example.MessageHandler handleStatMessage Received STAT message from Blade Runner: BR01
+00:16:07.436 INFO: org.example.Server sendMessageToClient Sent AKST to client: BR01
+00:16:09.433 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+00:16:09.433 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+00:16:09.433 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+00:16:09.434 INFO: org.example.MessageHandler handleStatMessage Received STAT message from Blade Runner: CP01
+00:16:09.434 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+00:16:09.434 INFO: org.example.MessageHandler handleStatMessage Received STAT message from Blade Runner: BR01
+00:16:09.435 INFO: org.example.Server sendMessageToClient Sent AKST to client: BR01
+00:16:10.705 INFO: org.example.SystemStateManager setState Changing to system state MAPPING
+00:16:10.706 INFO: org.example.CommandHandler run Command executed: start mapping
+00:16:11.431 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+00:16:11.431 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+00:16:11.432 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+00:16:11.432 INFO: org.example.MessageHandler handleStatMessage Received STAT message from Blade Runner: CP01
+00:16:11.432 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+00:16:11.432 INFO: org.example.MessageHandler handleStatMessage Received STAT message from Blade Runner: BR01
+00:16:11.432 INFO: org.example.Server sendMessageToClient Sent AKST to client: BR01
+00:16:12.740 INFO: org.example.MappingState sendBladeRunnerToNextCheckpoint  moving BR01
+00:16:12.740 INFO: org.example.Server sendMessageToClient Sent EXEC to client: BR01
+00:16:13.430 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+00:16:13.430 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+00:16:13.430 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+00:16:13.431 INFO: org.example.MessageHandler handleStatMessage Received STAT message from Blade Runner: CP01
+00:16:13.431 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+00:16:13.431 INFO: org.example.MessageHandler handleStatMessage Received STAT message from Blade Runner: BR01
+00:16:13.431 INFO: org.example.Server sendMessageToClient Sent AKST to client: BR01
+00:16:15.429 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+00:16:15.429 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+00:16:15.429 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+00:16:15.430 INFO: org.example.MessageHandler handleStatMessage Received STAT message from Blade Runner: CP01
+00:16:15.430 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+00:16:15.430 INFO: org.example.MessageHandler handleStatMessage Received STAT message from Blade Runner: BR01
+00:16:15.430 INFO: org.example.Server sendMessageToClient Sent AKST to client: BR01
+00:16:17.058 WARNING: org.example.SystemStateManager addUnresponsiveClient Client BR01 has TODISCONNECT
+00:16:17.058 WARNING: org.example.SystemStateManager checkChange Error detected while in state MAPPING
+00:16:17.058 INFO: org.example.Client addReason Added reason TODISCONNECT
+00:16:17.059 INFO: org.example.SystemStateManager setState Changing to system state EMERGENCY
+00:16:17.059 INFO: org.example.CommandHandler run Command executed: disconnect BR01
+00:16:17.422 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+00:16:17.423 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+00:16:17.424 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+00:16:17.424 INFO: org.example.MessageHandler handleStatMessage Received STAT message from Blade Runner: CP01
+00:16:17.425 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+00:16:17.425 INFO: org.example.MessageHandler handleStatMessage Received STAT message from Blade Runner: BR01
+00:16:17.426 INFO: org.example.Server sendMessageToClient Sent AKST to client: BR01
+00:16:17.741 INFO: org.example.Server sendMessageToClient Sent EXEC to client: BR01
+00:16:18.741 INFO: org.example.Server sendMessageToClient Sent EXEC to client: BR01
+00:16:18.742 SEVERE: org.example.MessageHandler lambda$3 Attempted to get non-existent bladerunner: BR01
+00:16:19.434 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+00:16:19.435 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+00:16:19.435 INFO: org.example.MessageHandler handleStatMessage Received STAT message from Blade Runner: CP01
+00:16:21.431 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+00:16:21.432 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+00:16:21.433 INFO: org.example.MessageHandler handleStatMessage Received STAT message from Blade Runner: CP01
+00:16:23.430 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+00:16:23.430 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+00:16:23.430 INFO: org.example.MessageHandler handleStatMessage Received STAT message from Blade Runner: CP01
+00:16:25.426 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+00:16:25.427 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+00:16:25.427 INFO: org.example.MessageHandler handleStatMessage Received STAT message from Blade Runner: CP01
+00:16:27.425 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+00:16:27.426 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+00:16:27.426 INFO: org.example.MessageHandler handleStatMessage Received STAT message from Blade Runner: CP01
+00:16:29.426 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+00:16:29.426 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+00:16:29.427 INFO: org.example.MessageHandler handleStatMessage Received STAT message from Blade Runner: CP01
+00:16:31.430 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+00:16:31.430 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+00:16:31.430 INFO: org.example.MessageHandler handleStatMessage Received STAT message from Blade Runner: CP01

@@ -12,8 +12,7 @@ public class Processor {
     private static int totalBlocks;
     private static final int MAX_BLOCKS = 10;
 
-    private Processor() {
-    }
+    private Processor() {}
 
     public static void checkpointTripped(int checkpointTripped, boolean untrip) {
         SystemStateManager systemStateManager = SystemStateManager.getInstance();
@@ -31,11 +30,10 @@ public class Processor {
         }
 
         // checks if the checkpoint before tripped checkpoint contains a blade runner
-        int previousCheckpoint = calculatePreviousBlock(checkpointTripped);
+        int previousCheckpoint = calculateNextBlock(checkpointTripped, -1);
         if (!db.isBlockOccupied(previousCheckpoint)) {
             String id = (checkpointTripped > 9) ? "CP" + checkpointTripped : "CP0" + checkpointTripped;
-            logger.log(Level.WARNING, "Inconsistent checkpoint trip : {0} on trip boolean : {1}",
-                    new Object[] { id, untrip });
+            logger.log(Level.WARNING, "Inconsistent checkpoint trip : {0} on trip boolean : {1}", new Object[] {id, untrip});
             systemStateManager.addUnresponsiveClient(id, ReasonEnum.INCORTRIP);
         } else {
             handleTrip(checkpointTripped, previousCheckpoint, untrip);
@@ -47,8 +45,7 @@ public class Processor {
         Optional<BladeRunnerClient> bladeRunnerOptional = getBladeRunner(previousCheckpoint);
 
         if (bladeRunnerOptional.isEmpty()) {
-            logger.log(Level.WARNING, "Tried to get blade runner at checkpoint {0} but failed",
-                    previousCheckpoint);
+            logger.log(Level.WARNING, "Tried to get blade runner at checkpoint {0} but failed", previousCheckpoint);
             return;
         }
 
@@ -59,15 +56,14 @@ public class Processor {
             bladeRunnerOptional.get().sendExecuteMessage(MessageEnums.CCPAction.STOPC);
             if (untrip) {
                 String id = bladeRunnerOptional.get().getId();
-                logger.log(Level.WARNING, "Multiple blade runners in the same zone, includes : {0}",
-                        id);
+                logger.log(Level.WARNING, "Multiple blade runners in the same zone, includes : {0}", id);
                 SystemStateManager.getInstance().addUnresponsiveClient(id, ReasonEnum.COLLISION);
             }
             return;
         }
 
         // checks if next block is full, if so stop only if untrip
-        if (db.isBlockOccupied(calculateNextBlock(checkpointTripped)) && untrip) {
+        if (db.isBlockOccupied(calculateNextBlock(checkpointTripped, 1)) && untrip) {
             bladeRunnerOptional.get().sendExecuteMessage(MessageEnums.CCPAction.STOPC);
         }
 
@@ -95,55 +91,33 @@ public class Processor {
     // by moving
     private static void checkForTraffic(int checkpoint) {
         // check block behind
-        int blockBefore = calculatePreviousBlock(checkpoint);
+        int blockBefore = calculateNextBlock(checkpoint, -1);
         if (db.isBlockOccupied(blockBefore)) {
             Optional<BladeRunnerClient> bladeRunnerOptional = getBladeRunner(blockBefore);
             bladeRunnerOptional.ifPresent(br -> br.sendExecuteMessage(MessageEnums.CCPAction.FFASTC));
-            bladeRunnerOptional.ifPresent(br -> br.updateStatus(MessageEnums.CCPStatus.FFASTC));
         }
     }
 
-    public static int calculatePreviousBlock(int checkpoint) {
+    public static int calculateNextBlock(int checkpoint, int direction) {
         totalBlocks = db.getCheckpointCount();
 
-        while (true) {
-            checkpoint--;
-            if (checkpoint == 0) {
-                checkpoint = MAX_BLOCKS;
-            }
-
-            if (isCheckpointValid(checkpoint)) {
-                return checkpoint;
-            }
-        }
-    }
-
-    public static int calculateNextBlock(int checkpoint) {
-        totalBlocks = db.getCheckpointCount();
-
-        while (true) {
-            checkpoint++;
-            if (checkpoint == MAX_BLOCKS) {
+        while(true) {
+            checkpoint += direction;
+            if (checkpoint > totalBlocks)
                 checkpoint = 1;
-            }
 
-            if (isCheckpointValid(checkpoint)) {
+            if (checkpoint < 1)
+                checkpoint = totalBlocks;
+
+            if(isCheckpointValid(checkpoint)) {
                 return checkpoint;
             }
         }
     }
 
     private static boolean isCheckpointValid(int checkpoint) {
-        if (checkpoint < 1 || checkpoint > MAX_BLOCKS) {
-            return false;
-        }
-
-        String id = (checkpoint == MAX_BLOCKS) ? "CP" + checkpoint : "CP0" + checkpoint;
-        if (db.getClient(id, CheckpointClient.class).isEmpty()) {
-            return false;
-        }
-
-        return true;
+        String id = (checkpoint == totalBlocks) ? "CP" + checkpoint : "CP0" + checkpoint;
+        return db.getClient(id, CheckpointClient.class).isPresent();
     }
 
     private static void trainAligned() {
