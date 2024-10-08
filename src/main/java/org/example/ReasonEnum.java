@@ -10,6 +10,7 @@ public enum ReasonEnum {
     CLIENTERR, // if the client reports an error
     WRONGMESSAGE, // if the client sends the wrong message
     MAPTIMEOUT, // blade runner failed to map in time
+    TODISCONNECT, //if the client is to disconnect, (given by the command handler)
     SYSTEMOVER, // if the system cannot keep up in processing packets
     INTERNAL, // if the MCP has had an error
 }

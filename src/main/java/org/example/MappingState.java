@@ -103,20 +103,22 @@ public class MappingState implements SystemStateInterface {
             sendBladeRunnerToNextCheckpoint(false);
         } else {
             try {
-                String[] tripInfo = tripQueue.take().split(",");
-                if (tripInfo.length == 2) {
-                    int tripZone = Integer.parseInt(tripInfo[0]);
-                    if(currentTrip == -1 || currentTrip == tripZone) {
-                        currentTrip = tripZone;
+                if(!tripQueue.isEmpty()) {
+                    String[] tripInfo = tripQueue.take().split(",");
+                    if (tripInfo.length == 2) {
+                        int tripZone = Integer.parseInt(tripInfo[0]);
+                        if(currentTrip == -1 || currentTrip == tripZone) {
+                            currentTrip = tripZone;
+                        }
+                        else {
+                            String str = (tripZone == 10) ? "CP10" : "CP" + tripZone;
+                            SystemStateManager.getInstance().addUnresponsiveClient(str, ReasonEnum.INCORTRIP);
+                            logger.log(Level.WARNING, "Checkpoint : {0} has had inconsistent trip", str);
+                            return false;
+                        }
+                        boolean untrip = Boolean.parseBoolean(tripInfo[1]);
+                        return stopBladeRunnerAtCheckpoint(tripZone, untrip);
                     }
-                    else {
-                        String str = (tripZone == 10) ? "CP10" : "CP" + tripZone;
-                        SystemStateManager.getInstance().addUnresponsiveClient(str, ReasonEnum.INCORTRIP);
-                        logger.log(Level.WARNING, "Checkpoint : {0} has had inconsistent trip", str);
-                        return false;
-                    }
-                    boolean untrip = Boolean.parseBoolean(tripInfo[1]);
-                    return stopBladeRunnerAtCheckpoint(tripZone, untrip);
                 }
             } catch (Exception e) {
                 logger.log(Level.SEVERE, "Error taking trip from trip queue");

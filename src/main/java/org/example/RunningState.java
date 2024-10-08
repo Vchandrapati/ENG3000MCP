@@ -35,7 +35,6 @@ public class RunningState implements SystemStateInterface {
     // If returns true then system goes to NEXT_STATE
     @Override
     public boolean performOperation() {
-        System.out.println(System.currentTimeMillis());
         if (!grab && System.currentTimeMillis() - runningStartTime >= WAIT) {
             grabAllBladeRunners();
         }
@@ -64,6 +63,9 @@ public class RunningState implements SystemStateInterface {
 
     private void moveAllBladeRunners() {
         if (System.currentTimeMillis() - startTime >= TIME_BETWEEN_SENDING || startTime == 0) {
+            if (bladeRunners == null || bladeRunners.isEmpty()) {
+                return;
+            }
             if (curBR < bladeRunners.size()) {
                 startTime = System.currentTimeMillis();
                 bladeRunners.get(curBR++).sendExecuteMessage(MessageEnums.CCPAction.FFASTC);

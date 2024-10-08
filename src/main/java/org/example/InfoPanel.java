@@ -114,8 +114,10 @@ public class InfoPanel extends JPanel {
                 Set<String> clients = db.getAllUnresponsiveClientIDs();
                 clearErrorClientLabels();
                 createErrorClientLabels(clients);
-            } else
+            } else {
+                errorClientList.setText("");
                 clearErrorClientLabels();
+            }
         }
     }
 

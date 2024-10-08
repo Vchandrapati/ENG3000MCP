@@ -9,8 +9,7 @@ public class EmergencyState implements SystemStateInterface {
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     // All time units in milliseconds
-    private static final long EMERGENCY_TIMEOUT = 600000; // 10 minutes
-    private static final long EMERGENCY_TIMEOUT_AFTER_WAIT = 300000; // 5 minutes
+    private static final long EMERGENCY_TIMEOUT = 300000; // 5 minutes
     private static final long TIME_BETWEEN_RUNNING = 1000;
     private static final long TIME_BETWEEN_SENDING_STOP = 5000; // 5 seconds
     private static final long MINIMUM_EMERGENCY_TIME = 5000; // 5 seconds
@@ -18,19 +17,15 @@ public class EmergencyState implements SystemStateInterface {
     private static final SystemState NEXT_STATE = SystemState.MAPPING;
 
     // the time when counter started
-    private final long timeOnStart;
+    private long timeOnStart;
     private final Database db = Database.getInstance();
     private long timeOnStop;
-    private boolean afterTimeout;
-
-    // Emergency mode can wait forever until client is fixed or
-    // be given a ten minute timeout
-    private static final boolean WAIT_FOREVER = false;
+    private boolean disconnection = false;
+    private boolean disconnectOnce = false;
 
     public EmergencyState() {
         timeOnStart = System.currentTimeMillis();
         timeOnStop = 0;
-        afterTimeout = false;
     }
 
     @Override
@@ -38,34 +33,30 @@ public class EmergencyState implements SystemStateInterface {
         // if it has been EMERGENCY_TIMEOUT minutes within emergency state, the client/s has failed
         // to reconnect in time and proceed to next state
 
-        // continues to wait forever until client is fixed
-        if (WAIT_FOREVER) {
-            stopAllBladeRunners();
-            return checkIfAllAreFixed();
+        stopAllBladeRunners();
+        if (disconnection || System.currentTimeMillis() - timeOnStart >= EMERGENCY_TIMEOUT) {
+            if (!disconnectOnce) {
+                disconnection = true;
+                disconnectOnce = true;
+                timeOnStart = System.currentTimeMillis();
+                disconnectClients();
+            } else if (System.currentTimeMillis() - timeOnStart >= EMERGENCY_TIMEOUT) {
+                return true;
+            }
+            return false;
         } else {
-            // continues to wait for 10 minutes until client is fixed
-            // if not just proceeds as normal as if the problem did not occur
-            if (afterTimeout || System.currentTimeMillis() - timeOnStart >= EMERGENCY_TIMEOUT) {
-                if (!afterTimeout) {
-                    afterTimeout = true;
+            return checkIfAllAreFixed();
+        }
+    }
 
-                    List<String> clients = new ArrayList<>(db.getAllUnresponsiveClientIDs());
-                    for (int i = clients.size() - 1; i > -1; i--) {
-                        BladeRunnerClient clientInstance =
-                                db.getClient(clients.get(i), BladeRunnerClient.class).get();
-                        if (clientInstance != null) {
-                            clientInstance.sendExecuteMessage(MessageEnums.CCPAction.DISCONNECT);
-                            db.fullPurge(clients.get(i));
-                        }
-                    }
-                } else if (System.currentTimeMillis() - timeOnStart >= EMERGENCY_TIMEOUT
-                        + EMERGENCY_TIMEOUT_AFTER_WAIT) {
-                    return true;
-                }
-                return false;
-            } else {
-                stopAllBladeRunners();
-                return checkIfAllAreFixed();
+    private void disconnectClients() {
+        List<String> clients = new ArrayList<>(db.getAllUnresponsiveClientIDs());
+        for (int i = clients.size() - 1; i > -1; i--) {
+            BladeRunnerClient clientInstance =
+                    db.getClient(clients.get(i), BladeRunnerClient.class).get();
+            if (clientInstance != null) {
+                clientInstance.sendExecuteMessage(MessageEnums.CCPAction.DISCONNECT);
+                db.fullPurge(clients.get(i));
             }
         }
     }
@@ -169,6 +160,10 @@ public class EmergencyState implements SystemStateInterface {
             }
             case ReasonEnum.MAPTIMEOUT: {
                 // wait for human override
+                break;
+            }
+            case ReasonEnum.TODISCONNECT: {
+                disconnection = true;
                 break;
             }
             default: {

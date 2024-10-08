@@ -12,6 +12,7 @@ import java.util.logging.Logger;
  */
 public class CommandHandler implements Runnable {
     private static final Set<String> commands;
+    private static final SystemStateManager systemStateManager = SystemStateManager.getInstance();
     private static boolean isRunning = true;
 
     // Set of commands
@@ -70,7 +71,6 @@ public class CommandHandler implements Runnable {
     // takes an input string and executes its command, if invalid throw exception
     private void executeCommand(String input) throws InvalidCommandException {
         // using the substring find the command
-        logger.log(Level.FINEST, "{0}", input.contains("disconnect"));
         switch (input) {
             case "help":
                 help();
@@ -79,20 +79,20 @@ public class CommandHandler implements Runnable {
                 App.shutdown();
                 break;
             case "start mapping":
-                if (SystemStateManager.getInstance().getState() == SystemState.WAITING)
-                    SystemStateManager.getInstance().setState(SystemState.MAPPING);
+                if (systemStateManager.getState() == SystemState.WAITING)
+                    systemStateManager.setState(SystemState.MAPPING);
                 else
                     throw new InvalidCommandException("Not in waiting state");
                 break;
             case "override emergency":
-                if (SystemStateManager.getInstance().getState() == SystemState.EMERGENCY)
-                    SystemStateManager.getInstance().setState(SystemState.MAPPING);
+                if (systemStateManager.getState() == SystemState.EMERGENCY)
+                    systemStateManager.setState(SystemState.MAPPING);
                 else
                     throw new InvalidCommandException("Not in emergency state");
                 break;
             case "start waiting":
-                if (SystemStateManager.getInstance().getState() != SystemState.WAITING)
-                    SystemStateManager.getInstance().setState(SystemState.WAITING);
+                if (systemStateManager.getState() != SystemState.WAITING)
+                    systemStateManager.setState(SystemState.WAITING);
                 else
                     throw new InvalidCommandException("Already in waiting state");
                 break;
@@ -110,7 +110,7 @@ public class CommandHandler implements Runnable {
         String[] array = input.split(" ");
         if (array.length == 2 && array[0].equals("disconnect")
                 && Database.getInstance().getClient(array[1], Client.class).isPresent()) {
-            Database.getInstance().fullPurge(array[1]);
+            systemStateManager.addUnresponsiveClient(array[1], ReasonEnum.TODISCONNECT);
         } else {
             throw new InvalidCommandException("Invalid command");
         }

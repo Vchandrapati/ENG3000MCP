@@ -64,6 +64,7 @@ public class SystemStateManager {
     // Checks to see if the system needs to go to emergency state, if already don't
     private void checkChange() {
         if (error && currentState != SystemState.EMERGENCY) {
+            error = false;
             logger.log(Level.WARNING, "Error detected while in state {0}", currentState);
             setState(SystemState.EMERGENCY);
         }
@@ -78,9 +79,6 @@ public class SystemStateManager {
     public void setState(SystemState newState) {
         if (currentState == newState) {
             return;
-        }
-        if (currentState == SystemState.EMERGENCY) {
-            error = false;
         }
 
         currentState = newState;
