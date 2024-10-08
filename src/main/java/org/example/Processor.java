@@ -19,10 +19,13 @@ public class Processor {
         totalBlocks = db.getCheckpointCount();
 
         if (!isCheckpointValid(checkpointTripped)) {
+            logger.log(Level.WARNING, "Inconsistent checkpoint trip : {0} on trip boolean : {1}",
+                    new Object[] {checkpointTripped, untrip});
             return;
         }
 
         if (systemStateManager.needsTrip(checkpointTripped, untrip)) {
+            logger.log(Level.WARNING, "Thomas to do, not sure what needstrip is");
             return;
         }
 
@@ -142,11 +145,29 @@ public class Processor {
         return true;
     }
 
-    // private static boolean isStation(int checkpoint) {
-    //if(db.isStation(checkpoint)){
-    //    return true;
-    //}
-    //return false;
-    //}
+    private static void trainAligned(){
+        //Nothing needed at the moment
+    }
+
+    private static void trainUnaligned(int stationCheckpoint){
+        Optional<BladeRunnerClient> br = getBladeRunner(stationCheckpoint-1);
+        Optional<BladeRunnerClient> brOverShot = getBladeRunner(stationCheckpoint);
+        
+
+        if(br.isEmpty() && brOverShot.isEmpty()){
+            logger.log(Level.WARNING, "Tried to get blade runner at checkpoint {0} but failed",
+            stationCheckpoint);
+            return;
+        }
+
+        if(br.isPresent()){
+            //train has undershot, not our responsibility to align i dont think
+        }
+
+        if(brOverShot.isPresent()){ //train has overshot
+            brOverShot.get().sendExecuteMessage(SpeedEnum.BACKWARDS);
+            brOverShot.get().updateStatus("REVERSING");
+        }
+    }
 
 }
