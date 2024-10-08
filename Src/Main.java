@@ -87,7 +87,7 @@ public class Main {
         if (inputs.length == 2 && inputs[0].equals("trip")) {
             for (CheckpointClient cp : Checkclients) {
                 if (cp.myID.contains("CP0" + inputs[1]) || cp.myID.contains("CP" + inputs[1])) {
-                    cp.sendTRIPMsg(true);
+                    cp.sendTRIPMsg();
                     break;
                 }
             }
@@ -95,7 +95,7 @@ public class Main {
 
         if (inputs.length == 2 && inputs[0].equals("untrip")) {
             try {
-                Checkclients.get(Integer.parseInt(inputs[1]) - 1).sendTRIPMsg(false);
+                Checkclients.get(Integer.parseInt(inputs[1]) - 1).sendTRIPMsg();
             } catch (Exception e) {
                 System.out.println("NO! bad user");
             }

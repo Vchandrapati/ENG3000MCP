@@ -17,6 +17,7 @@ public class CheckpointClient {
     private boolean living;
     private Integer sequenceNum;
     private Status curStat;
+    private boolean tripped = false;
 
     // Creates a client on specified port and send to specified address
     public CheckpointClient(Integer port, InetAddress addLoc, Integer snedPort, String ID) {
@@ -107,14 +108,17 @@ public class CheckpointClient {
     }
 
     // Sends a stat message
-    public void sendTRIPMsg(boolean tripped) {
-        Status trip = Status.ON;
-        if (!tripped) {
-            trip = Status.OFF;
+    public void sendTRIPMsg() {
+        if(!tripped) {
+            tripped = true;
+            this.curStat = Status.ON;
         }
-        curStat = trip;
+        else {
+            tripped = false;
+            this.curStat = Status.OFF;
+        }
         byte[] buffer = ("{\"client_type\":\"CPC\", \"message\":\"TRIP\", \"client_id\":\"" + myID
-                + "\", \"sequence_number\":\"" + sequenceNum + "\", \"status\":\"" + trip.toString()
+                + "\", \"sequence_number\":\"" + sequenceNum + "\", \"status\":\"" + curStat.toString()
                 + "\"}").getBytes();
         sendMsg(buffer);
     }
@@ -139,4 +143,5 @@ public class CheckpointClient {
     public void setLivingStatus(boolean status) {
         living = status;
     }
+
 }
