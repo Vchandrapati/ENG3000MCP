@@ -39,14 +39,12 @@ public abstract class Client<S extends Enum<S>, A extends Enum<A>> {
         this.latestStatusMessage = -1;
         this.missedStats = new AtomicInteger(0);
 
-        incomingMessages = new HashMap<>();
-        outgoingMessages = new HashMap<>();
         unresponsiveReasons = new HashSet<>();
     }
 
     public boolean checkResponsive() {
         this.missedStats.getAndIncrement();
-        if(missedStats.get() >= 3) {
+        if (missedStats.get() >= 3) {
             addReason(ReasonEnum.NOSTAT);
             return true;
         }
@@ -94,7 +92,8 @@ public abstract class Client<S extends Enum<S>, A extends Enum<A>> {
     }
 
     public void sendStatusMessage() {
-        String message = MessageGenerator.generateStatusMessage(type, id, sequenceNumberOutgoing.getAndIncrement());
+        String message = MessageGenerator.generateStatusMessage(type, id,
+                sequenceNumberOutgoing.getAndIncrement());
         sendMessage(message, "STAT");
     }
 

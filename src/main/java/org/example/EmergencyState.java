@@ -51,16 +51,18 @@ public class EmergencyState implements SystemStateInterface {
 
                     List<String> clients = new ArrayList<>(db.getAllUnresponsiveClientIDs());
                     for (int i = clients.size() - 1; i > -1; i--) {
-                        BladeRunnerClient clientInstance = db.getClient(clients.get(i), BladeRunnerClient.class).get();
-                        if(clientInstance != null) {
+                        BladeRunnerClient clientInstance =
+                                db.getClient(clients.get(i), BladeRunnerClient.class).get();
+                        if (clientInstance != null) {
                             clientInstance.sendExecuteMessage(MessageEnums.CCPAction.DISCONNECT);
-                            db.purge(clients.get(i));
+                            db.fullPurge(clients.get(i));
                         }
                     }
+                } else if (System.currentTimeMillis() - timeOnStart >= EMERGENCY_TIMEOUT
+                        + EMERGENCY_TIMEOUT_AFTER_WAIT) {
+                    return true;
                 }
-                else {
-
-                }
+                return false;
             } else {
                 stopAllBladeRunners();
                 return checkIfAllAreFixed();

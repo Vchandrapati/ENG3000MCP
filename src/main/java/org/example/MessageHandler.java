@@ -68,7 +68,8 @@ public class MessageHandler {
                             Processor.checkpointTripped(client.getLocation(), true);
                             break;
                         case MessageEnums.CPCStatus.ERR:
-                            systemStateManager.addUnresponsiveClient(client.getId(), ReasonEnum.CLIENTERR);
+                            systemStateManager.addUnresponsiveClient(client.getId(),
+                                    ReasonEnum.CLIENTERR);
                             break;
 
                         default:
@@ -77,7 +78,8 @@ public class MessageHandler {
                     }
 
                     client.sendAcknowledgeMessage(MessageEnums.AKType.AKTR);
-                    logger.log(Level.INFO, "Received TRIP command from Checkpoint: {0}", receiveMessage.clientID);
+                    logger.log(Level.INFO, "Received TRIP command from Checkpoint: {0}",
+                            receiveMessage.clientID);
                     break;
                 case "STAT":
                     handleStatMessage(client, receiveMessage);
@@ -85,7 +87,8 @@ public class MessageHandler {
                 case "AKEX":
                     break;
                 default:
-                    logger.log(Level.SEVERE, "Failed to handle checkpoint message: {0}", receiveMessage);
+                    logger.log(Level.SEVERE, "Failed to handle checkpoint message: {0}",
+                            receiveMessage);
                     break;
             }
         }, () -> {
@@ -140,7 +143,8 @@ public class MessageHandler {
                 case "AKEX":
                     break;
                 default:
-                    logger.log(Level.WARNING, "Unknown station message: {0}", receiveMessage.message);
+                    logger.log(Level.WARNING, "Unknown station message: {0}",
+                            receiveMessage.message);
                     break;
             }
         }, () -> {
@@ -169,13 +173,16 @@ public class MessageHandler {
                     // Temp zone code
                     String[] id = receiveMessage.clientID.split("CP");
                     int zone = Integer.parseInt(id[1]);
-                    client = new CheckpointClient(address, port, receiveMessage.clientID, receiveMessage.sequenceNumber, zone);
+                    client = new CheckpointClient(address, port, receiveMessage.clientID,
+                            receiveMessage.sequenceNumber, zone);
                     break;
                 case "STN":
-                    client = new StationClient(address, port, receiveMessage.clientID, receiveMessage.sequenceNumber, 0);
+                    client = new StationClient(address, port, receiveMessage.clientID,
+                            receiveMessage.sequenceNumber, 0);
                     break;
                 default:
-                    logger.log(Level.WARNING, "Unknown client type: {0}", receiveMessage.clientType);
+                    logger.log(Level.WARNING, "Unknown client type: {0}",
+                            receiveMessage.clientType);
                     break;
             }
 
@@ -196,14 +203,17 @@ public class MessageHandler {
         }
     }
 
-    private <S extends Enum<S>, A extends Enum<A> & MessageEnums.ActionToStatus<S>> void handleStatMessage (Client<S, A> client, ReceiveMessage receiveMessage) {
+    private <S extends Enum<S>, A extends Enum<A> & MessageEnums.ActionToStatus<S>> void handleStatMessage(
+            Client<S, A> client, ReceiveMessage receiveMessage) {
         A lastAction = client.getLastActionSent();
         S expectedStatus = null;
 
-        if (lastAction != null) expectedStatus = lastAction.getStatus();
+        if (lastAction != null)
+            expectedStatus = lastAction.getStatus();
 
         try {
-            S recievedStatus = Enum.valueOf(client.currentStatus.getDeclaringClass(), receiveMessage.status);
+            S recievedStatus =
+                    Enum.valueOf(client.currentStatus.getDeclaringClass(), receiveMessage.status);
 
             // If client reports ERR
             if (recievedStatus.toString().equals("ERR")) {
@@ -211,7 +221,8 @@ public class MessageHandler {
             } else if (expectedStatus != null && !expectedStatus.equals(recievedStatus)) {
                 // If client is not in expected state then there is a problem
                 systemStateManager.addUnresponsiveClient(client.getId(), ReasonEnum.WRONGSTATUS);
-                logger.log(Level.SEVERE, "Client {0} did not update status to {1} from {2}", new Object[] {client.getId(), expectedStatus, receiveMessage.status});
+                logger.log(Level.SEVERE, "Client {0} did not update status to {1} from {2}",
+                        new Object[] {client.getId(), expectedStatus, receiveMessage.status});
             }
 
             // If the current stat message sequence number is the highest then the stats
@@ -224,9 +235,11 @@ public class MessageHandler {
             client.updateStatus(recievedStatus);
         } catch (IllegalArgumentException e) {
             // Handle case where the status in receiveMessage is invalid
-            logger.log(Level.SEVERE, "Invalid status: received {0} for client {1}", new Object[]{receiveMessage.status, client.getId()});
+            logger.log(Level.SEVERE, "Invalid status: received {0} for client {1}",
+                    new Object[] {receiveMessage.status, client.getId()});
         }
 
-        logger.log(Level.INFO, "Received STAT message from Blade Runner: {0}", receiveMessage.clientID);
+        logger.log(Level.INFO, "Received STAT message from Blade Runner: {0}",
+                receiveMessage.clientID);
     }
 }
