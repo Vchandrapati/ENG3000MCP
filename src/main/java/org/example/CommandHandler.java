@@ -21,7 +21,7 @@ public class CommandHandler implements Runnable {
         commands.add("quit");
         commands.add("override emergency");
         commands.add("start waiting");
-        commands.add("disconnect");
+        commands.add("disconnect <ID>");
         commands.add("help");
     }
 
@@ -99,7 +99,21 @@ public class CommandHandler implements Runnable {
                     throw new InvalidCommandException("Already in waiting state");
                 break;
             default:
-                throw new InvalidCommandException("Invalid command");
+                if (input.contains("disconnect")) {
+                    processDisconnect(input);
+                } else {
+                    throw new InvalidCommandException("Invalid command");
+                }
+        }
+    }
+
+    private void processDisconnect(String input) throws InvalidCommandException {
+        String[] array = input.split(" ");
+        if (array.length == 2 && array[0].equals("disconnect")
+                && Database.getInstance().getClient(array[1], Client.class).isPresent()) {
+            Database.getInstance().fullPurge(array[1]);
+        } else {
+            throw new InvalidCommandException("Invalid command");
         }
     }
 
