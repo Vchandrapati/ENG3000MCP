@@ -10,11 +10,35 @@ public class VisualiserScreen extends JFrame {
     private final ClientsPanel clientsPanel;
 
     public VisualiserScreen() {
-        setTitle("Master Control Protocol");
         setSize(1900, 1200);
+        setTitle("Master Control Protocol");
+
+        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        // Get all screen devices (monitors)
+        GraphicsDevice[] gs = ge.getScreenDevices();
+
+        // Check if we have more than one monitor
+        String username = System.getProperty("user.name");
+        if (gs.length > 1 && username.equalsIgnoreCase("tshie")) {
+            // Get the bounds of the second monitor
+            GraphicsDevice secondMonitor = gs[0];
+            Rectangle secondMonitorBounds = secondMonitor.getDefaultConfiguration().getBounds();
+
+            // Set the frame size to the size of the second monitor
+            setBounds(secondMonitorBounds);
+            setLocation(secondMonitorBounds.x, secondMonitorBounds.y);
+        } else if (username.equalsIgnoreCase("xtheg")) {
+            setSize(1800, 900);
+            setLocationRelativeTo(null);
+        }
+        else {
+            setLocationRelativeTo(null);
+            System.out.println("No second monitor detected.");
+        }
+
+
         setResizable(false);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
         long startupTime = System.currentTimeMillis();
 
         trackPanel = new VisualiserPanel();
@@ -23,6 +47,7 @@ public class VisualiserScreen extends JFrame {
         JPanel userPanel = new JPanel();
         userPanel.setLayout(new BorderLayout());
         userPanel.setPreferredSize(new Dimension(800, 300));
+
 
         commandInput = new JTextField();
         Font font = new Font("Arial", Font.PLAIN, 20);
@@ -50,7 +75,8 @@ public class VisualiserScreen extends JFrame {
         mainSplitPane.setOneTouchExpandable(true);
 
         clientsPanel = new ClientsPanel();
-        JSplitPane verticalSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, mainSplitPane, clientsPanel);
+        JSplitPane verticalSplitPane =
+                new JSplitPane(JSplitPane.VERTICAL_SPLIT, mainSplitPane, clientsPanel);
         verticalSplitPane.setDividerLocation(600);
         verticalSplitPane.setOneTouchExpandable(true);
 

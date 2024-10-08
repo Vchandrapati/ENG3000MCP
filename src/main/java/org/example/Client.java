@@ -1,75 +1,126 @@
 package org.example;
 
 import java.net.InetAddress;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.logging.Logger;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
-public abstract class Client {
+public abstract class Client<S extends Enum<S>, A extends Enum<A>> {
     protected static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-    protected final String id;
+    A lastActionSent;
+    S currentStatus;
+    private final String id;
     private final InetAddress clientAddress;
     private final int clientPort;
-    private final AtomicBoolean statReturned = new AtomicBoolean(false);
-    private final AtomicBoolean statSent = new AtomicBoolean(false);
+    protected String type;
+    private String lastExecMessageSent;
+    private String lastResponse;
+
+    protected AtomicInteger sequenceNumberOutgoing;
+    protected AtomicInteger sequenceNumberIncoming;
+    protected Integer latestStatusMessage;
+    private final AtomicInteger missedStats;
+
+    protected HashMap<Integer, String> incomingMessages;
+    protected HashMap<Integer, String> outgoingMessages;
+
     protected boolean registered = false;
-    private volatile Status status;
-    private String lastMessageSent;
-    protected HashSet<ReasonEnum> unresponsiveReasons;
+    protected Set<ReasonEnum> unresponsiveReasons;
 
-    private enum Status {
-        ON, OFF, ERR,
-    }
-
-    protected Client(InetAddress clientAddress, int clientPort, String id) {
-        status = Status.ON;
+    protected Client(InetAddress clientAddress, int clientPort, String id, int sequenceNumber) {
         this.id = id;
         this.clientAddress = clientAddress;
         this.clientPort = clientPort;
+
+        // May or may not need
+        this.sequenceNumberIncoming = new AtomicInteger(sequenceNumber);
+        this.sequenceNumberOutgoing = new AtomicInteger(0);
+        this.latestStatusMessage = -1;
+        this.missedStats = new AtomicInteger(0);
+
+        incomingMessages = new HashMap<>();
+        outgoingMessages = new HashMap<>();
         unresponsiveReasons = new HashSet<>();
     }
 
+    public boolean checkResponsive() {
+        this.missedStats.getAndIncrement();
+        if (missedStats.get() >= 3) {
+            addReason(ReasonEnum.NOSTAT);
+            return true;
+        }
+
+        return false;
+    }
+
+    public void resetMissedStats() {
+        this.missedStats.set(0);
+    }
+
+    public void updateStatus(S newStatus) {
+        this.currentStatus = newStatus;
+        logger.log(Level.INFO, "Updated status for {0} to {1}", new Object[] {id, newStatus});
+    }
+
+    public S getStatus() {
+        return currentStatus;
+    }
+
+    public A getLastActionSent() {
+        return lastActionSent;
+    }
+
+    public void updateLatestStatusMessageCount(Integer count) {
+        latestStatusMessage = count;
+    }
+
+    public Integer getLatestStatusMessageCount() {
+        return latestStatusMessage;
+    }
+
+    public void sendExecuteMessage(A action) {
+        this.lastActionSent = action;
+        lastExecMessageSent = "EXEC " + action.toString();
+        String message = MessageGenerator.generateExecuteMessage(type, id,
+                sequenceNumberOutgoing.getAndIncrement(), String.valueOf(action));
+        sendMessage(message, "EXEC");
+    }
+
+    public void sendAcknowledgeMessage(MessageEnums.AKType akType) {
+        String message = MessageGenerator.generateAcknowledgeMessage(type, id,
+                sequenceNumberOutgoing.getAndIncrement(), akType);
+        sendMessage(message, String.valueOf(akType));
+        registered = true;
+    }
+
+    public void sendStatusMessage() {
+        String message = MessageGenerator.generateStatusMessage(type, id, sequenceNumberOutgoing.getAndIncrement());
+        sendMessage(message, "STAT");
+    }
+
     public void sendMessage(String message, String type) {
-        lastMessageSent = type;
         Server.getInstance().sendMessageToClient(this, message, type);
     }
 
-    public boolean isBladeRunnerClient() {
-        return this instanceof BladeRunnerClient;
+    public void registerClient() {
+        Database.getInstance().addClient(this.id, this);
+        logger.log(Level.INFO, "Added new {0} to database", type);
     }
 
-    public abstract void registerClient();
+    public void addReason(ReasonEnum reason) {
+        unresponsiveReasons.add(reason);
+        logger.log(Level.INFO, "Added reason {0}", reason);
+    }
 
-    protected abstract void sendStatusMessage(long timestamp);
-
-    protected abstract void sendAcknowledgeMessage();
-
-    protected abstract void addReason(ReasonEnum r);
-
-    public HashSet<ReasonEnum> getUnresponsiveReasons() {
+    public Set<ReasonEnum> getUnresponsiveReasons() {
         return unresponsiveReasons;
     }
 
     public void removeReason(ReasonEnum r) {
         unresponsiveReasons.remove(r);
-    }
-
-    public boolean lastStatReturned() {
-        return statReturned.get();
-    }
-
-    public boolean lastStatMSGSent() {
-        return statSent.get();
-    }
-
-    public void setStatReturned(boolean statReturned) {
-        this.statReturned.set(statReturned);
-    }
-
-    public void setStatSent(boolean statSent) {
-        this.statSent.set(statSent);
     }
 
     public InetAddress getClientAddress() {
@@ -88,19 +139,23 @@ public abstract class Client {
         return registered;
     }
 
-    public void updateStatus(String newStatus) {
-        try {
-            status = Status.valueOf(newStatus);
-        } catch (IllegalArgumentException e) {
-            logger.log(Level.SEVERE, "Tried to assign unknown status: {0} for train {1}", new Object[] {newStatus, id});
-        }
+    public String getLastExecMessageSent () {
+        return lastExecMessageSent;
     }
 
-    public String getStatus() {
-        return status.toString();
+    public int getSequenceCount() {
+        return sequenceNumberOutgoing.get();
     }
 
-    public String getLastMessageSent() {
-        return lastMessageSent;
+    public int getMissedStatCount() {
+        return missedStats.get();
+    }
+
+    public void setLastResponse(String lastResponse) {
+        this.lastResponse = lastResponse;
+    }
+
+    public String getLastResponse() {
+        return lastResponse;
     }
 }

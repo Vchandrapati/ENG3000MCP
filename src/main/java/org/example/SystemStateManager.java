@@ -11,7 +11,6 @@ public class SystemStateManager {
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     private static final Database db = Database.getInstance();
-    private static final int NO_TRIP = -1;
     private static final Map<SystemState, Supplier<SystemStateInterface>> stateMap;
 
     // singleton instance of class
@@ -28,7 +27,6 @@ public class SystemStateManager {
     // holds the current state and the current state concrete implementation
     private SystemState currentState;
     private SystemStateInterface currentStateConcrete;
-    private int lastTrip = NO_TRIP;
     private boolean error = false;
     private long timeWaited = System.currentTimeMillis();
 
@@ -66,6 +64,7 @@ public class SystemStateManager {
     // Checks to see if the system needs to go to emergency state, if already don't
     private void checkChange() {
         if (error && currentState != SystemState.EMERGENCY) {
+            error = false;
             logger.log(Level.WARNING, "Error detected while in state {0}", currentState);
             setState(SystemState.EMERGENCY);
         }
@@ -80,9 +79,6 @@ public class SystemStateManager {
     public void setState(SystemState newState) {
         if (currentState == newState) {
             return;
-        }
-        if (currentState == SystemState.EMERGENCY) {
-            error = false;
         }
 
         currentState = newState;
@@ -103,32 +99,13 @@ public class SystemStateManager {
 
         // if in the appropriate state of MAPPING only
         if (currentState == SystemState.MAPPING) {
-            if (lastTrip == -1) {
-                if (untrip) {
-                    lastTrip = trippedSensor;
-                    logger.log(Level.INFO, "System state manager has detected untrip {0}",
+            MappingState.addTrip(trippedSensor, untrip);
+            logger.log(Level.INFO, "System state manager has detected untrip {0}",
                             trippedSensor);
-                }
-                // accepts both trip and untrip for mapping, but only cares about untrip
-                return true;
-            }
-            logger.log(Level.WARNING,
-                    "Multiple untrips have occured in mapping, only one should occur at any time");
-            String id1 = (trippedSensor > 9) ? "CH" + trippedSensor : "CH0" + trippedSensor;
-            String id2 = (lastTrip > 9) ? "CH" + lastTrip : "CH0" + lastTrip;
-            addUnresponsiveClient(id1, ReasonEnum.INCORTRIP);
-            addUnresponsiveClient(id2, ReasonEnum.INCORTRIP);
+            return true;
         }
         return false;
     }
-
-    // returns the last trip and resets it after
-    public int getLastTrip() {
-        int tempTrip = lastTrip;
-        lastTrip = NO_TRIP;
-        return tempTrip;
-    }
-
 
     // Takes a string id of a client id
     // adds a client to the unresponsive client list in the database
@@ -138,16 +115,6 @@ public class SystemStateManager {
             logger.log(Level.WARNING, "Client {0} has {1}", new Object[] {id, reason});
             error = true;
             db.addUnresponsiveClient(id, reason);
-        }
-    }
-
-    // For every stat message received during emergency mode
-    // Takes a string id of a client id
-    // Adds a string if of a client of a packet received during emergency mode to
-    // the emergency mode message queue
-    public void sendEmergencyPacketClientID(String id) {
-        if (db.isClientUnresponsive(id)) {
-            EmergencyState.addMessage(id);
         }
     }
 }
