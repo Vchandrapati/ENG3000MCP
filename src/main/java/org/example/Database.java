@@ -94,12 +94,12 @@ public class Database {
     }
 
     // Vikil remove
-    // public List<String> getAllUnresponsiveClientStrings() {
-    // List<String> arrayOfErrorsAndReasons = new ArrayList<>();
-    // unresponsiveClients.forEach((client, reason) -> arrayOfErrorsAndReasons.add(client + " " +
-    // reason.toString()));
-    // return arrayOfErrorsAndReasons;
-    // }
+     public List<String> getAllUnresponsiveClientStrings() {
+     List<String> arrayOfErrorsAndReasons = new ArrayList<>();
+   //  unresponsiveClients.forEach((client, reason) -> arrayOfErrorsAndReasons.add(client + " " +
+   //  reason.toString()));
+     return arrayOfErrorsAndReasons;
+     }
 
     public HashSet<String> getAllUnresponsiveClientIDs() {
         return unresponsiveClients;

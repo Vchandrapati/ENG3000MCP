@@ -94,7 +94,8 @@ public class Processor {
         int blockBefore = calculatePreviousBlock(checkpoint);
         if (db.isBlockOccupied(blockBefore)) {
             Optional<BladeRunnerClient> bladeRunnerOptional = getBladeRunner(blockBefore);
-            bladeRunnerOptional.ifPresent(br -> br.sendExecuteMessage(SpeedEnum.SLOW));
+            bladeRunnerOptional.ifPresent(br -> br.sendExecuteMessage(SpeedEnum.FAST));
+            bladeRunnerOptional.ifPresent(br -> br.updateStatus("STARTED"));
         }
     }
 
@@ -140,4 +141,12 @@ public class Processor {
 
         return true;
     }
+
+    // private static boolean isStation(int checkpoint) {
+    //if(db.isStation(checkpoint)){
+    //    return true;
+    //}
+    //return false;
+    //}
+
 }
