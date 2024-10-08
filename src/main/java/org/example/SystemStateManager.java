@@ -101,32 +101,13 @@ public class SystemStateManager {
 
         // if in the appropriate state of MAPPING only
         if (currentState == SystemState.MAPPING) {
-            if (lastTrip == -1) {
-                if (untrip) {
-                    lastTrip = trippedSensor;
-                    logger.log(Level.INFO, "System state manager has detected untrip {0}",
+            MappingState.addTrip(trippedSensor, untrip);
+            logger.log(Level.INFO, "System state manager has detected untrip {0}",
                             trippedSensor);
-                }
-                // accepts both trip and untrip for mapping, but only cares about untrip
-                return true;
-            }
-            logger.log(Level.WARNING,
-                    "Multiple untrips have occured in mapping, only one should occur at any time");
-            String id1 = (trippedSensor > 9) ? "CH" + trippedSensor : "CH0" + trippedSensor;
-            String id2 = (lastTrip > 9) ? "CH" + lastTrip : "CH0" + lastTrip;
-            addUnresponsiveClient(id1, ReasonEnum.INCORTRIP);
-            addUnresponsiveClient(id2, ReasonEnum.INCORTRIP);
+            return true;
         }
         return false;
     }
-
-    // returns the last trip and resets it after
-    public int getLastTrip() {
-        int tempTrip = lastTrip;
-        lastTrip = NO_TRIP;
-        return tempTrip;
-    }
-
 
     // Takes a string id of a client id
     // adds a client to the unresponsive client list in the database

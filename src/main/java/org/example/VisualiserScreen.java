@@ -10,7 +10,7 @@ public class VisualiserScreen extends JFrame {
     private final ClientsPanel clientsPanel;
 
     public VisualiserScreen() {
-        setSize(Toolkit.getDefaultToolkit().getScreenSize());
+        setSize(1900, 1200);
         setTitle("Master Control Protocol");
 
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();

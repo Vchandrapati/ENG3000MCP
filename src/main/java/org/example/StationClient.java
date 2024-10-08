@@ -1,7 +1,6 @@
 package org.example;
 
 import java.net.InetAddress;
-import java.util.logging.Level;
 
 public class StationClient extends Client<MessageEnums.STCStatus, MessageEnums.STCAction> {
     private final int location;
@@ -12,6 +11,7 @@ public class StationClient extends Client<MessageEnums.STCStatus, MessageEnums.S
         // Everyone starts like this but maybe they dont is the thing
         this.updateStatus(MessageEnums.STCStatus.OFF);
         this.location = location;
+        this.type = "STC";
     }
 
     public int getLocation() {
@@ -23,16 +23,12 @@ public class StationClient extends Client<MessageEnums.STCStatus, MessageEnums.S
         return expectedStatus.toString();
     }
 
-    public void updateStatus(MessageEnums.STCStatus newStatus) {
-        super.updateStatus(newStatus, "ST");
-    }
-
     public void sendExecuteMessage(MessageEnums.STCAction action) {
         this.updateStatus(MessageEnums.convertActionToStatus(action));
-        super.sendExecuteMessage(action, "STC");
+        super.sendExecuteMessage(action);
     }
 
     public void registerClient() {
-        super.registerClient("Station");
+        super.registerClient();
     }
 }

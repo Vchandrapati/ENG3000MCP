@@ -29,8 +29,7 @@ public class MessageGenerator {
         return convertToJson(message);
     }
 
-    public static String generateStatusMessage(String clientType, String clientID,
-            Integer sequenceNumber) {
+    public static String generateStatusMessage(String clientType, String clientID, Integer sequenceNumber) {
         SendMessage message = preGen(clientType, clientID, sequenceNumber);
         message.message = "STRQ";
         return convertToJson(message);

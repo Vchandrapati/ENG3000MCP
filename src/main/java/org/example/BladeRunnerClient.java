@@ -1,9 +1,7 @@
 package org.example;
 
-import java.awt.TrayIcon.MessageType;
 import java.net.InetAddress;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.logging.Level;
 
 public class BladeRunnerClient extends Client<MessageEnums.CCPStatus, MessageEnums.CCPAction> {
     private final AtomicInteger zone = new AtomicInteger();
@@ -16,6 +14,7 @@ public class BladeRunnerClient extends Client<MessageEnums.CCPStatus, MessageEnu
         // Everyone starts like this but maybe they dont is the thing
         this.updateStatus(MessageEnums.CCPStatus.STOPC);
         this.isCurrentlyMapped = false;
+        this.type = "BR";
     }
 
     public Integer getZone() {
@@ -27,26 +26,9 @@ public class BladeRunnerClient extends Client<MessageEnums.CCPStatus, MessageEnu
         return expectedStatus.toString();
     }
 
-    public void updateStatus(MessageEnums.CCPStatus newStatus) {
-        super.updateStatus(newStatus, "BR");
-    }
-
     public void sendExecuteMessage(MessageEnums.CCPAction action) {
         this.updateStatus(MessageEnums.convertActionToStatus(action));
-        super.sendExecuteMessage(action, "CCP");
-
-    }
-
-    public void sendAcknowledgeMessage(MessageEnums.AKType akType) {
-        super.sendAcknowledgeMessage("CCP", akType);
-    }
-
-    public void sendStatusMessage() {
-        super.sendStatusMessage("CCP");
-    }
-
-    public void registerClient() {
-        super.registerClient("Blade Runner");
+        super.sendExecuteMessage(action);
     }
 
     public void changeZone(int zone) {

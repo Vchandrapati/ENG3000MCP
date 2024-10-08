@@ -30,9 +30,8 @@ public class MappingState implements SystemStateInterface {
     private int retryAttemps;
     private long startTime;
 
-    private boolean forward;
+    private int currentTrip;
     private boolean backwards;
-    private boolean hasTripped;
 
     // Constructor
     public MappingState() {
@@ -44,6 +43,8 @@ public class MappingState implements SystemStateInterface {
         currentBladeRunnerStartTime = 0;
         startTime = System.currentTimeMillis();
         bladeRunnersToMap = new ArrayList<>();
+        backwards = false;
+        currentTrip = -1;
     }
 
     // Performs the operation of this state at set intervals according to TIME_BETWEEN_RUNNING
@@ -101,10 +102,25 @@ public class MappingState implements SystemStateInterface {
         if (!hasSent) {
             sendBladeRunnerToNextCheckpoint(false);
         } else {
-            int tempTrip = SystemStateManager.getInstance().getLastTrip();
-            if (tempTrip != -1) {
-                stopBladeRunnerAtCheckpoint(tempTrip);
-                return true;
+            try {
+                String[] tripInfo = tripQueue.take().split(",");
+                if (tripInfo.length == 2) {
+                    int tripZone = Integer.parseInt(tripInfo[0]);
+                    if(currentTrip == -1 || currentTrip == tripZone) {
+                        currentTrip = tripZone;
+                    }
+                    else {
+                        String str = (tripZone == 10) ? "CP10" : "CP" + tripZone;
+                        SystemStateManager.getInstance().addUnresponsiveClient(str, ReasonEnum.INCORTRIP);
+                        logger.log(Level.WARNING, "Checkpoint : {0} has had inconsistent trip", str);
+                        return false;
+                    }
+                    boolean untrip = Boolean.parseBoolean(tripInfo[1]);
+                    return stopBladeRunnerAtCheckpoint(tripZone, untrip);
+                }
+            } catch (Exception e) {
+                logger.log(Level.SEVERE, "Error taking trip from trip queue");
+                Thread.currentThread().interrupt();
             }
 
             // every BLADE_RUNNER_MAPPING_RETRY_TIMEOUT seconds, while not mapped, will try to move
@@ -130,6 +146,7 @@ public class MappingState implements SystemStateInterface {
         //if the blader runner has had a collision go to reverse
         if (currentBladeRunner.collision(false, null)) {
             currentBladeRunner.sendExecuteMessage(MessageEnums.CCPAction.RSLOWC);
+            backwards = true;
         } else {
             currentBladeRunner.sendExecuteMessage(MessageEnums.CCPAction.FFASTC);
         }
@@ -138,16 +155,32 @@ public class MappingState implements SystemStateInterface {
     }
 
     // Tells the current BladeRunner to stop when a checkpoint has been detected
-    private void stopBladeRunnerAtCheckpoint(int zone) {
-        if (currentBladeRunner.collision(false, null)) {
+    private boolean stopBladeRunnerAtCheckpoint(int zone, boolean untrip) {
+
+        //if this blade runner was detected to be in a collision, it will be going backwards
+        //thus want the checkpoint before instead of infront
+        if (backwards) {
             zone = Processor.calculatePreviousBlock(zone);
         }
-        logger.log(Level.INFO, "BladeRunner {0} mapped to zone {1}",
+
+        //if a normal trip, then change to slow
+        //do not have to worry about backwards, because cannot go fast backwards
+        if (!untrip && !backwards) {
+            currentBladeRunner.sendExecuteMessage(MessageEnums.CCPAction.FSLOWC);
+        }
+        else {
+            //if a untrip, then send stop 
+            currentTrip = -1;
+            currentBladeRunner.sendExecuteMessage(MessageEnums.CCPAction.STOPC);
+            logger.log(Level.INFO, "BladeRunner {0} mapped to zone {1}",
                 new Object[] {currentBladeRunner.getId(), zone});
-        currentBladeRunner.sendExecuteMessage(MessageEnums.CCPAction.STOPC);
+        }
+
         currentBladeRunner.changeZone(zone);
         currentBladeRunner.collision(false, new Object());
         db.updateBladeRunnerBlock(currentBladeRunner.getId(), zone);
+
+        return untrip;
     }
 
     // if a BladeRunner does not map in a minute time, send stop message to current
@@ -178,6 +211,7 @@ public class MappingState implements SystemStateInterface {
     public static void addTrip(int trip, boolean untrip) {
         StringBuilder str = new StringBuilder();
         str.append(trip);
+        str.append(",");
         str.append(untrip);
         tripQueue.add(str.toString());
     }

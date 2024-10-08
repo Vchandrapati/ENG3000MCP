@@ -123,7 +123,11 @@ public class InfoPanel extends JPanel {
         Font font = new Font("Arial", Font.BOLD, 16);
 
         for (String client : clients) {
-            JLabel label = new JLabel(client);
+            StringBuilder str = new StringBuilder();
+            str.append(client);
+            str.append(" ");
+            str.append(db.getClientReasons(client));
+            JLabel label = new JLabel(str.toString());
             label.setFont(font);
             errorClients.add(label);
             add(label);
@@ -155,6 +159,7 @@ public class InfoPanel extends JPanel {
         long minutes = elapsedMillis / (1000 * 60) % 60;
         long hours = elapsedMillis / (1000 * 60 * 60);
 
-        return timer ? String.format("%02d:%02d", minutes, seconds) : String.format("%02d:%02d:%02d", hours, minutes, seconds);
+        return timer ? String.format("%02d:%02d", minutes, seconds)
+                : String.format("%02d:%02d:%02d", hours, minutes, seconds);
     }
 }
