@@ -69,16 +69,15 @@ public class MessageHandler {
                             Processor.checkpointTripped(client.getLocation(), true);
                             break;
                         case MessageEnums.CPCStatus.ERR:
-                            systemStateManager.addUnresponsiveClient(client.getId(),
-                                    ReasonEnum.CLIENTERR);
+                            systemStateManager.addUnresponsiveClient(client.getId(), ReasonEnum.CLIENTERR);
                             break;
                         default:
                             break;
 
                     }
+
                     client.sendAcknowledgeMessage(MessageEnums.AKType.AKTR);
-                    logger.log(Level.INFO, "Received TRIP command from Checkpoint: {0}",
-                            receiveMessage.clientID);
+                    logger.log(Level.INFO, "Received TRIP command from Checkpoint: {0}", receiveMessage.clientID);
                     break;
                 case "STAT":
                     handleStatMessage(client, receiveMessage);
@@ -204,8 +203,7 @@ public class MessageHandler {
         }
     }
 
-    private <S extends Enum<S>, A extends Enum<A> & MessageEnums.ActionToStatus<S>> void handleStatMessage(
-            Client<S, A> client, ReceiveMessage receiveMessage) {
+    private <S extends Enum<S>, A extends Enum<A> & MessageEnums.ActionToStatus<S>> void handleStatMessage(Client<S, A> client, ReceiveMessage receiveMessage) {
         A lastAction = client.getLastActionSent();
         S expectedStatus = null;
 
@@ -213,8 +211,7 @@ public class MessageHandler {
             expectedStatus = lastAction.getStatus();
 
         try {
-            S recievedStatus =
-                    Enum.valueOf(client.currentStatus.getDeclaringClass(), receiveMessage.status);
+            S recievedStatus = Enum.valueOf(client.currentStatus.getDeclaringClass(), receiveMessage.status);
 
             // If client reports ERR
             if (recievedStatus.toString().equals("ERR")) {

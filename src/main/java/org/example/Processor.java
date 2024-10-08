@@ -95,7 +95,6 @@ public class Processor {
         if (db.isBlockOccupied(blockBefore)) {
             Optional<BladeRunnerClient> bladeRunnerOptional = getBladeRunner(blockBefore);
             bladeRunnerOptional.ifPresent(br -> br.sendExecuteMessage(MessageEnums.CCPAction.FFASTC));
-            bladeRunnerOptional.ifPresent(br -> br.updateStatus(MessageEnums.CCPStatus.FFASTC));
         }
     }
 
