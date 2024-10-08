@@ -68,11 +68,6 @@ public class Main {
         // Starts by having every client send a fake connection msg
         for (int i = 0; i < numCCPClinets; i++) {
             CCPclients.get(i).sendInitialiseConnectionMsg();
-            try {
-                Thread.sleep(1000);
-            } catch (Exception e) {
-                // TODO: handle exception
-            }
         }
 
         // Starts by having every client send a fake connection msg
