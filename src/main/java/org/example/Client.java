@@ -22,6 +22,8 @@ public abstract class Client<S extends Enum<S>, A extends Enum<A>> {
     protected Integer latestStatusMessage;
     private final AtomicInteger missedStats;
 
+    private String lastMessageSent;
+
     protected HashMap<Integer, String> incomingMessages;
     protected HashMap<Integer, String> outgoingMessages;
 
@@ -39,6 +41,7 @@ public abstract class Client<S extends Enum<S>, A extends Enum<A>> {
         this.latestStatusMessage = -1;
         this.missedStats = new AtomicInteger(0);
 
+        lastMessageSent = "";
         unresponsiveReasons = new HashSet<>();
     }
 
@@ -99,6 +102,7 @@ public abstract class Client<S extends Enum<S>, A extends Enum<A>> {
 
     public void sendMessage(String message, String type) {
         Server.getInstance().sendMessageToClient(this, message, type);
+        lastMessageSent = message;
     }
 
     public void registerClient() {
@@ -136,6 +140,6 @@ public abstract class Client<S extends Enum<S>, A extends Enum<A>> {
     }
 
     public String getLastMessageSent() {
-        return incomingMessages.get(sequenceNumberIncoming.get());
+        return lastMessageSent;
     }
 }

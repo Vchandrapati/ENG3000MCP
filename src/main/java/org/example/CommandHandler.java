@@ -45,12 +45,9 @@ public class CommandHandler implements Runnable {
                 String input = commandQueue.take();
 
                 // if valid processes the command and prints to console
-                if (commands.contains(input)) {
-                    executeCommand(input);
-                    logger.log(Level.INFO, "Command executed: {0}", input);
-                } else {
-                    logger.log(Level.WARNING, "Invalid command: {0}", input);
-                }
+                executeCommand(input);
+                logger.log(Level.INFO, "Command executed: {0}", input);
+
                 // if command is invalid throw exception
             } catch (InvalidCommandException e) {
                 logger.log(Level.WARNING, "Invalid command");
@@ -73,6 +70,7 @@ public class CommandHandler implements Runnable {
     // takes an input string and executes its command, if invalid throw exception
     private void executeCommand(String input) throws InvalidCommandException {
         // using the substring find the command
+        logger.log(Level.FINEST, "{0}", input.contains("disconnect"));
         switch (input) {
             case "help":
                 help();
@@ -99,6 +97,7 @@ public class CommandHandler implements Runnable {
                     throw new InvalidCommandException("Already in waiting state");
                 break;
             default:
+
                 if (input.contains("disconnect")) {
                     processDisconnect(input);
                 } else {
