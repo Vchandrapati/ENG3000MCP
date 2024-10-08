@@ -3,19 +3,25 @@ package Src;
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Scanner;
+import javax.swing.SwingWorker.StateValue;
+import java.io.File; // Import the File class
+import java.io.FileNotFoundException; // Import this class to handle errors
 
 public class Main {
 
     Integer port = 6666;
     InetAddress add = null;
     Integer CCPglobal = 0;
-    Integer Checkglobal = 0;
 
-    Integer numCCPClinets;
-    Integer numcheckClinets;
+    Integer numCCPClinets = 0;
+    Integer numcheckClinets = 0;
+    Integer numSTNClients = 0;
+
+    ArrayList<String> inputs = new ArrayList<>();
 
     ArrayList<CCPClient> CCPclients = new ArrayList<>();
     ArrayList<CheckpointClient> Checkclients = new ArrayList<>();
+    ArrayList<STNClients> STNClients = new ArrayList<>();
 
     Scanner s = new Scanner(System.in);
 
@@ -25,13 +31,17 @@ public class Main {
         System.out.print("How many CCP clients: ");
         numCCPClinets = s.nextInt();
 
-        System.out.print("How many checkpoints clients: ");
-        numcheckClinets = s.nextInt();
-
         t = new Text(this);
         t.display();
 
         try {
+
+            File file = new File("SRC/inputs.txt");
+            Scanner s = new Scanner(file);
+
+            while (s.hasNextLine()) {
+                inputs.add(s.nextLine());
+            }
 
             add = InetAddress.getByName("localhost");
             for (int i = 0; i < numCCPClinets; i++) {
@@ -48,21 +58,33 @@ public class Main {
                 CCPglobal++;
             }
 
-            for (int i = 0; i < numcheckClinets; i++) {
+            for (int i = 0; i < inputs.size(); i++) {
                 // Starts every client off messageing to this adddress
-                String ID = "";
+                String[] ID = inputs.get(i).split(":");
+                Integer num = Integer.parseInt(ID[1]);
+                String fullID = "";
 
-                if (i < 9) {
-                    ID = "CP0" + (i + 1);
+                if (num <= 9) {
+                    fullID = ID[0] + "0" + (num);
                 } else {
-                    ID = "CP" + (i + 1);
+                    fullID = ID[0] + (num);
                 }
-                Checkclients.add(new CheckpointClient(3001 + Checkglobal, add, port, ID));
-                Checkglobal++;
+
+                if (ID[0].equals("ST")) {
+                    numSTNClients++;
+                    STNClients.add(new STNClients(4001 + num, add, port, fullID));
+                }
+                if (ID[0].equals("CP")) {
+                    numcheckClinets++;
+                    Checkclients.add(new CheckpointClient(3001 + num, add, port, fullID));
+                }
             }
 
+
+            s.close();
         } catch (Exception e) {
             System.out.println("should never be here");
+            e.printStackTrace();
         }
 
         // Starts by having every client send a fake connection msg
@@ -73,6 +95,11 @@ public class Main {
         // Starts by having every client send a fake connection msg
         for (int i = 0; i < numcheckClinets; i++) {
             Checkclients.get(i).sendInitialiseConnectionMsg(i + 1);
+        }
+
+        // Starts by having every client send a fake connection msg
+        for (int i = 0; i < numSTNClients; i++) {
+            STNClients.get(i).sendInitialiseConnectionMsg(i + 1);
         }
 
     }
@@ -132,34 +159,34 @@ public class Main {
             numCCPClinets++;
         }
 
-        if (inputs.length == 1 && inputs[0].equals("cp")) {
-            String ID = "";
-            if (Checkglobal < 9) {
-                ID = "CP0" + (Checkglobal + 1);
-            } else {
-                ID = "CP" + (Checkglobal + 1);
-            }
-            Checkclients.add(new CheckpointClient(3001 + Checkglobal, add, port, ID));
-            Checkclients.get(Checkclients.size() - 1)
-                    .sendInitialiseConnectionMsg(Checkclients.size());
-            Checkglobal++;
-            numcheckClinets++;
-        }
+        // if (inputs.length == 1 && inputs[0].equals("cp")) {
+        // String ID = "";
+        // if (Checkglobal < 9) {
+        // ID = "CP0" + (Checkglobal + 1);
+        // } else {
+        // ID = "CP" + (Checkglobal + 1);
+        // }
+        // Checkclients.add(new CheckpointClient(3001 + Checkglobal, add, port, ID));
+        // Checkclients.get(Checkclients.size() - 1)
+        // .sendInitialiseConnectionMsg(Checkclients.size());
+        // Checkglobal++;
+        // numcheckClinets++;
+        // }
 
-        if (inputs.length == 2 && inputs[0].equals("cp") && inputs[1].matches("[1-9]|10")) {
-            String ID = inputs[1];
-            if (Integer.parseInt(ID) != 10) {
-                ID = "CP0" + ID;
-            } else {
-                ID = "CP" + ID;
-            }
+        // if (inputs.length == 2 && inputs[0].equals("cp") && inputs[1].matches("[1-9]|10")) {
+        // String ID = inputs[1];
+        // if (Integer.parseInt(ID) != 10) {
+        // ID = "CP0" + ID;
+        // } else {
+        // ID = "CP" + ID;
+        // }
 
-            Checkclients.add(new CheckpointClient(3001 + Checkglobal, add, port, ID));
-            Checkclients.get(Checkclients.size() - 1)
-                    .sendInitialiseConnectionMsg(Integer.parseInt(inputs[1]));
-            Checkglobal++;
-            numcheckClinets++;
-        }
+        // Checkclients.add(new CheckpointClient(3001 + Checkglobal, add, port, ID));
+        // Checkclients.get(Checkclients.size() - 1)
+        // .sendInitialiseConnectionMsg(Integer.parseInt(inputs[1]));
+        // Checkglobal++;
+        // numcheckClinets++;
+        // }
 
         if (inputs.length == 3 && (inputs[0].equals("kill") || inputs[0].equals("rez"))) {
             boolean status = false;
