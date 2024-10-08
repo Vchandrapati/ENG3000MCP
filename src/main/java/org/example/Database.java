@@ -94,14 +94,6 @@ public class Database {
         return Optional.empty();
     }
 
-    // Vikil remove
-    // public List<String> getAllUnresponsiveClientStrings() {
-    // List<String> arrayOfErrorsAndReasons = new ArrayList<>();
-    // unresponsiveClients.forEach((client, reason) -> arrayOfErrorsAndReasons.add(client + " " +
-    // reason.toString()));
-    // return arrayOfErrorsAndReasons;
-    // }
-
     public Set<String> getAllUnresponsiveClientIDs() {
         return unresponsiveClients;
     }
@@ -121,6 +113,12 @@ public class Database {
 
         c.addReason(newReason);
         unresponsiveClients.add(id);
+    }
+
+    public void fullPurge(String id) {
+        allBladeRunners.remove(id);
+        unresponsiveClients.remove(id);
+        clients.remove(id);
     }
 
     public void removeReason(String id, ReasonEnum reason) {
