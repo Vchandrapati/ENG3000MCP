@@ -8,6 +8,7 @@ public class App {
     private static StatHandler statReq;
     private static SystemStateManager systemStateManager;
     private static VisualiserScreen screen;
+    private static ClientCreator clinetCreator;
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
@@ -20,9 +21,12 @@ public class App {
     public static void startMCP() {
         new Thread(() -> {
             systemStateManager = SystemStateManager.getInstance();
+            clinetCreator = ClientCreator.getInstance();
+            clinetCreator.readFromFile("src\\main\\java\\org\\example\\locations.txt");
             server = Server.getInstance();
             statReq = StatHandler.getInstance();
             statReq.startStatusScheduler();
+
 
             // main loop for program
             while (isRunning()) {

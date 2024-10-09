@@ -87,6 +87,7 @@ public abstract class Client<S extends Enum<S>, A extends Enum<A>> {
         lastExecMessageSent = "EXEC " + action.toString();
         String message = MessageGenerator.generateExecuteMessage(type, id,
                 sequenceNumberOutgoing.getAndIncrement(), String.valueOf(action));
+
         sendMessage(message, "EXEC");
     }
 
