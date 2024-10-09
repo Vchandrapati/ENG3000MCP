@@ -25,7 +25,6 @@ public abstract class Client<S extends Enum<S>, A extends Enum<A>> {
     private final AtomicInteger missedStats;
     protected boolean expectingStat;
 
-
     protected HashMap<Integer, String> incomingMessages;
     protected HashMap<Integer, String> outgoingMessages;
 

@@ -49,9 +49,7 @@ public class ClientCreator {
 
 
             if (client != null) {
-                client.registerClient();
-                client.sendAcknowledgeMessage(MessageEnums.AKType.AKIN);
-                logger.log(Level.INFO, "Initialised new client: {0}", receiveMessage.clientID);
+
                 // if a client joins while not in waiting state, goes to emergency mode
                 if (SystemStateManager.getInstance().getState() != SystemState.WAITING) {
                     SystemStateManager.getInstance().addUnresponsiveClient(receiveMessage.clientID,
