@@ -62,6 +62,7 @@ public class StatHandler {
                 if (lastAction.equals(MessageEnums.CCPAction.FSLOWC)
                         || lastAction.equals(MessageEnums.CCPAction.RSLOWC)) {
                     alternateStatus = MessageEnums.CCPStatus.STOPC;
+                    altPath = true;
                 }
             }
         }
@@ -84,7 +85,7 @@ public class StatHandler {
                 logger.log(Level.FINEST, "Got it", "null");
             }
 
-            if (altPath && expectedStatus != null && !expectedStatus.equals(recievedStatus)) {
+            if (!altPath && expectedStatus != null && !expectedStatus.equals(recievedStatus)) {
                 // If client is not in expected state then there is a problem
                 systemStateManager.addUnresponsiveClient(client.getId(), ReasonEnum.WRONGSTATUS);
                 logger.log(Level.SEVERE, "Client {0} did not update status to {1} from {2}",
