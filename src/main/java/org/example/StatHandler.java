@@ -6,6 +6,8 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.example.MessageEnums.CCPAction;
+import org.example.MessageEnums.CCPStatus;
 
 public class StatHandler {
     private static final long STAT_INTERVAL_SECONDS = 2000; // Set time later
@@ -47,11 +49,23 @@ public class StatHandler {
 
     public <S extends Enum<S>, A extends Enum<A> & MessageEnums.ActionToStatus<S>> void handleStatMessage(
             Client<S, A> client, ReceiveMessage receiveMessage) {
+
         A lastAction = client.getLastActionSent();
         S expectedStatus = null;
+        CCPStatus alternateStatus = null;
+        Boolean altPath = false;
 
-        if (lastAction != null)
+        if (lastAction != null) {
             expectedStatus = lastAction.getStatus();
+
+            if (receiveMessage.clientType.equals("CCP")) {
+                if (lastAction.equals(MessageEnums.CCPAction.FSLOWC)
+                        || lastAction.equals(MessageEnums.CCPAction.RSLOWC)) {
+                    alternateStatus = MessageEnums.CCPStatus.STOPC;
+                }
+            }
+        }
+
 
         try {
             S recievedStatus =
@@ -60,7 +74,16 @@ public class StatHandler {
             // If client reports ERR
             if (recievedStatus.toString().equals("ERR")) {
                 systemStateManager.addUnresponsiveClient(client.getId(), ReasonEnum.CLIENTERR);
-            } else if (expectedStatus != null && !expectedStatus.equals(recievedStatus)) {
+            }
+
+            if (!(alternateStatus == null) && recievedStatus.equals(alternateStatus)) {
+                // Ashton should get his STOPC
+                // Processor.bladeRunnerStopped(receiveMessage.clientID);
+
+                logger.log(Level.FINEST, "Got it", "null");
+            }
+
+            if (altPath && expectedStatus != null && !expectedStatus.equals(recievedStatus)) {
                 // If client is not in expected state then there is a problem
                 systemStateManager.addUnresponsiveClient(client.getId(), ReasonEnum.WRONGSTATUS);
                 logger.log(Level.SEVERE, "Client {0} did not update status to {1} from {2}",
@@ -81,8 +104,7 @@ public class StatHandler {
                     new Object[] {receiveMessage.status, client.getId()});
         }
 
-        logger.log(Level.INFO, "Received STAT message from Blade Runner: {0}",
-                receiveMessage.clientID);
+        logger.log(Level.INFO, "Received STAT message from Client: {0}", receiveMessage.clientID);
     }
 
     public void shutdown() {

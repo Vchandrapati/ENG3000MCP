@@ -40,6 +40,7 @@ public abstract class Client<S extends Enum<S>, A extends Enum<A>> {
         this.sequenceNumberOutgoing = new AtomicInteger(0);
         this.latestStatusMessage = -1;
         this.missedStats = new AtomicInteger(0);
+        this.lastActionSent = null;
 
         incomingMessages = new HashMap<>();
         outgoingMessages = new HashMap<>();
@@ -97,7 +98,8 @@ public abstract class Client<S extends Enum<S>, A extends Enum<A>> {
     }
 
     public void sendStatusMessage() {
-        String message = MessageGenerator.generateStatusMessage(type, id, sequenceNumberOutgoing.getAndIncrement());
+        String message = MessageGenerator.generateStatusMessage(type, id,
+                sequenceNumberOutgoing.getAndIncrement());
         sendMessage(message, "STAT");
     }
 
@@ -139,7 +141,7 @@ public abstract class Client<S extends Enum<S>, A extends Enum<A>> {
         return registered;
     }
 
-    public String getLastExecMessageSent () {
+    public String getLastExecMessageSent() {
         return lastExecMessageSent;
     }
 
