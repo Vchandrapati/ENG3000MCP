@@ -20627,3 +20627,2183 @@ java.lang.NullPointerException: Cannot invoke "java.lang.Integer.intValue()" bec
 19:16:17.058 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP04
 19:16:17.059 INFO: org.example.Client updateStatus Updated status for CP03 to OFF
 19:16:17.059 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP03
+20:29:16.903 INFO: org.example.SystemStateManager setState Changing to system state WAITING
+20:29:16.908 INFO: org.example.CommandHandler run MCP online, please input a command, type help to see a list of commands
+20:29:17.125 INFO: org.example.Server <init> Server completed startup and listening on PORT: 2000
+20:29:22.845 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:29:22.845 INFO: org.example.Client registerClient Added new BR to database
+20:29:22.858 INFO: org.example.Server sendMessageToClient Sent AKIN to client: BR01
+20:29:22.858 INFO: org.example.ClientCreator handleInitialise Initialised new client: BR01
+20:29:22.859 INFO: org.example.MessageHandler lambda$3 Received CCIN message from Blade Runner: BR01
+20:29:22.860 CONFIG: org.example.ClientCreator handleInitialise zone: 1 ID: CP01
+20:29:22.861 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:29:22.861 INFO: org.example.Client registerClient Added new CPC to database
+20:29:22.862 INFO: org.example.Server sendMessageToClient Sent AKIN to client: CP01
+20:29:22.863 INFO: org.example.ClientCreator handleInitialise Initialised new client: CP01
+20:29:22.863 INFO: org.example.MessageHandler lambda$1 Received CPIN message from Checkpoint: CP01
+20:29:22.863 CONFIG: org.example.ClientCreator handleInitialise zone: 2 ID: CP02
+20:29:22.864 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:29:22.864 INFO: org.example.Client registerClient Added new CPC to database
+20:29:22.865 INFO: org.example.Server sendMessageToClient Sent AKIN to client: CP02
+20:29:22.865 INFO: org.example.ClientCreator handleInitialise Initialised new client: CP02
+20:29:22.866 INFO: org.example.MessageHandler lambda$1 Received CPIN message from Checkpoint: CP02
+20:29:22.867 CONFIG: org.example.ClientCreator handleInitialise zone: 3 ID: CP03
+20:29:22.867 INFO: org.example.Client updateStatus Updated status for CP03 to OFF
+20:29:22.867 INFO: org.example.Client registerClient Added new CPC to database
+20:29:22.868 INFO: org.example.Server sendMessageToClient Sent AKIN to client: CP03
+20:29:22.868 INFO: org.example.ClientCreator handleInitialise Initialised new client: CP03
+20:29:22.869 INFO: org.example.MessageHandler lambda$1 Received CPIN message from Checkpoint: CP03
+20:29:22.869 CONFIG: org.example.ClientCreator handleInitialise zone: 4 ID: CP04
+20:29:22.870 INFO: org.example.Client updateStatus Updated status for CP04 to OFF
+20:29:22.870 INFO: org.example.Client registerClient Added new CPC to database
+20:29:22.872 INFO: org.example.Server sendMessageToClient Sent AKIN to client: CP04
+20:29:22.872 INFO: org.example.ClientCreator handleInitialise Initialised new client: CP04
+20:29:22.873 INFO: org.example.MessageHandler lambda$1 Received CPIN message from Checkpoint: CP04
+20:29:22.874 CONFIG: org.example.ClientCreator handleInitialise zone: 5 ID: CP05
+20:29:22.874 INFO: org.example.Client updateStatus Updated status for CP05 to OFF
+20:29:22.875 INFO: org.example.Client registerClient Added new CPC to database
+20:29:22.875 INFO: org.example.Server sendMessageToClient Sent AKIN to client: CP05
+20:29:22.876 INFO: org.example.ClientCreator handleInitialise Initialised new client: CP05
+20:29:22.876 INFO: org.example.MessageHandler lambda$1 Received CPIN message from Checkpoint: CP05
+20:29:37.803 INFO: org.example.SystemStateManager setState Changing to system state MAPPING
+20:29:37.804 INFO: org.example.CommandHandler run Command executed: start mapping
+20:29:39.803 INFO: org.example.MappingState sendBladeRunnerToNextCheckpoint  moving BR01
+20:29:39.803 INFO: org.example.Server sendMessageToClient Sent EXEC to client: BR01
+20:29:39.806 INFO: org.example.Server sendMessageToClient Sent AKST to client: BR01
+20:29:39.806 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:29:39.807 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:29:54.808 INFO: org.example.MappingState sendBladeRunnerToNextCheckpoint retry moving BR01
+20:29:54.808 INFO: org.example.Server sendMessageToClient Sent EXEC to client: BR01
+20:29:54.809 INFO: org.example.Server sendMessageToClient Sent AKST to client: BR01
+20:29:54.810 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:29:54.810 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:30:09.809 INFO: org.example.MappingState sendBladeRunnerToNextCheckpoint retry moving BR01
+20:30:09.809 INFO: org.example.Server sendMessageToClient Sent EXEC to client: BR01
+20:30:09.810 INFO: org.example.Server sendMessageToClient Sent AKST to client: BR01
+20:30:09.811 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:30:09.811 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:31:09.505 INFO: org.example.SystemStateManager setState Changing to system state WAITING
+20:31:09.509 INFO: org.example.CommandHandler run MCP online, please input a command, type help to see a list of commands
+20:31:09.717 INFO: org.example.Server <init> Server completed startup and listening on PORT: 2000
+20:31:13.733 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:31:13.734 INFO: org.example.Client registerClient Added new BR to database
+20:31:13.748 INFO: org.example.Server sendMessageToClient Sent AKIN to client: BR01
+20:31:13.748 INFO: org.example.ClientCreator handleInitialise Initialised new client: BR01
+20:31:13.749 INFO: org.example.MessageHandler lambda$3 Received CCIN message from Blade Runner: BR01
+20:31:13.750 CONFIG: org.example.ClientCreator handleInitialise zone: 1 ID: CP01
+20:31:13.751 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:31:13.752 INFO: org.example.Client registerClient Added new CPC to database
+20:31:13.753 INFO: org.example.Server sendMessageToClient Sent AKIN to client: CP01
+20:31:13.754 INFO: org.example.ClientCreator handleInitialise Initialised new client: CP01
+20:31:13.754 INFO: org.example.MessageHandler lambda$1 Received CPIN message from Checkpoint: CP01
+20:31:13.755 CONFIG: org.example.ClientCreator handleInitialise zone: 2 ID: CP02
+20:31:13.755 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:31:13.756 INFO: org.example.Client registerClient Added new CPC to database
+20:31:13.757 INFO: org.example.Server sendMessageToClient Sent AKIN to client: CP02
+20:31:13.757 INFO: org.example.ClientCreator handleInitialise Initialised new client: CP02
+20:31:13.757 INFO: org.example.MessageHandler lambda$1 Received CPIN message from Checkpoint: CP02
+20:31:13.758 CONFIG: org.example.ClientCreator handleInitialise zone: 3 ID: CP03
+20:31:13.759 INFO: org.example.Client updateStatus Updated status for CP03 to OFF
+20:31:13.760 INFO: org.example.Client registerClient Added new CPC to database
+20:31:13.760 INFO: org.example.Server sendMessageToClient Sent AKIN to client: CP03
+20:31:13.761 INFO: org.example.ClientCreator handleInitialise Initialised new client: CP03
+20:31:13.761 INFO: org.example.MessageHandler lambda$1 Received CPIN message from Checkpoint: CP03
+20:31:13.762 CONFIG: org.example.ClientCreator handleInitialise zone: 4 ID: CP04
+20:31:13.762 INFO: org.example.Client updateStatus Updated status for CP04 to OFF
+20:31:13.762 INFO: org.example.Client registerClient Added new CPC to database
+20:31:13.763 INFO: org.example.Server sendMessageToClient Sent AKIN to client: CP04
+20:31:13.763 INFO: org.example.ClientCreator handleInitialise Initialised new client: CP04
+20:31:13.765 INFO: org.example.MessageHandler lambda$1 Received CPIN message from Checkpoint: CP04
+20:31:13.765 CONFIG: org.example.ClientCreator handleInitialise zone: 5 ID: CP05
+20:31:13.766 INFO: org.example.Client updateStatus Updated status for CP05 to OFF
+20:31:13.766 INFO: org.example.Client registerClient Added new CPC to database
+20:31:13.767 INFO: org.example.Server sendMessageToClient Sent AKIN to client: CP05
+20:31:13.767 INFO: org.example.ClientCreator handleInitialise Initialised new client: CP05
+20:31:13.768 INFO: org.example.MessageHandler lambda$1 Received CPIN message from Checkpoint: CP05
+20:31:19.223 INFO: org.example.SystemStateManager setState Changing to system state MAPPING
+20:31:19.223 INFO: org.example.CommandHandler run Command executed: start mapping
+20:31:21.223 INFO: org.example.MappingState sendBladeRunnerToNextCheckpoint  moving BR01
+20:31:21.224 INFO: org.example.Server sendMessageToClient Sent EXEC to client: BR01
+20:31:21.226 INFO: org.example.Server sendMessageToClient Sent AKST to client: BR01
+20:31:21.226 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:31:21.227 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:32:20.913 INFO: org.example.SystemStateManager setState Changing to system state WAITING
+20:32:20.917 INFO: org.example.CommandHandler run MCP online, please input a command, type help to see a list of commands
+20:32:21.122 INFO: org.example.Server <init> Server completed startup and listening on PORT: 2000
+20:32:30.037 INFO: org.example.SystemStateManager setState Changing to system state WAITING
+20:32:30.042 INFO: org.example.CommandHandler run MCP online, please input a command, type help to see a list of commands
+20:32:30.250 INFO: org.example.Server <init> Server completed startup and listening on PORT: 2000
+20:32:33.987 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:32:33.988 INFO: org.example.Client registerClient Added new BR to database
+20:32:34.002 INFO: org.example.Server sendMessageToClient Sent AKIN to client: BR01
+20:32:34.002 INFO: org.example.ClientCreator handleInitialise Initialised new client: BR01
+20:32:34.003 INFO: org.example.MessageHandler lambda$3 Received CCIN message from Blade Runner: BR01
+20:32:34.004 CONFIG: org.example.ClientCreator handleInitialise zone: 1 ID: CP01
+20:32:34.006 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:32:34.007 INFO: org.example.Client registerClient Added new CPC to database
+20:32:34.008 INFO: org.example.Server sendMessageToClient Sent AKIN to client: CP01
+20:32:34.008 INFO: org.example.ClientCreator handleInitialise Initialised new client: CP01
+20:32:34.009 INFO: org.example.MessageHandler lambda$1 Received CPIN message from Checkpoint: CP01
+20:32:34.010 CONFIG: org.example.ClientCreator handleInitialise zone: 2 ID: CP02
+20:32:34.010 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:32:34.011 INFO: org.example.Client registerClient Added new CPC to database
+20:32:34.011 INFO: org.example.Server sendMessageToClient Sent AKIN to client: CP02
+20:32:34.011 INFO: org.example.ClientCreator handleInitialise Initialised new client: CP02
+20:32:34.012 INFO: org.example.MessageHandler lambda$1 Received CPIN message from Checkpoint: CP02
+20:32:34.012 CONFIG: org.example.ClientCreator handleInitialise zone: 3 ID: CP03
+20:32:34.013 INFO: org.example.Client updateStatus Updated status for CP03 to OFF
+20:32:34.013 INFO: org.example.Client registerClient Added new CPC to database
+20:32:34.014 INFO: org.example.Server sendMessageToClient Sent AKIN to client: CP03
+20:32:34.015 INFO: org.example.ClientCreator handleInitialise Initialised new client: CP03
+20:32:34.015 INFO: org.example.MessageHandler lambda$1 Received CPIN message from Checkpoint: CP03
+20:32:34.016 CONFIG: org.example.ClientCreator handleInitialise zone: 4 ID: CP04
+20:32:34.016 INFO: org.example.Client updateStatus Updated status for CP04 to OFF
+20:32:34.016 INFO: org.example.Client registerClient Added new CPC to database
+20:32:34.017 INFO: org.example.Server sendMessageToClient Sent AKIN to client: CP04
+20:32:34.017 INFO: org.example.ClientCreator handleInitialise Initialised new client: CP04
+20:32:34.018 INFO: org.example.MessageHandler lambda$1 Received CPIN message from Checkpoint: CP04
+20:32:34.018 CONFIG: org.example.ClientCreator handleInitialise zone: 5 ID: CP05
+20:32:34.019 INFO: org.example.Client updateStatus Updated status for CP05 to OFF
+20:32:34.020 INFO: org.example.Client registerClient Added new CPC to database
+20:32:34.020 INFO: org.example.Server sendMessageToClient Sent AKIN to client: CP05
+20:32:34.020 INFO: org.example.ClientCreator handleInitialise Initialised new client: CP05
+20:32:34.021 INFO: org.example.MessageHandler lambda$1 Received CPIN message from Checkpoint: CP05
+20:32:34.263 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:32:34.263 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:32:34.265 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP05
+20:32:34.265 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:32:34.266 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:32:34.266 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:32:34.266 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP04
+20:32:34.266 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:32:34.267 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP03
+20:32:34.267 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:32:34.268 INFO: org.example.Client updateStatus Updated status for CP05 to OFF
+20:32:34.268 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP05
+20:32:34.268 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:32:34.269 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:32:34.269 INFO: org.example.Client updateStatus Updated status for CP04 to OFF
+20:32:34.270 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP04
+20:32:34.270 INFO: org.example.Client updateStatus Updated status for CP03 to OFF
+20:32:34.271 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP03
+20:32:36.266 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:32:36.267 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:32:36.267 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:32:36.267 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:32:36.267 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP05
+20:32:36.268 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:32:36.268 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:32:36.268 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:32:36.268 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP04
+20:32:36.268 INFO: org.example.Client updateStatus Updated status for CP05 to OFF
+20:32:36.269 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP03
+20:32:36.269 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP05
+20:32:36.269 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:32:36.270 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:32:36.270 INFO: org.example.Client updateStatus Updated status for CP04 to OFF
+20:32:36.270 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP04
+20:32:36.271 INFO: org.example.Client updateStatus Updated status for CP03 to OFF
+20:32:36.271 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP03
+20:32:38.252 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:32:38.253 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:32:38.253 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:32:38.253 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:32:38.253 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP05
+20:32:38.254 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:32:38.254 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:32:38.254 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:32:38.254 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP04
+20:32:38.254 INFO: org.example.Client updateStatus Updated status for CP05 to OFF
+20:32:38.255 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP03
+20:32:38.255 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP05
+20:32:38.256 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:32:38.256 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:32:38.256 INFO: org.example.Client updateStatus Updated status for CP04 to OFF
+20:32:38.257 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP04
+20:32:38.257 INFO: org.example.Client updateStatus Updated status for CP03 to OFF
+20:32:38.258 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP03
+20:32:40.255 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:32:40.256 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:32:40.256 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:32:40.256 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:32:40.256 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP05
+20:32:40.256 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:32:40.257 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:32:40.257 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:32:40.257 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP04
+20:32:40.257 INFO: org.example.Client updateStatus Updated status for CP05 to OFF
+20:32:40.257 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP03
+20:32:40.258 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP05
+20:32:40.258 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:32:40.258 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:32:40.259 INFO: org.example.Client updateStatus Updated status for CP04 to OFF
+20:32:40.259 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP04
+20:32:40.259 INFO: org.example.Client updateStatus Updated status for CP03 to OFF
+20:32:40.260 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP03
+20:32:42.259 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:32:42.259 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:32:42.259 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:32:42.260 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP05
+20:32:42.260 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:32:42.260 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:32:42.260 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:32:42.260 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP04
+20:32:42.261 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:32:42.261 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP03
+20:32:42.261 INFO: org.example.Client updateStatus Updated status for CP05 to OFF
+20:32:42.261 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP05
+20:32:42.262 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:32:42.262 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:32:42.262 INFO: org.example.Client updateStatus Updated status for CP04 to OFF
+20:32:42.262 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP04
+20:32:42.263 INFO: org.example.Client updateStatus Updated status for CP03 to OFF
+20:32:42.263 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP03
+20:32:44.265 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:32:44.266 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:32:44.266 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:32:44.266 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:32:44.266 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP05
+20:32:44.266 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:32:44.266 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:32:44.267 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:32:44.267 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP04
+20:32:44.267 INFO: org.example.Client updateStatus Updated status for CP05 to OFF
+20:32:44.267 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP03
+20:32:44.267 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP05
+20:32:44.268 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:32:44.268 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:32:44.268 INFO: org.example.Client updateStatus Updated status for CP04 to OFF
+20:32:44.268 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP04
+20:32:44.269 INFO: org.example.Client updateStatus Updated status for CP03 to OFF
+20:32:44.269 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP03
+20:32:46.254 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:32:46.254 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:32:46.254 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:32:46.255 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP05
+20:32:46.255 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:32:46.255 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:32:46.255 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:32:46.255 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP04
+20:32:46.255 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:32:46.256 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP03
+20:32:46.256 INFO: org.example.Client updateStatus Updated status for CP05 to OFF
+20:32:46.256 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP05
+20:32:46.256 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:32:46.257 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:32:46.257 INFO: org.example.Client updateStatus Updated status for CP04 to OFF
+20:32:46.257 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP04
+20:32:46.257 INFO: org.example.Client updateStatus Updated status for CP03 to OFF
+20:32:46.258 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP03
+20:32:48.264 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:32:48.264 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:32:48.265 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:32:48.265 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP05
+20:32:48.265 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:32:48.265 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:32:48.265 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:32:48.266 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP04
+20:32:48.266 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:32:48.266 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP03
+20:32:48.266 INFO: org.example.Client updateStatus Updated status for CP05 to OFF
+20:32:48.266 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP05
+20:32:48.267 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:32:48.267 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:32:48.267 INFO: org.example.Client updateStatus Updated status for CP04 to OFF
+20:32:48.267 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP04
+20:32:48.268 INFO: org.example.Client updateStatus Updated status for CP03 to OFF
+20:32:48.268 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP03
+20:32:50.261 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:32:50.261 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:32:50.262 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:32:50.262 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP05
+20:32:50.262 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:32:50.262 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:32:50.262 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:32:50.262 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP04
+20:32:50.263 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:32:50.263 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP03
+20:32:50.263 INFO: org.example.Client updateStatus Updated status for CP05 to OFF
+20:32:50.263 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP05
+20:32:50.264 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:32:50.264 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:32:50.264 INFO: org.example.Client updateStatus Updated status for CP04 to OFF
+20:32:50.265 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP04
+20:32:50.265 INFO: org.example.Client updateStatus Updated status for CP03 to OFF
+20:32:50.265 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP03
+20:32:52.264 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:32:52.264 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:32:52.264 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:32:52.265 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP05
+20:32:52.265 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:32:52.265 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:32:52.265 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:32:52.265 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP04
+20:32:52.265 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:32:52.266 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP03
+20:32:52.266 INFO: org.example.Client updateStatus Updated status for CP05 to OFF
+20:32:52.266 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP05
+20:32:52.267 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:32:52.267 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:32:52.267 INFO: org.example.Client updateStatus Updated status for CP04 to OFF
+20:32:52.267 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP04
+20:32:52.268 INFO: org.example.Client updateStatus Updated status for CP03 to OFF
+20:32:52.268 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP03
+20:32:54.255 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:32:54.255 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:32:54.256 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:32:54.256 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP05
+20:32:54.256 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:32:54.256 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:32:54.256 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:32:54.257 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP04
+20:32:54.257 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:32:54.257 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP03
+20:32:54.257 INFO: org.example.Client updateStatus Updated status for CP05 to OFF
+20:32:54.257 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP05
+20:32:54.258 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:32:54.258 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:32:54.258 INFO: org.example.Client updateStatus Updated status for CP04 to OFF
+20:32:54.258 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP04
+20:32:54.259 INFO: org.example.Client updateStatus Updated status for CP03 to OFF
+20:32:54.259 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP03
+20:33:50.614 INFO: org.example.SystemStateManager setState Changing to system state WAITING
+20:33:50.619 INFO: org.example.CommandHandler run MCP online, please input a command, type help to see a list of commands
+20:33:50.827 INFO: org.example.Server <init> Server completed startup and listening on PORT: 2000
+20:33:55.119 CONFIG: org.example.ClientCreator handleInitialise zone: 1 ID: CP01
+20:33:55.121 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:33:55.121 INFO: org.example.Client registerClient Added new CPC to database
+20:33:55.133 INFO: org.example.Server sendMessageToClient Sent AKIN to client: CP01
+20:33:55.134 INFO: org.example.ClientCreator handleInitialise Initialised new client: CP01
+20:33:55.135 INFO: org.example.MessageHandler lambda$1 Received CPIN message from Checkpoint: CP01
+20:33:56.834 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:33:56.836 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:33:56.836 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:33:58.840 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:33:58.841 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:33:58.841 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:34:00.837 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:34:00.837 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:34:00.838 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:34:02.832 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:34:02.832 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:34:02.833 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:34:04.841 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:34:04.842 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:34:04.842 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:34:06.840 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:34:06.841 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:34:06.841 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:34:08.840 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:34:08.841 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:34:08.841 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:34:10.838 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:34:10.839 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:34:10.839 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:34:12.841 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:34:12.842 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:34:12.842 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:34:14.504 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:34:14.504 INFO: org.example.Client registerClient Added new BR to database
+20:34:14.504 INFO: org.example.Server sendMessageToClient Sent AKIN to client: BR01
+20:34:14.505 INFO: org.example.ClientCreator handleInitialise Initialised new client: BR01
+20:34:14.505 INFO: org.example.MessageHandler lambda$3 Received CCIN message from Blade Runner: BR01
+20:34:14.832 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:34:14.832 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:34:14.832 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:34:14.832 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:34:14.833 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:34:14.833 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:34:16.839 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:34:16.840 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:34:16.840 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:34:16.840 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:34:16.841 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:34:16.841 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:34:18.832 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:34:18.832 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:34:18.832 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:34:18.832 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:34:18.833 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:34:18.833 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:34:20.833 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:34:20.833 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:34:20.833 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:34:20.834 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:34:20.834 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:34:20.835 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:34:22.831 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:34:22.832 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:34:22.832 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:34:22.832 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:34:22.832 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:34:22.832 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:34:24.833 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:34:24.833 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:34:24.833 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:34:24.834 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:34:24.834 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:34:24.835 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:34:26.837 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:34:26.838 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:34:26.838 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:34:26.838 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:34:26.839 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:34:26.839 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:34:28.840 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:34:28.841 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:34:28.841 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:34:28.841 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:34:28.841 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:34:28.842 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:34:30.833 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:34:30.833 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:34:30.833 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:34:30.833 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:34:30.835 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:34:30.835 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:34:32.834 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:34:32.834 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:34:32.834 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:34:32.835 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:34:32.835 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:34:32.836 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:34:34.831 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:34:34.831 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:34:34.832 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:34:34.832 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:34:34.832 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:34:34.833 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:34:36.833 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:34:36.833 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:34:36.833 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:34:36.835 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:34:36.835 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:34:36.835 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:34:38.837 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:34:38.837 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:34:38.837 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:34:38.837 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:34:38.839 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:34:38.839 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:34:40.843 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:34:40.843 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:34:40.843 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:34:40.845 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:34:40.845 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:34:40.845 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:34:42.835 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:34:42.836 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:34:42.836 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:34:42.836 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:34:42.837 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:34:42.837 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:34:44.833 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:34:44.834 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:34:44.834 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:34:44.834 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:34:44.834 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:34:44.835 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:34:46.835 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:34:46.836 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:34:46.836 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:34:46.837 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:34:46.838 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:34:46.838 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:34:48.839 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:34:48.840 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:34:48.840 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:34:48.840 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:34:48.840 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:34:48.841 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:34:50.834 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:34:50.834 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:34:50.834 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:34:50.835 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:34:50.835 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:34:50.835 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:34:52.840 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:34:52.841 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:34:52.841 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:34:52.841 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:34:52.841 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:34:52.841 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:34:54.830 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:34:54.830 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:34:54.831 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:34:54.831 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:34:54.831 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:34:54.831 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:34:56.844 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:34:56.844 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:34:56.844 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:34:56.844 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:34:56.845 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:34:56.845 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:34:58.835 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:34:58.836 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:34:58.836 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:34:58.836 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:34:58.837 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:34:58.837 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:35:00.668 INFO: org.example.SystemStateManager setState Changing to system state MAPPING
+20:35:00.668 INFO: org.example.CommandHandler run Command executed: start mapping
+20:35:00.839 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:35:00.839 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:35:00.839 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:35:00.840 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:35:00.840 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:35:00.840 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:35:02.841 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:35:02.841 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:35:02.841 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:35:02.842 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:35:02.842 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:35:02.842 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:35:03.115 INFO: org.example.MappingState sendBladeRunnerToNextCheckpoint  moving BR01
+20:35:03.116 INFO: org.example.Server sendMessageToClient Sent EXEC to client: BR01
+20:35:03.117 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:35:03.117 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:35:04.843 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:35:04.843 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:35:04.843 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:35:04.844 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:35:04.844 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:35:04.844 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:35:06.841 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:35:06.841 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:35:06.841 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:35:06.841 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:35:06.842 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:35:06.843 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:35:08.842 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:35:08.842 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:35:08.842 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:35:08.843 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:35:08.843 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:35:08.843 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:35:10.843 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:35:10.843 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:35:10.843 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:35:10.843 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:35:10.843 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:35:10.845 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:35:12.842 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:35:12.842 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:35:12.842 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:35:12.843 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:35:12.844 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:35:12.844 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:35:14.832 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:35:14.832 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:35:14.833 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:35:14.833 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:35:14.833 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:35:14.833 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:35:16.841 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:35:16.842 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:35:33.419 INFO: org.example.SystemStateManager setState Changing to system state WAITING
+20:35:33.423 INFO: org.example.CommandHandler run MCP online, please input a command, type help to see a list of commands
+20:35:33.628 INFO: org.example.Server <init> Server completed startup and listening on PORT: 2000
+20:35:41.532 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:35:41.532 INFO: org.example.Client registerClient Added new BR to database
+20:35:41.546 INFO: org.example.Server sendMessageToClient Sent AKIN to client: BR01
+20:35:41.547 INFO: org.example.ClientCreator handleInitialise Initialised new client: BR01
+20:35:41.548 INFO: org.example.MessageHandler lambda$3 Received CCIN message from Blade Runner: BR01
+20:35:41.549 CONFIG: org.example.ClientCreator handleInitialise zone: 1 ID: CP01
+20:35:41.551 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:35:41.551 INFO: org.example.Client registerClient Added new CPC to database
+20:35:41.552 INFO: org.example.Server sendMessageToClient Sent AKIN to client: CP01
+20:35:41.553 INFO: org.example.ClientCreator handleInitialise Initialised new client: CP01
+20:35:41.553 INFO: org.example.MessageHandler lambda$1 Received CPIN message from Checkpoint: CP01
+20:35:47.705 INFO: org.example.SystemStateManager setState Changing to system state MAPPING
+20:35:47.707 INFO: org.example.CommandHandler run Command executed: start mapping
+20:35:49.706 INFO: org.example.MappingState sendBladeRunnerToNextCheckpoint  moving BR01
+20:35:49.707 INFO: org.example.Server sendMessageToClient Sent EXEC to client: BR01
+20:35:49.709 INFO: org.example.Server sendMessageToClient Sent AKST to client: BR01
+20:35:49.709 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:35:49.709 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:38:12.153 INFO: org.example.SystemStateManager setState Changing to system state WAITING
+20:38:12.158 INFO: org.example.CommandHandler run MCP online, please input a command, type help to see a list of commands
+20:38:12.365 INFO: org.example.Server <init> Server completed startup and listening on PORT: 2000
+20:38:17.214 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:38:17.215 INFO: org.example.Client registerClient Added new BR to database
+20:38:17.228 INFO: org.example.Server sendMessageToClient Sent AKIN to client: BR01
+20:38:17.229 INFO: org.example.ClientCreator handleInitialise Initialised new client: BR01
+20:38:17.230 INFO: org.example.MessageHandler lambda$3 Received CCIN message from Blade Runner: BR01
+20:38:17.230 CONFIG: org.example.ClientCreator handleInitialise zone: 1 ID: CP01
+20:38:17.232 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:38:17.232 INFO: org.example.Client registerClient Added new CPC to database
+20:38:17.233 INFO: org.example.Server sendMessageToClient Sent AKIN to client: CP01
+20:38:17.235 INFO: org.example.ClientCreator handleInitialise Initialised new client: CP01
+20:38:17.236 INFO: org.example.MessageHandler lambda$1 Received CPIN message from Checkpoint: CP01
+20:38:22.161 INFO: org.example.SystemStateManager setState Changing to system state MAPPING
+20:38:22.163 INFO: org.example.CommandHandler run Command executed: start mapping
+20:38:24.653 INFO: org.example.MappingState sendBladeRunnerToNextCheckpoint  moving BR01
+20:38:24.655 INFO: org.example.Server sendMessageToClient Sent EXEC to client: BR01
+20:38:24.656 INFO: org.example.Server sendMessageToClient Sent AKST to client: BR01
+20:38:24.657 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:38:24.657 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:38:34.829 INFO: org.example.Client updateStatus Updated status for CP01 to ON
+20:38:34.830 WARNING: org.example.Processor checkpointTripped Inconsistent checkpoint trip : 1 on trip boolean : false
+20:38:34.831 INFO: org.example.Server sendMessageToClient Sent AKTR to client: CP01
+20:38:34.832 INFO: org.example.MessageHandler lambda$0 Received TRIP command from Checkpoint: CP01
+20:38:39.655 INFO: org.example.MappingState sendBladeRunnerToNextCheckpoint retry moving BR01
+20:38:39.655 INFO: org.example.Server sendMessageToClient Sent EXEC to client: BR01
+20:38:39.656 INFO: org.example.Server sendMessageToClient Sent AKST to client: BR01
+20:38:39.657 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:38:39.657 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:38:49.043 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:38:49.045 WARNING: org.example.Processor checkpointTripped Inconsistent checkpoint trip : 1 on trip boolean : true
+20:38:49.045 INFO: org.example.Server sendMessageToClient Sent AKTR to client: CP01
+20:38:49.046 INFO: org.example.MessageHandler lambda$0 Received TRIP command from Checkpoint: CP01
+20:38:54.656 INFO: org.example.MappingState sendBladeRunnerToNextCheckpoint retry moving BR01
+20:38:54.656 INFO: org.example.Server sendMessageToClient Sent EXEC to client: BR01
+20:38:54.657 INFO: org.example.Server sendMessageToClient Sent AKST to client: BR01
+20:38:54.658 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:38:54.658 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:39:15.186 INFO: org.example.SystemStateManager setState Changing to system state WAITING
+20:39:15.190 INFO: org.example.CommandHandler run MCP online, please input a command, type help to see a list of commands
+20:39:15.395 INFO: org.example.Server <init> Server completed startup and listening on PORT: 2000
+20:39:22.365 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:39:22.366 INFO: org.example.Client registerClient Added new BR to database
+20:39:22.379 INFO: org.example.Server sendMessageToClient Sent AKIN to client: BR01
+20:39:22.380 INFO: org.example.ClientCreator handleInitialise Initialised new client: BR01
+20:39:22.380 INFO: org.example.MessageHandler lambda$3 Received CCIN message from Blade Runner: BR01
+20:39:22.382 CONFIG: org.example.ClientCreator handleInitialise zone: 1 ID: CP01
+20:39:22.383 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:39:22.383 INFO: org.example.Client registerClient Added new CPC to database
+20:39:22.386 INFO: org.example.Server sendMessageToClient Sent AKIN to client: CP01
+20:39:22.386 INFO: org.example.ClientCreator handleInitialise Initialised new client: CP01
+20:39:22.387 INFO: org.example.MessageHandler lambda$1 Received CPIN message from Checkpoint: CP01
+20:39:27.151 INFO: org.example.SystemStateManager setState Changing to system state MAPPING
+20:39:27.152 INFO: org.example.CommandHandler run Command executed: start mapping
+20:39:29.153 INFO: org.example.MappingState sendBladeRunnerToNextCheckpoint  moving BR01
+20:39:29.154 INFO: org.example.Server sendMessageToClient Sent EXEC to client: BR01
+20:39:29.155 INFO: org.example.Server sendMessageToClient Sent AKST to client: BR01
+20:39:29.156 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:39:29.156 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:39:48.530 INFO: org.example.SystemStateManager setState Changing to system state WAITING
+20:39:48.534 INFO: org.example.CommandHandler run MCP online, please input a command, type help to see a list of commands
+20:39:48.741 INFO: org.example.Server <init> Server completed startup and listening on PORT: 2000
+20:39:53.077 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:39:53.078 INFO: org.example.Client registerClient Added new BR to database
+20:39:53.092 INFO: org.example.Server sendMessageToClient Sent AKIN to client: BR01
+20:39:53.092 INFO: org.example.ClientCreator handleInitialise Initialised new client: BR01
+20:39:53.093 INFO: org.example.MessageHandler lambda$3 Received CCIN message from Blade Runner: BR01
+20:39:53.094 CONFIG: org.example.ClientCreator handleInitialise zone: 1 ID: CP01
+20:39:53.095 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:39:53.096 INFO: org.example.Client registerClient Added new CPC to database
+20:39:53.097 INFO: org.example.Server sendMessageToClient Sent AKIN to client: CP01
+20:39:53.097 INFO: org.example.ClientCreator handleInitialise Initialised new client: CP01
+20:39:53.097 INFO: org.example.MessageHandler lambda$1 Received CPIN message from Checkpoint: CP01
+20:39:57.950 INFO: org.example.SystemStateManager setState Changing to system state MAPPING
+20:39:57.951 INFO: org.example.CommandHandler run Command executed: start mapping
+20:39:59.950 INFO: org.example.MappingState sendBladeRunnerToNextCheckpoint  moving BR01
+20:39:59.951 INFO: org.example.Server sendMessageToClient Sent EXEC to client: BR01
+20:39:59.953 INFO: org.example.Server sendMessageToClient Sent AKST to client: BR01
+20:39:59.953 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:39:59.953 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:40:14.951 INFO: org.example.MappingState sendBladeRunnerToNextCheckpoint retry moving BR01
+20:40:14.951 INFO: org.example.Server sendMessageToClient Sent EXEC to client: BR01
+20:40:14.952 INFO: org.example.Server sendMessageToClient Sent AKST to client: BR01
+20:40:14.953 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:40:14.953 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:40:18.512 INFO: org.example.Client updateStatus Updated status for CP01 to ON
+20:40:18.515 WARNING: org.example.Processor checkpointTripped Inconsistent checkpoint trip : 1 on trip boolean : false
+20:40:18.516 INFO: org.example.Server sendMessageToClient Sent AKTR to client: CP01
+20:40:18.516 INFO: org.example.MessageHandler lambda$0 Received TRIP command from Checkpoint: CP01
+20:40:19.959 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:40:19.960 WARNING: org.example.Processor checkpointTripped Inconsistent checkpoint trip : 1 on trip boolean : true
+20:40:19.961 INFO: org.example.Server sendMessageToClient Sent AKTR to client: CP01
+20:40:19.961 INFO: org.example.MessageHandler lambda$0 Received TRIP command from Checkpoint: CP01
+20:40:49.773 INFO: org.example.SystemStateManager setState Changing to system state WAITING
+20:40:49.777 INFO: org.example.CommandHandler run MCP online, please input a command, type help to see a list of commands
+20:40:49.986 INFO: org.example.Server <init> Server completed startup and listening on PORT: 2000
+20:40:55.701 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:40:55.702 INFO: org.example.Client registerClient Added new BR to database
+20:40:55.716 INFO: org.example.Server sendMessageToClient Sent AKIN to client: BR01
+20:40:55.716 INFO: org.example.ClientCreator handleInitialise Initialised new client: BR01
+20:40:55.717 INFO: org.example.MessageHandler lambda$3 Received CCIN message from Blade Runner: BR01
+20:40:55.718 CONFIG: org.example.ClientCreator handleInitialise zone: 1 ID: CP01
+20:40:55.720 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:40:55.720 INFO: org.example.Client registerClient Added new CPC to database
+20:40:55.721 INFO: org.example.Server sendMessageToClient Sent AKIN to client: CP01
+20:40:55.722 INFO: org.example.ClientCreator handleInitialise Initialised new client: CP01
+20:40:55.722 INFO: org.example.MessageHandler lambda$1 Received CPIN message from Checkpoint: CP01
+20:40:55.723 CONFIG: org.example.ClientCreator handleInitialise zone: 2 ID: CP02
+20:40:55.723 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:40:55.724 INFO: org.example.Client registerClient Added new CPC to database
+20:40:55.725 INFO: org.example.Server sendMessageToClient Sent AKIN to client: CP02
+20:40:55.725 INFO: org.example.ClientCreator handleInitialise Initialised new client: CP02
+20:40:55.726 INFO: org.example.MessageHandler lambda$1 Received CPIN message from Checkpoint: CP02
+20:41:02.499 INFO: org.example.SystemStateManager setState Changing to system state MAPPING
+20:41:02.499 INFO: org.example.CommandHandler run Command executed: start mapping
+20:41:04.499 INFO: org.example.MappingState sendBladeRunnerToNextCheckpoint  moving BR01
+20:41:04.500 INFO: org.example.Server sendMessageToClient Sent EXEC to client: BR01
+20:41:04.502 INFO: org.example.Server sendMessageToClient Sent AKST to client: BR01
+20:41:04.503 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:41:04.503 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:41:07.614 INFO: org.example.Client updateStatus Updated status for CP01 to ON
+20:41:07.616 INFO: org.example.SystemStateManager needsTrip System state manager has detected untrip 1
+20:41:07.616 WARNING: org.example.Processor checkpointTripped Sent to mapping state
+20:41:07.617 INFO: org.example.Server sendMessageToClient Sent AKTR to client: CP01
+20:41:07.617 INFO: org.example.MessageHandler lambda$0 Received TRIP command from Checkpoint: CP01
+20:41:08.000 INFO: org.example.Server sendMessageToClient Sent EXEC to client: BR01
+20:41:08.001 INFO: org.example.Server sendMessageToClient Sent AKST to client: BR01
+20:41:08.001 INFO: org.example.Client updateStatus Updated status for BR01 to FSLOWC
+20:41:08.002 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:41:09.813 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:41:09.814 INFO: org.example.SystemStateManager needsTrip System state manager has detected untrip 1
+20:41:09.815 WARNING: org.example.Processor checkpointTripped Sent to mapping state
+20:41:09.815 INFO: org.example.Server sendMessageToClient Sent AKTR to client: CP01
+20:41:09.816 INFO: org.example.MessageHandler lambda$0 Received TRIP command from Checkpoint: CP01
+20:41:10.000 INFO: org.example.Server sendMessageToClient Sent EXEC to client: BR01
+20:41:10.000 INFO: org.example.MappingState stopBladeRunnerAtCheckpoint BladeRunner BR01 mapped to zone 1
+20:41:10.001 INFO: org.example.Server sendMessageToClient Sent AKST to client: BR01
+20:41:10.001 INFO: org.example.MappingState mapClients All clients have been mapped
+20:41:10.001 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:41:10.001 INFO: org.example.SystemStateManager setState Changing to system state RUNNING
+20:41:10.002 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:41:13.003 INFO: org.example.Server sendMessageToClient Sent EXEC to client: BR01
+20:41:13.004 INFO: org.example.Server sendMessageToClient Sent AKST to client: BR01
+20:41:13.005 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:41:13.006 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:41:32.478 INFO: org.example.SystemStateManager setState Changing to system state WAITING
+20:41:32.483 INFO: org.example.CommandHandler run MCP online, please input a command, type help to see a list of commands
+20:41:32.691 INFO: org.example.Server <init> Server completed startup and listening on PORT: 2000
+20:41:37.895 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:41:37.895 INFO: org.example.Client registerClient Added new BR to database
+20:41:37.908 INFO: org.example.Server sendMessageToClient Sent AKIN to client: BR01
+20:41:37.909 INFO: org.example.ClientCreator handleInitialise Initialised new client: BR01
+20:41:37.909 INFO: org.example.MessageHandler lambda$3 Received CCIN message from Blade Runner: BR01
+20:41:37.911 CONFIG: org.example.ClientCreator handleInitialise zone: 1 ID: CP01
+20:41:37.912 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:41:37.912 INFO: org.example.Client registerClient Added new CPC to database
+20:41:37.913 INFO: org.example.Server sendMessageToClient Sent AKIN to client: CP01
+20:41:37.914 INFO: org.example.ClientCreator handleInitialise Initialised new client: CP01
+20:41:37.914 INFO: org.example.MessageHandler lambda$1 Received CPIN message from Checkpoint: CP01
+20:41:37.915 CONFIG: org.example.ClientCreator handleInitialise zone: 2 ID: CP02
+20:41:37.916 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:41:37.917 INFO: org.example.Client registerClient Added new CPC to database
+20:41:37.918 INFO: org.example.Server sendMessageToClient Sent AKIN to client: CP02
+20:41:37.918 INFO: org.example.ClientCreator handleInitialise Initialised new client: CP02
+20:41:37.918 INFO: org.example.MessageHandler lambda$1 Received CPIN message from Checkpoint: CP02
+20:41:38.702 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:41:38.703 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:41:38.703 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:41:38.703 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:41:38.703 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:41:38.704 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:41:38.704 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:41:38.706 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:41:38.706 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:41:40.699 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:41:40.700 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:41:40.700 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:41:40.700 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:41:40.700 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:41:40.701 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:41:40.701 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:41:40.701 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:41:40.702 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:41:42.695 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:41:42.695 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:41:42.696 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:41:42.696 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:41:42.696 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:41:42.696 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:41:42.697 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:41:42.697 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:41:42.698 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:41:44.697 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:41:44.697 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:41:44.698 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:41:44.698 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:41:44.698 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:41:44.698 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:41:44.699 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:41:44.699 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:41:44.700 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:41:46.701 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:41:46.701 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:41:46.701 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:41:46.703 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:41:46.703 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:41:46.703 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:41:46.704 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:41:46.704 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:41:46.704 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:41:48.702 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:41:48.702 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:41:48.702 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:41:48.703 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:41:48.703 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:41:48.703 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:41:48.704 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:41:48.704 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:41:48.704 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:41:49.393 INFO: org.example.SystemStateManager setState Changing to system state MAPPING
+20:41:49.393 INFO: org.example.CommandHandler run Command executed: start mapping
+20:41:50.695 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:41:50.696 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:41:50.696 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:41:50.696 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:41:50.696 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:41:50.696 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:41:50.697 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:41:50.697 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:41:50.697 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:41:51.393 INFO: org.example.MappingState sendBladeRunnerToNextCheckpoint  moving BR01
+20:41:51.394 INFO: org.example.Server sendMessageToClient Sent EXEC to client: BR01
+20:41:51.395 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:41:51.395 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:41:52.701 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:41:52.701 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:41:52.702 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:41:52.702 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:41:52.702 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:41:52.702 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:41:52.703 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:41:52.703 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:41:52.703 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:41:54.693 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:41:54.693 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:41:54.693 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:41:54.694 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:41:54.694 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:41:54.694 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:41:54.694 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:41:54.695 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:41:54.695 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:41:56.704 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:41:56.704 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:41:56.704 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:41:56.704 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:41:56.704 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:41:56.705 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:41:56.705 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:41:56.706 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:41:56.706 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:41:58.704 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:41:58.704 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:41:58.705 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:41:58.705 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:41:58.705 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:41:58.706 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:41:58.706 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:41:58.706 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:41:58.706 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:43:07.552 INFO: org.example.SystemStateManager setState Changing to system state WAITING
+20:43:07.557 INFO: org.example.CommandHandler run MCP online, please input a command, type help to see a list of commands
+20:43:07.770 INFO: org.example.Server <init> Server completed startup and listening on PORT: 2000
+20:43:11.654 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:43:11.654 INFO: org.example.Client registerClient Added new BR to database
+20:43:11.667 INFO: org.example.Server sendMessageToClient Sent AKIN to client: BR01
+20:43:11.668 INFO: org.example.ClientCreator handleInitialise Initialised new client: BR01
+20:43:11.669 INFO: org.example.MessageHandler lambda$3 Received CCIN message from Blade Runner: BR01
+20:43:11.670 CONFIG: org.example.ClientCreator handleInitialise zone: 1 ID: CP01
+20:43:11.671 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:43:11.672 INFO: org.example.Client registerClient Added new CPC to database
+20:43:11.674 INFO: org.example.Server sendMessageToClient Sent AKIN to client: CP01
+20:43:11.674 INFO: org.example.ClientCreator handleInitialise Initialised new client: CP01
+20:43:11.674 INFO: org.example.MessageHandler lambda$1 Received CPIN message from Checkpoint: CP01
+20:43:11.675 CONFIG: org.example.ClientCreator handleInitialise zone: 2 ID: CP02
+20:43:11.676 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:43:11.676 INFO: org.example.Client registerClient Added new CPC to database
+20:43:11.676 INFO: org.example.Server sendMessageToClient Sent AKIN to client: CP02
+20:43:11.677 INFO: org.example.ClientCreator handleInitialise Initialised new client: CP02
+20:43:11.677 INFO: org.example.MessageHandler lambda$1 Received CPIN message from Checkpoint: CP02
+20:43:11.773 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:43:11.774 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:43:11.774 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:43:11.775 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:43:11.775 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:43:11.775 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:43:11.776 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:43:11.776 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:43:11.777 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:43:13.779 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:43:13.780 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:43:13.780 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:43:13.780 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:43:13.781 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:43:13.781 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:43:13.781 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:43:13.782 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:43:13.782 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:43:15.778 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:43:15.779 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:43:15.779 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:43:15.779 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:43:15.779 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:43:15.779 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:43:15.780 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:43:15.780 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:43:15.781 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:43:17.565 INFO: org.example.SystemStateManager setState Changing to system state MAPPING
+20:43:17.565 INFO: org.example.CommandHandler run Command executed: start mapping
+20:43:17.783 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:43:17.784 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:43:17.784 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:43:17.784 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:43:17.784 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:43:17.785 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:43:17.785 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:43:17.786 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:43:17.786 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:43:19.785 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:43:19.785 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:43:19.786 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:43:19.786 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:43:19.786 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:43:19.786 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:43:19.787 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:43:19.787 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:43:19.788 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:43:20.052 INFO: org.example.MappingState sendBladeRunnerToNextCheckpoint  moving BR01
+20:43:20.053 INFO: org.example.Server sendMessageToClient Sent EXEC to client: BR01
+20:43:20.053 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:43:20.054 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:43:21.779 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:43:21.779 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:43:21.779 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:43:21.780 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:43:21.780 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:43:21.780 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:43:21.781 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:43:21.781 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:43:21.781 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:43:23.773 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:43:23.773 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:43:23.774 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:43:23.774 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:43:23.774 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:43:23.774 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:43:23.775 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:43:23.775 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:43:23.775 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:43:25.776 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:43:25.776 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:43:25.776 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:43:25.777 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:43:25.777 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:43:25.778 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:43:25.778 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:43:25.778 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:43:25.778 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:43:27.775 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:43:27.775 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:43:27.775 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:43:27.776 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:43:27.776 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:43:27.776 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:43:27.777 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:43:27.777 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:43:27.777 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:43:29.784 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:43:29.785 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:43:29.785 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:43:29.785 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:43:29.785 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:43:29.786 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:43:29.786 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:43:29.786 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:43:29.786 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:44:49.770 INFO: org.example.SystemStateManager setState Changing to system state WAITING
+20:44:49.773 INFO: org.example.CommandHandler run MCP online, please input a command, type help to see a list of commands
+20:44:49.990 INFO: org.example.Server <init> Server completed startup and listening on PORT: 2000
+20:44:55.107 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:44:55.108 INFO: org.example.Client registerClient Added new BR to database
+20:44:55.119 INFO: org.example.Server sendMessageToClient Sent AKIN to client: BR01
+20:44:55.120 INFO: org.example.ClientCreator handleInitialise Initialised new client: BR01
+20:44:55.120 INFO: org.example.MessageHandler lambda$3 Received CCIN message from Blade Runner: BR01
+20:44:55.122 CONFIG: org.example.ClientCreator handleInitialise zone: 1 ID: CP01
+20:44:55.123 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:44:55.124 INFO: org.example.Client registerClient Added new CPC to database
+20:44:55.125 INFO: org.example.Server sendMessageToClient Sent AKIN to client: CP01
+20:44:55.125 INFO: org.example.ClientCreator handleInitialise Initialised new client: CP01
+20:44:55.125 INFO: org.example.MessageHandler lambda$1 Received CPIN message from Checkpoint: CP01
+20:44:55.126 CONFIG: org.example.ClientCreator handleInitialise zone: 2 ID: CP02
+20:44:55.127 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:44:55.127 INFO: org.example.Client registerClient Added new CPC to database
+20:44:55.127 INFO: org.example.Server sendMessageToClient Sent AKIN to client: CP02
+20:44:55.128 INFO: org.example.ClientCreator handleInitialise Initialised new client: CP02
+20:44:55.128 INFO: org.example.MessageHandler lambda$1 Received CPIN message from Checkpoint: CP02
+20:44:56.003 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:44:56.004 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:44:56.004 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:44:56.004 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:44:56.004 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:44:56.006 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:44:56.006 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:44:56.007 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:44:56.007 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:44:58.006 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:44:58.006 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:44:58.007 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:44:58.007 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:44:58.007 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:44:58.008 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:44:58.008 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:44:58.008 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:44:58.009 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:44:59.143 INFO: org.example.SystemStateManager setState Changing to system state MAPPING
+20:44:59.144 INFO: org.example.CommandHandler run Command executed: start mapping
+20:45:00.000 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:45:00.001 INFO: org.example.Server sendMessageToClient Sent AKST to client: CP02
+20:45:00.001 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:45:00.001 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:45:00.002 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:45:00.002 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:45:00.002 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:45:00.003 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:45:00.003 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:45:00.003 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:45:01.143 INFO: org.example.MappingState sendBladeRunnerToNextCheckpoint  moving BR01
+20:45:01.143 INFO: org.example.Server sendMessageToClient Sent EXEC to client: BR01
+20:45:01.145 INFO: org.example.Server sendMessageToClient Sent AKST to client: BR01
+20:45:01.146 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:45:01.146 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:45:01.995 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:45:01.996 INFO: org.example.Server sendMessageToClient Sent AKST to client: CP02
+20:45:01.996 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:45:01.996 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:45:01.996 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:45:01.996 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:45:01.997 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:45:01.997 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:45:01.998 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:45:01.998 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:45:04.002 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:45:04.003 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:45:04.003 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:45:04.003 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:45:04.003 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:45:04.003 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:45:04.004 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:45:04.004 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:45:04.004 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:45:06.000 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:45:06.001 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:45:06.001 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:45:06.001 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:45:06.001 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:45:06.001 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:45:06.001 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:45:06.003 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:45:06.003 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:45:08.003 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:45:08.003 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:45:08.004 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:45:08.004 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:45:08.004 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:45:08.004 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:45:08.004 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:45:08.005 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:45:08.005 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:45:09.993 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:45:09.994 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:45:09.994 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:45:09.994 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:45:09.994 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:45:09.994 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:45:09.995 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:45:09.995 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:45:09.995 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:45:12.003 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:45:12.004 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:45:12.004 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:45:12.004 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:45:12.004 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:45:12.004 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:45:12.004 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:45:12.006 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:45:12.006 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:45:13.996 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:45:13.996 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:45:13.996 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:45:13.997 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:45:13.997 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:45:13.997 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:45:13.998 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:45:13.998 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:45:13.998 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:45:16.007 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:45:16.008 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:45:16.008 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:45:16.008 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:45:16.008 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:45:16.008 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:45:16.009 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:45:16.009 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:45:16.009 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:45:16.145 INFO: org.example.MappingState sendBladeRunnerToNextCheckpoint retry moving BR01
+20:45:16.145 INFO: org.example.Server sendMessageToClient Sent EXEC to client: BR01
+20:45:16.146 INFO: org.example.Server sendMessageToClient Sent AKST to client: BR01
+20:45:16.147 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:45:16.147 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:45:18.003 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:45:18.003 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:45:18.003 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:45:18.003 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:45:18.003 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:45:18.005 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:45:18.005 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:45:18.005 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:45:18.005 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:45:20.004 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:45:20.005 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:45:20.005 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:45:20.005 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:45:20.005 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:45:20.006 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:45:20.006 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:45:20.006 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:45:20.006 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:45:21.995 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:45:21.995 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:45:21.995 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:45:21.996 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:45:21.996 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:45:21.996 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:45:21.997 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:45:21.997 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:45:21.997 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:45:22.378 INFO: org.example.Client updateStatus Updated status for CP01 to ON
+20:45:22.379 INFO: org.example.SystemStateManager needsTrip System state manager has detected untrip 1
+20:45:22.380 WARNING: org.example.Processor checkpointTripped Sent to mapping state
+20:45:22.380 INFO: org.example.Server sendMessageToClient Sent AKTR to client: CP01
+20:45:22.380 INFO: org.example.MessageHandler lambda$0 Received TRIP command from Checkpoint: CP01
+20:45:22.646 INFO: org.example.Server sendMessageToClient Sent EXEC to client: BR01
+20:45:22.647 INFO: org.example.Server sendMessageToClient Sent AKST to client: BR01
+20:45:22.647 INFO: org.example.Client updateStatus Updated status for BR01 to FSLOWC
+20:45:22.647 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:45:23.995 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:45:23.996 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:45:23.996 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:45:23.996 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:45:23.996 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:45:23.997 INFO: org.example.Client updateStatus Updated status for CP01 to ON
+20:45:23.997 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:45:23.997 INFO: org.example.Client updateStatus Updated status for BR01 to FSLOWC
+20:45:23.998 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:45:25.826 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:45:25.826 INFO: org.example.SystemStateManager needsTrip System state manager has detected untrip 1
+20:45:25.826 WARNING: org.example.Processor checkpointTripped Sent to mapping state
+20:45:25.827 INFO: org.example.Server sendMessageToClient Sent AKTR to client: CP01
+20:45:25.827 INFO: org.example.MessageHandler lambda$0 Received TRIP command from Checkpoint: CP01
+20:45:26.000 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:45:26.000 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:45:26.000 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:45:26.001 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:45:26.001 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:45:26.001 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:45:26.002 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:45:26.002 INFO: org.example.Client updateStatus Updated status for BR01 to FSLOWC
+20:45:26.002 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:45:26.146 INFO: org.example.Server sendMessageToClient Sent EXEC to client: BR01
+20:45:26.146 INFO: org.example.MappingState stopBladeRunnerAtCheckpoint BladeRunner BR01 mapped to zone 1
+20:45:26.147 INFO: org.example.Server sendMessageToClient Sent AKST to client: BR01
+20:45:26.147 INFO: org.example.MappingState mapClients All clients have been mapped
+20:45:26.147 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:45:26.147 INFO: org.example.SystemStateManager setState Changing to system state RUNNING
+20:45:26.148 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:45:27.999 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:45:28.000 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:45:28.000 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:45:28.000 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:45:28.000 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:45:28.001 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:45:28.001 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:45:28.001 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:45:28.001 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:45:28.250 INFO: org.example.Client updateStatus Updated status for CP02 to ON
+20:45:28.250 WARNING: org.example.Processor checkpointTripped Inconsistent checkpoint trip : 2 on trip boolean : false
+20:45:28.250 INFO: org.example.Server sendMessageToClient Sent AKTR to client: CP02
+20:45:28.250 INFO: org.example.MessageHandler lambda$0 Received TRIP command from Checkpoint: CP02
+20:45:29.148 INFO: org.example.Server sendMessageToClient Sent EXEC to client: BR01
+20:45:29.149 INFO: org.example.Server sendMessageToClient Sent AKST to client: BR01
+20:45:29.149 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:45:29.149 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:45:29.641 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:45:29.642 WARNING: org.example.Processor checkpointTripped Inconsistent checkpoint trip : 2 on trip boolean : true
+20:45:29.642 INFO: org.example.Server sendMessageToClient Sent AKTR to client: CP02
+20:45:29.642 INFO: org.example.MessageHandler lambda$0 Received TRIP command from Checkpoint: CP02
+20:45:29.994 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:45:29.994 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:45:29.994 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:45:29.995 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:45:29.995 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:45:29.995 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:45:29.995 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:45:29.996 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:45:29.996 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:45:31.624 INFO: org.example.Client updateStatus Updated status for CP01 to ON
+20:45:31.627 INFO: org.example.Server sendMessageToClient Sent EXEC to client: BR01
+20:45:31.628 INFO: org.example.Server sendMessageToClient Sent AKTR to client: CP01
+20:45:31.628 INFO: org.example.MessageHandler lambda$0 Received TRIP command from Checkpoint: CP01
+20:45:31.629 INFO: org.example.Server sendMessageToClient Sent AKST to client: BR01
+20:45:31.629 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:45:31.629 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:45:32.000 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:45:32.000 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:45:32.000 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:45:32.001 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:45:32.001 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:45:32.001 INFO: org.example.Client updateStatus Updated status for CP01 to ON
+20:45:32.001 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:45:32.002 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:45:32.002 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:45:32.816 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:45:32.818 INFO: org.example.Server sendMessageToClient Sent EXEC to client: BR01
+20:45:32.818 WARNING: org.example.Processor handleTrip Multiple blade runners in the same zone, includes : BR01
+20:45:32.819 WARNING: org.example.SystemStateManager addUnresponsiveClient Client BR01 has COLLISION
+20:45:32.819 INFO: org.example.Client addReason Added reason COLLISION
+20:45:32.820 WARNING: org.example.SystemStateManager checkChange Error detected while in state RUNNING
+20:45:32.820 INFO: org.example.Server sendMessageToClient Sent AKTR to client: CP01
+20:45:32.820 INFO: org.example.SystemStateManager setState Changing to system state EMERGENCY
+20:45:32.820 INFO: org.example.MessageHandler lambda$0 Received TRIP command from Checkpoint: CP01
+20:45:32.821 INFO: org.example.Server sendMessageToClient Sent AKST to client: BR01
+20:45:32.821 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:45:32.821 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:45:33.648 INFO: org.example.Server sendMessageToClient Sent EXEC to client: BR01
+20:45:33.648 INFO: org.example.EmergencyState dealClientReason Has recognised issue COLLISION for client : BR01, will be fixed in mapping
+20:45:33.649 INFO: org.example.Server sendMessageToClient Sent AKST to client: BR01
+20:45:33.649 INFO: org.example.Client updateStatus Updated status for BR01 to FSLOWC
+20:45:33.649 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:45:34.005 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:45:34.005 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:45:34.005 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:45:34.006 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:45:34.006 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:45:34.006 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:45:34.006 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:45:34.006 INFO: org.example.Client updateStatus Updated status for BR01 to FSLOWC
+20:45:34.007 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:45:36.001 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:45:36.001 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:45:36.002 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:47:29.461 INFO: org.example.SystemStateManager setState Changing to system state WAITING
+20:47:29.465 INFO: org.example.CommandHandler run MCP online, please input a command, type help to see a list of commands
+20:47:29.672 INFO: org.example.Server <init> Server completed startup and listening on PORT: 2000
+20:47:35.684 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:47:35.685 INFO: org.example.Client registerClient Added new BR to database
+20:47:35.698 INFO: org.example.Server sendMessageToClient Sent AKIN to client: BR01
+20:47:35.699 INFO: org.example.ClientCreator handleInitialise Initialised new client: BR01
+20:47:35.700 INFO: org.example.MessageHandler lambda$3 Received CCIN message from Blade Runner: BR01
+20:47:35.701 CONFIG: org.example.ClientCreator handleInitialise zone: 1 ID: CP01
+20:47:35.702 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:47:35.703 INFO: org.example.Client registerClient Added new CPC to database
+20:47:35.704 INFO: org.example.Server sendMessageToClient Sent AKIN to client: CP01
+20:47:35.704 INFO: org.example.ClientCreator handleInitialise Initialised new client: CP01
+20:47:35.705 INFO: org.example.MessageHandler lambda$1 Received CPIN message from Checkpoint: CP01
+20:47:35.706 CONFIG: org.example.ClientCreator handleInitialise zone: 2 ID: CP02
+20:47:35.707 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:47:35.707 INFO: org.example.Client registerClient Added new CPC to database
+20:47:35.708 INFO: org.example.Server sendMessageToClient Sent AKIN to client: CP02
+20:47:35.708 INFO: org.example.ClientCreator handleInitialise Initialised new client: CP02
+20:47:35.708 INFO: org.example.MessageHandler lambda$1 Received CPIN message from Checkpoint: CP02
+20:47:37.689 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:47:37.690 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:47:37.690 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:47:37.691 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:47:37.691 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:47:37.691 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:47:37.692 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:47:37.692 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:47:37.693 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:47:39.678 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:47:39.679 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:47:39.679 INFO: org.example.Server sendMessageToClient Sent AKST to client: CP02
+20:47:39.679 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:47:39.679 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:47:39.679 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:47:39.680 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:47:39.680 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:47:39.681 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:47:39.681 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:47:41.688 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:47:41.689 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:47:41.689 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:47:41.689 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:47:41.689 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:47:41.690 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:47:41.690 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:47:41.690 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:47:41.691 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:47:41.904 INFO: org.example.SystemStateManager setState Changing to system state MAPPING
+20:47:41.904 INFO: org.example.CommandHandler run Command executed: start mapping
+20:47:43.689 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:47:43.690 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:47:43.690 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:47:43.690 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:47:43.690 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:47:43.691 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:47:43.691 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:47:43.691 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:47:43.692 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:47:43.904 INFO: org.example.MappingState sendBladeRunnerToNextCheckpoint  moving BR01
+20:47:43.904 INFO: org.example.Server sendMessageToClient Sent EXEC to client: BR01
+20:47:43.907 INFO: org.example.Server sendMessageToClient Sent AKST to client: BR01
+20:47:43.907 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:47:43.908 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:47:45.675 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:47:45.676 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:47:45.676 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:47:45.676 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:47:45.676 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:47:45.677 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:47:45.677 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:47:45.677 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:47:45.678 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:47:47.686 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:47:47.686 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:47:47.687 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:47:47.687 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:47:47.687 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:47:47.687 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:47:47.688 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:47:47.688 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:47:47.688 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:47:49.682 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:47:49.682 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:47:49.683 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:47:49.683 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:47:49.683 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:47:49.683 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:47:49.683 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:47:49.684 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:47:49.684 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:47:51.688 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:47:51.688 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:47:51.688 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:47:51.689 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:47:51.689 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:47:51.690 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:47:51.690 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:47:51.690 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:47:51.690 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:47:53.687 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:47:53.688 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:47:53.688 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:47:53.688 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:47:53.688 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:47:53.689 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:47:53.689 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:47:53.690 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:47:53.690 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:47:55.683 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:47:55.684 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:47:55.684 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:47:55.684 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:47:55.684 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:47:55.685 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:47:55.685 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:47:55.685 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:47:55.686 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:47:57.678 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:47:57.678 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:47:57.678 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:47:57.679 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:47:57.679 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:47:57.679 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:47:57.680 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:47:57.680 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:47:57.680 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:47:58.907 INFO: org.example.MappingState sendBladeRunnerToNextCheckpoint retry moving BR01
+20:47:58.907 INFO: org.example.Server sendMessageToClient Sent EXEC to client: BR01
+20:47:58.909 INFO: org.example.Server sendMessageToClient Sent AKST to client: BR01
+20:47:58.909 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:47:58.909 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:47:59.690 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:47:59.690 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:47:59.690 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:47:59.691 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:47:59.691 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:47:59.691 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:47:59.691 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:47:59.691 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:47:59.691 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:48:01.680 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:48:01.681 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:48:01.681 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:48:01.681 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:48:01.681 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:48:01.681 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:48:01.682 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:48:01.682 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:48:01.682 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:48:02.883 INFO: org.example.Client updateStatus Updated status for CP01 to ON
+20:48:02.883 INFO: org.example.SystemStateManager needsTrip System state manager has detected untrip 1
+20:48:02.884 WARNING: org.example.Processor checkpointTripped Sent to mapping state
+20:48:02.885 INFO: org.example.Server sendMessageToClient Sent AKTR to client: CP01
+20:48:02.885 INFO: org.example.MessageHandler lambda$0 Received TRIP command from Checkpoint: CP01
+20:48:02.908 INFO: org.example.Server sendMessageToClient Sent EXEC to client: BR01
+20:48:02.909 INFO: org.example.Server sendMessageToClient Sent AKST to client: BR01
+20:48:02.909 INFO: org.example.Client updateStatus Updated status for BR01 to FSLOWC
+20:48:02.909 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:48:03.687 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:48:03.688 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:48:03.688 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:48:03.688 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:48:03.688 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:48:03.689 INFO: org.example.Client updateStatus Updated status for CP01 to ON
+20:48:03.689 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:48:03.689 INFO: org.example.Client updateStatus Updated status for BR01 to FSLOWC
+20:48:03.689 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:48:04.882 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:48:04.882 INFO: org.example.SystemStateManager needsTrip System state manager has detected untrip 1
+20:48:04.882 WARNING: org.example.Processor checkpointTripped Sent to mapping state
+20:48:04.883 INFO: org.example.Server sendMessageToClient Sent AKTR to client: CP01
+20:48:04.883 INFO: org.example.MessageHandler lambda$0 Received TRIP command from Checkpoint: CP01
+20:48:04.908 INFO: org.example.Server sendMessageToClient Sent EXEC to client: BR01
+20:48:04.908 INFO: org.example.MappingState stopBladeRunnerAtCheckpoint BladeRunner BR01 mapped to zone 1
+20:48:04.909 INFO: org.example.MappingState mapClients All clients have been mapped
+20:48:04.909 INFO: org.example.Server sendMessageToClient Sent AKST to client: BR01
+20:48:04.909 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:48:04.909 INFO: org.example.SystemStateManager setState Changing to system state RUNNING
+20:48:04.910 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:48:05.675 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:48:05.675 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:48:05.676 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:48:05.676 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:48:05.676 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:48:05.676 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:48:05.676 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:48:05.677 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:48:05.677 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:48:07.677 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:48:07.677 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:48:07.678 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:48:07.678 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:48:07.678 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:48:07.678 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:48:07.679 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:48:07.679 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:48:07.679 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:48:07.910 INFO: org.example.Server sendMessageToClient Sent EXEC to client: BR01
+20:48:07.911 INFO: org.example.Server sendMessageToClient Sent AKST to client: BR01
+20:48:07.911 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:48:07.911 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:48:09.679 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:48:09.679 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:48:09.680 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:48:09.680 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:48:09.680 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:48:09.680 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:48:09.680 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:48:09.681 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:48:09.681 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:48:11.677 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:48:11.677 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:48:11.678 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:48:11.678 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:48:11.678 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:48:11.678 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:48:11.678 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:48:11.679 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:48:11.679 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:48:13.679 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:48:13.679 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:48:13.680 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:48:51.762 INFO: org.example.SystemStateManager setState Changing to system state WAITING
+20:48:51.766 INFO: org.example.CommandHandler run MCP online, please input a command, type help to see a list of commands
+20:48:51.974 INFO: org.example.Server <init> Server completed startup and listening on PORT: 2000
+20:49:52.012 INFO: org.example.SystemStateManager setState Changing to system state WAITING
+20:49:52.016 INFO: org.example.CommandHandler run MCP online, please input a command, type help to see a list of commands
+20:49:52.226 INFO: org.example.Server <init> Server completed startup and listening on PORT: 2000
+20:49:58.099 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:49:58.100 INFO: org.example.Client registerClient Added new BR to database
+20:49:58.114 INFO: org.example.Server sendMessageToClient Sent AKIN to client: BR01
+20:49:58.114 INFO: org.example.ClientCreator handleInitialise Initialised new client: BR01
+20:49:58.115 INFO: org.example.MessageHandler lambda$3 Received CCIN message from Blade Runner: BR01
+20:49:58.116 CONFIG: org.example.ClientCreator handleInitialise zone: 1 ID: CP01
+20:49:58.118 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:49:58.119 INFO: org.example.Client registerClient Added new CPC to database
+20:49:58.120 INFO: org.example.Server sendMessageToClient Sent AKIN to client: CP01
+20:49:58.120 INFO: org.example.ClientCreator handleInitialise Initialised new client: CP01
+20:49:58.121 INFO: org.example.MessageHandler lambda$1 Received CPIN message from Checkpoint: CP01
+20:49:58.121 CONFIG: org.example.ClientCreator handleInitialise zone: 2 ID: CP02
+20:49:58.122 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:49:58.122 INFO: org.example.Client registerClient Added new CPC to database
+20:49:58.123 INFO: org.example.Server sendMessageToClient Sent AKIN to client: CP02
+20:49:58.123 INFO: org.example.ClientCreator handleInitialise Initialised new client: CP02
+20:49:58.124 INFO: org.example.MessageHandler lambda$1 Received CPIN message from Checkpoint: CP02
+20:49:58.124 CONFIG: org.example.ClientCreator handleInitialise zone: 4 ID: CP03
+20:49:58.125 INFO: org.example.Client updateStatus Updated status for CP03 to OFF
+20:49:58.125 INFO: org.example.Client registerClient Added new CPC to database
+20:49:58.126 INFO: org.example.Server sendMessageToClient Sent AKIN to client: CP03
+20:49:58.126 INFO: org.example.ClientCreator handleInitialise Initialised new client: CP03
+20:49:58.127 INFO: org.example.MessageHandler lambda$1 Received CPIN message from Checkpoint: CP03
+20:49:58.127 CONFIG: org.example.ClientCreator handleInitialise zone: 5 ID: CP04
+20:49:58.128 INFO: org.example.Client updateStatus Updated status for CP04 to OFF
+20:49:58.128 INFO: org.example.Client registerClient Added new CPC to database
+20:49:58.129 INFO: org.example.Server sendMessageToClient Sent AKIN to client: CP04
+20:49:58.130 INFO: org.example.ClientCreator handleInitialise Initialised new client: CP04
+20:49:58.130 INFO: org.example.MessageHandler lambda$1 Received CPIN message from Checkpoint: CP04
+20:49:58.132 CONFIG: org.example.ClientCreator handleInitialise zone: 3 ID: ST01
+20:49:58.133 INFO: org.example.Client updateStatus Updated status for ST01 to OFF
+20:49:58.133 INFO: org.example.Client registerClient Added new STC to database
+20:49:58.134 INFO: org.example.Server sendMessageToClient Sent AKIN to client: ST01
+20:49:58.134 INFO: org.example.ClientCreator handleInitialise Initialised new client: ST01
+20:49:58.135 INFO: org.example.MessageHandler lambda$5 Received STIN message from Station: ST01
+20:49:58.240 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:49:58.241 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:49:58.241 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:49:58.242 INFO: org.example.Server sendMessageToClient Sent STAT to client: ST01
+20:49:58.242 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:49:58.242 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:49:58.242 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:49:58.242 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP04
+20:49:58.243 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:49:58.243 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP03
+20:49:58.243 INFO: org.example.Client updateStatus Updated status for ST01 to OFF
+20:49:58.243 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: ST01
+20:49:58.244 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:49:58.245 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:49:58.245 INFO: org.example.Client updateStatus Updated status for CP04 to OFF
+20:49:58.246 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP04
+20:49:58.246 INFO: org.example.Client updateStatus Updated status for CP03 to OFF
+20:49:58.246 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP03
+20:50:00.229 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:50:00.230 INFO: org.example.Server sendMessageToClient Sent AKST to client: CP02
+20:50:00.230 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:50:00.230 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:50:00.230 INFO: org.example.Server sendMessageToClient Sent STAT to client: ST01
+20:50:00.230 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:50:00.231 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:50:00.231 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:50:00.231 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:50:00.231 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP04
+20:50:00.232 INFO: org.example.Client updateStatus Updated status for ST01 to OFF
+20:50:00.232 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP03
+20:50:00.232 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: ST01
+20:50:00.233 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:50:00.233 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:50:00.233 INFO: org.example.Client updateStatus Updated status for CP04 to OFF
+20:50:00.233 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP04
+20:50:00.235 INFO: org.example.Client updateStatus Updated status for CP03 to OFF
+20:50:00.235 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP03
+20:50:02.234 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:50:02.235 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:50:02.235 INFO: org.example.Server sendMessageToClient Sent AKST to client: CP02
+20:50:02.235 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:50:02.235 INFO: org.example.Server sendMessageToClient Sent STAT to client: ST01
+20:50:02.236 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:50:02.236 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:50:02.236 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:50:02.236 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP04
+20:50:02.236 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:50:02.237 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP03
+20:50:02.237 INFO: org.example.Client updateStatus Updated status for ST01 to OFF
+20:50:02.237 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: ST01
+20:50:02.237 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:50:02.239 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:50:02.239 INFO: org.example.Client updateStatus Updated status for CP04 to OFF
+20:50:02.239 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP04
+20:50:02.240 INFO: org.example.Client updateStatus Updated status for CP03 to OFF
+20:50:02.240 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP03
+20:50:04.232 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:50:04.233 INFO: org.example.Server sendMessageToClient Sent AKST to client: CP02
+20:50:04.233 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:50:04.233 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:50:04.233 INFO: org.example.Server sendMessageToClient Sent STAT to client: ST01
+20:50:04.233 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:50:04.233 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:50:04.234 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:50:04.234 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP04
+20:50:04.234 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:50:04.234 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP03
+20:50:04.234 INFO: org.example.Client updateStatus Updated status for ST01 to OFF
+20:50:04.235 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: ST01
+20:50:04.235 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:50:04.235 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:50:04.236 INFO: org.example.Client updateStatus Updated status for CP04 to OFF
+20:50:04.236 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP04
+20:50:04.236 INFO: org.example.Client updateStatus Updated status for CP03 to OFF
+20:50:04.237 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP03
+20:50:06.233 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:50:06.233 INFO: org.example.Server sendMessageToClient Sent AKST to client: CP02
+20:50:06.233 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:50:06.234 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:50:06.234 INFO: org.example.Server sendMessageToClient Sent STAT to client: ST01
+20:50:06.234 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:50:06.234 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:50:06.235 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:50:06.235 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP04
+20:50:06.235 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:50:06.235 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP03
+20:50:06.235 INFO: org.example.Client updateStatus Updated status for ST01 to OFF
+20:50:06.236 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: ST01
+20:50:06.236 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:50:06.237 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:50:06.237 INFO: org.example.Client updateStatus Updated status for CP04 to OFF
+20:50:06.237 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP04
+20:50:06.237 INFO: org.example.Client updateStatus Updated status for CP03 to OFF
+20:50:06.237 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP03
+20:50:08.241 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:50:08.242 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:50:08.242 INFO: org.example.Server sendMessageToClient Sent STAT to client: ST01
+20:50:08.242 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:50:08.242 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP04
+20:50:08.243 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP03
+20:50:10.237 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:50:10.237 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:50:10.237 INFO: org.example.Server sendMessageToClient Sent STAT to client: ST01
+20:50:10.239 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:50:10.239 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP04
+20:50:10.239 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP03
+20:50:25.023 INFO: org.example.SystemStateManager setState Changing to system state WAITING
+20:50:25.027 INFO: org.example.CommandHandler run MCP online, please input a command, type help to see a list of commands
+20:50:25.235 INFO: org.example.Server <init> Server completed startup and listening on PORT: 2000
+20:50:29.368 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:50:29.369 INFO: org.example.Client registerClient Added new BR to database
+20:50:29.383 INFO: org.example.Server sendMessageToClient Sent AKIN to client: BR01
+20:50:29.383 INFO: org.example.ClientCreator handleInitialise Initialised new client: BR01
+20:50:29.384 INFO: org.example.MessageHandler lambda$3 Received CCIN message from Blade Runner: BR01
+20:50:29.385 CONFIG: org.example.ClientCreator handleInitialise zone: 1 ID: CP01
+20:50:29.387 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:50:29.387 INFO: org.example.Client registerClient Added new CPC to database
+20:50:29.389 INFO: org.example.Server sendMessageToClient Sent AKIN to client: CP01
+20:50:29.389 INFO: org.example.ClientCreator handleInitialise Initialised new client: CP01
+20:50:29.390 INFO: org.example.MessageHandler lambda$1 Received CPIN message from Checkpoint: CP01
+20:50:29.390 CONFIG: org.example.ClientCreator handleInitialise zone: 2 ID: CP02
+20:50:29.391 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:50:29.392 INFO: org.example.Client registerClient Added new CPC to database
+20:50:29.392 INFO: org.example.Server sendMessageToClient Sent AKIN to client: CP02
+20:50:29.393 INFO: org.example.ClientCreator handleInitialise Initialised new client: CP02
+20:50:29.393 INFO: org.example.MessageHandler lambda$1 Received CPIN message from Checkpoint: CP02
+20:50:29.393 CONFIG: org.example.ClientCreator handleInitialise zone: 4 ID: CP03
+20:50:29.395 INFO: org.example.Client updateStatus Updated status for CP03 to OFF
+20:50:29.395 INFO: org.example.Client registerClient Added new CPC to database
+20:50:29.396 INFO: org.example.Server sendMessageToClient Sent AKIN to client: CP03
+20:50:29.397 INFO: org.example.ClientCreator handleInitialise Initialised new client: CP03
+20:50:29.397 INFO: org.example.MessageHandler lambda$1 Received CPIN message from Checkpoint: CP03
+20:50:29.398 CONFIG: org.example.ClientCreator handleInitialise zone: 5 ID: CP04
+20:50:29.398 INFO: org.example.Client updateStatus Updated status for CP04 to OFF
+20:50:29.398 INFO: org.example.Client registerClient Added new CPC to database
+20:50:29.399 INFO: org.example.Server sendMessageToClient Sent AKIN to client: CP04
+20:50:29.399 INFO: org.example.ClientCreator handleInitialise Initialised new client: CP04
+20:50:29.400 INFO: org.example.MessageHandler lambda$1 Received CPIN message from Checkpoint: CP04
+20:50:29.401 CONFIG: org.example.ClientCreator handleInitialise zone: 3 ID: ST01
+20:50:29.402 INFO: org.example.Client updateStatus Updated status for ST01 to OFF
+20:50:29.402 INFO: org.example.Client registerClient Added new STC to database
+20:50:29.403 INFO: org.example.Server sendMessageToClient Sent AKIN to client: ST01
+20:50:29.403 INFO: org.example.ClientCreator handleInitialise Initialised new client: ST01
+20:50:29.404 INFO: org.example.MessageHandler lambda$5 Received STIN message from Station: ST01
+20:50:31.249 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:50:31.250 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:50:31.250 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:50:31.250 INFO: org.example.Server sendMessageToClient Sent STAT to client: ST01
+20:50:31.250 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:50:31.251 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:50:31.251 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:50:31.251 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP04
+20:50:31.252 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:50:31.252 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP03
+20:50:31.252 INFO: org.example.Client updateStatus Updated status for ST01 to OFF
+20:50:31.253 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: ST01
+20:50:31.253 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:50:31.253 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:50:31.254 INFO: org.example.Client updateStatus Updated status for CP04 to OFF
+20:50:31.254 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP04
+20:50:31.255 INFO: org.example.Client updateStatus Updated status for CP03 to OFF
+20:50:31.255 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP03
+20:50:33.248 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:50:33.249 INFO: org.example.Server sendMessageToClient Sent AKST to client: CP02
+20:50:33.249 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:50:33.249 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:50:33.249 INFO: org.example.Server sendMessageToClient Sent STAT to client: ST01
+20:50:33.249 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:50:33.250 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:50:33.250 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:50:33.250 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP04
+20:50:33.250 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:50:33.252 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP03
+20:50:33.252 INFO: org.example.Client updateStatus Updated status for ST01 to OFF
+20:50:33.252 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: ST01
+20:50:33.252 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:50:33.252 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:50:33.253 INFO: org.example.Client updateStatus Updated status for CP04 to OFF
+20:50:33.253 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP04
+20:50:33.253 INFO: org.example.Client updateStatus Updated status for CP03 to OFF
+20:50:33.254 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP03
+20:50:35.247 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:50:35.247 INFO: org.example.Server sendMessageToClient Sent AKST to client: CP02
+20:50:35.247 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:50:35.248 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:50:35.248 INFO: org.example.Server sendMessageToClient Sent STAT to client: ST01
+20:50:35.248 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:50:35.248 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:50:35.249 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:50:35.249 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP04
+20:50:35.249 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:50:35.249 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP03
+20:50:35.249 INFO: org.example.Client updateStatus Updated status for ST01 to OFF
+20:50:35.250 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: ST01
+20:50:35.250 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:50:35.251 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:50:35.251 INFO: org.example.Client updateStatus Updated status for CP04 to OFF
+20:50:35.251 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP04
+20:50:35.251 INFO: org.example.Client updateStatus Updated status for CP03 to OFF
+20:50:35.251 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP03
+20:50:35.768 INFO: org.example.SystemStateManager setState Changing to system state MAPPING
+20:50:35.768 INFO: org.example.CommandHandler run Command executed: start mapping
+20:50:37.245 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:50:37.245 INFO: org.example.Server sendMessageToClient Sent AKST to client: CP02
+20:50:37.245 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:50:37.246 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:50:37.246 INFO: org.example.Server sendMessageToClient Sent STAT to client: ST01
+20:50:37.246 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:50:37.246 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:50:37.246 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:50:37.247 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP04
+20:50:37.247 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:50:37.247 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP03
+20:50:37.247 INFO: org.example.Client updateStatus Updated status for ST01 to OFF
+20:50:37.247 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: ST01
+20:50:37.248 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:50:37.248 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:50:37.248 INFO: org.example.Client updateStatus Updated status for CP04 to OFF
+20:50:37.249 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP04
+20:50:37.249 INFO: org.example.Client updateStatus Updated status for CP03 to OFF
+20:50:37.249 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP03
+20:50:37.768 INFO: org.example.MappingState sendBladeRunnerToNextCheckpoint  moving BR01
+20:50:37.769 INFO: org.example.Server sendMessageToClient Sent EXEC to client: BR01
+20:50:37.770 INFO: org.example.Server sendMessageToClient Sent AKST to client: BR01
+20:50:37.770 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:50:37.770 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:50:39.248 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:50:39.248 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:50:39.248 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:50:39.249 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:50:39.249 INFO: org.example.Server sendMessageToClient Sent STAT to client: ST01
+20:50:39.249 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:50:39.249 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:50:39.249 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:50:39.250 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP04
+20:50:39.250 INFO: org.example.Client updateStatus Updated status for ST01 to OFF
+20:50:39.250 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP03
+20:50:39.250 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: ST01
+20:50:39.251 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:50:39.251 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:50:39.251 INFO: org.example.Client updateStatus Updated status for CP04 to OFF
+20:50:39.251 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP04
+20:50:39.251 INFO: org.example.Client updateStatus Updated status for CP03 to OFF
+20:50:39.251 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP03
+20:50:41.241 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:50:41.241 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:50:41.241 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:50:41.241 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:50:41.241 INFO: org.example.Server sendMessageToClient Sent STAT to client: ST01
+20:50:41.243 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:50:41.243 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:50:41.243 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:50:41.243 INFO: org.example.Client updateStatus Updated status for ST01 to OFF
+20:50:41.243 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP04
+20:50:41.243 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: ST01
+20:50:41.244 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP03
+20:50:41.244 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:50:41.244 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:50:41.244 INFO: org.example.Client updateStatus Updated status for CP04 to OFF
+20:50:41.245 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP04
+20:50:41.245 INFO: org.example.Client updateStatus Updated status for CP03 to OFF
+20:50:41.245 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP03
+20:50:43.248 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:50:43.248 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:50:43.249 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:50:43.249 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:50:43.249 INFO: org.example.Server sendMessageToClient Sent STAT to client: ST01
+20:50:43.249 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:50:43.249 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:50:43.250 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:50:43.250 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP04
+20:50:43.250 INFO: org.example.Client updateStatus Updated status for ST01 to OFF
+20:50:43.250 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP03
+20:50:43.250 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: ST01
+20:50:43.251 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:50:43.251 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:50:43.251 INFO: org.example.Client updateStatus Updated status for CP04 to OFF
+20:50:43.251 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP04
+20:50:43.252 INFO: org.example.Client updateStatus Updated status for CP03 to OFF
+20:50:43.252 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP03
+20:50:45.240 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:50:45.240 INFO: org.example.Server sendMessageToClient Sent AKST to client: CP02
+20:50:45.240 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:50:45.241 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:50:45.241 INFO: org.example.Server sendMessageToClient Sent STAT to client: ST01
+20:50:45.241 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:50:45.241 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:50:45.241 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:50:45.242 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP04
+20:50:45.242 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:50:45.242 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP03
+20:50:45.242 INFO: org.example.Client updateStatus Updated status for ST01 to OFF
+20:50:45.242 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: ST01
+20:50:45.243 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:50:45.243 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:50:45.243 INFO: org.example.Client updateStatus Updated status for CP04 to OFF
+20:50:45.243 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP04
+20:50:45.244 INFO: org.example.Client updateStatus Updated status for CP03 to OFF
+20:50:45.244 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP03
+20:50:45.818 INFO: org.example.Client updateStatus Updated status for CP01 to ON
+20:50:45.820 INFO: org.example.SystemStateManager needsTrip System state manager has detected untrip 1
+20:50:45.821 WARNING: org.example.Processor checkpointTripped Sent to mapping state
+20:50:45.822 INFO: org.example.Server sendMessageToClient Sent AKTR to client: CP01
+20:50:45.822 INFO: org.example.MessageHandler lambda$0 Received TRIP command from Checkpoint: CP01
+20:50:46.269 INFO: org.example.Server sendMessageToClient Sent EXEC to client: BR01
+20:50:46.270 INFO: org.example.Server sendMessageToClient Sent AKST to client: BR01
+20:50:46.270 INFO: org.example.Client updateStatus Updated status for BR01 to FSLOWC
+20:50:46.270 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:50:47.246 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:50:47.246 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:50:47.246 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:50:47.247 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:50:47.247 INFO: org.example.Server sendMessageToClient Sent STAT to client: ST01
+20:50:47.247 INFO: org.example.Client updateStatus Updated status for CP01 to ON
+20:50:47.247 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:50:47.247 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:50:47.248 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP04
+20:50:47.248 INFO: org.example.Client updateStatus Updated status for ST01 to OFF
+20:50:47.248 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP03
+20:50:47.248 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: ST01
+20:50:47.249 INFO: org.example.Client updateStatus Updated status for BR01 to FSLOWC
+20:50:47.249 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:50:47.249 INFO: org.example.Client updateStatus Updated status for CP04 to OFF
+20:50:47.249 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP04
+20:50:47.250 INFO: org.example.Client updateStatus Updated status for CP03 to OFF
+20:50:47.250 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP03
+20:50:48.297 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:50:48.298 INFO: org.example.SystemStateManager needsTrip System state manager has detected untrip 1
+20:50:48.298 WARNING: org.example.Processor checkpointTripped Sent to mapping state
+20:50:48.299 INFO: org.example.Server sendMessageToClient Sent AKTR to client: CP01
+20:50:48.299 INFO: org.example.MessageHandler lambda$0 Received TRIP command from Checkpoint: CP01
+20:50:48.769 INFO: org.example.Server sendMessageToClient Sent EXEC to client: BR01
+20:50:48.769 INFO: org.example.MappingState stopBladeRunnerAtCheckpoint BladeRunner BR01 mapped to zone 1
+20:50:48.770 INFO: org.example.Server sendMessageToClient Sent AKST to client: BR01
+20:50:48.770 INFO: org.example.MappingState mapClients All clients have been mapped
+20:50:48.770 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:50:48.770 INFO: org.example.SystemStateManager setState Changing to system state RUNNING
+20:50:48.770 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:50:49.239 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:50:49.239 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:50:49.239 INFO: org.example.Server sendMessageToClient Sent AKST to client: CP02
+20:50:49.240 INFO: org.example.Server sendMessageToClient Sent STAT to client: ST01
+20:50:49.240 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:50:49.240 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:50:49.240 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:50:49.240 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP04
+20:50:49.240 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:50:49.241 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP03
+20:50:49.241 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:50:49.241 INFO: org.example.Client updateStatus Updated status for ST01 to OFF
+20:50:49.241 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: ST01
+20:50:49.241 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:50:49.242 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:50:49.242 INFO: org.example.Client updateStatus Updated status for CP04 to OFF
+20:50:49.242 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP04
+20:50:49.242 INFO: org.example.Client updateStatus Updated status for CP03 to OFF
+20:50:49.243 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP03
+20:50:51.240 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:50:51.240 INFO: org.example.Server sendMessageToClient Sent AKST to client: CP02
+20:50:51.240 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:50:51.241 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:50:51.241 INFO: org.example.Server sendMessageToClient Sent STAT to client: ST01
+20:50:51.241 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:50:51.241 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:50:51.242 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:50:51.242 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP04
+20:50:51.242 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:50:51.242 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP03
+20:50:51.242 INFO: org.example.Client updateStatus Updated status for ST01 to OFF
+20:50:51.243 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: ST01
+20:50:51.243 INFO: org.example.Client updateStatus Updated status for BR01 to STOPC
+20:50:51.243 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:50:51.244 INFO: org.example.Client updateStatus Updated status for CP04 to OFF
+20:50:51.244 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP04
+20:50:51.244 INFO: org.example.Client updateStatus Updated status for CP03 to OFF
+20:50:51.244 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP03
+20:50:51.770 INFO: org.example.Server sendMessageToClient Sent EXEC to client: BR01
+20:50:51.771 INFO: org.example.Server sendMessageToClient Sent AKST to client: BR01
+20:50:51.771 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:50:51.771 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:50:53.239 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:50:53.240 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:50:53.240 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:50:53.240 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:50:53.240 INFO: org.example.Server sendMessageToClient Sent STAT to client: ST01
+20:50:53.240 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:50:53.240 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:50:53.240 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:50:53.241 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP04
+20:50:53.241 INFO: org.example.Client updateStatus Updated status for ST01 to OFF
+20:50:53.241 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP03
+20:50:53.241 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: ST01
+20:50:53.241 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:50:53.242 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:50:53.242 INFO: org.example.Client updateStatus Updated status for CP04 to OFF
+20:50:53.242 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP04
+20:50:53.243 INFO: org.example.Client updateStatus Updated status for CP03 to OFF
+20:50:53.243 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP03
+20:50:55.248 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:50:55.248 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:50:55.248 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:50:55.248 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:50:55.249 INFO: org.example.Server sendMessageToClient Sent STAT to client: ST01
+20:50:55.249 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:50:55.249 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:50:55.249 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:50:55.249 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP04
+20:50:55.249 INFO: org.example.Client updateStatus Updated status for ST01 to OFF
+20:50:55.250 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP03
+20:50:55.250 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: ST01
+20:50:55.250 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:50:55.250 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:50:55.251 INFO: org.example.Client updateStatus Updated status for CP04 to OFF
+20:50:55.251 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP04
+20:50:55.251 INFO: org.example.Client updateStatus Updated status for CP03 to OFF
+20:50:55.251 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP03
+20:50:55.737 INFO: org.example.Client updateStatus Updated status for CP02 to ON
+20:50:55.740 WARNING: org.example.Processor getBladeRunner Tried to get blade runner at checkpoint 2 but failed
+20:50:55.741 INFO: org.example.Server sendMessageToClient Sent AKTR to client: CP02
+20:50:55.741 INFO: org.example.MessageHandler lambda$0 Received TRIP command from Checkpoint: CP02
+20:50:57.240 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:50:57.240 INFO: org.example.Client updateStatus Updated status for CP02 to ON
+20:50:57.240 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:50:57.240 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:50:57.241 INFO: org.example.Server sendMessageToClient Sent STAT to client: ST01
+20:50:57.241 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:50:57.241 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:50:57.241 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:50:57.241 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP04
+20:50:57.242 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP03
+20:50:57.241 INFO: org.example.Client updateStatus Updated status for ST01 to OFF
+20:50:57.242 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: ST01
+20:50:57.242 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:50:57.242 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:50:57.242 INFO: org.example.Client updateStatus Updated status for CP04 to OFF
+20:50:57.242 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP04
+20:50:57.242 INFO: org.example.Client updateStatus Updated status for CP03 to OFF
+20:50:57.243 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP03
+20:50:59.241 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:50:59.241 INFO: org.example.Client updateStatus Updated status for CP02 to ON
+20:50:59.241 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:50:59.242 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:50:59.242 INFO: org.example.Server sendMessageToClient Sent STAT to client: ST01
+20:50:59.242 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:50:59.242 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:50:59.242 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:50:59.242 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP04
+20:50:59.242 INFO: org.example.Client updateStatus Updated status for ST01 to OFF
+20:50:59.242 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP03
+20:50:59.242 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: ST01
+20:50:59.243 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:50:59.243 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:50:59.243 INFO: org.example.Client updateStatus Updated status for CP04 to OFF
+20:50:59.243 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP04
+20:50:59.244 INFO: org.example.Client updateStatus Updated status for CP03 to OFF
+20:50:59.244 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP03
+20:51:01.242 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:51:01.242 INFO: org.example.Client updateStatus Updated status for CP02 to ON
+20:51:01.242 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:51:01.242 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:51:01.243 INFO: org.example.Server sendMessageToClient Sent STAT to client: ST01
+20:51:01.243 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:51:01.243 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:51:01.243 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:51:01.243 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP04
+20:51:01.243 INFO: org.example.Client updateStatus Updated status for ST01 to OFF
+20:51:01.243 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP03
+20:51:01.243 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: ST01
+20:51:01.244 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:51:01.244 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:51:01.244 INFO: org.example.Client updateStatus Updated status for CP04 to OFF
+20:51:01.244 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP04
+20:51:01.244 INFO: org.example.Client updateStatus Updated status for CP03 to OFF
+20:51:01.245 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP03
+20:51:02.025 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:51:02.026 WARNING: org.example.Processor getBladeRunner Tried to get blade runner at checkpoint 2 but failed
+20:51:02.026 INFO: org.example.Server sendMessageToClient Sent AKTR to client: CP02
+20:51:02.027 INFO: org.example.MessageHandler lambda$0 Received TRIP command from Checkpoint: CP02
+20:51:03.241 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:51:03.241 INFO: org.example.Server sendMessageToClient Sent AKST to client: CP02
+20:51:03.241 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:51:03.241 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:51:03.242 INFO: org.example.Server sendMessageToClient Sent STAT to client: ST01
+20:51:03.242 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:51:03.242 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:51:03.242 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:51:03.242 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP04
+20:51:03.242 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:51:03.242 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP03
+20:51:03.243 INFO: org.example.Client updateStatus Updated status for ST01 to OFF
+20:51:03.243 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: ST01
+20:51:03.243 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:51:03.244 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:51:03.244 INFO: org.example.Client updateStatus Updated status for CP04 to OFF
+20:51:03.244 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP04
+20:51:03.244 INFO: org.example.Client updateStatus Updated status for CP03 to OFF
+20:51:03.245 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP03
+20:51:05.240 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:51:05.240 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:51:05.240 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:51:05.240 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:51:05.241 INFO: org.example.Server sendMessageToClient Sent AKST to client: CP01
+20:51:05.241 INFO: org.example.Server sendMessageToClient Sent STAT to client: ST01
+20:51:05.241 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:51:05.241 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:51:05.241 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:51:05.244 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP04
+20:51:05.245 INFO: org.example.Client updateStatus Updated status for ST01 to OFF
+20:51:05.245 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP03
+20:51:05.245 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: ST01
+20:51:05.245 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:51:05.245 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:51:05.246 INFO: org.example.Client updateStatus Updated status for CP04 to OFF
+20:51:05.246 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP04
+20:51:05.246 INFO: org.example.Client updateStatus Updated status for CP03 to OFF
+20:51:05.246 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP03
+20:51:07.250 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:51:07.250 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:51:07.250 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:51:07.250 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:51:07.251 INFO: org.example.Server sendMessageToClient Sent STAT to client: ST01
+20:51:07.251 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:51:07.251 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP04
+20:51:07.251 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP03
+20:51:07.252 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:51:07.252 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:51:07.252 INFO: org.example.Client updateStatus Updated status for ST01 to OFF
+20:51:07.252 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: ST01
+20:51:07.253 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:51:07.253 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:51:07.253 INFO: org.example.Client updateStatus Updated status for CP04 to OFF
+20:51:07.253 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP04
+20:51:07.253 INFO: org.example.Client updateStatus Updated status for CP03 to OFF
+20:51:07.253 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP03
+20:51:09.248 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:51:09.248 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:51:09.248 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:51:09.248 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:51:09.249 INFO: org.example.Server sendMessageToClient Sent STAT to client: ST01
+20:51:09.249 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:51:09.249 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:51:09.249 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:51:09.249 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP04
+20:51:09.249 INFO: org.example.Client updateStatus Updated status for ST01 to OFF
+20:51:09.249 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP03
+20:51:09.249 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: ST01
+20:51:09.250 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:51:09.250 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:51:09.250 INFO: org.example.Client updateStatus Updated status for CP04 to OFF
+20:51:09.250 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP04
+20:51:09.251 INFO: org.example.Client updateStatus Updated status for CP03 to OFF
+20:51:09.251 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP03
+20:51:11.245 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:51:11.245 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:51:11.245 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:51:11.245 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:51:11.246 INFO: org.example.Server sendMessageToClient Sent STAT to client: ST01
+20:51:11.246 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:51:11.246 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:51:11.246 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:51:11.246 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP04
+20:51:11.246 INFO: org.example.Client updateStatus Updated status for ST01 to OFF
+20:51:11.246 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP03
+20:51:11.246 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: ST01
+20:51:11.247 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:51:11.247 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:51:11.247 INFO: org.example.Client updateStatus Updated status for CP04 to OFF
+20:51:11.247 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP04
+20:51:11.247 INFO: org.example.Client updateStatus Updated status for CP03 to OFF
+20:51:11.248 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP03
+20:51:13.240 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:51:13.240 INFO: org.example.Server sendMessageToClient Sent AKST to client: CP02
+20:51:13.240 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:51:13.240 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:51:13.241 INFO: org.example.Server sendMessageToClient Sent STAT to client: ST01
+20:51:13.241 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:51:13.241 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:51:13.241 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:51:13.241 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP04
+20:51:13.241 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:51:13.241 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP03
+20:51:13.241 INFO: org.example.Client updateStatus Updated status for ST01 to OFF
+20:51:13.242 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: ST01
+20:51:13.242 INFO: org.example.Client updateStatus Updated status for BR01 to FFASTC
+20:51:13.242 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:51:13.242 INFO: org.example.Client updateStatus Updated status for CP04 to OFF
+20:51:13.242 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP04
+20:51:13.243 INFO: org.example.Client updateStatus Updated status for CP03 to OFF
+20:51:13.243 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP03
+20:51:14.009 INFO: org.example.Client updateStatus Updated status for CP03 to ON
+20:51:14.010 WARNING: org.example.Processor getBladeRunner Tried to get blade runner at checkpoint 4 but failed
+20:51:14.010 WARNING: org.example.Processor checkpointTripped Inconsistent checkpoint trip : CP04 on trip boolean : false
+20:51:14.011 WARNING: org.example.SystemStateManager addUnresponsiveClient Client CP04 has INCORTRIP
+20:51:14.011 WARNING: org.example.SystemStateManager checkChange Error detected while in state RUNNING
+20:51:14.011 INFO: org.example.Client addReason Added reason INCORTRIP
+20:51:14.011 INFO: org.example.SystemStateManager setState Changing to system state EMERGENCY
+20:51:14.012 INFO: org.example.Server sendMessageToClient Sent AKTR to client: CP03
+20:51:14.012 INFO: org.example.MessageHandler lambda$0 Received TRIP command from Checkpoint: CP03
+20:51:14.772 INFO: org.example.Server sendMessageToClient Sent EXEC to client: BR01
+20:51:14.773 INFO: org.example.Server sendMessageToClient Sent AKST to client: BR01
+20:51:14.773 INFO: org.example.Client updateStatus Updated status for BR01 to FSLOWC
+20:51:14.773 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:51:15.239 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:51:15.239 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:51:15.239 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:51:15.240 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:51:15.240 INFO: org.example.Server sendMessageToClient Sent STAT to client: ST01
+20:51:15.240 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:51:15.240 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:51:15.240 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:51:15.240 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP04
+20:51:15.240 INFO: org.example.Client updateStatus Updated status for ST01 to OFF
+20:51:15.240 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP03
+20:51:15.241 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: ST01
+20:51:15.241 INFO: org.example.Client updateStatus Updated status for BR01 to FSLOWC
+20:51:15.241 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:51:15.241 INFO: org.example.Client updateStatus Updated status for CP04 to OFF
+20:51:15.241 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP04
+20:51:15.242 INFO: org.example.Client updateStatus Updated status for CP03 to ON
+20:51:15.242 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP03
+20:51:17.239 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:51:17.239 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:51:17.239 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:51:17.240 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:51:17.240 INFO: org.example.Server sendMessageToClient Sent STAT to client: ST01
+20:51:17.240 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:51:17.240 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:51:17.240 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:51:17.240 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP04
+20:51:17.240 INFO: org.example.Client updateStatus Updated status for ST01 to OFF
+20:51:17.241 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP03
+20:51:17.241 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: ST01
+20:51:17.241 INFO: org.example.Client updateStatus Updated status for BR01 to FSLOWC
+20:51:17.241 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:51:17.241 INFO: org.example.Client updateStatus Updated status for CP04 to OFF
+20:51:17.241 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP04
+20:51:17.242 INFO: org.example.Client updateStatus Updated status for CP03 to ON
+20:51:17.242 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP03
+20:51:19.250 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP02
+20:51:19.250 INFO: org.example.Client updateStatus Updated status for CP02 to OFF
+20:51:19.250 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP01
+20:51:19.250 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP02
+20:51:19.250 INFO: org.example.Server sendMessageToClient Sent STAT to client: ST01
+20:51:19.251 INFO: org.example.Client updateStatus Updated status for CP01 to OFF
+20:51:19.251 INFO: org.example.Server sendMessageToClient Sent STAT to client: BR01
+20:51:19.251 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP01
+20:51:19.251 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP04
+20:51:19.251 INFO: org.example.Client updateStatus Updated status for ST01 to OFF
+20:51:19.251 INFO: org.example.Server sendMessageToClient Sent STAT to client: CP03
+20:51:19.251 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: ST01
+20:51:19.251 INFO: org.example.Client updateStatus Updated status for BR01 to FSLOWC
+20:51:19.251 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01
+20:51:19.251 INFO: org.example.Client updateStatus Updated status for CP04 to OFF
+20:51:19.253 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP04
+20:51:19.253 INFO: org.example.Client updateStatus Updated status for CP03 to ON
+20:51:19.253 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: CP03
+20:51:19.772 INFO: org.example.Server sendMessageToClient Sent EXEC to client: BR01
+20:51:19.773 INFO: org.example.Server sendMessageToClient Sent AKST to client: BR01
+20:51:19.773 INFO: org.example.Client updateStatus Updated status for BR01 to FSLOWC
+20:51:19.773 INFO: org.example.StatHandler handleStatMessage Received STAT message from Client: BR01

@@ -33,6 +33,7 @@ public class StatHandler {
                 for (Client client : clients) {
                     if (Boolean.TRUE.equals(client.isRegistered())) {
                         client.sendStatusMessage();
+                        client.nowExpectingStat();
                         checkIfClientIsUnresponsive(client);
                     }
                 }
@@ -72,17 +73,32 @@ public class StatHandler {
             S recievedStatus =
                     Enum.valueOf(client.currentStatus.getDeclaringClass(), receiveMessage.status);
 
+            if (!client.isExpectingStat()) {
+                client.sendAcknowledgeMessage(MessageEnums.AKType.AKST);
+            }
+
             // If client reports ERR
             if (recievedStatus.toString().equals("ERR")) {
                 systemStateManager.addUnresponsiveClient(client.getId(), ReasonEnum.CLIENTERR);
+                altPath = true;
             }
 
-            if (!(alternateStatus == null) && recievedStatus.equals(alternateStatus)) {
+            // For specifically FSLOWC and RSLOWC case
+            if (alternateStatus != null && recievedStatus.equals(alternateStatus)) {
                 // Ashton should get his STOPC
-                 Processor.bladeRunnerStopped(receiveMessage.clientID);
-
-                logger.log(Level.FINEST, "Got it", "null");
+                Processor.bladeRunnerStopped(receiveMessage.clientID);
+                // Resp stat here
             }
+
+            // String clientLastExec = client.lastActionSent.toString();
+
+            // // For DOOR stat response when no response needed
+            // if (!altPath && client.isExpectingStat()
+            // && (receiveMessage.status.equals("ONOPEN") && clientLastExec.equals("OPEN"))
+            // && (receiveMessage.status.equals("ON") && clientLastExec.equals("CLOSE"))) {
+            // altPath = true;
+            // // Resp stat here
+            // }
 
             if (!altPath && expectedStatus != null && !expectedStatus.equals(recievedStatus)) {
                 // If client is not in expected state then there is a problem
@@ -98,6 +114,7 @@ public class StatHandler {
                 client.resetMissedStats();
             }
 
+            client.noLongerExpectingStat();
             client.updateStatus(recievedStatus);
         } catch (IllegalArgumentException e) {
             // Handle case where the status in receiveMessage is invalid

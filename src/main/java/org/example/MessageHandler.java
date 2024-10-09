@@ -14,14 +14,6 @@ public class MessageHandler {
     private static final SystemStateManager systemStateManager = SystemStateManager.getInstance();
     private static final StatHandler statHandler = StatHandler.getInstance();
 
-
-    // ET plans
-
-    // 1. Cut based on message type
-    // 2. Cut based on client type
-    // 3. Update related data and notify correct subsystems
-
-    // Handles messages from CCPs and stations
     public void handleMessage(String message, InetAddress address, int port) {
         try {
             ReceiveMessage receiveMessage = objectMapper.readValue(message, ReceiveMessage.class);
@@ -115,7 +107,7 @@ public class MessageHandler {
             switch (receiveMessage.message) {
                 case "STAT":
                     statHandler.handleStatMessage(client, receiveMessage);
-                    client.sendAcknowledgeMessage(MessageEnums.AKType.AKST);
+
                     break;
                 case "AKEX":
                     break;

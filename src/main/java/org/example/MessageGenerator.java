@@ -29,7 +29,8 @@ public class MessageGenerator {
         return convertToJson(message);
     }
 
-    public static String generateStatusMessage(String clientType, String clientID, Integer sequenceNumber) {
+    public static String generateStatusMessage(String clientType, String clientID,
+            Integer sequenceNumber) {
         SendMessage message = preGen(clientType, clientID, sequenceNumber);
         message.message = "STRQ";
         return convertToJson(message);
@@ -40,6 +41,14 @@ public class MessageGenerator {
             Integer sequenceNumber, String action) {
         SendMessage message = preGen(clientType, clientID, sequenceNumber);
         message.message = "EXEC";
+        message.action = action;
+        return convertToJson(message);
+    }
+
+    public static String generateDOORMessage(String clientType, String clientID,
+            Integer sequenceNumber, String action) {
+        SendMessage message = preGen(clientType, clientID, sequenceNumber);
+        message.message = "DOOR";
         message.action = action;
         return convertToJson(message);
     }

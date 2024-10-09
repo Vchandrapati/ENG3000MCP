@@ -16,13 +16,15 @@ public abstract class Client<S extends Enum<S>, A extends Enum<A>> {
     private final InetAddress clientAddress;
     private final int clientPort;
     protected String type;
-    private String lastExecMessageSent;
+    protected String lastExecMessageSent;
     private String lastResponse;
 
     protected AtomicInteger sequenceNumberOutgoing;
     protected AtomicInteger sequenceNumberIncoming;
     protected Integer latestStatusMessage;
     private final AtomicInteger missedStats;
+    protected boolean expectingStat;
+
 
     protected HashMap<Integer, String> incomingMessages;
     protected HashMap<Integer, String> outgoingMessages;
@@ -41,6 +43,7 @@ public abstract class Client<S extends Enum<S>, A extends Enum<A>> {
         this.latestStatusMessage = -1;
         this.missedStats = new AtomicInteger(0);
         this.lastActionSent = null;
+        this.expectingStat = false;
 
         incomingMessages = new HashMap<>();
         outgoingMessages = new HashMap<>();
@@ -55,6 +58,18 @@ public abstract class Client<S extends Enum<S>, A extends Enum<A>> {
         }
 
         return false;
+    }
+
+    public boolean isExpectingStat() {
+        return expectingStat;
+    }
+
+    public void noLongerExpectingStat() {
+        expectingStat = false;
+    }
+
+    public void nowExpectingStat() {
+        expectingStat = true;
     }
 
     public void resetMissedStats() {
@@ -82,14 +97,7 @@ public abstract class Client<S extends Enum<S>, A extends Enum<A>> {
         return latestStatusMessage;
     }
 
-    public void sendExecuteMessage(A action) {
-        this.lastActionSent = action;
-        lastExecMessageSent = "EXEC " + action.toString();
-        String message = MessageGenerator.generateExecuteMessage(type, id,
-                sequenceNumberOutgoing.getAndIncrement(), String.valueOf(action));
-
-        sendMessage(message, "EXEC");
-    }
+    protected abstract void sendExecuteMessage(A action);
 
     public void sendAcknowledgeMessage(MessageEnums.AKType akType) {
         String message = MessageGenerator.generateAcknowledgeMessage(type, id,
