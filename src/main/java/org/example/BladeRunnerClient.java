@@ -7,6 +7,7 @@ public class BladeRunnerClient extends Client<MessageEnums.CCPStatus, MessageEnu
     private final AtomicInteger zone = new AtomicInteger();
     private volatile boolean isCurrentlyMapped;
     private volatile boolean collision;
+    private volatile boolean dockedAtstation;
 
     public BladeRunnerClient(InetAddress clientAddress, int clientPort, String id,
             int sequenceNumber) {
@@ -15,6 +16,7 @@ public class BladeRunnerClient extends Client<MessageEnums.CCPStatus, MessageEnu
         this.updateStatus(MessageEnums.CCPStatus.STOPC);
         this.isCurrentlyMapped = false;
         this.type = "BR";
+        this.dockedAtstation = false;
     }
 
     public Integer getZone() {
@@ -39,5 +41,13 @@ public class BladeRunnerClient extends Client<MessageEnums.CCPStatus, MessageEnu
             collision = hasCollide;
         }
         return collision;
+    }
+
+    public boolean isDockedAtStation() {
+        return dockedAtstation;
+    }
+
+    public void setDockedAtStation(Boolean b) {
+        dockedAtstation = b;
     }
 }
