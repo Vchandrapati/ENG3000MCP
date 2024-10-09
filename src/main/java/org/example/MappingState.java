@@ -201,7 +201,7 @@ public class MappingState implements SystemStateInterface {
         for (BladeRunnerClient BladeRunnerClient : tempBladeRunnersToMap) {
             // returns true if the blade runner has had a collision
             if (BladeRunnerClient.collision(false, null)) {
-                bladeRunnersToMap.addFirst(BladeRunnerClient);
+                //bladeRunnersToMap.addFirst(BladeRunnerClient);
             }
             // returns true if the blade runner is unmapped
             else if (BladeRunnerClient.isUnmapped()) {
