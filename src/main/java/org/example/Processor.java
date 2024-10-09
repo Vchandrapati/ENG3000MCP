@@ -75,6 +75,11 @@ public class Processor {
         if (untrip) {
             db.updateBladeRunnerBlock(bladeRunner.getId(), checkpointTripped);
             bladeRunner.changeZone(checkpointTripped);
+
+            if(isNextCheckpointStation(checkpointTripped) && !bladeRunner.stoppedAtStation()){
+                
+            }
+
             checkForTraffic(previousCheckpoint);
         }
     }
@@ -133,7 +138,15 @@ public class Processor {
         // Nothing needed at the moment
     }
 
-    private static void trainUnaligned(int stationCheckpoint) {
+
+    public static void bladeRunnerStopped(BladeRunnerClient BladeRunner){
+        //open doors
+        //time for 5 seconds or whatever
+        BladeRunner.stoppedAtStation();
+    }
+    
+
+    public static void trainUnaligned(int stationCheckpoint) {
         Optional<BladeRunnerClient> br = getBladeRunner(stationCheckpoint - 1);
         Optional<BladeRunnerClient> brOverShot = getBladeRunner(stationCheckpoint);
 

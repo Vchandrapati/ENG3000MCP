@@ -7,6 +7,7 @@ public class BladeRunnerClient extends Client<MessageEnums.CCPStatus, MessageEnu
     private final AtomicInteger zone = new AtomicInteger();
     private volatile boolean isCurrentlyMapped;
     private volatile boolean collision;
+    private boolean stopped;
 
     public BladeRunnerClient(InetAddress clientAddress, int clientPort, String id,
             int sequenceNumber) {
