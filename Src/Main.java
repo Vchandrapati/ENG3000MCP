@@ -72,12 +72,10 @@ public class Main {
 
                 if (ID[0].equals("ST")) {
                     numSTNClients++;
-                    System.out.println(Integer.parseInt(ID[2]));
                     STNClients.add(new STNClients(Integer.parseInt(ID[2]), add, port, fullID));
                 }
                 if (ID[0].equals("CP")) {
                     numcheckClinets++;
-                    System.out.println(Integer.parseInt(ID[2]));
                     Checkclients
                             .add(new CheckpointClient(Integer.parseInt(ID[2]), add, port, fullID));
                 }
@@ -109,26 +107,21 @@ public class Main {
 
     public void Commands(String input) {
         String[] inputs = input.split(" ");
-        if (inputs.length == 2 && inputs[0].equals("trip")) {
+        if (inputs.length == 2 && inputs[0].equals("cp")) {
             for (CheckpointClient cp : Checkclients) {
                 if (cp.myID.contains("CP0" + inputs[1]) || cp.myID.contains("CP" + inputs[1])) {
                     cp.sendTRIPMsg();
                     break;
                 }
             }
+        }
+
+        if (inputs.length == 2 && inputs[0].equals("st")) {
             for (STNClients st : STNClients) {
                 if (st.myID.contains("ST0" + inputs[1]) || st.myID.contains("ST" + inputs[1])) {
                     st.sendTRIPMsg();
                     break;
                 }
-            }
-        }
-
-        if (inputs.length == 2 && inputs[0].equals("untrip")) {
-            try {
-                Checkclients.get(Integer.parseInt(inputs[1]) - 1).sendTRIPMsg();
-            } catch (Exception e) {
-                System.out.println("NO! bad user");
             }
         }
 
