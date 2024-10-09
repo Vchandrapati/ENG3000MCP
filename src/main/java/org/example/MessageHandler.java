@@ -189,48 +189,6 @@ public class MessageHandler {
 
     // I dont think anything needs to change here except location
     private void handleInitialise(ReceiveMessage receiveMessage, InetAddress address, int port) {
-        try {
-            Client<?, ?> client = null;
-            switch (receiveMessage.clientType) {
-                case "CCP":
-                    client = new BladeRunnerClient(address, port, receiveMessage.clientID,
-                            receiveMessage.sequenceNumber);
-                    break;
-                case "CPC": {
-                    // Temp zone code
-                    String[] id = receiveMessage.clientID.split("CP");
-                    int zone = Integer.parseInt(id[1]);
-                    client = new CheckpointClient(address, port, receiveMessage.clientID,
-                            receiveMessage.sequenceNumber, zone);
-                    break;
-                }
-                case "STC": {
-                    String[] id = receiveMessage.clientID.split("ST");
-                    int zone = Integer.parseInt(id[1]);
-                    client = new StationClient(address, port, receiveMessage.clientID,
-                            receiveMessage.sequenceNumber, zone);
-                    break;
-                }
-                default:
-                    logger.log(Level.WARNING, "Unknown client type: {0}",
-                            receiveMessage.clientType);
-                    break;
-            }
-
-            if (client != null) {
-                client.registerClient();
-                client.sendAcknowledgeMessage(MessageEnums.AKType.AKIN);
-                logger.log(Level.INFO, "Initialised new client: {0}", receiveMessage.clientID);
-                // if a client joins while not in waiting state, goes to emergency mode
-                if (SystemStateManager.getInstance().getState() != SystemState.WAITING) {
-                    SystemStateManager.getInstance().addUnresponsiveClient(receiveMessage.clientID,
-                            ReasonEnum.INVALCONNECT);
-                }
-            }
-
-        } catch (Exception e) {
-            logger.log(Level.SEVERE, "Failed to handle message");
-            logger.log(Level.SEVERE, "Exception: ", e);
-        }
+        ClientCreator.getInstance().handleInitialise(receiveMessage, address, port);
     }
 }
