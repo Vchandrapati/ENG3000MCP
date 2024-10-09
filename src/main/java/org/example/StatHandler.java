@@ -78,7 +78,7 @@ public class StatHandler {
 
             if (!(alternateStatus == null) && recievedStatus.equals(alternateStatus)) {
                 // Ashton should get his STOPC
-                // Processor.bladeRunnerStopped(receiveMessage.clientID);
+                 Processor.bladeRunnerStopped(receiveMessage.clientID);
 
                 logger.log(Level.FINEST, "Got it", "null");
             }
