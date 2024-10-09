@@ -9,7 +9,7 @@ import java.io.FileNotFoundException; // Import this class to handle errors
 
 public class Main {
 
-    Integer port = 6666;
+    Integer port = 2000;
     InetAddress add = null;
     Integer CCPglobal = 0;
 
@@ -113,6 +113,12 @@ public class Main {
                     break;
                 }
             }
+            for (STNClients st : STNClients) {
+                if (st.myID.contains("ST0" + inputs[1]) || st.myID.contains("ST" + inputs[1])) {
+                    st.sendTRIPMsg();
+                    break;
+                }
+            }
         }
 
         if (inputs.length == 2 && inputs[0].equals("untrip")) {
@@ -205,6 +211,16 @@ public class Main {
             } catch (Exception e) {
                 System.out.println("NO! bad thomas");
             }
+        }
+
+        if (inputs.length == 3 && (inputs[0].equals("ccp"))) {
+            try {
+                CCPClient ccp = CCPclients.get(Integer.parseInt(inputs[1]) - 1);
+                ccp.stringToStatus(inputs[2]);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
         }
 
         if (input.equals("q")) {

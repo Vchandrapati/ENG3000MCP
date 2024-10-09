@@ -78,7 +78,7 @@ public class CCPClient {
                     }
 
                     if (c[1].equals("\"EXEC\"")) {
-                        stringToStatus(s[1]);
+                        stringToStatus(s[1].split("\"")[1]);
                         System.out.println(s[1]);
                         this.sendAKEX();
                     }
@@ -143,12 +143,7 @@ public class CCPClient {
     }
 
     public void stringToStatus(String status) {
-        char[] charStatus = status.toCharArray();
-        status = "";
-        for (int i = 1; i < charStatus.length - 1; i++) {
-            status += charStatus[i];
-        }
-        switch(status) {
+        switch (status) {
             case "STOPC":
                 this.curStat = Status.STOPC;
                 break;
@@ -167,10 +162,9 @@ public class CCPClient {
             case "ERR":
                 this.curStat = Status.ERR;
                 break;
-            default: 
+            default:
                 System.out.println("ERROR in string to status");
                 break;
         }
-    }   
-
+    }
 }

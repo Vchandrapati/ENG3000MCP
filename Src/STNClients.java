@@ -121,7 +121,7 @@ public class STNClients {
             tripped = false;
             this.curStat = Status.OFF;
         }
-        byte[] buffer = ("{\"client_type\":\"CPC\", \"message\":\"TRIP\", \"client_id\":\"" + myID
+        byte[] buffer = ("{\"client_type\":\"STC\", \"message\":\"TRIP\", \"client_id\":\"" + myID
                 + "\", \"sequence_number\":\"" + sequenceNum + "\", \"status\":\""
                 + curStat.toString() + "\"}").getBytes();
         sendMsg(buffer);
