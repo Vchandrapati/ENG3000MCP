@@ -77,11 +77,10 @@ public class StatHandler {
                 systemStateManager.addUnresponsiveClient(client.getId(), ReasonEnum.CLIENTERR);
             }
 
-            // This if also needs to check if it is in running
-            if (!(alternateStatus == null) && recievedStatus.equals(alternateStatus)
-                    && systemStateManager.getState().equals(SystemState.RUNNING)) {
+            if (!(alternateStatus == null) && recievedStatus.equals(alternateStatus)) {
                 // Ashton should get his STOPC
-                // Processor.bladeRunnerStopped(receiveMessage.clientID);
+                 Processor.bladeRunnerStopped(receiveMessage.clientID);
+
                 logger.log(Level.FINEST, "Got it", "null");
             }
 
