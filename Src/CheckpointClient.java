@@ -54,7 +54,7 @@ public class CheckpointClient {
                     if (!message.isEmpty()) {
                         message = message.replaceAll("[^\\x20-\\x7E]", " ");
                         // Print every message received
-                        System.out.println(myID + " Recieved msg: " + message);
+                        // System.out.println(myID + " Recieved msg: " + message);
                     }
 
                     String[] temp = message.split(",");
@@ -109,17 +109,16 @@ public class CheckpointClient {
 
     // Sends a stat message
     public void sendTRIPMsg() {
-        if(!tripped) {
+        if (!tripped) {
             tripped = true;
             this.curStat = Status.ON;
-        }
-        else {
+        } else {
             tripped = false;
             this.curStat = Status.OFF;
         }
         byte[] buffer = ("{\"client_type\":\"CPC\", \"message\":\"TRIP\", \"client_id\":\"" + myID
-                + "\", \"sequence_number\":\"" + sequenceNum + "\", \"status\":\"" + curStat.toString()
-                + "\"}").getBytes();
+                + "\", \"sequence_number\":\"" + sequenceNum + "\", \"status\":\""
+                + curStat.toString() + "\"}").getBytes();
         sendMsg(buffer);
     }
 
@@ -132,7 +131,7 @@ public class CheckpointClient {
             DatagramPacket sendPacket =
                     new DatagramPacket(buffer, buffer.length, sendAddress, sendPort);
             socket.send(sendPacket);
-            System.out.println(myID + " Sent msg " + new String(buffer));
+            // System.out.println(myID + " Sent msg " + new String(buffer));
             sequenceNum++;
         } catch (Exception e) {
             System.out.println("Failed to send packet");

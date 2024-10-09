@@ -19,6 +19,7 @@ public class CCPClient {
     private Text txt;
     private Integer sequenceNum;
     private Status curStat;
+    private boolean expectingAKST = false;
 
 
     // Creates a client on specified port and send to specified address
@@ -55,7 +56,7 @@ public class CCPClient {
                     if (!message.isEmpty()) {
                         message = message.replaceAll("[^\\x20-\\x7E]", " ");
                         // Print every message received
-                        System.out.println(myID + " Recieved msg: " + message);
+                        // System.out.println(myID + " Recieved msg: " + message);
                     }
 
                     String[] temp = message.split(",");
@@ -81,6 +82,16 @@ public class CCPClient {
                         stringToStatus(s[1].split("\"")[1]);
                         System.out.println(s[1]);
                         this.sendAKEX();
+
+                        this.sendStatMsg();
+                        expectingAKST = true;
+                    }
+
+
+                    if (c[1].equals("\"AKST\"")) {
+                        System.out.println(expectingAKST);
+                        expectingAKST = false;
+
                     }
 
                 } catch (IOException e) {
@@ -130,7 +141,7 @@ public class CCPClient {
             DatagramPacket sendPacket =
                     new DatagramPacket(buffer, buffer.length, sendAddress, sendPort);
             socket.send(sendPacket);
-            System.out.println(myID + " Sent msg " + new String(buffer));
+            // System.out.println(myID + " Sent msg " + new String(buffer));
             sequenceNum++;
         } catch (Exception e) {
             System.out.println("Failed to send packet");
