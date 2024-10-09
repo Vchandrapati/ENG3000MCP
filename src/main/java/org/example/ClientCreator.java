@@ -31,12 +31,16 @@ public class ClientCreator {
                     break;
                 case "CPC": {
                     Integer zone = locations.get(address.toString() + port);
+                    logger.log(Level.CONFIG, "zone: {0} ID: {1}",
+                            new Object[] {zone, receiveMessage.clientID});
                     client = new CheckpointClient(address, port, receiveMessage.clientID,
                             receiveMessage.sequenceNumber, zone);
                     break;
                 }
                 case "STC": {
                     Integer zone = locations.get(address.toString() + port);
+                    logger.log(Level.CONFIG, "zone: {0} ID: {1}",
+                            new Object[] {zone, receiveMessage.clientID});
                     client = new StationClient(address, port, receiveMessage.clientID,
                             receiveMessage.sequenceNumber, zone);
                     break;
@@ -73,10 +77,9 @@ public class ClientCreator {
             while (s.hasNextLine()) {
                 String str = s.nextLine();
                 String[] splitStr = str.split("_");
-
-                locations.put(splitStr[0], Integer.parseInt(splitStr[1]));
-                logger.log(Level.FINER, "Key: {0} Value: {1}",
-                        new Object[] {splitStr[0], splitStr[1]});
+                if (splitStr.length == 2) {
+                    locations.put(splitStr[0], Integer.parseInt(splitStr[1]));
+                }
             }
 
             s.close();
