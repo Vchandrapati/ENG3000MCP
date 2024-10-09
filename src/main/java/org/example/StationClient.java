@@ -11,7 +11,7 @@ public class StationClient extends Client<MessageEnums.STCStatus, MessageEnums.S
             int location) {
         super(clientAddress, clientPort, id, sequenceNumber);
         // Everyone starts like this but maybe they dont is the thing
-        this.updateStatus(MessageEnums.STCStatus.OFF);
+        this.updateExpectedStatus(MessageEnums.STCStatus.OFF);
         this.location = location;
         this.type = "STC";
     }

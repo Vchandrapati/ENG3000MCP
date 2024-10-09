@@ -15,7 +15,7 @@ public class BladeRunnerClient extends Client<MessageEnums.CCPStatus, MessageEnu
             int sequenceNumber) {
         super(clientAddress, clientPort, id, sequenceNumber);
         // Everyone starts like this but maybe they dont is the thing
-        this.updateStatus(MessageEnums.CCPStatus.STOPC);
+        this.updateExpectedStatus(MessageEnums.CCPStatus.STOPC);
         this.isCurrentlyMapped = false;
         this.type = "BR";
         this.dockedAtstation = false;

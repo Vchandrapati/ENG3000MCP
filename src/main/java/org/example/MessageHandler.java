@@ -13,6 +13,7 @@ public class MessageHandler {
     private static final Database db = Database.getInstance();
     private static final SystemStateManager systemStateManager = SystemStateManager.getInstance();
     private static final StatHandler statHandler = StatHandler.getInstance();
+    private static final ClientCreator clientCreator = ClientCreator.getInstance();
 
     public void handleMessage(String message, InetAddress address, int port) {
         try {
@@ -55,11 +56,11 @@ public class MessageHandler {
                 case "TRIP":
                     switch (MessageEnums.CPCStatus.valueOf(receiveMessage.status)) {
                         case MessageEnums.CPCStatus.ON:
-                            client.updateStatus(MessageEnums.CPCStatus.ON);
+                            client.updateExpectedStatus(MessageEnums.CPCStatus.ON);
                             Processor.checkpointTripped(client.getLocation(), false);
                             break;
                         case MessageEnums.CPCStatus.OFF:
-                            client.updateStatus(MessageEnums.CPCStatus.OFF);
+                            client.updateExpectedStatus(MessageEnums.CPCStatus.OFF);
                             Processor.checkpointTripped(client.getLocation(), true);
                             break;
                         case MessageEnums.CPCStatus.ERR:
@@ -88,7 +89,7 @@ public class MessageHandler {
         }, () -> {
             // Client is not present
             if ("CPIN".equals(receiveMessage.message)) {
-                handleInitialise(receiveMessage, address, port);
+                clientCreator.handleInitialise(receiveMessage, address, port);
 
                 logger.log(Level.INFO, "Received CPIN message from Checkpoint: {0}",
                         receiveMessage.clientID);
@@ -118,7 +119,7 @@ public class MessageHandler {
         }, () -> {
             // Client is not present
             if ("CCIN".equals(receiveMessage.message)) {
-                handleInitialise(receiveMessage, address, port);
+                clientCreator.handleInitialise(receiveMessage, address, port);
                 logger.log(Level.INFO, "Received CCIN message from Blade Runner: {0}",
                         receiveMessage.clientID);
             } else {
@@ -141,11 +142,11 @@ public class MessageHandler {
                 case "TRIP":
                     switch (MessageEnums.STCStatus.valueOf(receiveMessage.status)) {
                         case MessageEnums.STCStatus.ON:
-                            client.updateStatus(MessageEnums.STCStatus.ON);
+                            client.updateExpectedStatus(MessageEnums.STCStatus.ON);
                             Processor.checkpointTripped(client.getLocation(), false);
                             break;
                         case MessageEnums.STCStatus.OFF:
-                            client.updateStatus(MessageEnums.STCStatus.OFF);
+                            client.updateExpectedStatus(MessageEnums.STCStatus.OFF);
                             Processor.checkpointTripped(client.getLocation(), true);
                             break;
                         case MessageEnums.STCStatus.ERR:
@@ -169,7 +170,7 @@ public class MessageHandler {
         }, () -> {
             // Client is not present
             if ("STIN".equals(receiveMessage.message)) {
-                handleInitialise(receiveMessage, address, port);
+                clientCreator.handleInitialise(receiveMessage, address, port);
                 logger.log(Level.INFO, "Received STIN message from Station: {0}",
                         receiveMessage.clientID);
             } else {
@@ -177,10 +178,5 @@ public class MessageHandler {
                         receiveMessage.clientID);
             }
         });
-    }
-
-    // I dont think anything needs to change here except location
-    private void handleInitialise(ReceiveMessage receiveMessage, InetAddress address, int port) {
-        ClientCreator.getInstance().handleInitialise(receiveMessage, address, port);
     }
 }

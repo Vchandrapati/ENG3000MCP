@@ -11,7 +11,7 @@ public class CheckpointClient extends Client<MessageEnums.CPCStatus, MessageEnum
     public CheckpointClient(InetAddress clientAddress, int clientPort, String id,
             int sequenceNumber, int location) {
         super(clientAddress, clientPort, id, sequenceNumber);
-        this.updateStatus(MessageEnums.CPCStatus.OFF);
+        this.updateExpectedStatus(MessageEnums.CPCStatus.OFF);
         this.location = location;
         this.tripped = false;
         this.type = "CPC";

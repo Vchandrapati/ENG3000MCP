@@ -48,6 +48,14 @@ public abstract class Client<S extends Enum<S>, A extends Enum<A>> {
         incomingMessages = new HashMap<>();
         outgoingMessages = new HashMap<>();
         unresponsiveReasons = new HashSet<>();
+
+        this.startupSequence();
+    }
+
+    public void startupSequence() {
+        this.registerClient();
+        this.sendAcknowledgeMessage(MessageEnums.AKType.AKIN);
+        logger.log(Level.INFO, "Initialised new {0}: {1}", new Object[] {this.type, this.id});
     }
 
     public boolean checkResponsive() {
@@ -76,7 +84,7 @@ public abstract class Client<S extends Enum<S>, A extends Enum<A>> {
         this.missedStats.set(0);
     }
 
-    public void updateStatus(S newStatus) {
+    public void updateExpectedStatus(S newStatus) {
         this.currentStatus = newStatus;
         logger.log(Level.INFO, "Updated status for {0} to {1}", new Object[] {id, newStatus});
     }

@@ -31,16 +31,12 @@ public class ClientCreator {
                     break;
                 case "CPC": {
                     Integer zone = locations.get(address.toString() + port);
-                    logger.log(Level.CONFIG, "zone: {0} ID: {1}",
-                            new Object[] {zone, receiveMessage.clientID});
                     client = new CheckpointClient(address, port, receiveMessage.clientID,
                             receiveMessage.sequenceNumber, zone);
                     break;
                 }
                 case "STC": {
                     Integer zone = locations.get(address.toString() + port);
-                    logger.log(Level.CONFIG, "zone: {0} ID: {1}",
-                            new Object[] {zone, receiveMessage.clientID});
                     client = new StationClient(address, port, receiveMessage.clientID,
                             receiveMessage.sequenceNumber, zone);
                     break;
@@ -50,6 +46,7 @@ public class ClientCreator {
                             receiveMessage.clientType);
                     break;
             }
+
 
             if (client != null) {
                 client.registerClient();
