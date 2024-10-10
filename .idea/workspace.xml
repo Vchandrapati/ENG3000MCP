@@ -4,46 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1d9b5952-4092-4fc7-8340-7dd220ada861" name="Changes" comment="Made bladerunners stop at stations">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/client/CheckpointClient.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/client/StationClient.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/messages/MessageBuilder.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/messages/MessageSender.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/messages/SequenceNumberManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="1d9b5952-4092-4fc7-8340-7dd220ada861" name="Changes" comment="Moved subsystems into packages and seperated client">
       <change beforePath="$PROJECT_DIR$/app.log" beforeDir="false" afterPath="$PROJECT_DIR$/app.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.log.1" beforeDir="false" afterPath="$PROJECT_DIR$/app.log.1" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/BladeRunnerClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/client/BladeRunnerClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/CheckpointClient.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/client/AbstractClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/ClientCreator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/messages/ClientFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/ClientsPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/visualiser/ClientsPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/CommandHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/visualiser/CommandHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Database.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/EmergencyState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/state/EmergencyState.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/InfoPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/visualiser/InfoPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/LoggerConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/LoggerConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/MappingState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/state/MappingState.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/MessageEnums.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/messages/MessageEnums.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/MessageGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/client/MessageGenerator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/MessageHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/messages/MessageHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Processor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Processor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/ReasonEnum.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/ReceiveMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/messages/ReceiveMessage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/RunningState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/state/RunningState.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/ScreenLogHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/visualiser/ScreenLogHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/SendMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/messages/SendMessage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/messages/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/StatHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/messages/StatHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/StationClient.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/SystemState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/state/SystemState.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/SystemStateInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/state/SystemStateInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/SystemStateManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/state/SystemStateManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/VisualiserPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/visualiser/VisualiserPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/VisualiserScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/visualiser/VisualiserScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/WaitingState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/state/WaitingState.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/locations.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/messages/locations.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -163,7 +126,7 @@
       <workItem from="1728358965380" duration="13378000" />
       <workItem from="1728454873014" duration="4358000" />
       <workItem from="1728459319167" duration="2407000" />
-      <workItem from="1728518327776" duration="9195000" />
+      <workItem from="1728518327776" duration="9582000" />
     </task>
     <task id="LOCAL-00001" summary="Made some changes to comply with sonarlint">
       <option name="closed" value="true" />
@@ -341,7 +304,15 @@
       <option name="project" value="LOCAL" />
       <updated>1728391832555</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="Moved subsystems into packages and seperated client">
+      <option name="closed" value="true" />
+      <created>1728528001550</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1728528001550</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -374,6 +345,7 @@
     <MESSAGE value="Fixed fuck up" />
     <MESSAGE value="Changed stat message to change client status" />
     <MESSAGE value="refactored processor and fixed up some bugs" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactored processor and fixed up some bugs" />
+    <MESSAGE value="Moved subsystems into packages and seperated client" />
+    <option name="LAST_COMMIT_MESSAGE" value="Moved subsystems into packages and seperated client" />
   </component>
 </project>
