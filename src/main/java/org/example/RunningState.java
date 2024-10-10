@@ -12,10 +12,12 @@ public class RunningState implements SystemStateInterface {
     private static final SystemState nextState = SystemState.RUNNING;
     private static final long TIME_BETWEEN_RUNNING = 500;
     private static final long TIME_BETWEEN_SENDING = 2000;
+    private static final long WAIT = 3000;
 
     private List<BladeRunnerClient> bladeRunners;
     private int curBR;
     private long startTime;
+    private long runningStartTime;
     private boolean grab;
     private boolean allRunning;
 
@@ -26,13 +28,14 @@ public class RunningState implements SystemStateInterface {
         bladeRunners = null;
         startTime = 0;
         curBR = 0;
+        runningStartTime = System.currentTimeMillis();
     }
 
     // Performs the operation of this state at set intervals according to TIME_BETWEEN_RUNNING
     // If returns true then system goes to NEXT_STATE
     @Override
     public boolean performOperation() {
-        if (!grab) {
+        if (!grab && System.currentTimeMillis() - runningStartTime >= WAIT) {
             grabAllBladeRunners();
         }
         if (!allRunning) {
@@ -60,9 +63,12 @@ public class RunningState implements SystemStateInterface {
 
     private void moveAllBladeRunners() {
         if (System.currentTimeMillis() - startTime >= TIME_BETWEEN_SENDING || startTime == 0) {
+            if (bladeRunners == null || bladeRunners.isEmpty()) {
+                return;
+            }
             if (curBR < bladeRunners.size()) {
                 startTime = System.currentTimeMillis();
-                bladeRunners.get(curBR++).sendExecuteMessage(SpeedEnum.SLOW);
+                bladeRunners.get(curBR++).sendExecuteMessage(MessageEnums.CCPAction.FFASTC);
                 return;
             }
             allRunning = true;

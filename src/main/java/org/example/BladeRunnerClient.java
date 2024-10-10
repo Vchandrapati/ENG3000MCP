@@ -2,80 +2,27 @@ package org.example;
 
 import java.net.InetAddress;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.logging.Level;
+import org.example.MessageEnums.CCPAction;
 
-public class BladeRunnerClient extends Client {
-
-    private enum Status {
-        STOPPED, STARTED, ON, OFF, ERR, CRASH, STOPPED_AT_STATION
-    }
-
+public class BladeRunnerClient extends Client<MessageEnums.CCPStatus, MessageEnums.CCPAction> {
     private final AtomicInteger zone = new AtomicInteger();
-    private volatile Status status;
     private volatile boolean isCurrentlyMapped;
     private volatile boolean collision;
+    private volatile boolean dockedAtstation;
 
-    public BladeRunnerClient(InetAddress clientAddress, int clientPort, String id) {
-        super(clientAddress, clientPort, id);
-        this.status = Status.ON;
+
+    public BladeRunnerClient(InetAddress clientAddress, int clientPort, String id,
+            int sequenceNumber) {
+        super(clientAddress, clientPort, id, sequenceNumber);
+        // Everyone starts like this but maybe they dont is the thing
+        this.updateExpectedStatus(MessageEnums.CCPStatus.STOPC);
         this.isCurrentlyMapped = false;
+        this.type = "BR";
+        this.dockedAtstation = false;
     }
 
     public Integer getZone() {
         return zone.get();
-    }
-
-    @Override
-    public String getStatus() {
-        return status.toString();
-    }
-
-    @Override
-    public void updateStatus(String newStatus) {
-        try {
-            status = Status.valueOf(newStatus);
-        } catch (IllegalArgumentException e) {
-            logger.log(Level.SEVERE, "Tried to assign unknown status: {0} for train {1}", new Object[] {newStatus, id});
-        }
-    }
-
-    // For sending a message telling the CCP what speed the bladerunner should go at
-    // 0: Stop
-    // 1: Slow
-    // 2+: Fast
-    public void sendExecuteMessage(SpeedEnum speed) {
-        String message = MessageGenerator.generateExecuteMessage("ccp", id, System.currentTimeMillis(), speed);
-        sendMessage(message, "EXEC");
-    }
-
-    // For sending an acknowledgment message to the CCP
-    @Override
-    public void sendAcknowledgeMessage() {
-        String message = MessageGenerator.generateAcknowledgesMessage("ccp", id, System.currentTimeMillis());
-        sendMessage(message, "ACK");
-        registered = true;
-    }
-
-    // For sending a status message to the CCP
-    @Override
-    public void sendStatusMessage(long timestamp) {
-        String message = MessageGenerator.generateStatusMessage("ccp", id, System.currentTimeMillis());
-        sendMessage(message, "STAT");
-    }
-
-    // For sending a message about updating the status of the door
-    // True: Door is open
-    // False: Door is closed
-    public void sendDoorMessage(boolean doorOpen) {
-        String message = MessageGenerator.generateDoorMessage("ccp", id, System.currentTimeMillis(), doorOpen);
-        sendMessage(message, "DOOR");
-    }
-
-    @Override
-    public void registerClient() {
-        Database.getInstance().addClient(this.id, this);
-        logger.info("Added new BladeRunner to database: " + Database.getInstance().getBladeRunnerCount());
-
     }
 
     public void changeZone(int zone) {
@@ -98,32 +45,21 @@ public class BladeRunnerClient extends Client {
         return collision;
     }
 
-    @Override
-    public void addReason(ReasonEnum r) {
-        String[] temp = {id, r.toString()};
-        Boolean valid = true;
-        switch (r) {
-            case ReasonEnum.NOSTAT:
-                break;
-            case ReasonEnum.WRONGMESSAGE:
-                break;
-            case ReasonEnum.INVALCONNECT:
-                break;
-            case ReasonEnum.CLIENTERR:
-                break;
-            case ReasonEnum.COLLISION:
-                break;
-            case ReasonEnum.MAPTIMEOUT:
-                break;
-            default:
-                valid = false;
-                logger.log(Level.WARNING, "Attempted to add error {1} to {0} which is invalid", temp);
-                break;
-        }
+    public boolean isDockedAtStation() {
+        return dockedAtstation;
+    }
 
-        if (valid) {
-            unresponsiveReasons.add(r);
-        }
+    public void setDockedAtStation(Boolean b) {
+        dockedAtstation = b;
+    }
+
+    @Override
+    public void sendExecuteMessage(CCPAction action) {
+        this.lastActionSent = action;
+        lastExecMessageSent = "EXEC " + action.toString();
+        String message = MessageGenerator.generateExecuteMessage(type, super.getId(),
+                sequenceNumberOutgoing.getAndIncrement(), String.valueOf(action));
+        sendMessage(message, "EXEC");
 
     }
 }

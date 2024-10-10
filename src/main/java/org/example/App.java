@@ -5,8 +5,10 @@ import javax.swing.*;
 public class App {
     private static volatile boolean isRunning = true;
     private static Server server;
+    private static StatHandler statReq;
     private static SystemStateManager systemStateManager;
     private static VisualiserScreen screen;
+    private static ClientCreator clinetCreator;
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
@@ -19,7 +21,13 @@ public class App {
     public static void startMCP() {
         new Thread(() -> {
             systemStateManager = SystemStateManager.getInstance();
+            clinetCreator = ClientCreator.getInstance();
+            clinetCreator.readFromFile("src\\main\\java\\org\\example\\locations.txt");
             server = Server.getInstance();
+            statReq = StatHandler.getInstance();
+            statReq.startStatusScheduler();
+
+
             // main loop for program
             while (isRunning()) {
                 systemStateManager.run();
@@ -30,6 +38,7 @@ public class App {
     // shutdown entire program
     public static void shutdown() {
         server.shutdown();
+        statReq.shutdown();
         setRunning(false);
         CommandHandler.shutdown();
         Thread.currentThread().interrupt();

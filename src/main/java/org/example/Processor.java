@@ -1,6 +1,8 @@
 package org.example;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -10,40 +12,54 @@ public class Processor {
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private static final Database db = Database.getInstance();
     private static int totalBlocks;
-    private static final int MAX_BLOCKS = 10;
+    private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
     private Processor() {}
 
     public static void checkpointTripped(int checkpointTripped, boolean untrip) {
         SystemStateManager systemStateManager = SystemStateManager.getInstance();
-        totalBlocks = db.getCheckpointCount();
+        totalBlocks = db.getBlockCount();
 
-        if (!isCheckpointValid(checkpointTripped)) {
+        if (!isNextBlockValid(checkpointTripped)) {
             logger.log(Level.WARNING, "Inconsistent checkpoint trip : {0} on trip boolean : {1}",
                     new Object[] {checkpointTripped, untrip});
             return;
         }
 
         if (systemStateManager.needsTrip(checkpointTripped, untrip)) {
-            logger.log(Level.WARNING, "Thomas to do, not sure what needstrip is");
+            logger.log(Level.WARNING, "Sent to mapping state");
             return;
         }
 
+        Optional<BladeRunnerClient> reversingBladeRunner = getBladeRunner(checkpointTripped);
+        Boolean reversing = false;
+
+        if (reversingBladeRunner.isPresent()
+                && reversingBladeRunner.get().currentStatus == MessageEnums.CCPStatus.RSLOWC) {
+            reversing = true;
+        }
+
+
         // checks if the checkpoint before tripped checkpoint contains a blade runner
-        int previousCheckpoint = calculatePreviousBlock(checkpointTripped);
-        if (!db.isBlockOccupied(previousCheckpoint)) {
-            String id =
-                    (checkpointTripped > 9) ? "CP" + checkpointTripped : "CP0" + checkpointTripped;
-            logger.log(Level.WARNING, "Inconsistent checkpoint trip : {0} on trip boolean : {1}",
-                    new Object[] {id, untrip});
-            systemStateManager.addUnresponsiveClient(id, ReasonEnum.INCORTRIP);
+        if (!reversing) {
+            int previousCheckpoint = calculateNextBlock(checkpointTripped, -1);
+            if (!db.isBlockOccupied(previousCheckpoint)) {
+                String id = (checkpointTripped > 9) ? "CP" + checkpointTripped
+                        : "CP0" + checkpointTripped;
+                logger.log(Level.WARNING,
+                        "Inconsistent checkpoint trip : {0} on trip boolean : {1}",
+                        new Object[] {id, untrip});
+                systemStateManager.addUnresponsiveClient(id, ReasonEnum.INCORTRIP);
+            } else {
+                handleTrip(checkpointTripped, previousCheckpoint, untrip);
+            }
         } else {
-            handleTrip(checkpointTripped, previousCheckpoint, untrip);
+            reverseTrip(reversingBladeRunner.get(), checkpointTripped, untrip);
         }
     }
 
     private static void handleTrip(int checkpointTripped, int previousCheckpoint, boolean untrip) {
-        // get the blade runner of the block before the current tripped block
+        // get the blade runner of the block before the current tripped checkpoint
         Optional<BladeRunnerClient> bladeRunnerOptional = getBladeRunner(previousCheckpoint);
 
         if (bladeRunnerOptional.isEmpty()) {
@@ -56,7 +72,7 @@ public class Processor {
 
         // checks if tripped block is full, if so stop
         if (db.isBlockOccupied(checkpointTripped)) {
-            bladeRunnerOptional.get().sendExecuteMessage(SpeedEnum.STOP);
+            bladeRunnerOptional.get().sendExecuteMessage(MessageEnums.CCPAction.STOPC);
             if (untrip) {
                 String id = bladeRunnerOptional.get().getId();
                 logger.log(Level.WARNING, "Multiple blade runners in the same zone, includes : {0}",
@@ -67,16 +83,69 @@ public class Processor {
         }
 
         // checks if next block is full, if so stop only if untrip
-        if (db.isBlockOccupied(calculateNextBlock(checkpointTripped)) && untrip) {
-            bladeRunnerOptional.get().sendExecuteMessage(SpeedEnum.STOP);
+        int nextCheckpoint = calculateNextBlock(checkpointTripped, 1);
+
+        if (isCheckpointStation(nextCheckpoint)) {
+            bladeRunner.sendExecuteMessage(MessageEnums.CCPAction.FSLOWC);
+            // give station blade runner
         }
+
+        if (db.isBlockOccupied(nextCheckpoint) && untrip) {
+            bladeRunnerOptional.get().sendExecuteMessage(MessageEnums.CCPAction.STOPC);
+        }
+
+
 
         // only change zone if untrip
         if (untrip) {
             db.updateBladeRunnerBlock(bladeRunner.getId(), checkpointTripped);
             bladeRunner.changeZone(checkpointTripped);
-            checkForTraffic(previousCheckpoint);
+
+            if (isCheckpointStation(checkpointTripped) && !bladeRunner.isDockedAtStation()) { // overshot
+                                                                                              // Station
+                bladeRunnerOverShot(bladeRunner, checkpointTripped);
+            } else {
+                bladeRunner.setDockedAtStation(false);
+                checkForTraffic(previousCheckpoint);
+            }
         }
+    }
+
+    private static void reverseTrip(BladeRunnerClient reversingBladeRunner, int checkpointTripped,
+            boolean untrip) {
+        // checks if train is reversing "legally"
+        if (!isCheckpointStation(checkpointTripped)
+                && reversingBladeRunner.currentStatus == MessageEnums.CCPStatus.RSLOWC) {
+            // train was reversing randomly
+            reversingBladeRunner.sendExecuteMessage(MessageEnums.CCPAction.FFASTC);
+            reversingBladeRunner.updateExpectedStatus(MessageEnums.CCPStatus.FFASTC);
+            return;
+        }
+
+        int previousBlock = calculateNextBlock(checkpointTripped, -1);
+
+        if (!untrip) {
+            if (db.isBlockOccupied(previousBlock)) {
+                // bladeRunner is reversing but the previous block has a bladeRunner in it. Must
+                // stop
+                reversingBladeRunner.sendExecuteMessage(MessageEnums.CCPAction.STOPC);
+                reversingBladeRunner.updateExpectedStatus(MessageEnums.CCPStatus.STOPC);
+            }
+        }
+
+        if (untrip) {
+            reversingBladeRunner.sendExecuteMessage(MessageEnums.CCPAction.FSLOWC);
+            reversingBladeRunner.updateExpectedStatus(MessageEnums.CCPStatus.FSLOWC);
+
+            db.updateBladeRunnerBlock(reversingBladeRunner.getId(), previousBlock);
+            reversingBladeRunner.changeZone(previousBlock);
+        }
+
+    }
+
+    private static boolean isCheckpointStation(int checkpoint) {
+        String id = checkpoint > 9 ? "ST" + checkpoint : "ST0" + checkpoint;
+        return db.getClient(id, StationClient.class).isPresent();
     }
 
     private static Optional<BladeRunnerClient> getBladeRunner(int checkpoint) {
@@ -91,83 +160,89 @@ public class Processor {
         return db.getClient(bladeRunnerID, BladeRunnerClient.class);
     }
 
-    // frees ONE blade runner behind the current, he will subsequently free the rest by moving
+    // frees ONE blade runner behind the current, he will subsequently free the rest
+    // by moving
     private static void checkForTraffic(int checkpoint) {
         // check block behind
-        int blockBefore = calculatePreviousBlock(checkpoint);
+        int blockBefore = calculateNextBlock(checkpoint, -1);
         if (db.isBlockOccupied(blockBefore)) {
             Optional<BladeRunnerClient> bladeRunnerOptional = getBladeRunner(blockBefore);
-            bladeRunnerOptional.ifPresent(br -> br.sendExecuteMessage(SpeedEnum.FAST));
-            bladeRunnerOptional.ifPresent(br -> br.updateStatus("STARTED"));
+            bladeRunnerOptional
+                    .ifPresent(br -> br.sendExecuteMessage(MessageEnums.CCPAction.FFASTC));
         }
     }
 
-    public static int calculatePreviousBlock(int checkpoint) {
-        totalBlocks = db.getCheckpointCount();
+    public static int calculateNextBlock(int checkpoint, int direction) {
+        totalBlocks = db.getBlockCount();
 
-        while(true) {
-            checkpoint--;
-            if (checkpoint == 0) {
-                checkpoint = MAX_BLOCKS;
-            }
-            
-            if(isCheckpointValid(checkpoint)) {
-                return checkpoint;
-            }
-        }
-    }
-
-    public static int calculateNextBlock(int checkpoint) {
-        totalBlocks = db.getCheckpointCount();
-
-        while(true) {
-            checkpoint++;
-            if (checkpoint == MAX_BLOCKS) {
+        while (true) {
+            checkpoint += direction;
+            if (checkpoint > totalBlocks)
                 checkpoint = 1;
-            }
-            
-            if(isCheckpointValid(checkpoint)) {
+
+            if (checkpoint < 1)
+                checkpoint = totalBlocks;
+
+            if (isNextBlockValid(checkpoint)) {
                 return checkpoint;
             }
         }
     }
 
-    private static boolean isCheckpointValid(int checkpoint) {
-        if (checkpoint < 1 || checkpoint > MAX_BLOCKS) {
-            return false;
-        }
-
-        String id = (checkpoint == MAX_BLOCKS) ? "CP" + checkpoint : "CP0" + checkpoint;
-        if (db.getClient(id, CheckpointClient.class).isEmpty()) {
-            return false;
-        }
-
-        return true;
+    private static boolean isNextBlockValid(int checkpoint) {
+        String cpId = checkpoint == totalBlocks ? "CP" + checkpoint : "CP0" + checkpoint;
+        String stId = checkpoint == totalBlocks ? "ST" + checkpoint : "ST0" + checkpoint;
+        return db.getClient(cpId, CheckpointClient.class).isPresent()
+                || db.getClient(stId, StationClient.class).isPresent();
     }
 
-    private static void trainAligned(){
-        //Nothing needed at the moment
+    private static void trainAligned() {
+        // Nothing needed at the moment
     }
 
-    private static void trainUnaligned(int stationCheckpoint){
-        Optional<BladeRunnerClient> br = getBladeRunner(stationCheckpoint-1);
-        Optional<BladeRunnerClient> brOverShot = getBladeRunner(stationCheckpoint);
-        
+    public static void bladeRunnerStopped(String bladeRunnerID) {
+        Optional<BladeRunnerClient> bladeRunnerOp =
+                db.getClient(bladeRunnerID, BladeRunnerClient.class);
+        if (bladeRunnerOp.isPresent()) {
+            BladeRunnerClient bladeRunner = bladeRunnerOp.get();
+            bladeRunner.sendExecuteMessage(MessageEnums.CCPAction.STOPO);
+            bladeRunner.updateExpectedStatus(MessageEnums.CCPStatus.STOPO);
 
-        if(br.isEmpty() && brOverShot.isEmpty()){
-            logger.log(Level.WARNING, "Tried to get blade runner at checkpoint {0} but failed",
-            stationCheckpoint);
-            return;
-        }
+            int stationCheckpoint = calculateNextBlock(bladeRunner.getZone(), 1);
+            Optional<StationClient> sc =
+                    db.getClient("ST0" + stationCheckpoint, StationClient.class);
+            logger.log(Level.FINEST, "ST0" + stationCheckpoint);
+            if (sc.isPresent()) {
+                StationClient station = sc.get();
+                station.sendExecuteMessage(MessageEnums.STCAction.OPEN);
+                station.updateExpectedStatus(MessageEnums.STCStatus.ONOPEN);
+                scheduler.schedule(() -> stationBuffer(bladeRunner, sc.get()), 5, TimeUnit.SECONDS);
+            }
 
-        if(br.isPresent()){
-            //train has undershot, not our responsibility to align i dont think
-        }
 
-        if(brOverShot.isPresent()){ //train has overshot
-            brOverShot.get().sendExecuteMessage(SpeedEnum.BACKWARDS);
-            brOverShot.get().updateStatus("REVERSING");
+            // time for 5 seconds or whatever
+            bladeRunner.setDockedAtStation(true);
+            // set speed to forward/ back to forward
         }
     }
 
+    public static void bladeRunnerOverShot(BladeRunnerClient bladeRunner, int bladeRunnerZone) {
+        Optional<BladeRunnerClient> br = getBladeRunner(calculateNextBlock(bladeRunnerZone, -2));
+
+        if (br.isPresent()) {
+            br.get().sendExecuteMessage(MessageEnums.CCPAction.STOPC);
+            br.get().updateExpectedStatus(MessageEnums.CCPStatus.STOPC);
+        }
+
+        bladeRunner.sendExecuteMessage(MessageEnums.CCPAction.RSLOWC);
+        bladeRunner.updateExpectedStatus(MessageEnums.CCPStatus.RSLOWC);
+    }
+
+
+    private static void stationBuffer(BladeRunnerClient br, StationClient station) {
+        br.sendExecuteMessage(MessageEnums.CCPAction.FFASTC);
+        br.updateExpectedStatus(MessageEnums.CCPStatus.FFASTC);
+        station.sendExecuteMessage(MessageEnums.STCAction.CLOSE);
+        station.updateExpectedStatus(MessageEnums.STCStatus.OFF);
+    }
 }

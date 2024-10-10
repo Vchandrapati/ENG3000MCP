@@ -1,8 +1,6 @@
 package org.example;
 
 import java.util.List;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.ArrayList;
@@ -11,22 +9,19 @@ public class EmergencyState implements SystemStateInterface {
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     // All time units in milliseconds
-    private static final long EMERGENCY_TIMEOUT = 600000; // 10 minutes
+    private static final long EMERGENCY_TIMEOUT = 300000; // 5 minutes
     private static final long TIME_BETWEEN_RUNNING = 1000;
     private static final long TIME_BETWEEN_SENDING_STOP = 5000; // 5 seconds
     private static final long MINIMUM_EMERGENCY_TIME = 5000; // 5 seconds
 
     private static final SystemState NEXT_STATE = SystemState.MAPPING;
-    private static final BlockingQueue<String> clientMessageQueue = new LinkedBlockingQueue<>();
 
     // the time when counter started
-    private final long timeOnStart;
+    private long timeOnStart;
     private final Database db = Database.getInstance();
     private long timeOnStop;
-
-    // Emergency mode can wait forever until client is fixed or
-    // be given a ten minute timeout
-    private static final boolean WAIT_FOREVER = true;
+    private boolean disconnection = false;
+    private boolean disconnectOnce = false;
 
     public EmergencyState() {
         timeOnStart = System.currentTimeMillis();
@@ -38,18 +33,30 @@ public class EmergencyState implements SystemStateInterface {
         // if it has been EMERGENCY_TIMEOUT minutes within emergency state, the client/s has failed
         // to reconnect in time and proceed to next state
 
-        // continues to wait forever until client is fixed
-        if (WAIT_FOREVER) {
-            stopAllBladeRunners();
-            return checkIfAllAreFixed();
-        } else {
-            // continues to wait for 10 minutes until client is fixed
-            // if not just proceeds as normal as if the problem did not occur
-            if (System.currentTimeMillis() - timeOnStart >= EMERGENCY_TIMEOUT) {
+        stopAllBladeRunners();
+        if (disconnection || System.currentTimeMillis() - timeOnStart >= EMERGENCY_TIMEOUT) {
+            if (!disconnectOnce) {
+                disconnection = true;
+                disconnectOnce = true;
+                timeOnStart = System.currentTimeMillis();
+                disconnectClients();
+            } else if (System.currentTimeMillis() - timeOnStart >= EMERGENCY_TIMEOUT) {
                 return true;
-            } else {
-                stopAllBladeRunners();
-                return checkIfAllAreFixed();
+            }
+            return false;
+        } else {
+            return checkIfAllAreFixed();
+        }
+    }
+
+    private void disconnectClients() {
+        List<String> clients = new ArrayList<>(db.getAllUnresponsiveClientIDs());
+        for (int i = clients.size() - 1; i > -1; i--) {
+            BladeRunnerClient clientInstance =
+                    db.getClient(clients.get(i), BladeRunnerClient.class).get();
+            if (clientInstance != null) {
+                clientInstance.sendExecuteMessage(MessageEnums.CCPAction.DISCONNECT);
+                db.fullPurge(clients.get(i));
             }
         }
     }
@@ -89,8 +96,7 @@ public class EmergencyState implements SystemStateInterface {
             // if client is null then SYSTEM was given
             if (client == null) {
                 dealSystemReason(client, reason);
-            }
-            else {
+            } else {
                 dealClientReason(client, reason);
             }
         }
@@ -118,9 +124,8 @@ public class EmergencyState implements SystemStateInterface {
         switch (reason) {
             case ReasonEnum.INVALCONNECT: // same as no stat for now
             case ReasonEnum.NOSTAT: {
-                Client clientInstance = db.getClient(client, Client.class).get();
-                if (clientInstance.lastStatReturned()) {
-                    clientInstance.setStatReturned(true);
+                Client<?, ?> clientInstance = db.getClient(client, Client.class).get();
+                if (!clientInstance.checkResponsive()) {
                     logger.log(Level.INFO, "Has fixed issue {0} for client : {1}",
                             new Object[] {reason, client});
                     db.removeReason(client, reason);
@@ -128,8 +133,8 @@ public class EmergencyState implements SystemStateInterface {
                 break;
             }
             case ReasonEnum.CLIENTERR: {
-                Client clientInstance = db.getClient(client, Client.class).get();
-                if (!clientInstance.getStatus().equals("ERR")) {
+                Client<?, ?> clientInstance = db.getClient(client, Client.class).get();
+                if (clientInstance.getLastActionSent() != MessageEnums.CCPStatus.ERR) {
                     db.removeReason(client, reason);
                 }
                 break;
@@ -157,6 +162,10 @@ public class EmergencyState implements SystemStateInterface {
                 // wait for human override
                 break;
             }
+            case ReasonEnum.TODISCONNECT: {
+                disconnection = true;
+                break;
+            }
             default: {
                 logger.log(Level.INFO, "Invalid reason {0} for client : {1}",
                         new Object[] {reason, client});
@@ -174,13 +183,9 @@ public class EmergencyState implements SystemStateInterface {
             List<BladeRunnerClient> bladeRunners = db.getBladeRunnerClients();
             timeOnStop = System.currentTimeMillis();
             for (BladeRunnerClient BladeRunnerClient : bladeRunners) {
-                BladeRunnerClient.sendExecuteMessage(SpeedEnum.STOP);
+                BladeRunnerClient.sendExecuteMessage(MessageEnums.CCPAction.FSLOWC);
             }
         }
-    }
-
-    public static void addMessage(String id) {
-        clientMessageQueue.add(id);
     }
 
     @Override

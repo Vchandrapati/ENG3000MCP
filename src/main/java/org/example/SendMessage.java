@@ -10,7 +10,8 @@ public class SendMessage {
     public String message;
     @JsonProperty("client_id")
     public String clientID;
-    public String timestamp;
-    public String status;
+    @JsonProperty("sequence_number")
+    public int sequenceNumber;
     public String action;
+    public String arrivingBR;
 }

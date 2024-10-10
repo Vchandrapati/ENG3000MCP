@@ -1,72 +1,43 @@
 package org.example;
 
 import java.net.InetAddress;
-import java.util.logging.Level;
+import org.example.MessageEnums.CPCAction;
+import org.example.MessageEnums.STCAction;
 
-public class StationClient extends CheckpointClient {
-    private volatile DoorStatus status;
+public class StationClient extends Client<MessageEnums.STCStatus, MessageEnums.STCAction> {
+    private final int location;
 
-    public StationClient(InetAddress clientAddress, int clientPort, String id, int location) {
-        super(clientAddress, clientPort, id, location);
+    public StationClient(InetAddress clientAddress, int clientPort, String id, int sequenceNumber,
+            int location) {
+        super(clientAddress, clientPort, id, sequenceNumber);
+        // Everyone starts like this but maybe they dont is the thing
+        this.updateExpectedStatus(MessageEnums.STCStatus.OFF);
+        this.location = location;
+        this.type = "STC";
+    }
+
+    public int getLocation() {
+        return location;
     }
 
     @Override
-    public void updateStatus(String newStatus) {
-        try {
-            status = StationClient.DoorStatus.valueOf(newStatus);
-        } catch (IllegalArgumentException e) {
-            logger.severe(String.format("Tried to assign unknown status: %s for BladeRunner %s", newStatus, id));
+    public void sendExecuteMessage(STCAction action) {
+        if (!action.equals(MessageEnums.STCAction.BLINK)) {
+            this.lastActionSent = action;
         }
+        lastExecMessageSent = "EXEC " + action.toString();
+        String message = MessageGenerator.generateExecuteMessage(type, super.getId(),
+                sequenceNumberOutgoing.getAndIncrement(), String.valueOf(action));
+        sendMessage(message, "EXEC");
     }
 
-    // For sending a message about updating the status of the door
-    // True: Door is open
-    // False: Door is closed
-    public void sendDoorMessage(boolean doorOpen) {
-        String message = MessageGenerator.generateDoorMessage("station", id, System.currentTimeMillis(), doorOpen);
+    public void sendDOORMessage(STCAction action) {
+        this.lastActionSent = action;
+
+        String message = MessageGenerator.generateDOORMessage(type, super.getId(),
+                sequenceNumberOutgoing.getAndIncrement(), String.valueOf(action));
+
         sendMessage(message, "DOOR");
     }
 
-    // To tell the station what the status of the LED should be
-    // True: LED is on
-    // False: LED is off
-    public void sendIRLEDMessage(boolean on) {
-        String message = MessageGenerator.generateIRLEDMessage("station", id, System.currentTimeMillis(), on);
-        sendMessage(message, "IRLED");
-    }
-
-    @Override
-    public void registerClient() {
-        Database.getInstance().addClient(this.id, this);
-        logger.info("Added new station to database: " + Database.getInstance().getStationCount());
-    }
-
-    @Override
-    public void addReason(ReasonEnum r) {
-        String[] temp = {id, r.toString()};
-        Boolean valid = true;
-        switch (r) {
-            case ReasonEnum.NOSTAT:
-                break;
-            case ReasonEnum.WRONGMESSAGE:
-                break;
-            case ReasonEnum.INVALCONNECT:
-                break;
-            case ReasonEnum.CLIENTERR:
-                break;
-            default:
-                valid = false;
-                logger.log(Level.WARNING, "Attempted to add error {1} to {0} which is invalid", temp);
-                break;
-        }
-
-        if (valid) {
-            unresponsiveReasons.add(r);
-        }
-
-    }
-
-    private enum DoorStatus {
-        OPEN, CLOSE
-    }
 }
