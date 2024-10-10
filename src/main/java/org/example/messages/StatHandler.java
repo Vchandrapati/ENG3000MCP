@@ -1,9 +1,9 @@
-package org.example;
+package org.example.messages;
 
+import org.example.Database;
+import org.example.Processor;
 import org.example.client.AbstractClient;
 import org.example.client.ReasonEnum;
-import org.example.messages.MessageEnums;
-import org.example.messages.ReceiveMessage;
 import org.example.state.SystemState;
 import org.example.state.SystemStateManager;
 

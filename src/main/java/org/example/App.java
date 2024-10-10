@@ -2,7 +2,7 @@ package org.example;
 
 import org.example.messages.ClientFactory;
 import org.example.messages.Server;
-import org.example.StatHandler;
+import org.example.messages.StatHandler;
 import org.example.state.SystemStateManager;
 import org.example.visualiser.CommandHandler;
 import org.example.visualiser.VisualiserScreen;
