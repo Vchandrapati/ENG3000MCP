@@ -1,4 +1,11 @@
-package org.example.messages;
+package org.example;
+
+import org.example.client.AbstractClient;
+import org.example.client.ReasonEnum;
+import org.example.messages.MessageEnums;
+import org.example.messages.ReceiveMessage;
+import org.example.state.SystemState;
+import org.example.state.SystemStateManager;
 
 import java.util.List;
 import java.util.concurrent.Executors;
@@ -6,13 +13,6 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import org.example.Database;
-import org.example.Processor;
-import org.example.client.ReasonEnum;
-import org.example.state.SystemStateManager;
-import org.example.messages.MessageEnums.CCPStatus;
-import org.example.client.AbstractClient;
 
 public class StatHandler {
     private static final long STAT_INTERVAL_SECONDS = 2000; // Set time later
@@ -51,13 +51,12 @@ public class StatHandler {
         }
     }
 
-    public <S extends Enum<S>, A extends Enum<A> & MessageEnums.ActionToStatus<S>> void handleStatMessage(
-            AbstractClient<S, A> client, ReceiveMessage receiveMessage) {
+    public <S extends Enum<S>, A extends Enum<A> & MessageEnums.ActionToStatus<S>> void handleStatMessage (AbstractClient<S, A> client, ReceiveMessage receiveMessage) {
 
         A lastAction = client.getLastActionSent();
         S expectedStatus = null;
-        CCPStatus alternateStatus = null;
-        Boolean altPath = false;
+        MessageEnums.CCPStatus alternateStatus = null;
+        boolean altPath = false;
 
         if (lastAction != null) {
             expectedStatus = lastAction.getStatus();
@@ -72,7 +71,8 @@ public class StatHandler {
 
 
         try {
-            S recievedStatus = Enum.valueOf(client.getStatus().getDeclaringClass(), receiveMessage.status);
+            S recievedStatus =
+                    Enum.valueOf(client.getStatus().getDeclaringClass(), receiveMessage.status);
 
             if (!client.isExpectingStat()) {
                 client.sendAcknowledgeMessage(MessageEnums.AKType.AKST);
@@ -92,7 +92,7 @@ public class StatHandler {
                 altPath = true;
             }
 
-            String clientLastExec = client.lastActionSent.toString();
+            String clientLastExec = client.getLastActionSent().toString();
 
             // For DOOR stat response when no response needed
             if (!altPath
@@ -116,7 +116,7 @@ public class StatHandler {
             }
 
             client.noLongerExpectingStat();
-            client.updateExpectedStatus(recievedStatus);
+            client.updateStatus(recievedStatus);
         } catch (IllegalArgumentException e) {
             // Handle case where the status in receiveMessage is invalid
             logger.log(Level.SEVERE, "Invalid status: received {0} for client {1}",

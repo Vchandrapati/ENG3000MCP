@@ -2,7 +2,7 @@ package org.example;
 
 import org.example.messages.ClientFactory;
 import org.example.messages.Server;
-import org.example.messages.StatHandler;
+import org.example.StatHandler;
 import org.example.state.SystemStateManager;
 import org.example.visualiser.CommandHandler;
 import org.example.visualiser.VisualiserScreen;
@@ -29,7 +29,7 @@ public class App {
         new Thread(() -> {
             systemStateManager = SystemStateManager.getInstance();
             clinetCreator = ClientFactory.getInstance();
-            clinetCreator.readFromFile("src\\main\\java\\org\\example\\locations.txt");
+            clinetCreator.readFromFile("src/main/java/org/example/messages/locations.txt");
             server = Server.getInstance();
             statReq = StatHandler.getInstance();
             statReq.startStatusScheduler();
