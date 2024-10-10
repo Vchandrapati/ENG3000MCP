@@ -210,11 +210,11 @@ public class Database {
         return allBladeRunners.size();
     }
 
-    public Integer getCheckpointCount() {
+    public int getCheckpointCount() {
         return numberOfCheckpoints.get();
     }
 
-    public Integer getStationCount() {
+    public int getStationCount() {
         return numberOfStations.get();
     }
 
@@ -222,7 +222,7 @@ public class Database {
         unresponsiveClients.clear();
     }
 
-    public Integer getBlockCount() {
+    public int getBlockCount() {
         return getCheckpointCount() + getStationCount();
     }
 }

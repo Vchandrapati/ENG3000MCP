@@ -66,7 +66,6 @@ public class StatHandler {
                 if (lastAction.equals(MessageEnums.CCPAction.FSLOWC)
                         || lastAction.equals(MessageEnums.CCPAction.RSLOWC)) {
                     alternateStatus = MessageEnums.CCPStatus.STOPC;
-                    altPath = true;
                 }
             }
         }
@@ -86,21 +85,21 @@ public class StatHandler {
             }
 
             // For specifically FSLOWC and RSLOWC case
-            if (alternateStatus != null && recievedStatus.equals(alternateStatus)) {
+            if (alternateStatus != null && recievedStatus.equals(alternateStatus)
+                    && systemStateManager.getState().equals(SystemState.RUNNING)) {
                 // Ashton should get his STOPC
                 Processor.bladeRunnerStopped(receiveMessage.clientID);
-                // Resp stat here
+                altPath = true;
             }
 
-            // String clientLastExec = client.lastActionSent.toString();
+            String clientLastExec = client.lastActionSent.toString();
 
-            // // For DOOR stat response when no response needed
-            // if (!altPath && client.isExpectingStat()
-            // && (receiveMessage.status.equals("ONOPEN") && clientLastExec.equals("OPEN"))
-            // && (receiveMessage.status.equals("ON") && clientLastExec.equals("CLOSE"))) {
-            // altPath = true;
-            // // Resp stat here
-            // }
+            // For DOOR stat response when no response needed
+            if (!altPath
+                    && (receiveMessage.status.equals("ONOPEN") && clientLastExec.equals("OPEN"))
+                    && (receiveMessage.status.equals("ON") && clientLastExec.equals("CLOSE"))) {
+                altPath = true;
+            }
 
             if (!altPath && expectedStatus != null && !expectedStatus.equals(recievedStatus)) {
                 // If client is not in expected state then there is a problem
@@ -117,7 +116,7 @@ public class StatHandler {
             }
 
             client.noLongerExpectingStat();
-            client.updateStatus(recievedStatus);
+            client.updateExpectedStatus(recievedStatus);
         } catch (IllegalArgumentException e) {
             // Handle case where the status in receiveMessage is invalid
             logger.log(Level.SEVERE, "Invalid status: received {0} for client {1}",
