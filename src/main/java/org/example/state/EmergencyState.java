@@ -1,4 +1,10 @@
-package org.example;
+package org.example.state;
+
+import org.example.Database;
+import org.example.client.ReasonEnum;
+import org.example.client.AbstractClient;
+import org.example.client.BladeRunnerClient;
+import org.example.messages.MessageEnums;
 
 import java.util.List;
 import java.util.logging.Level;
@@ -124,7 +130,7 @@ public class EmergencyState implements SystemStateInterface {
         switch (reason) {
             case ReasonEnum.INVALCONNECT: // same as no stat for now
             case ReasonEnum.NOSTAT: {
-                Client<?, ?> clientInstance = db.getClient(client, Client.class).get();
+                AbstractClient<?, ?> clientInstance = db.getClient(client, AbstractClient.class).get();
                 if (!clientInstance.checkResponsive()) {
                     logger.log(Level.INFO, "Has fixed issue {0} for client : {1}",
                             new Object[] {reason, client});
@@ -133,7 +139,7 @@ public class EmergencyState implements SystemStateInterface {
                 break;
             }
             case ReasonEnum.CLIENTERR: {
-                Client<?, ?> clientInstance = db.getClient(client, Client.class).get();
+                AbstractClient<?, ?> clientInstance = db.getClient(client, AbstractClient.class).get();
                 if (clientInstance.getLastActionSent() != MessageEnums.CCPStatus.ERR) {
                     db.removeReason(client, reason);
                 }
@@ -182,7 +188,7 @@ public class EmergencyState implements SystemStateInterface {
                 || timeOnStop == 0) {
             List<BladeRunnerClient> bladeRunners = db.getBladeRunnerClients();
             timeOnStop = System.currentTimeMillis();
-            for (BladeRunnerClient BladeRunnerClient : bladeRunners) {
+            for (org.example.client.BladeRunnerClient BladeRunnerClient : bladeRunners) {
                 BladeRunnerClient.sendExecuteMessage(MessageEnums.CCPAction.FSLOWC);
             }
         }

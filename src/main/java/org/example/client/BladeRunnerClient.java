@@ -1,24 +1,25 @@
-package org.example;
+package org.example.client;
 
-import java.net.InetAddress;
 import java.util.concurrent.atomic.AtomicInteger;
-import org.example.MessageEnums.CCPAction;
 
-public class BladeRunnerClient extends Client<MessageEnums.CCPStatus, MessageEnums.CCPAction> {
+import org.example.messages.MessageEnums;
+import org.example.messages.MessageEnums.CCPAction;
+import org.example.messages.MessageSender;
+
+public class BladeRunnerClient extends AbstractClient<MessageEnums.CCPStatus, CCPAction> {
     private final AtomicInteger zone = new AtomicInteger();
     private volatile boolean isCurrentlyMapped;
     private volatile boolean collision;
-    private volatile boolean dockedAtstation;
+    private volatile boolean dockedAtStation;
 
 
-    public BladeRunnerClient(InetAddress clientAddress, int clientPort, String id,
-            int sequenceNumber) {
-        super(clientAddress, clientPort, id, sequenceNumber);
-        // Everyone starts like this but maybe they dont is the thing
+    public BladeRunnerClient (String id, MessageGenerator messageGenerator,
+                              MessageSender messageSender, int initialSequenceNumber) {
+        super(id, messageGenerator, messageSender, initialSequenceNumber);
         this.updateStatus(MessageEnums.CCPStatus.STOPC);
-        this.isCurrentlyMapped = false;
         this.type = "BR";
-        this.dockedAtstation = false;
+        this.isCurrentlyMapped = false;
+        this.dockedAtStation = false;
     }
 
     public Integer getZone() {
@@ -28,10 +29,6 @@ public class BladeRunnerClient extends Client<MessageEnums.CCPStatus, MessageEnu
     public void changeZone(int zone) {
         this.zone.set(zone);
         isCurrentlyMapped = true;
-    }
-
-    public void unmap() {
-        isCurrentlyMapped = false;
     }
 
     public boolean isUnmapped() {
@@ -46,19 +43,18 @@ public class BladeRunnerClient extends Client<MessageEnums.CCPStatus, MessageEnu
     }
 
     public boolean isDockedAtStation() {
-        return dockedAtstation;
+        return dockedAtStation;
     }
 
     public void setDockedAtStation(Boolean b) {
-        dockedAtstation = b;
+        dockedAtStation = b;
     }
 
     @Override
     public void sendExecuteMessage(CCPAction action) {
         this.lastActionSent = action;
-        lastExecMessageSent = "EXEC " + action.toString();
-        String message = MessageGenerator.generateExecuteMessage(type, super.getId(),
-                sequenceNumberOutgoing.getAndIncrement(), String.valueOf(action));
+        String message = messageGenerator.generateExecuteMessage(type, super.getId(),
+                sequenceNumberManager.getNextOutgoingSequenceNumber(), action.toString());
         sendMessage(message, "EXEC");
 
     }

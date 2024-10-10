@@ -1,4 +1,7 @@
-package org.example;
+package org.example.state;
+
+import org.example.Database;
+import org.example.client.ReasonEnum;
 
 import java.util.EnumMap;
 import java.util.Map;

@@ -1,4 +1,9 @@
-package org.example;
+package org.example.messages;
+
+import org.example.*;
+import org.example.client.*;
+import org.example.state.SystemState;
+import org.example.state.SystemStateManager;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -8,41 +13,40 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class ClientCreator {
+public class ClientFactory {
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private static final HashMap<String, Integer> locations = new HashMap<>();
+    private final Database db = Database.getInstance();
 
-    public static ClientCreator getInstance() {
+    private static class Holder {
+        private static final ClientFactory INSTANCE = new ClientFactory();
+    }
+
+    public static ClientFactory getInstance() {
         return Holder.INSTANCE;
     }
 
-    private static class Holder {
-        private static final ClientCreator INSTANCE = new ClientCreator();
-    }
-
-    // I dont think anything needs to change here except location
     public void handleInitialise(ReceiveMessage receiveMessage, InetAddress address, int port) {
         try {
-            Client<?, ?> client = null;
+            MessageGenerator messageGenerator = new MessageGenerator();
+            MessageSender messageSender = new MessageSender(Server.getInstance(), address, port,
+                    receiveMessage.clientID);
+            AbstractClient<?, ?> client = null;
             switch (receiveMessage.clientType) {
                 case "CCP":
-                    client = new BladeRunnerClient(address, port, receiveMessage.clientID,
-                            receiveMessage.sequenceNumber);
+                    client = new BladeRunnerClient(receiveMessage.clientID, messageGenerator,
+                            messageSender, receiveMessage.sequenceNumber);
                     break;
                 case "CPC": {
                     Integer zone = locations.get(address.toString() + port);
-                    logger.log(Level.CONFIG, "zone: {0} ID: {1}",
-                            new Object[] {zone, receiveMessage.clientID});
-                    client = new CheckpointClient(address, port, receiveMessage.clientID,
-                            receiveMessage.sequenceNumber, zone);
+                    client = new CheckpointClient(receiveMessage.clientID,
+                            messageGenerator, messageSender, receiveMessage.sequenceNumber, zone);
                     break;
                 }
                 case "STC": {
                     Integer zone = locations.get(address.toString() + port);
-                    logger.log(Level.CONFIG, "zone: {0} ID: {1}",
-                            new Object[] {zone, receiveMessage.clientID});
-                    client = new StationClient(address, port, receiveMessage.clientID,
-                            receiveMessage.sequenceNumber, zone);
+                    client = new StationClient(receiveMessage.clientID,
+                            messageGenerator, messageSender, receiveMessage.sequenceNumber, zone);
                     break;
                 }
                 default:
@@ -52,7 +56,7 @@ public class ClientCreator {
             }
 
             if (client != null) {
-                client.registerClient();
+                db.addClient(receiveMessage.clientID, client);
                 client.sendAcknowledgeMessage(MessageEnums.AKType.AKIN);
                 logger.log(Level.INFO, "Initialised new client: {0}", receiveMessage.clientID);
                 // if a client joins while not in waiting state, goes to emergency mode
@@ -69,7 +73,6 @@ public class ClientCreator {
     }
 
     public void readFromFile(String fileLocation) {
-
         try {
             File file = new File(fileLocation);
             Scanner s = new Scanner(file);

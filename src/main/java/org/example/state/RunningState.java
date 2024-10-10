@@ -1,4 +1,8 @@
-package org.example;
+package org.example.state;
+
+import org.example.Database;
+import org.example.client.BladeRunnerClient;
+import org.example.messages.MessageEnums;
 
 import java.util.Collections;
 import java.util.List;

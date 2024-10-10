@@ -1,4 +1,11 @@
-package org.example;
+package org.example.visualiser;
+
+import org.example.App;
+import org.example.Database;
+import org.example.client.AbstractClient;
+import org.example.client.ReasonEnum;
+import org.example.state.SystemState;
+import org.example.state.SystemStateManager;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -109,7 +116,7 @@ public class CommandHandler implements Runnable {
     private void processDisconnect(String input) throws InvalidCommandException {
         String[] array = input.split(" ");
         if (array.length == 2 && array[0].equals("disconnect")
-                && Database.getInstance().getClient(array[1], Client.class).isPresent()) {
+                && Database.getInstance().getClient(array[1], AbstractClient.class).isPresent()) {
             systemStateManager.addUnresponsiveClient(array[1], ReasonEnum.TODISCONNECT);
         } else {
             throw new InvalidCommandException("Invalid command");

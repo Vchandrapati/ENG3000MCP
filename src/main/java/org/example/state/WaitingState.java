@@ -1,4 +1,6 @@
-package org.example;
+package org.example.state;
+
+import org.example.Database;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;

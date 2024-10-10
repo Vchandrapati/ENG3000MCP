@@ -1,10 +1,13 @@
-package org.example;
+package org.example.messages;
+
+import org.example.client.ReasonEnum;
+import org.example.state.SystemStateManager;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.net.InetAddress;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
@@ -69,12 +72,10 @@ public class Server implements Runnable {
     private void connectionListener() {
         while (serverRunning.get()) {
             try {
-                DatagramPacket receivePacket =
-                        new DatagramPacket(new byte[BUFFER_SIZE], BUFFER_SIZE);
+                DatagramPacket receivePacket = new DatagramPacket(new byte[BUFFER_SIZE], BUFFER_SIZE);
                 serverSocket.receive(receivePacket);
-                if (receivePacket.getLength() > 0) {
-                    mailbox.add(receivePacket);
-                }
+
+                if (receivePacket.getLength() > 0) mailbox.add(receivePacket);
             } catch (IOException e) {
                 logger.log(Level.SEVERE, "Error receiving packet", e);
             }
@@ -86,12 +87,12 @@ public class Server implements Runnable {
             try {
                 // If the server cannot process requests fast enough
                 if (mailbox.size() > MAX_THROUGHPUT)
-                    SystemStateManager.getInstance().addUnresponsiveClient("SYSTEM",
-                            ReasonEnum.SYSTEMOVER);
+                    SystemStateManager.getInstance().addUnresponsiveClient("SYSTEM", ReasonEnum.SYSTEMOVER);
 
                 DatagramPacket receivePacket = mailbox.take();
                 String message = new String(receivePacket.getData(), 0, receivePacket.getLength(),
                         StandardCharsets.UTF_8);
+
                 messageHandler.handleMessage(message, receivePacket.getAddress(),
                         receivePacket.getPort());
             } catch (InterruptedException e) {
@@ -104,15 +105,16 @@ public class Server implements Runnable {
         logger.log(Level.INFO, "Packet processor terminated");
     }
 
-    public void sendMessageToClient(Client client, String message, String type) {
+    public void sendMessageToClient(InetAddress address, int port, String message, String type,
+                                    String clientID) {
         try {
             byte[] buffer = message.getBytes();
             DatagramPacket sendPacket = new DatagramPacket(buffer, buffer.length,
-                    client.getClientAddress(), client.getClientPort());
+                    address, port);
             serverSocket.send(sendPacket);
-            logger.log(Level.INFO, "Sent {0} to client: {1}", new Object[] {type, client.getId()});
+            logger.log(Level.INFO, "Sent {0} to client at: {1}", new Object[] {type, clientID});
         } catch (IOException e) {
-            logger.log(Level.SEVERE, "Failed to send message to client {0}", client.getId());
+            logger.log(Level.SEVERE, "Failed to send message to client: {0}", clientID);
             logger.log(Level.SEVERE, "Exception: ", e);
         }
     }

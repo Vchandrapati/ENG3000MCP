@@ -1,4 +1,7 @@
-package org.example;
+package org.example.visualiser;
+
+import org.example.Database;
+import org.example.LoggerConfig;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,4 +1,4 @@
-package org.example;
+package org.example.visualiser;
 
 import javax.swing.*;
 import java.util.logging.Formatter;

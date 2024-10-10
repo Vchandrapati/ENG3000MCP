@@ -1,6 +1,12 @@
 package org.example;
 
-import java.util.List;
+import org.example.client.BladeRunnerClient;
+import org.example.client.CheckpointClient;
+import org.example.client.StationClient;
+import org.example.messages.MessageEnums;
+import org.example.client.ReasonEnum;
+import org.example.state.SystemStateManager;
+
 import java.util.Optional;
 import java.util.concurrent.*;
 import java.util.logging.Level;
@@ -35,7 +41,7 @@ public class Processor {
         Boolean reversing = false;
 
         if (reversingBladeRunner.isPresent()
-                && reversingBladeRunner.get().currentStatus == MessageEnums.CCPStatus.RSLOWC) {
+                && reversingBladeRunner.get().getStatus() == MessageEnums.CCPStatus.RSLOWC) {
             reversing = true;
         }
 
@@ -109,7 +115,7 @@ public class Processor {
     private static void reverseTrip(BladeRunnerClient reversingBladeRunner, int checkpointTripped, boolean untrip) {
         // checks if train is reversing "legally"
         if (!isCheckpointStation(checkpointTripped)
-                && reversingBladeRunner.currentStatus == MessageEnums.CCPStatus.RSLOWC) {
+                && reversingBladeRunner.getStatus() == MessageEnums.CCPStatus.RSLOWC) {
             // train was reversing randomly
             reversingBladeRunner.sendExecuteMessage(MessageEnums.CCPAction.FFASTC);
             reversingBladeRunner.updateStatus(MessageEnums.CCPStatus.FFASTC);
@@ -228,7 +234,7 @@ public class Processor {
     }
 
 
-    private static void stationBuffer( BladeRunnerClient br, StationClient station){
+    private static void stationBuffer(BladeRunnerClient br, StationClient station){
         br.sendExecuteMessage(MessageEnums.CCPAction.FFASTC);
         br.updateStatus(MessageEnums.CCPStatus.FFASTC);
         station.sendExecuteMessage(MessageEnums.STCAction.CLOSE);

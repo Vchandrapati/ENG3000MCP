@@ -1,7 +1,13 @@
-package org.example;
+package org.example.messages;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.example.*;
+import org.example.client.BladeRunnerClient;
+import org.example.client.CheckpointClient;
+import org.example.client.ReasonEnum;
+import org.example.client.StationClient;
+import org.example.state.SystemStateManager;
 
 import java.net.InetAddress;
 import java.util.logging.Level;
@@ -181,6 +187,6 @@ public class MessageHandler {
 
     // I dont think anything needs to change here except location
     private void handleInitialise(ReceiveMessage receiveMessage, InetAddress address, int port) {
-        ClientCreator.getInstance().handleInitialise(receiveMessage, address, port);
+        ClientFactory.getInstance().handleInitialise(receiveMessage, address, port);
     }
 }

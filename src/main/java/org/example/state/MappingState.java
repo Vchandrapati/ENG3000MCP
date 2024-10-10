@@ -1,4 +1,10 @@
-package org.example;
+package org.example.state;
+
+import org.example.Database;
+import org.example.Processor;
+import org.example.client.ReasonEnum;
+import org.example.client.BladeRunnerClient;
+import org.example.messages.MessageEnums;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -198,7 +204,7 @@ public class MappingState implements SystemStateInterface {
     // Grabs all unmapped blade runners, and also blade runners that have collided
     private void grabBladeRunners() {
         List<BladeRunnerClient> tempBladeRunnersToMap = db.getBladeRunnerClients();
-        for (BladeRunnerClient BladeRunnerClient : tempBladeRunnersToMap) {
+        for (org.example.client.BladeRunnerClient BladeRunnerClient : tempBladeRunnersToMap) {
             // returns true if the blade runner has had a collision
             if (BladeRunnerClient.collision(false, null)) {
                 bladeRunnersToMap.addFirst(BladeRunnerClient);

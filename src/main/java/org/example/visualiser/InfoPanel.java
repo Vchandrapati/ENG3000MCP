@@ -1,4 +1,8 @@
-package org.example;
+package org.example.visualiser;
+
+import org.example.Database;
+import org.example.state.SystemState;
+import org.example.state.SystemStateManager;
 
 import javax.swing.*;
 import java.awt.*;

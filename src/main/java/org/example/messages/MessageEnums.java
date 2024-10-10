@@ -1,4 +1,4 @@
-package org.example;
+package org.example.messages;
 
 public class MessageEnums {
     // There are certain actions which can not be mapped 1 to 1 to a status

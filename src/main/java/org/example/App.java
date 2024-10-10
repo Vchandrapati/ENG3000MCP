@@ -1,5 +1,12 @@
 package org.example;
 
+import org.example.messages.ClientFactory;
+import org.example.messages.Server;
+import org.example.messages.StatHandler;
+import org.example.state.SystemStateManager;
+import org.example.visualiser.CommandHandler;
+import org.example.visualiser.VisualiserScreen;
+
 import javax.swing.*;
 
 public class App {
@@ -8,7 +15,7 @@ public class App {
     private static StatHandler statReq;
     private static SystemStateManager systemStateManager;
     private static VisualiserScreen screen;
-    private static ClientCreator clinetCreator;
+    private static ClientFactory clinetCreator;
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
@@ -21,7 +28,7 @@ public class App {
     public static void startMCP() {
         new Thread(() -> {
             systemStateManager = SystemStateManager.getInstance();
-            clinetCreator = ClientCreator.getInstance();
+            clinetCreator = ClientFactory.getInstance();
             clinetCreator.readFromFile("src\\main\\java\\org\\example\\locations.txt");
             server = Server.getInstance();
             statReq = StatHandler.getInstance();

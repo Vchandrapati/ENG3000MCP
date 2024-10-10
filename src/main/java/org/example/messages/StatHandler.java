@@ -1,4 +1,4 @@
-package org.example;
+package org.example.messages;
 
 import java.util.List;
 import java.util.concurrent.Executors;
@@ -6,8 +6,13 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.example.MessageEnums.CCPAction;
-import org.example.MessageEnums.CCPStatus;
+
+import org.example.Database;
+import org.example.Processor;
+import org.example.client.ReasonEnum;
+import org.example.state.SystemStateManager;
+import org.example.messages.MessageEnums.CCPStatus;
+import org.example.client.AbstractClient;
 
 public class StatHandler {
     private static final long STAT_INTERVAL_SECONDS = 2000; // Set time later
@@ -28,20 +33,18 @@ public class StatHandler {
     // send stats at specified intervals
     public void startStatusScheduler() {
         scheduler.scheduleAtFixedRate(() -> {
-            List<Client> clients = db.getClients();
+            List<AbstractClient> clients = db.getClients();
             synchronized (lock) {
-                for (Client client : clients) {
-                    if (Boolean.TRUE.equals(client.isRegistered())) {
-                        client.sendStatusMessage();
-                        client.nowExpectingStat();
-                        checkIfClientIsUnresponsive(client);
-                    }
+                for (AbstractClient client : clients) {
+                    client.sendStatusMessage();
+                    client.nowExpectingStat();
+                    checkIfClientIsUnresponsive(client);
                 }
             }
         }, 0, STAT_INTERVAL_SECONDS, TimeUnit.MILLISECONDS);
     }
 
-    private void checkIfClientIsUnresponsive(Client client) {
+    private void checkIfClientIsUnresponsive(AbstractClient client) {
         if (client.checkResponsive()) {
             SystemStateManager.getInstance().addUnresponsiveClient(client.getId(),
                     ReasonEnum.NOSTAT);
@@ -49,7 +52,7 @@ public class StatHandler {
     }
 
     public <S extends Enum<S>, A extends Enum<A> & MessageEnums.ActionToStatus<S>> void handleStatMessage(
-            Client<S, A> client, ReceiveMessage receiveMessage) {
+            AbstractClient<S, A> client, ReceiveMessage receiveMessage) {
 
         A lastAction = client.getLastActionSent();
         S expectedStatus = null;
@@ -70,8 +73,7 @@ public class StatHandler {
 
 
         try {
-            S recievedStatus =
-                    Enum.valueOf(client.currentStatus.getDeclaringClass(), receiveMessage.status);
+            S recievedStatus = Enum.valueOf(client.getStatus().getDeclaringClass(), receiveMessage.status);
 
             if (!client.isExpectingStat()) {
                 client.sendAcknowledgeMessage(MessageEnums.AKType.AKST);

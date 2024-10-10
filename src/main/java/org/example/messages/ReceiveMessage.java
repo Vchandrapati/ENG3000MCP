@@ -1,4 +1,4 @@
-package org.example;
+package org.example.messages;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;

@@ -1,4 +1,9 @@
-package org.example;
+package org.example.visualiser;
+
+import org.example.Database;
+import org.example.client.BladeRunnerClient;
+import org.example.client.StationClient;
+import org.example.messages.MessageEnums;
 
 import javax.swing.*;
 import java.awt.*;
@@ -46,28 +51,28 @@ public class VisualiserPanel extends JPanel {
             g2d.drawString(zoneNumber, (float) labelX - (float) labelWidth / 2,
                     (float) labelY + (float) labelHeight / 2);
 
-            // // Check if the current checkpoint has a station
-            // Optional<StationClient> stationClientOpt = db.getClient("ST" + (i < 10 ? "0" + i :
-            // i), StationClient.class);
-            // if (stationClientOpt.isPresent()) {
-            // StationClient stationClient = stationClientOpt.get();
-
-            // // Calculate the position of the station text box
-            // double stationLabelX = centerX + (radiusX - 50) * Math.cos(labelAngle);
-            // double stationLabelY = centerY + (radiusY - 50) * Math.sin(labelAngle);
-
-            // // Get station ID and status
-            // String stationId = stationClient.getId();
-            // String stationStatus = stationClient.getStatus().toString();
-
-            // // Draw the station ID and status
-            // g2d.setFont(new Font("Arial", Font.PLAIN, 12));
-            // String stationInfo = stationId + " (" + stationStatus + ")";
-            // int stationLabelWidth = fm.stringWidth(stationInfo);
-            // g2d.setColor(Color.BLUE);
-            // g2d.drawString(stationInfo, (float) stationLabelX - (float) stationLabelWidth / 2,
-            // (float) stationLabelY);
-            // }
+             // Check if the current checkpoint has a station
+//             Optional<StationClient> stationClientOpt = db.getClient("ST" + (i < 10 ? "0" + i :
+//                 i), StationClient.class);
+//                 if (stationClientOpt.isPresent()) {
+//                 StationClient stationClient = stationClientOpt.get();
+//
+//                 // Calculate the position of the station text box
+//                 double stationLabelX = centerX + (radiusX - 50) * Math.cos(labelAngle);
+//                 double stationLabelY = centerY + (radiusY - 50) * Math.sin(labelAngle);
+//
+//                 // Get station ID and status
+//                 String stationId = stationClient.getId();
+//                 String stationStatus = stationClient.getStatus().toString();
+//
+//                 // Draw the station ID and status
+//                 g2d.setFont(new Font("Arial", Font.PLAIN, 12));
+//                 String stationInfo = stationId + " (" + stationStatus + ")";
+//                 int stationLabelWidth = fm.stringWidth(stationInfo);
+//                 g2d.setColor(Color.BLUE);
+//                 g2d.drawString(stationInfo, (float) stationLabelX - (float) stationLabelWidth / 2,
+//                 (float) stationLabelY);
+//             }
         }
     }
 
@@ -148,7 +153,7 @@ public class VisualiserPanel extends JPanel {
 
             Shape rotatedRect = transform.createTransformedShape(rect);
 
-            if (bladeRunner.currentStatus != MessageEnums.CCPStatus.ERR)
+            if (bladeRunner.getStatus() != MessageEnums.CCPStatus.ERR)
                 g2d.setColor(Color.GREEN);
             else
                 g2d.setColor(Color.RED);
