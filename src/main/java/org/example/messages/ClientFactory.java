@@ -29,8 +29,8 @@ public class ClientFactory {
     public void handleInitialise(ReceiveMessage receiveMessage, InetAddress address, int port) {
         try {
             MessageGenerator messageGenerator = new MessageGenerator();
-            MessageSender messageSender = new MessageSender(Server.getInstance(), address, port,
-                    receiveMessage.clientID);
+            MessageSender messageSender =
+                    new MessageSender(Server.getInstance(), address, port, receiveMessage.clientID);
             AbstractClient<?, ?> client = null;
             switch (receiveMessage.clientType) {
                 case "CCP":
@@ -39,14 +39,14 @@ public class ClientFactory {
                     break;
                 case "CPC": {
                     Integer zone = locations.get(address.toString() + port);
-                    client = new CheckpointClient(receiveMessage.clientID,
-                            messageGenerator, messageSender, receiveMessage.sequenceNumber, zone);
+                    client = new CheckpointClient(receiveMessage.clientID, messageGenerator,
+                            messageSender, receiveMessage.sequenceNumber, zone);
                     break;
                 }
                 case "STC": {
                     Integer zone = locations.get(address.toString() + port);
-                    client = new StationClient(receiveMessage.clientID,
-                            messageGenerator, messageSender, receiveMessage.sequenceNumber, zone);
+                    client = new StationClient(receiveMessage.clientID, messageGenerator,
+                            messageSender, receiveMessage.sequenceNumber, zone);
                     break;
                 }
                 default:
