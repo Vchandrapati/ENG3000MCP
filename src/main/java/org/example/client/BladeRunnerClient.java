@@ -54,7 +54,7 @@ public class BladeRunnerClient extends AbstractClient<MessageEnums.CCPStatus, CC
     public void sendExecuteMessage(CCPAction action) {
         this.lastActionSent = action;
         String message = messageGenerator.generateExecuteMessage(type, super.getId(),
-                sequenceNumberManager.getNextOutgoingSequenceNumber(), action.toString());
+                outgoingSequenceNumber.getAndIncrement(), action.toString());
         sendMessage(message, "EXEC");
 
     }

@@ -27,7 +27,7 @@ public class CheckpointClient extends AbstractClient<MessageEnums.CPCStatus, CPC
 
         lastExecMessageSent = action.toString();
         String message = messageGenerator.generateExecuteMessage(type, super.getId(),
-                sequenceNumberManager.getNextOutgoingSequenceNumber(), String.valueOf(action));
+                outgoingSequenceNumber.getAndIncrement(), String.valueOf(action));
 
         sendMessage(message, "EXEC");
 

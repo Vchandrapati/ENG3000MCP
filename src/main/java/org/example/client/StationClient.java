@@ -26,14 +26,14 @@ public class StationClient extends AbstractClient<MessageEnums.STCStatus, STCAct
         }
         lastExecMessageSent = action.toString();
         String message = messageGenerator.generateExecuteMessage(type, super.getId(),
-                sequenceNumberManager.getNextOutgoingSequenceNumber(), String.valueOf(action));
+                outgoingSequenceNumber.getAndIncrement(), String.valueOf(action));
         sendMessage(message, "EXEC");
     }
 
     public void sendDoorMessage (STCAction action) {
         this.lastActionSent = action;
         String message = messageGenerator.generateDoorMessage(type, super.getId(),
-                sequenceNumberManager.getNextOutgoingSequenceNumber(), String.valueOf(action));
+                outgoingSequenceNumber.getAndIncrement(), String.valueOf(action));
         sendMessage(message, "DOOR");
     }
 
