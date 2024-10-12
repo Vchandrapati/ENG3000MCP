@@ -21,7 +21,7 @@ public abstract class AbstractClient<S extends Enum<S>, A extends Enum<A>> {
     protected String lastExecMessageSent;
 
     private String lastResponse;
-    protected SequenceNumberManager sequenceNumberManager;
+    AtomicInteger outgoingSequenceNumber = new AtomicInteger(0);
     protected int latestStatusMessage;
     private final AtomicInteger missedStats;
     protected boolean expectingStat;
@@ -32,7 +32,6 @@ public abstract class AbstractClient<S extends Enum<S>, A extends Enum<A>> {
     protected AbstractClient (String id, MessageGenerator messageGenerator,
                               MessageSender messageSender, int initialSequenceNumber) {
         this.id = id;
-        this.sequenceNumberManager = new SequenceNumberManager(initialSequenceNumber);
         this.messageGenerator = messageGenerator;
         this.messageSender = messageSender;
 
@@ -100,14 +99,14 @@ public abstract class AbstractClient<S extends Enum<S>, A extends Enum<A>> {
 
     public void sendAcknowledgeMessage(MessageEnums.AKType akType) {
         String message = messageGenerator.generateAcknowledgeMessage(type, id,
-                sequenceNumberManager.getNextOutgoingSequenceNumber(), akType);
+                outgoingSequenceNumber.getAndIncrement(), akType);
         sendMessage(message, String.valueOf(akType));
         registered = true;
     }
 
     public void sendStatusMessage() {
         String message = messageGenerator.generateStatusMessage(type, id,
-                sequenceNumberManager.getNextOutgoingSequenceNumber());
+                outgoingSequenceNumber.getAndIncrement());
         sendMessage(message, "STAT");
     }
 

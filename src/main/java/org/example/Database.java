@@ -14,14 +14,15 @@ import java.util.logging.Logger;
 
 public class Database {
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+
     // All client objects
     private final ConcurrentHashMap<String, AbstractClient> clients;
     private final ConcurrentHashMap<String, Integer> bladeRunnerBlockMap;
 
     // Set of all BladeRunner client IDs
     private final HashSet<String> allBladeRunners;
-    // Set of all unresponsive or "dead" clients
 
+    // Set of all unresponsive or "dead" clients
     private final HashSet<String> unresponsiveClients;
 
     private final AtomicInteger numberOfCheckpoints;
