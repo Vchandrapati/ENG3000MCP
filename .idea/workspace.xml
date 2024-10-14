@@ -5,9 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1d9b5952-4092-4fc7-8340-7dd220ada861" name="Changes" comment="Added tests">
+      <change afterPath="$PROJECT_DIR$/src/test/java/ServerTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Processor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Processor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/client/AbstractClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/client/AbstractClient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/client/BladeRunnerClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/client/BladeRunnerClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/client/CheckpointClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/client/CheckpointClient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/client/StationClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/client/StationClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/messages/ClientFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/messages/ClientFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/messages/MessageHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/messages/MessageHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/messages/StatHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/messages/StatHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/state/SystemStateManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/state/SystemStateManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,6 +71,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Application.Unnamed.executor": "Run",
+    "JUnit.ServerTest.testSystemStateManagerOnHighThroughput.executor": "Debug",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
@@ -86,7 +96,7 @@
       <recent name="D:\Programming\Java\ENG3000MCP\src\main\java\org\example\messages" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="JUnit.ServerTest.testSystemStateManagerOnHighThroughput">
     <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.App" />
       <module name="ENG3000MCP2.0" />
@@ -94,6 +104,65 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="ServerTest.testPacketProcessing" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ENG3000MCP2.0" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="ServerTest" />
+      <option name="METHOD_NAME" value="testPacketProcessing" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ServerTest.testPacketProcessingWithException" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ENG3000MCP2.0" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="ServerTest" />
+      <option name="METHOD_NAME" value="testPacketProcessingWithException" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ServerTest.testSendMessageToClient" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ENG3000MCP2.0" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="ServerTest" />
+      <option name="METHOD_NAME" value="testSendMessageToClient" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ServerTest.testSendMessageToClientWithException" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ENG3000MCP2.0" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="ServerTest" />
+      <option name="METHOD_NAME" value="testSendMessageToClientWithException" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ServerTest.testSystemStateManagerOnHighThroughput" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ENG3000MCP2.0" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="ServerTest" />
+      <option name="METHOD_NAME" value="testSystemStateManagerOnHighThroughput" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.ServerTest.testSystemStateManagerOnHighThroughput" />
+        <item itemvalue="JUnit.ServerTest.testSendMessageToClientWithException" />
+        <item itemvalue="JUnit.ServerTest.testSendMessageToClient" />
+        <item itemvalue="JUnit.ServerTest.testPacketProcessingWithException" />
+        <item itemvalue="JUnit.ServerTest.testPacketProcessing" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -134,6 +203,7 @@
       <workItem from="1728528588832" duration="2275000" />
       <workItem from="1728631997087" duration="1413000" />
       <workItem from="1728702329898" duration="652000" />
+      <workItem from="1728906571524" duration="3099000" />
     </task>
     <task id="LOCAL-00001" summary="Made some changes to comply with sonarlint">
       <option name="closed" value="true" />

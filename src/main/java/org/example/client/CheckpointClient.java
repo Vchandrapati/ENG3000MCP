@@ -8,8 +8,8 @@ public class CheckpointClient extends AbstractClient<MessageEnums.CPCStatus, CPC
     private final int location;
 
     public CheckpointClient (String id, MessageGenerator messageGenerator,
-                             MessageSender messageSender, int initialSequenceNumber, int location) {
-        super(id, messageGenerator, messageSender, initialSequenceNumber);
+                             MessageSender messageSender, int location) {
+        super(id, messageGenerator, messageSender);
         this.updateStatus(MessageEnums.CPCStatus.OFF);
         this.location = location;
         this.type = "CPC";

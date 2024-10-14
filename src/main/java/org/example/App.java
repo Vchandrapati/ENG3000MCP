@@ -15,7 +15,7 @@ public class App {
     private static StatHandler statReq;
     private static SystemStateManager systemStateManager;
     private static VisualiserScreen screen;
-    private static ClientFactory clinetCreator;
+    private static ClientFactory clientCreator;
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
@@ -28,8 +28,8 @@ public class App {
     public static void startMCP() {
         new Thread(() -> {
             systemStateManager = SystemStateManager.getInstance();
-            clinetCreator = ClientFactory.getInstance();
-            clinetCreator.readFromFile("src/main/java/org/example/messages/locations.txt");
+            clientCreator = ClientFactory.getInstance();
+            clientCreator.readFromFile("src/main/java/org/example/messages/locations.txt");
             server = Server.getInstance();
             statReq = StatHandler.getInstance();
             statReq.startStatusScheduler();

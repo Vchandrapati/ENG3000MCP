@@ -27,7 +27,7 @@ public class SystemStateManager {
         stateMap.put(SystemState.EMERGENCY, EmergencyState::new);
     }
 
-    // holds the current state and the current state concrete implementation
+    // Holds the current state and the current state concrete implementation
     private SystemState currentState;
     private SystemStateInterface currentStateConcrete;
     private boolean error = false;

@@ -160,7 +160,6 @@ public class MessageHandler {
                             break;
                         default:
                             break;
-
                     }
 
                     client.sendAcknowledgeMessage(MessageEnums.AKType.AKTR);
