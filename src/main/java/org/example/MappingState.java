@@ -103,26 +103,11 @@ public class MappingState implements SystemStateInterface {
             sendBladeRunnerToNextCheckpoint(false);
         } else {
             try {
-                if(!tripQueue.isEmpty()) {
-                    String[] tripInfo = tripQueue.take().split(",");
-                    if (tripInfo.length == 2) {
-                        int tripZone = Integer.parseInt(tripInfo[0]);
-                        if(currentTrip == -1 || currentTrip == tripZone) {
-                            currentTrip = tripZone;
-                        }
-                        else {
-                            String str = (tripZone == 10) ? "CP10" : "CP" + tripZone;
-                            SystemStateManager.getInstance().addUnresponsiveClient(str, ReasonEnum.INCORTRIP);
-                            logger.log(Level.WARNING, "Checkpoint : {0} has had inconsistent trip", str);
-                            return false;
-                        }
-                        boolean untrip = Boolean.parseBoolean(tripInfo[1]);
-                        return stopBladeRunnerAtCheckpoint(tripZone, untrip);
-                    }
-                }
+                processTrip();
             } catch (Exception e) {
                 logger.log(Level.SEVERE, "Error taking trip from trip queue");
                 Thread.currentThread().interrupt();
+                return false;
             }
 
             // every BLADE_RUNNER_MAPPING_RETRY_TIMEOUT seconds, while not mapped, will try to move
@@ -136,6 +121,26 @@ public class MappingState implements SystemStateInterface {
         return false;
     }
 
+    private boolean processTrip() throws InterruptedException {
+        if (!tripQueue.isEmpty()) {
+            String[] tripInfo = tripQueue.take().split(",");
+            if (tripInfo.length == 2) {
+                int tripZone = Integer.parseInt(tripInfo[0]);
+                if (currentTrip == -1 || currentTrip == tripZone) {
+                    currentTrip = tripZone;
+                } else {
+                    String str = (tripZone == 10) ? "CP10" : "CP" + tripZone;
+                    SystemStateManager.getInstance().addUnresponsiveClient(str,
+                            ReasonEnum.INCORTRIP);
+                    logger.log(Level.WARNING, "Checkpoint : {0} has had inconsistent trip", str);
+                    return false;
+                }
+                boolean untrip = Boolean.parseBoolean(tripInfo[1]);
+                return stopBladeRunnerAtCheckpoint(tripZone, untrip);
+            }
+        }
+    }
+
     // Send speed message to the current BladeRunner
     private void sendBladeRunnerToNextCheckpoint(boolean retry) {
         if (!hasSent) {
@@ -145,7 +150,7 @@ public class MappingState implements SystemStateInterface {
         logger.log(Level.INFO, "{0} moving {1}",
                 new Object[] {retryString, currentBladeRunner.getId()});
 
-        //if the blader runner has had a collision go to reverse
+        // if the blader runner has had a collision go to reverse
         if (currentBladeRunner.collision(false, null)) {
             currentBladeRunner.sendExecuteMessage(MessageEnums.CCPAction.RSLOWC);
             backwards = true;
@@ -159,23 +164,22 @@ public class MappingState implements SystemStateInterface {
     // Tells the current BladeRunner to stop when a checkpoint has been detected
     private boolean stopBladeRunnerAtCheckpoint(int zone, boolean untrip) {
 
-        //if this blade runner was detected to be in a collision, it will be going backwards
-        //thus want the checkpoint before instead of infront
+        // if this blade runner was detected to be in a collision, it will be going backwards
+        // thus want the checkpoint before instead of infront
         if (backwards) {
             zone = Processor.calculateNextBlock(zone, -1);
         }
 
-        //if a normal trip, then change to slow
-        //do not have to worry about backwards, because cannot go fast backwards
+        // if a normal trip, then change to slow
+        // do not have to worry about backwards, because cannot go fast backwards
         if (!untrip && !backwards) {
             currentBladeRunner.sendExecuteMessage(MessageEnums.CCPAction.FSLOWC);
-        }
-        else {
-            //if a untrip, then send stop 
+        } else {
+            // if a untrip, then send stop
             currentTrip = -1;
             currentBladeRunner.sendExecuteMessage(MessageEnums.CCPAction.STOPC);
             logger.log(Level.INFO, "BladeRunner {0} mapped to zone {1}",
-                new Object[] {currentBladeRunner.getId(), zone});
+                    new Object[] {currentBladeRunner.getId(), zone});
         }
 
         currentBladeRunner.changeZone(zone);
@@ -190,7 +194,8 @@ public class MappingState implements SystemStateInterface {
     // * Returns true if the timeout has occurred */
     private void checkIfBladeRunnerIsDead() {
         if (retryAttemps > MAX_RETRIES) {
-            SystemStateManager.getInstance().addUnresponsiveClient(currentBladeRunner.getId(), ReasonEnum.MAPTIMEOUT);
+            SystemStateManager.getInstance().addUnresponsiveClient(currentBladeRunner.getId(),
+                    ReasonEnum.MAPTIMEOUT);
             logger.log(Level.SEVERE, "Blade runner failed to be mapped in time");
         }
     }
