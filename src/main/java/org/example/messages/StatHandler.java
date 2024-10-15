@@ -15,19 +15,20 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class StatHandler {
-    private static final long STAT_INTERVAL_SECONDS = 2000; // Set time later
-    private final Object lock = new Object();
-    private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-    private static final Database db = Database.getInstance();
-    private static final SystemStateManager systemStateManager = SystemStateManager.getInstance();
-    private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+    private long STAT_INTERVAL_SECONDS;
+    private Object lock;
+    private ScheduledExecutorService scheduler;
+    private Database db;
+    private SystemStateManager systemStateManager;
+    private Logger logger;
 
-    public static StatHandler getInstance() {
-        return Holder.INSTANCE;
-    }
-
-    private static class Holder {
-        private static final StatHandler INSTANCE = new StatHandler();
+    public StatHandler() {
+        STAT_INTERVAL_SECONDS = 2000; // Set time later
+        lock = new Object();
+        scheduler = Executors.newScheduledThreadPool(1);
+        db = Database.getInstance();
+        systemStateManager = SystemStateManager.getInstance();
+        logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     }
 
     // send stats at specified intervals
@@ -46,12 +47,13 @@ public class StatHandler {
 
     private void checkIfClientIsUnresponsive(AbstractClient client) {
         if (client.checkResponsive()) {
-            SystemStateManager.getInstance().addUnresponsiveClient(client.getId(),
-                    ReasonEnum.NOSTAT);
+            systemStateManager.addUnresponsiveClient(client.getId(), ReasonEnum.NOSTAT);
         }
     }
 
-    public <S extends Enum<S>, A extends Enum<A> & MessageEnums.ActionToStatus<S>> void handleStatMessage (AbstractClient<S, A> client, ReceiveMessage receiveMessage) {
+    public <S extends Enum<S>, A extends Enum<A> & MessageEnums.ActionToStatus<S>> void handleStatMessage(
+            AbstractClient<S, A> client, ReceiveMessage receiveMessage) {
+
 
         A lastAction = client.getLastActionSent();
         S expectedStatus = null;
@@ -61,13 +63,12 @@ public class StatHandler {
         if (lastAction != null) {
             expectedStatus = lastAction.getStatus();
 
-            if (receiveMessage.clientType.equals("CCP") && (lastAction.equals(MessageEnums.CCPAction.FSLOWC)
-                        || lastAction.equals(MessageEnums.CCPAction.RSLOWC))) {
-                    alternateStatus = MessageEnums.CCPStatus.STOPC;
-                }
-
+            if (receiveMessage.clientType.equals("CCP")
+                    && (lastAction.equals(MessageEnums.CCPAction.FSLOWC)
+                            || lastAction.equals(MessageEnums.CCPAction.RSLOWC))) {
+                alternateStatus = MessageEnums.CCPStatus.STOPC;
+            }
         }
-
 
         try {
             S recievedStatus =
@@ -88,6 +89,7 @@ public class StatHandler {
                     && systemStateManager.getState().equals(SystemState.RUNNING)) {
                 // Ashton should get his STOPC
                 Processor.bladeRunnerStopped(receiveMessage.clientID);
+
                 altPath = true;
             }
 
@@ -113,6 +115,7 @@ public class StatHandler {
                 client.updateLatestStatusMessageCount(receiveMessage.sequenceNumber);
                 client.resetMissedStats();
             }
+
 
             client.noLongerExpectingStat();
             client.updateStatus(recievedStatus);

@@ -31,7 +31,7 @@ public class App {
             clientCreator = ClientFactory.getInstance();
             clientCreator.readFromFile("src/main/java/org/example/messages/locations.txt");
             server = Server.getInstance();
-            statReq = StatHandler.getInstance();
+            statReq = new StatHandler();
             statReq.startStatusScheduler();
 
 

@@ -14,11 +14,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class MessageHandler {
-    private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-    private static final ObjectMapper objectMapper = new ObjectMapper();
-    private static final Database db = Database.getInstance();
-    private static final SystemStateManager systemStateManager = SystemStateManager.getInstance();
-    private static final StatHandler statHandler = StatHandler.getInstance();
+    private Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+    private ObjectMapper objectMapper = new ObjectMapper();
+    private Database db = Database.getInstance();
+    private SystemStateManager systemStateManager = SystemStateManager.getInstance();
+    private StatHandler statHandler = new StatHandler();
+    private ClientFactory clientFactory = ClientFactory.getInstance();
 
     public void handleMessage(String message, InetAddress address, int port) {
         try {
@@ -186,6 +187,6 @@ public class MessageHandler {
 
     // I dont think anything needs to change here except location
     private void handleInitialise(ReceiveMessage receiveMessage, InetAddress address, int port) {
-        ClientFactory.getInstance().handleInitialise(receiveMessage, address, port);
+        clientFactory.handleInitialise(receiveMessage, address, port);
     }
 }
