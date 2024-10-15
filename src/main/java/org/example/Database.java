@@ -40,7 +40,7 @@ public class Database {
     private final AtomicInteger numberOfCheckpoints;
     private final AtomicInteger numberOfStations;
 
-    private Database() {
+    public Database() {
         clients = new ConcurrentHashMap<>();
         bladeRunnerBlockMap = new ConcurrentHashMap<>();
 

@@ -15,15 +15,19 @@ import java.util.logging.Logger;
 // [x] need to check backwards
 
 public class Processor {
+    private static SystemStateManager systemStateManager;
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-    private static final Database db = Database.getInstance();
+    private static Database db = Database.getInstance();
     private static int totalBlocks;
     private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
-    private Processor() {}
+    public Processor(Database db, SystemStateManager systemStateManager) {
+        this.db = db;
+        this.systemStateManager = systemStateManager;
+    }
 
     public static void checkpointTripped(int checkpointTripped, boolean untrip) {
-        SystemStateManager systemStateManager = SystemStateManager.getInstance();
+        //SystemStateManager systemStateManager = SystemStateManager.getInstance();
         totalBlocks = db.getBlockCount();
 
         if (!isNextBlockValid(checkpointTripped)) {
@@ -38,8 +42,7 @@ public class Processor {
         }
 
         Optional<BladeRunnerClient> reversingBladeRunner = getBladeRunner(checkpointTripped);
-        boolean reversing = reversingBladeRunner.isPresent()
-                && reversingBladeRunner.get().getStatus() == MessageEnums.CCPStatus.RSLOWC;
+        boolean reversing = reversingBladeRunner.isPresent() && reversingBladeRunner.get().getStatus() == MessageEnums.CCPStatus.RSLOWC;
 
 
         // checks if the checkpoint before tripped checkpoint contains a blade runner
@@ -52,13 +55,15 @@ public class Processor {
                 systemStateManager.addUnresponsiveClient(id, ReasonEnum.INCORTRIP);
             } else {
                 handleTrip(checkpointTripped, previousCheckpoint, untrip);
+                logger.log(Level.FINEST, "forward reached");
             }
         } else {
             reverseTrip(reversingBladeRunner.get(), checkpointTripped, untrip);
+            logger.log(Level.FINEST, "Reversing reached");
         }
     }
 
-    private static void handleTrip(int checkpointTripped, int previousCheckpoint, boolean untrip) {
+    public static void handleTrip(int checkpointTripped, int previousCheckpoint, boolean untrip) {
         // get the blade runner of the block before the current tripped checkpoint
         Optional<BladeRunnerClient> bladeRunnerOptional = getBladeRunner(previousCheckpoint);
 
@@ -106,9 +111,12 @@ public class Processor {
                 checkForTraffic(previousCheckpoint);
             }
         }
+
+        //for Test
+        logger.log(Level.FINEST, "succesfully exited handleTrip");
     }
 
-    private static void reverseTrip(BladeRunnerClient reversingBladeRunner, int checkpointTripped, boolean untrip) {
+    public static void reverseTrip(BladeRunnerClient reversingBladeRunner, int checkpointTripped, boolean untrip) {
         // checks if train is reversing "legally"
         if (!isCheckpointStation(checkpointTripped)
                 && reversingBladeRunner.getStatus() == MessageEnums.CCPStatus.RSLOWC) {
@@ -137,12 +145,14 @@ public class Processor {
 
     }
 
-    private static boolean isCheckpointStation(int checkpoint) {
+    public static boolean isCheckpointStation(int checkpoint) {
         String id = checkpoint > 9 ? "ST" + checkpoint : "ST0" + checkpoint;
         return db.getClient(id, StationClient.class).isPresent();
     }
 
-    private static Optional<BladeRunnerClient> getBladeRunner(int checkpoint) {
+
+
+    public static Optional<BladeRunnerClient> getBladeRunner(int checkpoint) {
         String bladeRunnerID = db.getLastBladeRunnerInBlock(checkpoint);
 
         if (bladeRunnerID == null) {
@@ -155,7 +165,7 @@ public class Processor {
 
     // frees ONE blade runner behind the current, he will subsequently free the rest
     // by moving
-    private static void checkForTraffic(int checkpoint) {
+    public static void checkForTraffic(int checkpoint) {
         // check block behind
         int blockBefore = calculateNextBlock(checkpoint, -1);
         if (db.isBlockOccupied(blockBefore)) {
@@ -181,7 +191,7 @@ public class Processor {
         }
     }
 
-    private static boolean isNextBlockValid(int checkpoint) {
+    public static boolean isNextBlockValid(int checkpoint) {
         String cpId = checkpoint == totalBlocks ? "CP" + checkpoint : "CP0" + checkpoint;
         String stId = checkpoint == totalBlocks ? "ST" + checkpoint : "ST0" + checkpoint;
         return db.getClient(cpId, CheckpointClient.class).isPresent()
