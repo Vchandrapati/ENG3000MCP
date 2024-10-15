@@ -6,9 +6,8 @@ import org.example.messages.MessageSender;
 public class StationClient extends AbstractClient<MessageEnums.STCStatus, STCAction> {
     private final int location;
 
-    public StationClient (String id, MessageGenerator messageGenerator, MessageSender messageSender,
-                          int initialSequenceNumber, int location) {
-        super(id, messageGenerator, messageSender, initialSequenceNumber);
+    public StationClient (String id, MessageGenerator messageGenerator, MessageSender messageSender, int location) {
+        super(id, messageGenerator, messageSender);
         // Everyone starts like this but maybe they dont is the thing
         this.updateStatus(MessageEnums.STCStatus.OFF);
         this.location = location;

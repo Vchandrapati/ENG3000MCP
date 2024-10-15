@@ -61,12 +61,11 @@ public class StatHandler {
         if (lastAction != null) {
             expectedStatus = lastAction.getStatus();
 
-            if (receiveMessage.clientType.equals("CCP")) {
-                if (lastAction.equals(MessageEnums.CCPAction.FSLOWC)
-                        || lastAction.equals(MessageEnums.CCPAction.RSLOWC)) {
+            if (receiveMessage.clientType.equals("CCP") && (lastAction.equals(MessageEnums.CCPAction.FSLOWC)
+                        || lastAction.equals(MessageEnums.CCPAction.RSLOWC))) {
                     alternateStatus = MessageEnums.CCPStatus.STOPC;
                 }
-            }
+
         }
 
 

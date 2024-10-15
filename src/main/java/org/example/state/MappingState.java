@@ -105,25 +105,23 @@ public class MappingState implements SystemStateInterface {
 
     // Processes the current BladeRunner to move to next checkpoint, keeps trying until it reaches
     private boolean processCurrentBladeRunner() {
-        if (!hasSent) {
-            sendBladeRunnerToNextCheckpoint(false);
-        } else {
-            try {
-                processTrip();
-            } catch (Exception e) {
-                logger.log(Level.SEVERE, "Error taking trip from trip queue");
-                Thread.currentThread().interrupt();
-                return false;
-            }
-
-            // every BLADE_RUNNER_MAPPING_RETRY_TIMEOUT seconds, while not mapped, will try to move
-            // the blade runner again
-            if (System.currentTimeMillis() - currentBladeRunnerStartTime > (retryAttemps + 1)
-                    * BLADE_RUNNER_MAPPING_RETRY_TIMEOUT) {
-                sendBladeRunnerToNextCheckpoint(true);
-                retryAttemps++;
-            }
+        // every BLADE_RUNNER_MAPPING_RETRY_TIMEOUT seconds, while not mapped, will try to move
+        // the blade runner again
+        if (retryAttemps == 0
+                || System.currentTimeMillis() - currentBladeRunnerStartTime > (retryAttemps + 1)
+                        * BLADE_RUNNER_MAPPING_RETRY_TIMEOUT) {
+            sendBladeRunnerToNextCheckpoint(retryAttemps == 0);
+            retryAttemps++;
+            return true;
         }
+
+        try {
+            processTrip();
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, "Error taking trip from trip queue");
+            Thread.currentThread().interrupt();
+        }
+
         return false;
     }
 
@@ -143,6 +141,7 @@ public class MappingState implements SystemStateInterface {
                 }
                 boolean untrip = Boolean.parseBoolean(tripInfo[1]);
                 stopBladeRunnerAtCheckpoint(tripZone, untrip);
+                return true;
             }
         }
         return false;
@@ -210,7 +209,7 @@ public class MappingState implements SystemStateInterface {
     }
 
     // Grabs all unmapped blade runners, and also blade runners that have collided
-     private List<BladeRunnerClient> grabBladeRunners() {
+    private List<BladeRunnerClient> grabBladeRunners() {
         try {
             List<BladeRunnerClient> grabbedBladeRunners = db.getBladeRunnerClients();
             if (grabbedBladeRunners != null) {
@@ -225,10 +224,9 @@ public class MappingState implements SystemStateInterface {
                     }
                 }
                 return grabbedBladeRunners;
-            } 
+            }
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Failed to move BladeRunners");
-            SystemStateManager.getInstance().addUnresponsiveClient("SYSTEM", ReasonEnum.INTERNAL);
         }
         return new ArrayList<>();
     }

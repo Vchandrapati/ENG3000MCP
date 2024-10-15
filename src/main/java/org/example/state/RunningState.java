@@ -62,7 +62,6 @@ public class RunningState implements SystemStateInterface {
             } 
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Failed to move BladeRunners");
-            SystemStateManager.getInstance().addUnresponsiveClient("SYSTEM", ReasonEnum.INTERNAL);
         }
         return new ArrayList<>();
     }

@@ -30,7 +30,7 @@ public abstract class AbstractClient<S extends Enum<S>, A extends Enum<A>> {
     protected Set<ReasonEnum> unresponsiveReasons;
 
     protected AbstractClient (String id, MessageGenerator messageGenerator,
-                              MessageSender messageSender, int initialSequenceNumber) {
+                              MessageSender messageSender) {
         this.id = id;
         this.messageGenerator = messageGenerator;
         this.messageSender = messageSender;

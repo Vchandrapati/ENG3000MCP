@@ -14,8 +14,8 @@ public class BladeRunnerClient extends AbstractClient<MessageEnums.CCPStatus, CC
 
 
     public BladeRunnerClient (String id, MessageGenerator messageGenerator,
-                              MessageSender messageSender, int initialSequenceNumber) {
-        super(id, messageGenerator, messageSender, initialSequenceNumber);
+                              MessageSender messageSender) {
+        super(id, messageGenerator, messageSender);
         this.updateStatus(MessageEnums.CCPStatus.STOPC);
         this.type = "BR";
         this.isCurrentlyMapped = false;

@@ -27,11 +27,17 @@ public class SystemStateManager {
         stateMap.put(SystemState.EMERGENCY, EmergencyState::new);
     }
 
-    // holds the current state and the current state concrete implementation
-    private SystemState currentState;
-    private SystemStateInterface currentStateConcrete;
-    private boolean error = false;
-    private long timeWaited = System.currentTimeMillis();
+    // Holds the current state and the current state concrete implementation
+    // private SystemState currentState;
+    // private SystemStateInterface currentStateConcrete;
+    // private boolean error = false;
+    // private long timeWaited = System.currentTimeMillis();
+
+    //temp for testing
+    public SystemState currentState;
+    public SystemStateInterface currentStateConcrete;
+    public boolean error = false;
+    public long timeWaited = System.currentTimeMillis();
 
     // Initial state
     private SystemStateManager() {

@@ -35,18 +35,18 @@ public class ClientFactory {
             switch (receiveMessage.clientType) {
                 case "CCP":
                     client = new BladeRunnerClient(receiveMessage.clientID, messageGenerator,
-                            messageSender, receiveMessage.sequenceNumber);
+                            messageSender);
                     break;
                 case "CPC": {
                     Integer zone = locations.get(address.toString() + port);
                     client = new CheckpointClient(receiveMessage.clientID, messageGenerator,
-                            messageSender, receiveMessage.sequenceNumber, zone);
+                            messageSender, zone);
                     break;
                 }
                 case "STC": {
                     Integer zone = locations.get(address.toString() + port);
                     client = new StationClient(receiveMessage.clientID, messageGenerator,
-                            messageSender, receiveMessage.sequenceNumber, zone);
+                            messageSender, zone);
                     break;
                 }
                 default:
@@ -60,10 +60,8 @@ public class ClientFactory {
                 client.sendAcknowledgeMessage(MessageEnums.AKType.AKIN);
                 logger.log(Level.INFO, "Initialised new client: {0}", receiveMessage.clientID);
                 // if a client joins while not in waiting state, goes to emergency mode
-                if (SystemStateManager.getInstance().getState() != SystemState.WAITING) {
-                    SystemStateManager.getInstance().addUnresponsiveClient(receiveMessage.clientID,
-                            ReasonEnum.INVALCONNECT);
-                }
+                SystemStateManager.getInstance().addUnresponsiveClient(receiveMessage.clientID, ReasonEnum.INVALCONNECT);
+
             }
 
         } catch (Exception e) {
