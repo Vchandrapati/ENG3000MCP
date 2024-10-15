@@ -154,9 +154,9 @@ class MessageHandlerTest {
         r.message = "AKEX";
         r.sequenceNumber = 0;
 
-        BladeRunnerClient br = mock(BladeRunnerClient.class);
+        CheckpointClient cp = mock(CheckpointClient.class);
 
-        when(db.getClient("CP01", BladeRunnerClient.class)).thenReturn(Optional.of(br));
+        when(db.getClient("CP01", CheckpointClient.class)).thenReturn(Optional.of(cp));
 
         String s = objectMapper.writeValueAsString(r);
         mh.handleMessage(s, InetAddress.getLocalHost(), 0);
