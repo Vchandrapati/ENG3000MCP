@@ -14,9 +14,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ClientFactory {
-    private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-    private static final HashMap<String, Integer> locations = new HashMap<>();
-    private final Database db = Database.getInstance();
+    private Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+    private HashMap<String, Integer> locations = new HashMap<>();
+    private Database db = Database.getInstance();
 
     private static class Holder {
         private static final ClientFactory INSTANCE = new ClientFactory();
@@ -60,7 +60,8 @@ public class ClientFactory {
                 client.sendAcknowledgeMessage(MessageEnums.AKType.AKIN);
                 logger.log(Level.INFO, "Initialised new client: {0}", receiveMessage.clientID);
                 // if a client joins while not in waiting state, goes to emergency mode
-                SystemStateManager.getInstance().addUnresponsiveClient(receiveMessage.clientID, ReasonEnum.INVALCONNECT);
+                SystemStateManager.getInstance().addUnresponsiveClient(receiveMessage.clientID,
+                        ReasonEnum.INVALCONNECT);
 
             }
 

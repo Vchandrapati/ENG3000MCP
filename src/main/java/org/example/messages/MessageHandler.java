@@ -44,7 +44,6 @@ public class MessageHandler {
             logger.log(Level.SEVERE, "Failed to parse message: {0} \nException: {1}",
                     new Object[] {message, e.getMessage()});
         } catch (Exception e) {
-            logger.log(Level.FINEST, "{0}", message);
             logger.log(Level.SEVERE,
                     "Unexpected error handling message from {0}:{1} \nException: {2}",
                     new Object[] {address, port, e});
