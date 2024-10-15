@@ -4,11 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1d9b5952-4092-4fc7-8340-7dd220ada861" name="Changes" comment="refactored processor and fixed up some bugs">
+    <list default="true" id="1d9b5952-4092-4fc7-8340-7dd220ada861" name="Changes" comment="Added tests">
+      <change afterPath="$PROJECT_DIR$/src/test/java/ServerTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.log" beforeDir="false" afterPath="$PROJECT_DIR$/app.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/App.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Processor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Processor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/StatHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/StatHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/client/AbstractClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/client/AbstractClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/client/BladeRunnerClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/client/BladeRunnerClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/client/CheckpointClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/client/CheckpointClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/client/StationClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/client/StationClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/messages/ClientFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/messages/ClientFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/messages/MessageHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/messages/MessageHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/messages/StatHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/messages/StatHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/state/SystemStateManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/state/SystemStateManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,6 +26,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -46,7 +55,7 @@
   &quot;isMigrated&quot;: true
 }</component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="CurrentFile" />
+    <option name="selectedTabId" value="ProjectErrors" />
   </component>
   <component name="ProjectCodeStyleSettingsMigration">
     <option name="version" value="2" />
@@ -62,6 +71,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Application.Unnamed.executor": "Run",
+    "JUnit.ServerTest.testSystemStateManagerOnHighThroughput.executor": "Debug",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
@@ -73,12 +83,20 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
     "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "settings.editor.selected.configurable": "preferences.sourceCode",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager">
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Programming\Java\ENG3000MCP\src\main\java\org\example\messages" />
+    </key>
+  </component>
+  <component name="RunManager" selected="JUnit.ServerTest.testSystemStateManagerOnHighThroughput">
     <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.App" />
       <module name="ENG3000MCP2.0" />
@@ -86,12 +104,71 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="ServerTest.testPacketProcessing" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ENG3000MCP2.0" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="ServerTest" />
+      <option name="METHOD_NAME" value="testPacketProcessing" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ServerTest.testPacketProcessingWithException" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ENG3000MCP2.0" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="ServerTest" />
+      <option name="METHOD_NAME" value="testPacketProcessingWithException" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ServerTest.testSendMessageToClient" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ENG3000MCP2.0" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="ServerTest" />
+      <option name="METHOD_NAME" value="testSendMessageToClient" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ServerTest.testSendMessageToClientWithException" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ENG3000MCP2.0" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="ServerTest" />
+      <option name="METHOD_NAME" value="testSendMessageToClientWithException" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ServerTest.testSystemStateManagerOnHighThroughput" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ENG3000MCP2.0" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="ServerTest" />
+      <option name="METHOD_NAME" value="testSystemStateManagerOnHighThroughput" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.ServerTest.testSystemStateManagerOnHighThroughput" />
+        <item itemvalue="JUnit.ServerTest.testSendMessageToClientWithException" />
+        <item itemvalue="JUnit.ServerTest.testSendMessageToClient" />
+        <item itemvalue="JUnit.ServerTest.testPacketProcessingWithException" />
+        <item itemvalue="JUnit.ServerTest.testPacketProcessing" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-b114ca120d71-intellij.indexing.shared.core-IU-242.21829.142" />
-        <option value="bundled-js-predefined-d6986cc7102b-7c0b70fcd90d-JavaScript-IU-242.21829.142" />
+        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.18034.62" />
+        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-IU-241.18034.62" />
       </set>
     </attachedChunks>
   </component>
@@ -122,6 +199,11 @@
       <workItem from="1728358965380" duration="13378000" />
       <workItem from="1728454873014" duration="4358000" />
       <workItem from="1728459319167" duration="2407000" />
+      <workItem from="1728518327776" duration="10121000" />
+      <workItem from="1728528588832" duration="2275000" />
+      <workItem from="1728631997087" duration="1413000" />
+      <workItem from="1728702329898" duration="652000" />
+      <workItem from="1728906571524" duration="3099000" />
     </task>
     <task id="LOCAL-00001" summary="Made some changes to comply with sonarlint">
       <option name="closed" value="true" />
@@ -299,7 +381,55 @@
       <option name="project" value="LOCAL" />
       <updated>1728391832555</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="Moved subsystems into packages and seperated client">
+      <option name="closed" value="true" />
+      <created>1728528001550</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1728528001550</updated>
+    </task>
+    <task id="LOCAL-00024" summary="Moved subsystems into packages and seperated client">
+      <option name="closed" value="true" />
+      <created>1728528043100</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1728528043100</updated>
+    </task>
+    <task id="LOCAL-00025" summary="Moved subsystems into packages and seperated client">
+      <option name="closed" value="true" />
+      <created>1728528792220</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1728528792220</updated>
+    </task>
+    <task id="LOCAL-00026" summary="Moved subsystems into packages and seperated client">
+      <option name="closed" value="true" />
+      <created>1728528804324</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1728528804324</updated>
+    </task>
+    <task id="LOCAL-00027" summary="Moved subsystems into packages and seperated client">
+      <option name="closed" value="true" />
+      <created>1728529120402</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1728529120402</updated>
+    </task>
+    <task id="LOCAL-00028" summary="Added tests">
+      <option name="closed" value="true" />
+      <created>1728702691671</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1728702691671</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -332,6 +462,8 @@
     <MESSAGE value="Fixed fuck up" />
     <MESSAGE value="Changed stat message to change client status" />
     <MESSAGE value="refactored processor and fixed up some bugs" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactored processor and fixed up some bugs" />
+    <MESSAGE value="Moved subsystems into packages and seperated client" />
+    <MESSAGE value="Added tests" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added tests" />
   </component>
 </project>
