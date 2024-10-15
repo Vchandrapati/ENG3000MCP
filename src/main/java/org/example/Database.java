@@ -1,5 +1,11 @@
 package org.example;
 
+import org.example.client.AbstractClient;
+import org.example.client.BladeRunnerClient;
+import org.example.client.CheckpointClient;
+import org.example.client.StationClient;
+import org.example.client.ReasonEnum;
+
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -8,14 +14,15 @@ import java.util.logging.Logger;
 
 public class Database {
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+
     // All client objects
-    private final ConcurrentHashMap<String, Client> clients;
+    private final ConcurrentHashMap<String, AbstractClient> clients;
     private final ConcurrentHashMap<String, Integer> bladeRunnerBlockMap;
 
     // Set of all BladeRunner client IDs
     private final HashSet<String> allBladeRunners;
-    // Set of all unresponsive or "dead" clients
 
+    // Set of all unresponsive or "dead" clients
     private final HashSet<String> unresponsiveClients;
 
     private final AtomicInteger numberOfCheckpoints;
@@ -49,12 +56,13 @@ public class Database {
     }
 
     // Add any client with this method
-    public void addClient(String id, Client client) {
+    public void addClient(String id, AbstractClient client) {
         // Will attempt to add a client
         // If absent it will happen, however, if it is present the previous client will
         // be handed over
-        Client prevValue = clients.putIfAbsent(id, client);
+        AbstractClient prevValue = clients.putIfAbsent(id, client);
         clients.putIfAbsent(id, client);
+        logger.log(Level.INFO, "Added {0} to database", client.getId());
 
         // If there was a previous client log the error
         if (prevValue != null) {
@@ -78,8 +86,8 @@ public class Database {
     }
 
     // Get any client with this method
-    public <T extends Client> Optional<T> getClient(String id, Class<T> type) {
-        Client c = clients.get(id);
+    public <T extends AbstractClient> Optional<T> getClient(String id, Class<T> type) {
+        AbstractClient c = clients.get(id);
 
         if (c == null)
             return Optional.empty();
@@ -100,8 +108,8 @@ public class Database {
 
     public void addUnresponsiveClient(String id, ReasonEnum newReason) {
 
-        Optional<Client> cOptional = getClient(id, Client.class);
-        Client c;
+        Optional<AbstractClient> cOptional = getClient(id, AbstractClient.class);
+        AbstractClient c;
 
         if (cOptional.isPresent()) {
             c = cOptional.get();
@@ -127,8 +135,8 @@ public class Database {
             return;
         }
 
-        Optional<Client> cOptional = getClient(id, Client.class);
-        Client c;
+        Optional<AbstractClient> cOptional = getClient(id, AbstractClient.class);
+        AbstractClient c;
 
         if (cOptional.isPresent()) {
             c = cOptional.get();
@@ -147,8 +155,8 @@ public class Database {
             return new HashSet<>();
         }
 
-        Optional<Client> cOptional = getClient(id, Client.class);
-        Client c;
+        Optional<AbstractClient> cOptional = getClient(id, AbstractClient.class);
+        AbstractClient c;
 
         if (cOptional.isPresent()) {
             c = cOptional.get();
@@ -195,7 +203,7 @@ public class Database {
         return bladeRunners;
     }
 
-    public List<Client> getClients() {
+    public List<AbstractClient> getClients() {
         return new ArrayList<>(clients.values());
     }
 
@@ -203,15 +211,19 @@ public class Database {
         return allBladeRunners.size();
     }
 
-    public Integer getCheckpointCount() {
+    public int getCheckpointCount() {
         return numberOfCheckpoints.get();
     }
 
-    public Integer getStationCount() {
+    public int getStationCount() {
         return numberOfStations.get();
     }
 
     public void clearUnresponsive() {
         unresponsiveClients.clear();
+    }
+
+    public int getBlockCount() {
+        return getCheckpointCount() + getStationCount();
     }
 }

@@ -1,6 +1,6 @@
-23:48:22.642 INFO: org.example.SystemStateManager setState Changing to system state WAITING
-23:48:22.647 INFO: org.example.CommandHandler run MCP online, please input a command, type help to see a list of commands
-23:48:22.829 SEVERE: org.example.Server <init> Error starting up server
+23:48:22.642 INFO: org.example.state.SystemStateManager setState Changing to system state WAITING
+23:48:22.647 INFO: org.example.visualiser.CommandHandler run MCP online, please input a command, type help to see a list of commands
+23:48:22.829 SEVERE: org.example.messages.Server <init> Error starting up server
 java.net.BindException: Address already in use: bind
 	at java.base/sun.nio.ch.Net.bind0(Native Method)
 	at java.base/sun.nio.ch.Net.bind(Net.java:565)
@@ -11,15 +11,15 @@ java.net.BindException: Address already in use: bind
 	at java.base/java.net.DatagramSocket.<init>(DatagramSocket.java:328)
 	at java.base/java.net.DatagramSocket.<init>(DatagramSocket.java:387)
 	at java.base/java.net.DatagramSocket.<init>(DatagramSocket.java:353)
-	at org.example.Server.<init>(Server.java:39)
-	at org.example.Server$Holder.<clinit>(Server.java:140)
-	at org.example.Server.getInstance(Server.java:52)
+	at org.example.messages.Server.<init>(Server.java:39)
+	at org.example.messages.Server$Holder.<clinit>(Server.java:140)
+	at org.example.messages.Server.getInstance(Server.java:52)
 	at org.example.App.lambda$1(App.java:23)
 	at java.base/java.lang.Thread.run(Thread.java:1583)
 
-23:48:49.344 INFO: org.example.SystemStateManager setState Changing to system state WAITING
-23:48:49.360 INFO: org.example.CommandHandler run MCP online, please input a command, type help to see a list of commands
-23:48:49.533 SEVERE: org.example.Server <init> Error starting up server
+23:48:49.344 INFO: org.example.state.SystemStateManager setState Changing to system state WAITING
+23:48:49.360 INFO: org.example.visualiser.CommandHandler run MCP online, please input a command, type help to see a list of commands
+23:48:49.533 SEVERE: org.example.messages.Server <init> Error starting up server
 java.net.BindException: Address already in use: bind
 	at java.base/sun.nio.ch.Net.bind0(Native Method)
 	at java.base/sun.nio.ch.Net.bind(Net.java:565)
@@ -30,9 +30,28 @@ java.net.BindException: Address already in use: bind
 	at java.base/java.net.DatagramSocket.<init>(DatagramSocket.java:328)
 	at java.base/java.net.DatagramSocket.<init>(DatagramSocket.java:387)
 	at java.base/java.net.DatagramSocket.<init>(DatagramSocket.java:353)
-	at org.example.Server.<init>(Server.java:39)
-	at org.example.Server$Holder.<clinit>(Server.java:140)
-	at org.example.Server.getInstance(Server.java:52)
+	at org.example.messages.Server.<init>(Server.java:39)
+	at org.example.messages.Server$Holder.<clinit>(Server.java:140)
+	at org.example.messages.Server.getInstance(Server.java:52)
 	at org.example.App.lambda$1(App.java:23)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+
+13:57:56.264 INFO: org.example.state.SystemStateManager setState Changing to system state WAITING
+13:57:56.268 INFO: org.example.visualiser.CommandHandler run MCP online, please input a command, type help to see a list of commands
+13:57:56.468 SEVERE: org.example.messages.Server <init> Error starting up server
+java.net.BindException: Address already in use: bind
+	at java.base/sun.nio.ch.Net.bind0(Native Method)
+	at java.base/sun.nio.ch.Net.bind(Net.java:565)
+	at java.base/sun.nio.ch.DatagramChannelImpl.bindInternal(DatagramChannelImpl.java:1329)
+	at java.base/sun.nio.ch.DatagramChannelImpl.bind(DatagramChannelImpl.java:1299)
+	at java.base/sun.nio.ch.DatagramSocketAdaptor.bind(DatagramSocketAdaptor.java:108)
+	at java.base/java.net.DatagramSocket.createDelegate(DatagramSocket.java:1425)
+	at java.base/java.net.DatagramSocket.<init>(DatagramSocket.java:328)
+	at java.base/java.net.DatagramSocket.<init>(DatagramSocket.java:387)
+	at java.base/java.net.DatagramSocket.<init>(DatagramSocket.java:353)
+	at org.example.messages.Server.<init>(Server.java:42)
+	at org.example.messages.Server$Holder.<clinit>(Server.java:142)
+	at org.example.messages.Server.getInstance(Server.java:55)
+	at org.example.App.lambda$startMCP$1(App.java:33)
 	at java.base/java.lang.Thread.run(Thread.java:1583)
 
