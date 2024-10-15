@@ -85,10 +85,6 @@ public class Server implements Runnable {
     private void packetProcessor() {
         while (serverRunning.get()) {
             try {
-                // If the server cannot process requests fast enough
-                if (mailbox.size() > MAX_THROUGHPUT)
-                    SystemStateManager.getInstance().addUnresponsiveClient("SYSTEM", ReasonEnum.SYSTEMOVER);
-
                 DatagramPacket receivePacket = mailbox.take();
                 String message = new String(receivePacket.getData(), 0, receivePacket.getLength(),
                         StandardCharsets.UTF_8);

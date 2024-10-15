@@ -2,7 +2,7 @@ package org.example.state;
 
 import org.example.Database;
 import org.example.client.ReasonEnum;
-
+import java.security.cert.CertPathValidatorException.Reason;
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.function.Supplier;
@@ -13,7 +13,8 @@ import java.util.logging.Logger;
 public class SystemStateManager {
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
-    private static final Database db = Database.getInstance();
+    // private static final Database db = Database.getInstance();
+    private static Database db = Database.getInstance();
     private static final Map<SystemState, Supplier<SystemStateInterface>> stateMap;
 
     // singleton instance of class
@@ -33,11 +34,15 @@ public class SystemStateManager {
     // private boolean error = false;
     // private long timeWaited = System.currentTimeMillis();
 
-    //temp for testing
+    // temp for testing
     public SystemState currentState;
     public SystemStateInterface currentStateConcrete;
     public boolean error = false;
     public long timeWaited = System.currentTimeMillis();
+
+    public void injectDatabase(Database db) {
+        this.db = db;
+    }
 
     // Initial state
     private SystemStateManager() {
@@ -87,15 +92,16 @@ public class SystemStateManager {
     }
 
     // Sets the state of the program to the given one
-    public void setState(SystemState newState) {
-        if (currentState == newState) {
-            return;
+    public boolean setState(SystemState newState) {
+        if (newState == null || currentState == newState) {
+            return false;
         }
 
         currentState = newState;
         currentStateConcrete = stateMap.get(newState).get();
 
         logger.log(Level.INFO, "Changing to system state {0}", newState);
+        return true;
     }
 
 
@@ -111,8 +117,7 @@ public class SystemStateManager {
         // if in the appropriate state of MAPPING only
         if (currentState == SystemState.MAPPING) {
             MappingState.addTrip(trippedSensor, untrip);
-            logger.log(Level.INFO, "System state manager has detected untrip {0}",
-                            trippedSensor);
+            logger.log(Level.INFO, "System state manager has detected untrip {0}", trippedSensor);
             return true;
         }
         return false;
@@ -122,11 +127,12 @@ public class SystemStateManager {
     // adds a client to the unresponsive client list in the database
     // only does this if in not in the waiting state
     public boolean addUnresponsiveClient(String id, ReasonEnum reason) {
-        if (currentState != SystemState.WAITING) {
+        if (currentState != SystemState.WAITING && id != null && reason != null
+                && db.addUnresponsiveClient(id, reason)) {
             logger.log(Level.WARNING, "Client {0} has {1}", new Object[] {id, reason});
             error = true;
-            db.addUnresponsiveClient(id, reason);
             return true;
+
         }
         return false;
     }

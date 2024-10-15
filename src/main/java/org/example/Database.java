@@ -4,6 +4,7 @@ import org.example.client.AbstractClient;
 import org.example.client.BladeRunnerClient;
 import org.example.client.CheckpointClient;
 import org.example.client.StationClient;
+import org.example.state.SystemStateManager;
 import org.example.client.ReasonEnum;
 
 import java.util.*;
@@ -14,6 +15,17 @@ import java.util.logging.Logger;
 
 public class Database {
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+
+    //REMOVE AFTER FROM TESTING
+    private static Database instance;
+
+    //REMOVE AFTER FROM TESTING
+     public static synchronized Database getInstanceTest() {
+        if (instance == null) {
+            instance = new Database();
+        }
+        return instance;
+    }
 
     // All client objects
     private final ConcurrentHashMap<String, AbstractClient> clients;
@@ -106,7 +118,7 @@ public class Database {
         return unresponsiveClients;
     }
 
-    public void addUnresponsiveClient(String id, ReasonEnum newReason) {
+    public boolean addUnresponsiveClient(String id, ReasonEnum newReason) {
 
         Optional<AbstractClient> cOptional = getClient(id, AbstractClient.class);
         AbstractClient c;
@@ -116,11 +128,12 @@ public class Database {
 
         } else {
             logger.log(Level.WARNING, "Attempted to get non-existent client", id);
-            return;
+            return false;
         }
 
         c.addReason(newReason);
         unresponsiveClients.add(id);
+        return true;
     }
 
     public void fullPurge(String id) {

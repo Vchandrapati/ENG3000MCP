@@ -101,31 +101,7 @@ public class EmergencyState implements SystemStateInterface {
     private boolean dealWithReasons(String client, List<ReasonEnum> reasons) {
         for (int i = reasons.size() - 1; i > -1; i--) {
             ReasonEnum reason = reasons.get(i);
-            // if client is null then SYSTEM was given
-            if (client == null) {
-                dealSystemReason(client, reason);
-            } else {
-                dealClientReason(client, reason);
-            }
-        }
-        return true;
-    }
-
-    private boolean dealSystemReason(String client, ReasonEnum reason) {
-        switch (reason) {
-            case ReasonEnum.SYSTEMOVER: {
-                db.removeReason(client, reason);
-                break;
-            }
-            case ReasonEnum.INTERNAL: {
-                db.removeReason(client, reason);
-                break;
-            }
-            default: {
-                logger.log(Level.INFO, "Invalid reason {0} for : {1}",
-                        new Object[] {reason, client});
-                break;
-            }
+            dealClientReason(client, reason);
         }
         return true;
     }
