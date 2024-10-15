@@ -55,7 +55,7 @@ public class EmergencyState implements SystemStateInterface {
         }
     }
 
-    private void disconnectClients() {
+    private boolean disconnectClients() {
         List<String> clients = new ArrayList<>(db.getAllUnresponsiveClientIDs());
         for (int i = clients.size() - 1; i > -1; i--) {
             BladeRunnerClient clientInstance =
@@ -65,6 +65,7 @@ public class EmergencyState implements SystemStateInterface {
                 db.fullPurge(clients.get(i));
             }
         }
+        return true;
     }
 
     // goes through the stat message queue, if the string is of a dead client, that client has
@@ -87,46 +88,25 @@ public class EmergencyState implements SystemStateInterface {
         }
     }
 
-    private void processEachUnresponsiveClient() {
+    private boolean processEachUnresponsiveClient() {
         List<String> clients = new ArrayList<>(db.getAllUnresponsiveClientIDs());
 
         for (int i = clients.size() - 1; i > -1; i--) {
             String client = clients.get(i);
             dealWithReasons(client, new ArrayList<>(db.getClientReasons(client)));
         }
+        return true;
     }
 
-    private void dealWithReasons(String client, List<ReasonEnum> reasons) {
+    private boolean dealWithReasons(String client, List<ReasonEnum> reasons) {
         for (int i = reasons.size() - 1; i > -1; i--) {
             ReasonEnum reason = reasons.get(i);
-            // if client is null then SYSTEM was given
-            if (client == null) {
-                dealSystemReason(client, reason);
-            } else {
-                dealClientReason(client, reason);
-            }
+            dealClientReason(client, reason);
         }
+        return true;
     }
 
-    private void dealSystemReason(String client, ReasonEnum reason) {
-        switch (reason) {
-            case ReasonEnum.SYSTEMOVER: {
-                db.removeReason(client, reason);
-                break;
-            }
-            case ReasonEnum.INTERNAL: {
-                db.removeReason(client, reason);
-                break;
-            }
-            default: {
-                logger.log(Level.INFO, "Invalid reason {0} for : {1}",
-                        new Object[] {reason, client});
-                break;
-            }
-        }
-    }
-
-    private void dealClientReason(String client, ReasonEnum reason) {
+    private boolean dealClientReason(String client, ReasonEnum reason) {
         switch (reason) {
             case ReasonEnum.INVALCONNECT: // same as no stat for now
             case ReasonEnum.NOSTAT: {
@@ -178,12 +158,13 @@ public class EmergencyState implements SystemStateInterface {
                 break;
             }
         }
+        return true;
     }
 
     // Grabs all the trains each time and tells each
     // performs this every 5 seconds, and instantly when going into emergency mode
     // grabs all the trains each time as new trains could connect unexpectedly
-    private void stopAllBladeRunners() {
+    private boolean stopAllBladeRunners() {
         if (System.currentTimeMillis() - timeOnStop >= TIME_BETWEEN_SENDING_STOP
                 || timeOnStop == 0) {
             List<BladeRunnerClient> bladeRunners = db.getBladeRunnerClients();
@@ -192,6 +173,7 @@ public class EmergencyState implements SystemStateInterface {
                 BladeRunnerClient.sendExecuteMessage(MessageEnums.CCPAction.FSLOWC);
             }
         }
+        return true;
     }
 
     @Override

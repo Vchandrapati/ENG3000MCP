@@ -2,8 +2,9 @@ package org.example.state;
 
 import org.example.Database;
 import org.example.client.BladeRunnerClient;
+import org.example.client.ReasonEnum;
 import org.example.messages.MessageEnums;
-
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
@@ -12,6 +13,7 @@ import java.util.logging.Logger;
 // If no issues this state performs the operation of the system normally
 public class RunningState implements SystemStateInterface {
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+    private static final Database db = Database.getInstance();
 
     private static final SystemState nextState = SystemState.RUNNING;
     private static final long TIME_BETWEEN_RUNNING = 500;
@@ -40,43 +42,42 @@ public class RunningState implements SystemStateInterface {
     @Override
     public boolean performOperation() {
         if (!grab && System.currentTimeMillis() - runningStartTime >= WAIT) {
-            grabAllBladeRunners();
+            bladeRunners = grabAllBladeRunners();
         }
-        if (!allRunning) {
+        if (grab && !allRunning) {
             moveAllBladeRunners();
         }
         return false;
     }
 
     // sends a one time message to all BladeRunners to make them move, makes them move in order
-    private void grabAllBladeRunners() {
+    private List<BladeRunnerClient> grabAllBladeRunners() {
         try {
-            bladeRunners = Database.getInstance().getBladeRunnerClients();
-            if (bladeRunners != null && !bladeRunners.isEmpty()) {
-                Collections.sort(bladeRunners,
-                        (br1, br2) -> Integer.compare(br2.getZone(), br1.getZone()));
-            } else {
-                allRunning = true;
-            }
             grab = true;
+            List<BladeRunnerClient> grabbedBladeRunners = db.getBladeRunnerClients();
+            if (grabbedBladeRunners != null) {
+                Collections.sort(grabbedBladeRunners,
+                        (br1, br2) -> Integer.compare(br2.getZone(), br1.getZone()));
+                return grabbedBladeRunners;
+            } 
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Failed to move BladeRunners");
-            SystemStateManager.getInstance().setState(SystemState.EMERGENCY);
         }
+        return new ArrayList<>();
     }
 
-    private void moveAllBladeRunners() {
+    private boolean moveAllBladeRunners() {
         if (System.currentTimeMillis() - startTime >= TIME_BETWEEN_SENDING || startTime == 0) {
             if (bladeRunners == null || bladeRunners.isEmpty()) {
-                return;
+                allRunning = true;
+                return true;
             }
             if (curBR < bladeRunners.size()) {
                 startTime = System.currentTimeMillis();
                 bladeRunners.get(curBR++).sendExecuteMessage(MessageEnums.CCPAction.FFASTC);
-                return;
             }
-            allRunning = true;
         }
+        return false;
     }
 
     @Override
