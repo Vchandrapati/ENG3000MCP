@@ -8,8 +8,7 @@ import java.io.File; // Import the File class
 import java.io.FileNotFoundException; // Import this class to handle errors
 
 public class Main {
-
-    Integer port = 2000;
+    Integer port = 3001;
     InetAddress add = null;
     Integer CCPglobal = 0;
 
@@ -43,7 +42,8 @@ public class Main {
                 inputs.add(s.nextLine());
             }
 
-            add = InetAddress.getByName("localhost");
+            add = InetAddress.getLocalHost();
+            System.out.println(add);
             for (int i = 0; i < numCCPClinets; i++) {
                 // Starts every CCP off messageing to this adddress
                 String ID = "";
@@ -78,6 +78,7 @@ public class Main {
                     numcheckClinets++;
                     Checkclients
                             .add(new CheckpointClient(Integer.parseInt(ID[2]), add, port, fullID));
+                    System.out.println(Integer.parseInt(ID[2]));
                 }
             }
 

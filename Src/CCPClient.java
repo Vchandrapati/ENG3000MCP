@@ -56,7 +56,7 @@ public class CCPClient {
                     if (!message.isEmpty()) {
                         message = message.replaceAll("[^\\x20-\\x7E]", " ");
                         // Print every message received
-                        // System.out.println(myID + " Recieved msg: " + message);
+                        System.out.println(myID + " Recieved msg: " + message);
                     }
 
                     String[] temp = message.split(",");
@@ -67,6 +67,7 @@ public class CCPClient {
                     if (c[1].equals("\"AKIN\"")) {
                         String[] temp2 = temp[2].split(":");
                         String[] temp3 = temp2[1].split("\"");
+
                         myID = temp3[1];
 
                         txt.addtext("Time taken for " + myID + ": "
@@ -141,7 +142,7 @@ public class CCPClient {
             DatagramPacket sendPacket =
                     new DatagramPacket(buffer, buffer.length, sendAddress, sendPort);
             socket.send(sendPacket);
-            // System.out.println(myID + " Sent msg " + new String(buffer));
+            System.out.println(myID + " Sent msg " + new String(buffer));
             sequenceNum++;
         } catch (Exception e) {
             System.out.println("Failed to send packet");

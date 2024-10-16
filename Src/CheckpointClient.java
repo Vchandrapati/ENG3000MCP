@@ -131,7 +131,7 @@ public class CheckpointClient {
             DatagramPacket sendPacket =
                     new DatagramPacket(buffer, buffer.length, sendAddress, sendPort);
             socket.send(sendPacket);
-            // System.out.println(myID + " Sent msg " + new String(buffer));
+            System.out.println(myID + " Sent msg " + new String(buffer));
             sequenceNum++;
         } catch (Exception e) {
             System.out.println("Failed to send packet");
