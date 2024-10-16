@@ -16,31 +16,7 @@ public class VisualiserScreen extends JFrame {
         setSize(1900, 1200);
         setTitle("Master Control Protocol");
 
-        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        // Get all screen devices (monitors)
-        GraphicsDevice[] gs = ge.getScreenDevices();
-
-        // Check if we have more than one monitor
-        String username = System.getProperty("user.name");
-        if (gs.length > 1 && username.equalsIgnoreCase("tshie")) {
-            // Get the bounds of the second monitor
-            GraphicsDevice secondMonitor = gs[0];
-            Rectangle secondMonitorBounds = secondMonitor.getDefaultConfiguration().getBounds();
-
-            // Set the frame size to the size of the second monitor
-            setBounds(secondMonitorBounds);
-            setLocation(secondMonitorBounds.x, secondMonitorBounds.y);
-        } else if (username.equalsIgnoreCase("xtheg")) {
-            setSize(1800, 900);
-            setLocationRelativeTo(null);
-        }
-        else {
-            setLocationRelativeTo(null);
-            System.out.println("No second monitor detected.");
-        }
-
-
-        setResizable(false);
+        setResizable(true);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         long startupTime = System.currentTimeMillis();
 
