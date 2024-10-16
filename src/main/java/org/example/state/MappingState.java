@@ -111,7 +111,7 @@ public class MappingState implements SystemStateInterface {
         if (retryAttemps == 0
                 || System.currentTimeMillis() - currentBladeRunnerStartTime > (retryAttemps + 1)
                         * BLADE_RUNNER_MAPPING_RETRY_TIMEOUT) {
-            sendBladeRunnerToNextCheckpoint(retryAttemps == 0);
+            sendBladeRunnerToNextCheckpoint(retryAttemps != 0);
             retryAttemps++;
         }
 
@@ -162,6 +162,7 @@ public class MappingState implements SystemStateInterface {
             currentBladeRunner.sendExecuteMessage(MessageEnums.CCPAction.RSLOWC);
             backwards = true;
         } else {
+            System.out.println("sent fast");
             currentBladeRunner.sendExecuteMessage(MessageEnums.CCPAction.FFASTC);
         }
         hasSent = true;
@@ -183,6 +184,7 @@ public class MappingState implements SystemStateInterface {
             currentBladeRunner.sendExecuteMessage(MessageEnums.CCPAction.FSLOWC);
         } else {
             // if a untrip, then send stop
+            retryAttemps = 0;
             currentBladeRunner.sendExecuteMessage(MessageEnums.CCPAction.STOPC);
             logger.log(Level.INFO, "BladeRunner {0} mapped to zone {1}",
                     new Object[] {currentBladeRunner.getId(), zone});
