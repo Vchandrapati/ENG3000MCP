@@ -2,8 +2,10 @@ package org.example;
 
 import org.example.client.BladeRunnerClient;
 import org.example.client.CheckpointClient;
+import org.example.client.MessageGenerator;
 import org.example.client.StationClient;
 import org.example.messages.MessageEnums;
+import org.example.messages.MessageSender;
 import org.example.client.ReasonEnum;
 import org.example.state.SystemStateManager;
 
@@ -88,6 +90,12 @@ public class Processor {
             //give station blade runner
         }
 
+        // if (isCheckpointStation(checkpointTripped)) {
+        //     bladeRunner.sendExecuteMessage(MessageEnums.CCPAction.FSLOWC);
+        //     //give station blade runner
+        // }
+
+
         if (db.isBlockOccupied(nextCheckpoint) && untrip) {
             bladeRunnerOptional.get().sendExecuteMessage(MessageEnums.CCPAction.STOPC);
         }
@@ -137,12 +145,14 @@ public class Processor {
             db.updateBladeRunnerBlock(reversingBladeRunner.getId(), previousBlock);
             reversingBladeRunner.changeZone(previousBlock);
         }
-
     }
 
     public static boolean isCheckpointStation(int checkpoint) {
         String id = checkpoint > 9 ? "ST" + checkpoint : "ST0" + checkpoint;
-        return db.getClient(id, StationClient.class).isPresent();
+        //return db.getClient(id, StationClient.class).isPresent();
+        if(checkpoint == 2)
+            return true;
+        return false;
     }
 
 
@@ -187,8 +197,8 @@ public class Processor {
     }
 
     public static boolean isNextBlockValid(int checkpoint) {
-        String cpId = checkpoint == totalBlocks ? "CP" + checkpoint : "CP0" + checkpoint;
-        String stId = checkpoint == totalBlocks ? "ST" + checkpoint : "ST0" + checkpoint;
+        String cpId = checkpoint > 9 ? "CP" + checkpoint : "CP0" + checkpoint;
+        String stId = checkpoint > 9 ? "ST" + checkpoint : "ST0" + checkpoint;
         return db.getClient(cpId, CheckpointClient.class).isPresent()
                 || db.getClient(stId, StationClient.class).isPresent();
     }
@@ -211,7 +221,7 @@ public class Processor {
                 StationClient station = sc.get();
                 station.sendExecuteMessage(MessageEnums.STCAction.OPEN);
                 station.updateStatus(MessageEnums.STCStatus.ONOPEN);
-                scheduler.schedule(() -> stationBuffer(bladeRunner, sc.get()), 5, TimeUnit.SECONDS);
+                scheduler.schedule(() -> stationBuffer(bladeRunner, station), 5, TimeUnit.SECONDS);
             }
 
 
@@ -239,5 +249,6 @@ public class Processor {
         br.updateStatus(MessageEnums.CCPStatus.FFASTC);
         station.sendExecuteMessage(MessageEnums.STCAction.CLOSE);
         station.updateStatus(MessageEnums.STCStatus.OFF);
+        System.out.println("hello");
     }
 }

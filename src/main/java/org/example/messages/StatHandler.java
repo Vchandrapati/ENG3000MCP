@@ -105,7 +105,7 @@ public class StatHandler {
                 altPath = true;
             }
 
-            if (!altPath && expectedStatus != null && !expectedStatus.equals(recievedStatus)) {
+            if (!altPath && expectedStatus != null && !expectedStatus.equals(recievedStatus) && !client.isExpectingStat()) {
                 // If client is not in expected state then there is a problem
                 systemStateManager.addUnresponsiveClient(client.getId(), ReasonEnum.WRONGSTATUS);
                 logger.log(Level.SEVERE, "Client {0} did not update status to {1} from {2}",
