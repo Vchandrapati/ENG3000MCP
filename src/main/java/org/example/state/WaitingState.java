@@ -9,11 +9,14 @@ import java.util.logging.Logger;
 // No emergency mode can happen in this phase
 public class WaitingState implements SystemStateInterface {
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-    private static final Database db = Database.getInstance();
+    //private static final Database db = Database.getInstance();
+    //TODO
+     private static Database db = Database.getInstance();
 
     // All time units in milliseconds
-    private static final long STARTUP_CONNECTION_TIME_PERIOD = 600000; // ten minutes
-    private static final long TIME_ON_START = System.currentTimeMillis(); // the time when counter
+    //private static final long STARTUP_CONNECTION_TIME_PERIOD = 600000; // ten minutes
+    private static final long STARTUP_CONNECTION_TIME_PERIOD = 4000; // ten minutes
+
                                                                           // 10-minute timer started
     private static final long TIME_BETWEEN_RUNNING = 5000; // 5 seconds
 
@@ -23,11 +26,21 @@ public class WaitingState implements SystemStateInterface {
     // Next state of this state
     private static final SystemState NEXT_STATE = SystemState.MAPPING;
 
+    private long timeOnStart;
+    
+    public WaitingState() {
+        timeOnStart = System.currentTimeMillis(); // the time when counter
+    }
+
+    public static void injectDatabase(Database dbA) {
+        db = dbA;
+    }
+
     // Performs the operation of this state at set intervals according to TIME_BETWEEN_RUNNING
     // If returns true then system goes to NEXT_STATE
     @Override
     public boolean performOperation() {
-        long elapsedTime = System.currentTimeMillis() - TIME_ON_START;
+        long elapsedTime = System.currentTimeMillis() - timeOnStart;
 
         // Checks if the timeout has occured or if the correct amount of clients have joined
         if (elapsedTime >= STARTUP_CONNECTION_TIME_PERIOD

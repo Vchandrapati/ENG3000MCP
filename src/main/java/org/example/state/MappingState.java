@@ -14,6 +14,9 @@ import java.util.concurrent.*;
 
 public class MappingState implements SystemStateInterface {
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+    // private static final Database db = Database.getInstance();
+    //TODO
+    private static Database db = Database.getInstance();
 
     // All time units in milliseconds
     private static final long BLADE_RUNNER_MAPPING_RETRY_TIMEOUT = 15000; // 15 seconds
@@ -24,10 +27,9 @@ public class MappingState implements SystemStateInterface {
 
     private static final SystemState NEXT_STATE = SystemState.RUNNING;
 
-    private static final BlockingQueue<String> tripQueue = new LinkedBlockingQueue<>();
+    private static BlockingQueue<String> tripQueue;
 
     private List<BladeRunnerClient> bladeRunnersToMap;
-    private final Database db = Database.getInstance();
     private boolean startMapping;
     private BladeRunnerClient currentBladeRunner;
     private int currentBladeRunnerIndex;
@@ -38,6 +40,10 @@ public class MappingState implements SystemStateInterface {
 
     private int currentTrip;
     private boolean backwards;
+
+    public static void injectDatabase(Database dbA) {
+        db = dbA;
+    }
 
     // Constructor
     public MappingState() {
@@ -51,6 +57,7 @@ public class MappingState implements SystemStateInterface {
         bladeRunnersToMap = new ArrayList<>();
         backwards = false;
         currentTrip = -1;
+        tripQueue = new LinkedBlockingQueue<>();
     }
 
     // Performs the operation of this state at set intervals according to TIME_BETWEEN_RUNNING
@@ -110,39 +117,37 @@ public class MappingState implements SystemStateInterface {
         if (retryAttemps == 0
                 || System.currentTimeMillis() - currentBladeRunnerStartTime > (retryAttemps + 1)
                         * BLADE_RUNNER_MAPPING_RETRY_TIMEOUT) {
-            sendBladeRunnerToNextCheckpoint(retryAttemps == 0);
+            sendBladeRunnerToNextCheckpoint(retryAttemps != 0);
             retryAttemps++;
-            return true;
         }
 
+        boolean tripResult = false;
         try {
-            processTrip();
+            tripResult = processTrip();
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Error taking trip from trip queue");
             Thread.currentThread().interrupt();
         }
 
-        return false;
+        return tripResult;
     }
 
     private boolean processTrip() throws InterruptedException {
         if (!tripQueue.isEmpty()) {
             String[] tripInfo = tripQueue.take().split(",");
-            if (tripInfo.length == 2) {
-                int tripZone = Integer.parseInt(tripInfo[0]);
-                if (currentTrip == -1 || currentTrip == tripZone) {
-                    currentTrip = tripZone;
-                } else {
-                    String str = (tripZone == 10) ? "CP10" : "CP" + tripZone;
-                    SystemStateManager.getInstance().addUnresponsiveClient(str,
-                            ReasonEnum.INCORTRIP);
-                    logger.log(Level.WARNING, "Checkpoint : {0} has had inconsistent trip", str);
-                    return false;
-                }
-                boolean untrip = Boolean.parseBoolean(tripInfo[1]);
-                stopBladeRunnerAtCheckpoint(tripZone, untrip);
-                return true;
+            int tripZone = Integer.parseInt(tripInfo[0]);
+            if (currentTrip == -1 || currentTrip == tripZone) {
+                currentTrip = tripZone;
+            } else {
+                String str = (tripZone == 10) ? "CP10" : "CP" + tripZone;
+                SystemStateManager.getInstance().addUnresponsiveClient(str,
+                        ReasonEnum.INCORTRIP);
+                logger.log(Level.WARNING, "Checkpoint : {0} has had inconsistent trip", str);
+                return false;
             }
+            boolean untrip = Boolean.parseBoolean(tripInfo[1]);
+            stopBladeRunnerAtCheckpoint(tripZone, untrip);
+            return true;
         }
         return false;
     }
@@ -210,25 +215,20 @@ public class MappingState implements SystemStateInterface {
 
     // Grabs all unmapped blade runners, and also blade runners that have collided
     private List<BladeRunnerClient> grabBladeRunners() {
-        try {
-            List<BladeRunnerClient> grabbedBladeRunners = db.getBladeRunnerClients();
-            if (grabbedBladeRunners != null) {
-                for (org.example.client.BladeRunnerClient BladeRunnerClient : grabbedBladeRunners) {
-                    // returns true if the blade runner has had a collision
-                    if (BladeRunnerClient.collision(false, null)) {
-                        bladeRunnersToMap.addFirst(BladeRunnerClient);
-                    }
-                    // returns true if the blade runner is unmapped
-                    else if (BladeRunnerClient.isUnmapped()) {
-                        bladeRunnersToMap.add(BladeRunnerClient);
-                    }
+        List<BladeRunnerClient> grabbedBladeRunners = db.getBladeRunnerClients();
+        if (!grabbedBladeRunners.isEmpty()) {
+            for (org.example.client.BladeRunnerClient BladeRunnerClient : grabbedBladeRunners) {
+                // returns true if the blade runner has had a collision
+                if (BladeRunnerClient.collision(false, null)) {
+                    bladeRunnersToMap.addFirst(BladeRunnerClient);
                 }
-                return grabbedBladeRunners;
+                // returns true if the blade runner is unmapped
+                else if (BladeRunnerClient.isUnmapped()) {
+                    bladeRunnersToMap.add(BladeRunnerClient);
+                }
             }
-        } catch (Exception e) {
-            logger.log(Level.SEVERE, "Failed to move BladeRunners");
         }
-        return new ArrayList<>();
+        return grabbedBladeRunners;
     }
 
     public static void addTrip(int trip, boolean untrip) {

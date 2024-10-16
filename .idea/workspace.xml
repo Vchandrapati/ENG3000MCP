@@ -8,10 +8,16 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.log" beforeDir="false" afterPath="$PROJECT_DIR$/app.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Database.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Processor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Processor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/client/ReasonEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/client/ReasonEnum.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/messages/MessageSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/messages/MessageSender.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/messages/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/messages/Server.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/state/EmergencyState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/state/EmergencyState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/state/MappingState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/state/MappingState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/state/RunningState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/state/RunningState.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/state/SystemStateManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/state/SystemStateManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/state/WaitingState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/state/WaitingState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/visualiser/CommandHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/visualiser/CommandHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/systemManagerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/systemManagerTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -51,7 +57,7 @@
   &quot;isMigrated&quot;: true
 }</component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="ProjectErrors" />
+    <option name="selectedTabId" value="DEPENDENCY_CHECKER_PROBLEMS_TAB" />
   </component>
   <component name="ProjectCodeStyleSettingsMigration">
     <option name="version" value="2" />
@@ -68,9 +74,24 @@
   "keyToString": {
     "Application.Unnamed.executor": "Run",
     "JUnit.ServerTest.testSystemStateManagerOnHighThroughput.executor": "Debug",
-    "JUnit.systemManagerTest.executor": "Run",
+    "JUnit.systemManagerTest.executor": "Coverage",
+    "JUnit.systemManagerTest.mapping.executor": "Run",
+    "JUnit.systemManagerTest.mapping1.executor": "Run",
+    "JUnit.systemManagerTest.mapping2.executor": "Debug",
+    "JUnit.systemManagerTest.mapping3.executor": "Debug",
+    "JUnit.systemManagerTest.runningOperation.executor": "Coverage",
     "JUnit.systemManagerTest.sysManagerAddUnresponsive.executor": "Run",
     "JUnit.systemManagerTest.sysManagerAddUnresponsive0.executor": "Run",
+    "JUnit.systemManagerTest.sysManagerAddUnresponsiveInEmergency.executor": "Run",
+    "JUnit.systemManagerTest.sysManagerAddUnresponsiveInMapping.executor": "Run",
+    "JUnit.systemManagerTest.sysManagerAddUnresponsiveInRunning.executor": "Run",
+    "JUnit.systemManagerTest.sysManagerAddUnresponsiveInWaiting.executor": "Run",
+    "JUnit.systemManagerTest.sysManagerNeedstrip.executor": "Run",
+    "JUnit.systemManagerTest.sysManagerRun.executor": "Run",
+    "JUnit.systemManagerTest.sysManagersetState.executor": "Run",
+    "JUnit.systemManagerTest.waitingOperation.executor": "Run",
+    "JUnit.systemManagerTest.waitingOperation2.executor": "Run",
+    "JUnit.systemManagerTest.waitingOperation3.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
@@ -95,30 +116,10 @@
       <recent name="D:\Programming\Java\ENG3000MCP\src\main\java\org\example\messages" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.systemManagerTest">
+  <component name="RunManager" selected="JUnit.systemManagerTest.mapping3">
     <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.App" />
       <module name="ENG3000MCP2.0" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ServerTest.testSendMessageToClientWithException" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="ENG3000MCP2.0" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="ServerTest" />
-      <option name="METHOD_NAME" value="testSendMessageToClientWithException" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ServerTest.testSystemStateManagerOnHighThroughput" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="ENG3000MCP2.0" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="ServerTest" />
-      <option name="METHOD_NAME" value="testSystemStateManagerOnHighThroughput" />
-      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -132,21 +133,41 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="systemManagerTest.sysManagerAddUnresponsive" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="systemManagerTest.mapping" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="ENG3000MCP2.0" />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="systemManagerTest" />
-      <option name="METHOD_NAME" value="sysManagerAddUnresponsive" />
+      <option name="METHOD_NAME" value="mapping" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="systemManagerTest.sysManagerAddUnresponsive0" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="systemManagerTest.mapping1" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="ENG3000MCP2.0" />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="systemManagerTest" />
-      <option name="METHOD_NAME" value="sysManagerAddUnresponsive0" />
+      <option name="METHOD_NAME" value="mapping1" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="systemManagerTest.mapping2" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ENG3000MCP2.0" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="systemManagerTest" />
+      <option name="METHOD_NAME" value="mapping2" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="systemManagerTest.mapping3" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ENG3000MCP2.0" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="systemManagerTest" />
+      <option name="METHOD_NAME" value="mapping3" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -154,11 +175,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.systemManagerTest.mapping3" />
         <item itemvalue="JUnit.systemManagerTest" />
-        <item itemvalue="JUnit.systemManagerTest.sysManagerAddUnresponsive0" />
-        <item itemvalue="JUnit.systemManagerTest.sysManagerAddUnresponsive" />
-        <item itemvalue="JUnit.ServerTest.testSystemStateManagerOnHighThroughput" />
-        <item itemvalue="JUnit.ServerTest.testSendMessageToClientWithException" />
+        <item itemvalue="JUnit.systemManagerTest.mapping" />
+        <item itemvalue="JUnit.systemManagerTest.mapping2" />
+        <item itemvalue="JUnit.systemManagerTest.mapping1" />
       </list>
     </recent_temporary>
   </component>
@@ -202,7 +223,8 @@
       <workItem from="1728631997087" duration="1413000" />
       <workItem from="1728702329898" duration="652000" />
       <workItem from="1728906571524" duration="3099000" />
-      <workItem from="1728965954232" duration="8283000" />
+      <workItem from="1728965954232" duration="26939000" />
+      <workItem from="1729001809994" duration="3266000" />
     </task>
     <task id="LOCAL-00001" summary="Made some changes to comply with sonarlint">
       <option name="closed" value="true" />
@@ -466,10 +488,36 @@
     <option name="LAST_COMMIT_MESSAGE" value="Added tests" />
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/systemManagerTest.java</url>
+          <line>670</line>
+          <option name="timeStamp" value="75" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/systemManagerTest.java</url>
+          <line>810</line>
+          <option name="timeStamp" value="77" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/systemManagerTest.java</url>
+          <line>795</line>
+          <option name="timeStamp" value="78" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
         <PinnedItemInfo parentTag="java.util.Optional" memberName="value" />
       </pinned-members>
     </pin-to-top-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/MCP$systemManagerTest_waitingOperation.ic" NAME="systemManagerTest.waitingOperation Coverage Results" MODIFIED="1728990356086" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+    <SUITE FILE_PATH="coverage/MCP$systemManagerTest_mapping.ic" NAME="systemManagerTest.mapping Coverage Results" MODIFIED="1728997111756" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+    <SUITE FILE_PATH="coverage/MCP$systemManagerTest_sysManagerAddUnresponsiveInWaiting.ic" NAME="systemManagerTest.sysManagerAddUnresponsiveInWaiting Coverage Results" MODIFIED="1728985069627" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+    <SUITE FILE_PATH="coverage/MCP$systemManagerTest_runningOperation.ic" NAME="systemManagerTest.runningOperation Coverage Results" MODIFIED="1728995955365" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+    <SUITE FILE_PATH="coverage/MCP$systemManagerTest.ic" NAME="systemManagerTest Coverage Results" MODIFIED="1729004557395" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
   </component>
 </project>

@@ -16,6 +16,8 @@ import java.util.logging.Logger;
 public class Database {
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
+
+    //TODO
     //REMOVE AFTER FROM TESTING
     private static Database instance;
 

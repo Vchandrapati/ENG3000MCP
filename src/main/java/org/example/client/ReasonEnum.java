@@ -10,5 +10,5 @@ public enum ReasonEnum {
     CLIENTERR, // if the client reports an error
     WRONGMESSAGE, // if the client sends the wrong message
     MAPTIMEOUT, // blade runner failed to map in time
-    TODISCONNECT, //if the client is to disconnect, (given by the command handler)
+    DISCONNECT, //if the client is to disconnect, (given by the command handler)
 }

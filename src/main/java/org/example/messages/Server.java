@@ -27,7 +27,6 @@ public class Server implements Runnable {
 
     private static final int BUFFER_SIZE = 1024;
 
-    private static final int MAX_THROUGHPUT = 50;
     private static final BlockingQueue<DatagramPacket> mailbox = new LinkedBlockingQueue<>();
     private final AtomicBoolean serverRunning;
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
@@ -36,7 +35,9 @@ public class Server implements Runnable {
     private DatagramSocket serverSocket;
 
 
-    private Server() {
+    //TODO
+
+    public Server() {
         serverRunning = new AtomicBoolean(true);
         try {
             serverSocket = new DatagramSocket(PORT);

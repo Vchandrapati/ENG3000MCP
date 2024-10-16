@@ -13,6 +13,14 @@ import java.util.ArrayList;
 
 public class EmergencyState implements SystemStateInterface {
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+    // private static final Database db = Database.getInstance();
+    //TODO
+    private static Database db = Database.getInstance();
+
+    public static void injectDatabase(Database dbA) {
+        db = dbA;
+    }
+
 
     // All time units in milliseconds
     private static final long EMERGENCY_TIMEOUT = 300000; // 5 minutes
@@ -24,7 +32,6 @@ public class EmergencyState implements SystemStateInterface {
 
     // the time when counter started
     private long timeOnStart;
-    private final Database db = Database.getInstance();
     private long timeOnStop;
     private boolean disconnection = false;
     private boolean disconnectOnce = false;
@@ -148,7 +155,7 @@ public class EmergencyState implements SystemStateInterface {
                 // wait for human override
                 break;
             }
-            case ReasonEnum.TODISCONNECT: {
+            case ReasonEnum.DISCONNECT: {
                 disconnection = true;
                 break;
             }

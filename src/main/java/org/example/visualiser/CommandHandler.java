@@ -117,7 +117,7 @@ public class CommandHandler implements Runnable {
         String[] array = input.split(" ");
         if (array.length == 2 && array[0].equals("disconnect")
                 && Database.getInstance().getClient(array[1], AbstractClient.class).isPresent()) {
-            systemStateManager.addUnresponsiveClient(array[1], ReasonEnum.TODISCONNECT);
+            systemStateManager.addUnresponsiveClient(array[1], ReasonEnum.DISCONNECT);
         } else {
             throw new InvalidCommandException("Invalid command");
         }

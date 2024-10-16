@@ -1,6 +1,7 @@
 package org.example.messages;
 
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
 
 public class MessageSender {
     private final Server server;
