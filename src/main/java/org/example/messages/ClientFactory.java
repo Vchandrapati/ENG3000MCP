@@ -35,19 +35,19 @@ public class ClientFactory {
             switch (receiveMessage.clientType) {
                 case "CCP":
                     client = new BladeRunnerClient(receiveMessage.clientID, messageGenerator,
-                            messageSender);
+                            messageSender, receiveMessage.sequenceNumber);
                     break;
                 case "CPC": {
                     Integer zone = locations.get(address.toString() + port);
-                    System.out.println(address.toString());
+                    System.out.println(address.toString() + " Look");
                     client = new CheckpointClient(receiveMessage.clientID, messageGenerator,
-                            messageSender, zone);
+                            messageSender, zone, receiveMessage.sequenceNumber);
                     break;
                 }
                 case "STC": {
                     Integer zone = locations.get(address.toString() + port);
                     client = new StationClient(receiveMessage.clientID, messageGenerator,
-                            messageSender, zone);
+                            messageSender, zone, receiveMessage.sequenceNumber);
                     break;
                 }
                 default:

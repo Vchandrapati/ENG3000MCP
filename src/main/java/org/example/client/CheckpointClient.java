@@ -7,9 +7,9 @@ import org.example.messages.MessageSender;
 public class CheckpointClient extends AbstractClient<MessageEnums.CPCStatus, CPCAction> {
     private final int location;
 
-    public CheckpointClient (String id, MessageGenerator messageGenerator,
-                             MessageSender messageSender, int location) {
-        super(id, messageGenerator, messageSender);
+    public CheckpointClient(String id, MessageGenerator messageGenerator,
+            MessageSender messageSender, int location, int sequenceNumber) {
+        super(id, messageGenerator, messageSender, sequenceNumber);
         this.updateStatus(MessageEnums.CPCStatus.OFF);
         this.location = location;
         this.type = "CPC";

@@ -85,11 +85,16 @@ public class MessageHandler {
                     statHandler.handleStatMessage(client, receiveMessage);
                     break;
                 case "AKEX":
+                    client.expectingAKEXBy(receiveMessage.sequenceNumber);
                     break;
                 default:
                     logger.log(Level.SEVERE, "Failed to handle checkpoint message: {0}",
                             receiveMessage);
                     break;
+            }
+
+            if (client.isMissedAKEX(receiveMessage.sequenceNumber)) {
+                // Has missed the AKEX timing
             }
         }, () -> {
             // Client is not present
@@ -116,10 +121,15 @@ public class MessageHandler {
 
                     break;
                 case "AKEX":
+                    client.expectingAKEXBy(receiveMessage.sequenceNumber);
                     break;
                 default:
                     logger.log(Level.WARNING, "Unknown CCP message: {0}", receiveMessage.message);
                     break;
+            }
+
+            if (client.isMissedAKEX(receiveMessage.sequenceNumber)) {
+                // Has missed the AKEX timing
             }
         }, () -> {
             // Client is not present
@@ -143,6 +153,7 @@ public class MessageHandler {
                     statHandler.handleStatMessage(client, receiveMessage);
                     break;
                 case "AKEX":
+                    client.expectingAKEXBy(receiveMessage.sequenceNumber);
                     break;
                 case "TRIP":
                     switch (MessageEnums.STCStatus.valueOf(receiveMessage.status)) {
@@ -170,6 +181,9 @@ public class MessageHandler {
                     logger.log(Level.WARNING, "Unknown station message: {0}",
                             receiveMessage.message);
                     break;
+            }
+            if (client.isMissedAKEX(receiveMessage.sequenceNumber)) {
+                // Has missed the AKEX timing
             }
         }, () -> {
             // Client is not present

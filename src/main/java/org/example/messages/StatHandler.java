@@ -41,7 +41,7 @@ public class StatHandler {
                     client.nowExpectingStat();
                     checkIfClientIsUnresponsive(client);
                 }
-                       }
+            }
         }, 0, STAT_INTERVAL_SECONDS, TimeUnit.MILLISECONDS);
     }
 
@@ -56,12 +56,10 @@ public class StatHandler {
 
 
         A lastAction = client.getLastActionSent();
-        S expectedStatus = null;
         MessageEnums.CCPStatus alternateStatus = null;
         boolean altPath = false;
 
         if (lastAction != null) {
-            expectedStatus = lastAction.getStatus();
 
             if (receiveMessage.clientType.equals("CCP")
                     && (lastAction.equals(MessageEnums.CCPAction.FSLOWC)
@@ -94,7 +92,7 @@ public class StatHandler {
             }
 
             String clientLastExec = "";
-            if(client.getLastActionSent() != null){
+            if (client.getLastActionSent() != null) {
                 clientLastExec = client.getLastActionSent().toString();
             }
 
@@ -105,12 +103,13 @@ public class StatHandler {
                 altPath = true;
             }
 
-            if (!altPath && expectedStatus != null && !expectedStatus.equals(recievedStatus) && !client.isExpectingStat()) {
-                // If client is not in expected state then there is a problem
-                systemStateManager.addUnresponsiveClient(client.getId(), ReasonEnum.WRONGSTATUS);
-                logger.log(Level.SEVERE, "Client {0} did not update status to {1} from {2}",
-                        new Object[] {client.getId(), expectedStatus, receiveMessage.status});
-            }
+            // if (!altPath && expectedStatus != null && !expectedStatus.equals(recievedStatus)
+            // && !client.isExpectingStat()) {
+            // // If client is not in expected state then there is a problem
+            // systemStateManager.addUnresponsiveClient(client.getId(), ReasonEnum.WRONGSTATUS);
+            // logger.log(Level.SEVERE, "Client {0} did not update status to {1} from {2}",
+            // new Object[] {client.getId(), expectedStatus, receiveMessage.status});
+            // }
 
             // If the current stat message sequence number is the highest then the stats
             // missed should = 0

@@ -19,6 +19,7 @@ public class App {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
+            Database.coom();
             screen = new VisualiserScreen();
             screen.setVisible(true);
             startMCP();
@@ -29,7 +30,7 @@ public class App {
         new Thread(() -> {
             systemStateManager = SystemStateManager.getInstance();
             clientCreator = ClientFactory.getInstance();
-            clientCreator.readFromFile("locations.txt");
+            clientCreator.readFromFile("src\\main\\java\\org\\example\\messages\\locations.txt");
             server = Server.getInstance();
             statReq = new StatHandler();
             statReq.startStatusScheduler();

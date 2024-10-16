@@ -16,11 +16,11 @@ import java.util.logging.Logger;
 public class Database {
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
-    //REMOVE AFTER FROM TESTING
+    // REMOVE AFTER FROM TESTING
     private static Database instance;
 
-    //REMOVE AFTER FROM TESTING
-     public static synchronized Database getInstanceTest() {
+    // REMOVE AFTER FROM TESTING
+    public static synchronized Database getInstanceTest() {
         if (instance == null) {
             instance = new Database();
         }
@@ -40,6 +40,8 @@ public class Database {
     private final AtomicInteger numberOfCheckpoints;
     private final AtomicInteger numberOfStations;
 
+    private final ConcurrentHashMap<Integer, String> isStationMap;
+
     public Database() {
         clients = new ConcurrentHashMap<>();
         bladeRunnerBlockMap = new ConcurrentHashMap<>();
@@ -49,6 +51,8 @@ public class Database {
 
         numberOfCheckpoints = new AtomicInteger(0);
         numberOfStations = new AtomicInteger(0);
+
+        isStationMap = new ConcurrentHashMap<>();
     }
 
     /**
@@ -66,6 +70,21 @@ public class Database {
     private static class Holder {
         private static final Database INSTANCE = new Database();
     }
+
+    public Optional<StationClient> getStationIfExist(int zone) {
+
+        String sc = isStationMap.get(zone);
+        if (sc == null) {
+            return Optional.of(null);
+        }
+        return Optional.of(StationClient.class.cast(clients.get(sc)));
+    }
+
+    private void addStationsToMap(int zone, String id) {
+        isStationMap.put(zone, id);
+    }
+
+
 
     // Add any client with this method
     public void addClient(String id, AbstractClient client) {
@@ -94,6 +113,8 @@ public class Database {
 
         if (client instanceof StationClient) {
             numberOfStations.getAndIncrement();
+            StationClient sc = StationClient.class.cast(client);
+            addStationsToMap(sc.getLocation(), id);
         }
     }
 
@@ -140,6 +161,10 @@ public class Database {
         allBladeRunners.remove(id);
         unresponsiveClients.remove(id);
         clients.remove(id);
+    }
+
+    public static void coom() {
+        System.out.println("coom");
     }
 
     public void removeReason(String id, ReasonEnum reason) {

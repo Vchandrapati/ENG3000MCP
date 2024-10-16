@@ -12,6 +12,7 @@ import org.example.state.SystemState;
 import org.example.state.SystemStateManager;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
@@ -36,6 +37,7 @@ import java.util.logging.Level;
 import java.util.*;
 import static org.junit.Assert.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.*;
@@ -742,8 +744,62 @@ class StatHandlerTest {
         verify(l, times(1)).log(eq(Level.INFO), isA(String.class), isA(Object.class));
         PowerMockito.verifyStatic(Processor.class, never());
         Processor.bladeRunnerStopped("BR01");
+    }
 
+    @Test
+    public void Times100test() {
 
+        Integer scale = 100;
+        ReceiveMessage r1 = new ReceiveMessage();
+        r1.clientType = "CCP";
+        r1.clientID = "BR01";
+        r1.message = "STAT";
+        r1.sequenceNumber = 4;
+        r1.status = "FFASTC";
+
+        ReceiveMessage r2 = new ReceiveMessage();
+        r2.clientType = "CCP";
+        r2.clientID = "BR01";
+        r2.message = "STAT";
+        r2.sequenceNumber = 5;
+        r2.status = "FFASTC";
+
+        BladeRunnerClient br = mock(BladeRunnerClient.class);
+
+        for (int i = 0; i < scale; i++) {
+            when(br.getLastActionSent()).thenReturn(MessageEnums.CCPAction.FSLOWC);
+            when(br.isExpectingStat()).thenReturn(true);
+            when(br.getLatestStatusMessageCount()).thenReturn(3);
+            when(sm.getState()).thenReturn(SystemState.RUNNING);
+            when(br.getId()).thenReturn("BR01");
+            when(br.getStatus()).thenReturn(MessageEnums.CCPStatus.FSLOWC); // This does not matter
+
+            sh.handleStatMessage(br, r1);
+
+            when(br.getLastActionSent()).thenReturn(MessageEnums.CCPAction.FSLOWC);
+            when(br.isExpectingStat()).thenReturn(false);
+            when(br.getLatestStatusMessageCount()).thenReturn(4);
+            when(sm.getState()).thenReturn(SystemState.RUNNING);
+            when(br.getId()).thenReturn("BR01");
+            when(br.getStatus()).thenReturn(MessageEnums.CCPStatus.FSLOWC); // This does not matter
+
+            sh.handleStatMessage(br, r2);
+        }
+
+        verify(br, times(1 * scale)).sendAcknowledgeMessage(any(MessageEnums.AKType.class));
+        verify(sm, never()).addUnresponsiveClient(any(String.class), any(ReasonEnum.class));
+
+        verify(br, times(1 * scale)).updateLatestStatusMessageCount(eq(4));
+        verify(br, times(1 * scale)).updateLatestStatusMessageCount(eq(5));
+        verify(br, times(2 * scale)).resetMissedStats();
+
+        verify(br, times(2 * scale)).noLongerExpectingStat();
+        verify(br, times(2 * scale)).updateStatus(eq(MessageEnums.CCPStatus.FFASTC));
+
+        verify(l, times(2 * scale)).log(eq(Level.INFO), isA(String.class), isA(Object.class));
+
+        PowerMockito.verifyStatic(Processor.class, never());
+        Processor.bladeRunnerStopped("BR01");
     }
 
 
