@@ -93,7 +93,10 @@ public class StatHandler {
                 altPath = true;
             }
 
-            String clientLastExec = client.getLastActionSent().toString();
+            String clientLastExec = "";
+            if(client.getLastActionSent() != null){
+                clientLastExec = client.getLastActionSent().toString();
+            }
 
             // For DOOR stat response when no response needed
             if (!altPath
