@@ -111,7 +111,7 @@ public class MappingState implements SystemStateInterface {
         if (retryAttemps == 0
                 || System.currentTimeMillis() - currentBladeRunnerStartTime > (retryAttemps + 1)
                         * BLADE_RUNNER_MAPPING_RETRY_TIMEOUT) {
-            sendBladeRunnerToNextCheckpoint(retryAttemps != 0);
+            sendBladeRunnerToNextCheckpoint(retryAttemps == 0);
             retryAttemps++;
         }
 
@@ -133,6 +133,7 @@ public class MappingState implements SystemStateInterface {
             int tripZone = Integer.parseInt(tripInfo[0]);
             if (currentTrip == -1 && !untrip) {
                 currentTrip = tripZone;
+                stopBladeRunnerAtCheckpoint(tripZone, untrip);
             } else if (currentTrip == tripZone && untrip) {
                 stopBladeRunnerAtCheckpoint(tripZone, untrip);
                 currentTrip = -1;
@@ -151,6 +152,7 @@ public class MappingState implements SystemStateInterface {
         if (!hasSent) {
             currentBladeRunnerStartTime = System.currentTimeMillis();
         }
+
         String retryString = (retry) ? "retry" : "";
         logger.log(Level.INFO, "{0} moving {1}",
                 new Object[] {retryString, currentBladeRunner.getId()});
@@ -181,7 +183,6 @@ public class MappingState implements SystemStateInterface {
             currentBladeRunner.sendExecuteMessage(MessageEnums.CCPAction.FSLOWC);
         } else {
             // if a untrip, then send stop
-            currentTrip = -1;
             currentBladeRunner.sendExecuteMessage(MessageEnums.CCPAction.STOPC);
             logger.log(Level.INFO, "BladeRunner {0} mapped to zone {1}",
                     new Object[] {currentBladeRunner.getId(), zone});
