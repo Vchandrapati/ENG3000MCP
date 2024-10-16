@@ -346,6 +346,7 @@ class systemManagerTest {
         instanceFieldSM.set(null, null);
         sm = SystemStateManager.getInstance();
     }
+    
 
     @Test
     void sysManagersetState() throws Exception {
