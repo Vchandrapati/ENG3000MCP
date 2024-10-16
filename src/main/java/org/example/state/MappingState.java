@@ -128,20 +128,19 @@ public class MappingState implements SystemStateInterface {
     private boolean processTrip() throws InterruptedException {
         if (!tripQueue.isEmpty()) {
             String[] tripInfo = tripQueue.take().split(",");
-            if (tripInfo.length == 2) {
-                int tripZone = Integer.parseInt(tripInfo[0]);
-                if (currentTrip == -1 || currentTrip == tripZone) {
-                    currentTrip = tripZone;
-                    boolean untrip = Boolean.parseBoolean(tripInfo[1]);
-                    stopBladeRunnerAtCheckpoint(tripZone, untrip);
-                    return true;
-                } else {
-                    String str = (tripZone == 10) ? "CP10" : "CP" + tripZone;
-                    SystemStateManager.getInstance().addUnresponsiveClient(str,
-                            ReasonEnum.INCORTRIP);
-                    logger.log(Level.WARNING, "Checkpoint : {0} has had inconsistent trip", str);
-                    return false;
-                }
+            boolean untrip = Boolean.parseBoolean(tripInfo[1]);
+            int tripZone = Integer.parseInt(tripInfo[0]);
+            if (currentTrip == -1 && !untrip) {
+                currentTrip = tripZone;
+            } else if (currentTrip == tripZone && untrip) {
+                stopBladeRunnerAtCheckpoint(tripZone, untrip);
+                currentTrip = -1;
+                return true;
+            } else {
+                String str = (tripZone == 10) ? "CP10" : "CP" + tripZone;
+                SystemStateManager.getInstance().addUnresponsiveClient(str, ReasonEnum.INCORTRIP);
+                logger.log(Level.WARNING, "Checkpoint : {0} has had inconsistent trip", str);
+                return false;
             }
         }
         return false;
