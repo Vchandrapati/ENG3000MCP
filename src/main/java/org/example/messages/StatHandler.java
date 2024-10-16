@@ -41,7 +41,7 @@ public class StatHandler {
                     client.nowExpectingStat();
                     checkIfClientIsUnresponsive(client);
                 }
-            }
+                       }
         }, 0, STAT_INTERVAL_SECONDS, TimeUnit.MILLISECONDS);
     }
 
