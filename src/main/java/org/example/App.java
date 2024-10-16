@@ -29,7 +29,7 @@ public class App {
         new Thread(() -> {
             systemStateManager = SystemStateManager.getInstance();
             clientCreator = ClientFactory.getInstance();
-            clientCreator.readFromFile("src/main/java/org/example/messages/locations.txt");
+            clientCreator.readFromFile("locations.txt");
             server = Server.getInstance();
             statReq = new StatHandler();
             statReq.startStatusScheduler();
