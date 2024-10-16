@@ -132,6 +132,9 @@ public class MappingState implements SystemStateInterface {
                 int tripZone = Integer.parseInt(tripInfo[0]);
                 if (currentTrip == -1 || currentTrip == tripZone) {
                     currentTrip = tripZone;
+                    boolean untrip = Boolean.parseBoolean(tripInfo[1]);
+                    stopBladeRunnerAtCheckpoint(tripZone, untrip);
+                    return true;
                 } else {
                     String str = (tripZone == 10) ? "CP10" : "CP" + tripZone;
                     SystemStateManager.getInstance().addUnresponsiveClient(str,
@@ -139,9 +142,6 @@ public class MappingState implements SystemStateInterface {
                     logger.log(Level.WARNING, "Checkpoint : {0} has had inconsistent trip", str);
                     return false;
                 }
-                boolean untrip = Boolean.parseBoolean(tripInfo[1]);
-                stopBladeRunnerAtCheckpoint(tripZone, untrip);
-                return true;
             }
         }
         return false;
