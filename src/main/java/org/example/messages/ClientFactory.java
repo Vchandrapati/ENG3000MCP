@@ -39,8 +39,7 @@ public class ClientFactory {
                     break;
                 case "CPC": {
                     Integer zone = locations.get(address.toString() + port);
-
-                    System.out.println(zone + "here");
+                    System.out.println(address.toString());
                     client = new CheckpointClient(receiveMessage.clientID, messageGenerator,
                             messageSender, zone);
                     break;

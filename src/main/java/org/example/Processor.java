@@ -21,13 +21,8 @@ public class Processor {
     private static int totalBlocks;
     private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
-    public Processor(Database db, SystemStateManager systemStateManager) {
-        this.db = db;
-        this.systemStateManager = systemStateManager;
-    }
-
     public static void checkpointTripped(int checkpointTripped, boolean untrip) {
-        //SystemStateManager systemStateManager = SystemStateManager.getInstance();
+        SystemStateManager systemStateManager = SystemStateManager.getInstance();
         totalBlocks = db.getBlockCount();
 
         if (!isNextBlockValid(checkpointTripped)) {
