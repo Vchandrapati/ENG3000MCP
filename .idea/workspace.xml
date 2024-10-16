@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1d9b5952-4092-4fc7-8340-7dd220ada861" name="Changes" comment="Added tests">
+    <list default="true" id="1d9b5952-4092-4fc7-8340-7dd220ada861" name="Changes" comment="Jar">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/messages/StatHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/messages/StatHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/MessageHandlerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/MessageHandlerTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -210,7 +208,7 @@
       <workItem from="1728906571524" duration="5134000" />
       <workItem from="1728984405168" duration="8320000" />
       <workItem from="1729003123160" duration="2831000" />
-      <workItem from="1729042326804" duration="884000" />
+      <workItem from="1729042326804" duration="1333000" />
     </task>
     <task id="LOCAL-00001" summary="Made some changes to comply with sonarlint">
       <option name="closed" value="true" />
@@ -444,7 +442,15 @@
       <option name="project" value="LOCAL" />
       <updated>1728912684623</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="Jar">
+      <option name="closed" value="true" />
+      <created>1729056879138</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1729056879138</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -479,14 +485,15 @@
     <MESSAGE value="refactored processor and fixed up some bugs" />
     <MESSAGE value="Moved subsystems into packages and seperated client" />
     <MESSAGE value="Added tests" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added tests" />
+    <MESSAGE value="Jar" />
+    <option name="LAST_COMMIT_MESSAGE" value="Jar" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/org/example/messages/MessageHandler.java</url>
-          <line>61</line>
+          <line>60</line>
           <option name="timeStamp" value="14" />
         </line-breakpoint>
       </breakpoints>
