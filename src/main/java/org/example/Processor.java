@@ -138,6 +138,7 @@ public class Processor {
         if (!isCheckpointStation(checkpointTripped)
                 && reversingBladeRunner.getStatus() == MessageEnums.CCPStatus.RSLOWC) {
             // train was reversing randomly
+            logger.log(Level.WARNING, "blade Runner reversing when it shouldn't");
             reversingBladeRunner.sendExecuteMessage(MessageEnums.CCPAction.FFASTC);
             reversingBladeRunner.updateStatus(MessageEnums.CCPStatus.FFASTC);
             return;

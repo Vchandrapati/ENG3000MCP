@@ -5,6 +5,9 @@ import org.junit.jupiter.api.*;
 import org.mockito.ArgumentCaptor;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
+
+import javassist.bytecode.Opcode;
+
 import java.util.Optional;
 import java.util.logging.*;
 
@@ -262,6 +265,23 @@ class ProcessorTest {
         processor.handleTrip(3, 2, true);
 
         verify(br).sendExecuteMessage(MessageEnums.CCPAction.STOPC);
+    }
+
+
+
+
+    // reverse Trip
+
+    @Test
+    void testReverseTripBadReverse(){
+        StationClient sc = mock(StationClient.class);
+        BladeRunnerClient br = mock(BladeRunnerClient.class);
+
+        when(mockDb.getStationIfExist(3)).thenReturn(Optional.empty());
+        when(br.getStatus()).thenReturn(MessageEnums.CCPStatus.RSLOWC);
+
+        verify(br).sendExecuteMessage(MessageEnums.CCPAction.FFASTC);
+        
     }
 
 
