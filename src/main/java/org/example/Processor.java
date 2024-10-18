@@ -17,6 +17,12 @@ import java.util.logging.Logger;
 // [x] need to check backwards
 
 public class Processor {
+
+    public Processor(Database db, SystemStateManager systemStateManager) {
+        this.db = db;
+        this.systemStateManager = systemStateManager;
+    }
+
     private static SystemStateManager systemStateManager;
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private static Database db = Database.getInstance();
@@ -92,6 +98,7 @@ public class Processor {
 
         if (isCheckpointStation(nextCheckpoint)) {
             bladeRunner.sendExecuteMessage(MessageEnums.CCPAction.FSLOWC);
+            notifyStation(bladeRunner, db.getStationIfExist(nextCheckpoint).get());
             // give station blade runner
         }
 
@@ -155,10 +162,16 @@ public class Processor {
     }
 
     public static boolean isCheckpointStation(int checkpoint) {
-        String id = checkpoint > 9 ? "ST" + checkpoint : "ST0" + checkpoint;
-        // return db.getClient(id, StationClient.class).isPresent();
-        if (checkpoint == 2)
+            if(db.getStationIfExist(checkpoint).isEmpty()){
+                return false;
+            }
             return true;
+    }
+
+    private static boolean isSmartStation(StationClient sc){
+        if(sc.getId().contains("A")){
+            return true;
+        }
         return false;
     }
 
@@ -225,10 +238,9 @@ public class Processor {
             bladeRunner.updateStatus(MessageEnums.CCPStatus.STOPO);
 
             int stationCheckpoint = calculateNextBlock(bladeRunner.getZone(), 1);
-            Optional<StationClient> sc =
-                    db.getClient("ST0" + stationCheckpoint, StationClient.class);
+            Optional<StationClient> sc = db.getStationIfExist(stationCheckpoint);
             logger.log(Level.FINEST, "ST0{0}", stationCheckpoint);
-            if (sc.isPresent()) {
+            if (sc.isPresent() && isSmartStation(sc.get())) {
                 StationClient station = sc.get();
                 station.sendExecuteMessage(MessageEnums.STCAction.OPEN);
                 station.updateStatus(MessageEnums.STCStatus.ONOPEN);
@@ -260,9 +272,19 @@ public class Processor {
         br.updateStatus(MessageEnums.CCPStatus.FFASTC);
         station.sendExecuteMessage(MessageEnums.STCAction.CLOSE);
         station.updateStatus(MessageEnums.STCStatus.OFF);
-        System.out.println("hello");
     }
 
-    //
-    // public lastEXECResend(){STUFF}
+    private static void notifyStation(BladeRunnerClient br, StationClient sc){
+        String id = br.getId();
+        
+        //TODO
+        sc.sendMessage("Blade Runner coming", id);
+
+    }
+
+
+    public static void lastEXECResend(BladeRunnerClient br){
+         MessageEnums.CCPAction action = br.getLastActionSent();
+        br.sendExecuteMessage(action);
+    } 
 }
