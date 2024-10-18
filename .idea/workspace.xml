@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="1d9b5952-4092-4fc7-8340-7dd220ada861" name="Changes" comment="Jar">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/ProcessorTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ProcessorTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,41 +58,43 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.Unnamed.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.MessageHandlerTest.executor&quot;: &quot;Coverage&quot;,
-    &quot;JUnit.MessageHandlerTest.test_CCP_STAT_MSG.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ServerTest.testSystemStateManagerOnHighThroughput.executor&quot;: &quot;Debug&quot;,
-    &quot;JUnit.StatHandlerTest.executor&quot;: &quot;Coverage&quot;,
-    &quot;JUnit.StatHandlerTest.test_ERR.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.StatHandlerTest.test_Start_Status_1_MSG_Scheduler.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.StatHandlerTest.test_Start_Status_1_MultiClient_MSG_Scheduler.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.StatHandlerTest.test_Start_Status_3_MSG_Scheduler.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.StatHandlerTest.test_Start_Status_3_MultiClient_MSG_Scheduler.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.StatHandlerTest.test_checkIfClientIsUnresponsive_false.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.StatHandlerTest.test_checkIfClientIsUnresponsive_true.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.StatHandlerTest.test_shutdown.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;SONARLINT_PRECOMMIT_ANALYSIS&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;experimental&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Programming/Java/ENG3000MCP/src/test/java&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.sourceCode&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Unnamed.executor": "Run",
+    "JUnit.MessageHandlerTest.executor": "Coverage",
+    "JUnit.MessageHandlerTest.test_CCP_STAT_MSG.executor": "Run",
+    "JUnit.ProcessorTest.testReverseTripBRInPreviousBlock.executor": "Run",
+    "JUnit.ProcessorTest.testReverseTripBadReverse.executor": "Run",
+    "JUnit.ServerTest.testSystemStateManagerOnHighThroughput.executor": "Debug",
+    "JUnit.StatHandlerTest.executor": "Coverage",
+    "JUnit.StatHandlerTest.test_ERR.executor": "Run",
+    "JUnit.StatHandlerTest.test_Start_Status_1_MSG_Scheduler.executor": "Run",
+    "JUnit.StatHandlerTest.test_Start_Status_1_MultiClient_MSG_Scheduler.executor": "Run",
+    "JUnit.StatHandlerTest.test_Start_Status_3_MSG_Scheduler.executor": "Run",
+    "JUnit.StatHandlerTest.test_Start_Status_3_MultiClient_MSG_Scheduler.executor": "Run",
+    "JUnit.StatHandlerTest.test_checkIfClientIsUnresponsive_false.executor": "Run",
+    "JUnit.StatHandlerTest.test_checkIfClientIsUnresponsive_true.executor": "Run",
+    "JUnit.StatHandlerTest.test_shutdown.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "SONARLINT_PRECOMMIT_ANALYSIS": "true",
+    "git-widget-placeholder": "experimental",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/Programming/Java/ENG3000MCP/src/test/java",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "preferences.sourceCode",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Programming\Java\ENG3000MCP\src\test\java" />
@@ -101,7 +104,7 @@
       <recent name="D:\Programming\Java\ENG3000MCP\src\main\java\org\example\messages" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.ServerTest">
+  <component name="RunManager" selected="JUnit.ProcessorTest.testReverseTripBRInPreviousBlock">
     <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.App" />
       <module name="ENG3000MCP2.0" />
@@ -128,6 +131,26 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="ProcessorTest.testReverseTripBRInPreviousBlock" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ENG3000MCP2.0" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="ProcessorTest" />
+      <option name="METHOD_NAME" value="testReverseTripBRInPreviousBlock" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ProcessorTest.testReverseTripBadReverse" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ENG3000MCP2.0" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="ProcessorTest" />
+      <option name="METHOD_NAME" value="testReverseTripBadReverse" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="ServerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="ENG3000MCP2.0" />
       <option name="PACKAGE_NAME" value="" />
@@ -137,40 +160,21 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="StatHandlerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="ENG3000MCP2.0" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="StatHandlerTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="StatHandlerTest.test_Start_Status_3_MultiClient_MSG_Scheduler" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="ENG3000MCP2.0" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="StatHandlerTest" />
-      <option name="METHOD_NAME" value="test_Start_Status_3_MultiClient_MSG_Scheduler" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.ProcessorTest.testReverseTripBRInPreviousBlock" />
+        <item itemvalue="JUnit.ProcessorTest.testReverseTripBadReverse" />
         <item itemvalue="JUnit.ServerTest" />
         <item itemvalue="JUnit.MessageHandlerTest" />
         <item itemvalue="JUnit.MessageHandlerTest.test_CCP_STAT_MSG" />
-        <item itemvalue="JUnit.StatHandlerTest" />
-        <item itemvalue="JUnit.StatHandlerTest.test_Start_Status_3_MultiClient_MSG_Scheduler" />
       </list>
     </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.18034.62" />
-        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-IU-241.18034.62" />
+        <option value="bundled-jdk-9823dce3aa75-b114ca120d71-intellij.indexing.shared.core-IU-242.21829.142" />
+        <option value="bundled-js-predefined-d6986cc7102b-7c0b70fcd90d-JavaScript-IU-242.21829.142" />
       </set>
     </attachedChunks>
   </component>
@@ -209,6 +213,7 @@
       <workItem from="1728984405168" duration="8320000" />
       <workItem from="1729003123160" duration="2831000" />
       <workItem from="1729042326804" duration="1333000" />
+      <workItem from="1729239695836" duration="1123000" />
     </task>
     <task id="LOCAL-00001" summary="Made some changes to comply with sonarlint">
       <option name="closed" value="true" />
@@ -495,6 +500,26 @@
           <url>file://$PROJECT_DIR$/src/main/java/org/example/messages/MessageHandler.java</url>
           <line>60</line>
           <option name="timeStamp" value="14" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/Processor.java</url>
+          <line>205</line>
+          <option name="timeStamp" value="15" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/Processor.java</url>
+          <line>207</line>
+          <option name="timeStamp" value="16" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/Processor.java</url>
+          <line>208</line>
+          <option name="timeStamp" value="17" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/Processor.java</url>
+          <line>209</line>
+          <option name="timeStamp" value="18" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -280,9 +280,33 @@ class ProcessorTest {
         when(mockDb.getStationIfExist(3)).thenReturn(Optional.empty());
         when(br.getStatus()).thenReturn(MessageEnums.CCPStatus.RSLOWC);
 
+        processor.reverseTrip(br, 3, false);
+
         verify(br).sendExecuteMessage(MessageEnums.CCPAction.FFASTC);
         
     }
+
+    @Test
+    void testReverseTripBRInPreviousBlock(){ //NEED TO FIX, DOESNT WORK YET
+        StationClient sc = mock(StationClient.class);
+        CheckpointClient cc = mock(CheckpointClient.class);
+        BladeRunnerClient br = mock(BladeRunnerClient.class);
+        Optional<StationClient> sc2 = Optional.of(mock(StationClient.class));
+
+        when(mockDb.getStationIfExist(3)).thenReturn(Optional.of(sc));
+        when(br.getStatus()).thenReturn(MessageEnums.CCPStatus.FFASTC);
+        when(mockDb.getBlockCount()).thenReturn(10);
+        when(mockDb.getClient("CP03", CheckpointClient.class)).thenReturn(Optional.of(cc));
+        when(mockDb.getClient("ST03", StationClient.class)).thenReturn(Optional.of(sc));
+
+        when(mockDb.isBlockOccupied(2)).thenReturn(true);
+
+        processor.reverseTrip(br, 3, false);
+        verify(br).sendExecuteMessage(MessageEnums.CCPAction.STOPC);
+
+    }
+
+
 
 
 
