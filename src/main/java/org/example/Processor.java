@@ -271,7 +271,6 @@ public class Processor {
         bladeRunner.updateStatus(MessageEnums.CCPStatus.RSLOWC);
     }
 
-
     private void stationBuffer(BladeRunnerClient br, StationClient station) {
         br.sendExecuteMessage(MessageEnums.CCPAction.FFASTC);
         br.updateStatus(MessageEnums.CCPStatus.FFASTC);
