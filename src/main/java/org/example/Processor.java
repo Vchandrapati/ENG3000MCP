@@ -4,9 +4,11 @@ import org.example.client.BladeRunnerClient;
 import org.example.client.CheckpointClient;
 import org.example.client.MessageGenerator;
 import org.example.client.StationClient;
+import org.example.events.*;
 import org.example.messages.MessageEnums;
 import org.example.messages.MessageSender;
 import org.example.client.ReasonEnum;
+import org.example.state.SystemState;
 import org.example.state.SystemStateManager;
 
 import java.util.Optional;
@@ -17,20 +19,28 @@ import java.util.logging.Logger;
 // [x] need to check backwards
 
 public class Processor {
+    private final EventBus eventBus;
+    private final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+    private Database db = Database.getInstance();
+    private int totalBlocks;
+    private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+    private SystemState currentState;
 
-    public Processor(Database db, SystemStateManager systemStateManager) {
-        this.db = db;
-        this.systemStateManager = systemStateManager;
+    public Processor(EventBus eventBus) {
+        this.eventBus = eventBus;
+
+        eventBus.subscribe(TripEvent.class, this::checkpointTripped);
+        eventBus.subscribe(StateChangeEvent.class, this::updateState);
+        eventBus.subscribe(BladeRunnerStopEvent.class, this::bladeRunnerStopped);
     }
 
-    private static SystemStateManager systemStateManager;
-    private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-    private static Database db = Database.getInstance();
-    private static int totalBlocks;
-    private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+    private void updateState(StateChangeEvent event) {
+        currentState = event.getState();
+    }
 
-    public static void checkpointTripped(int checkpointTripped, boolean untrip) {
-        SystemStateManager systemStateManager = SystemStateManager.getInstance();
+    private void checkpointTripped(TripEvent event) {
+        int checkpointTripped = event.getLocation();
+        boolean untrip = event.isUntrip();
         totalBlocks = db.getBlockCount();
 
         if (!isNextBlockValid(checkpointTripped)) {
@@ -39,7 +49,7 @@ public class Processor {
             return;
         }
 
-        if (systemStateManager.needsTrip(checkpointTripped, untrip)) {
+        if (currentState == SystemState.WAITING || currentState == SystemState.MAPPING) {
             logger.log(Level.WARNING, "Sent to mapping state");
             return;
         }
@@ -58,7 +68,7 @@ public class Processor {
                 logger.log(Level.WARNING,
                         "Inconsistent checkpoint trip : {0} on trip boolean : {1}",
                         new Object[] {id, untrip});
-                systemStateManager.addUnresponsiveClient(id, ReasonEnum.INCORTRIP);
+                eventBus.publish(new ClientErrorEvent(id, ReasonEnum.INCORTRIP));
             } else {
                 handleTrip(checkpointTripped, previousCheckpoint, untrip);
                 logger.log(Level.FINEST, "forward reached");
@@ -69,7 +79,7 @@ public class Processor {
         }
     }
 
-    public static void handleTrip(int checkpointTripped, int previousCheckpoint, boolean untrip) {
+    private void handleTrip(int checkpointTripped, int previousCheckpoint, boolean untrip) {
         // get the blade runner of the block before the current tripped checkpoint
         Optional<BladeRunnerClient> bladeRunnerOptional = getBladeRunner(previousCheckpoint);
 
@@ -88,7 +98,7 @@ public class Processor {
                 String id = bladeRunnerOptional.get().getId();
                 logger.log(Level.WARNING, "Multiple blade runners in the same zone, includes : {0}",
                         id);
-                SystemStateManager.getInstance().addUnresponsiveClient(id, ReasonEnum.COLLISION);
+                eventBus.publish(new ClientErrorEvent(id, ReasonEnum.INCORTRIP));
             }
             return;
         }
@@ -132,7 +142,7 @@ public class Processor {
         logger.log(Level.FINEST, "succesfully exited handleTrip");
     }
 
-    public static void reverseTrip(BladeRunnerClient reversingBladeRunner, int checkpointTripped,
+    private void reverseTrip(BladeRunnerClient reversingBladeRunner, int checkpointTripped,
             boolean untrip) {
         // checks if train is reversing "legally"
         if (!isCheckpointStation(checkpointTripped)
@@ -162,23 +172,17 @@ public class Processor {
         }
     }
 
-    public static boolean isCheckpointStation(int checkpoint) {
-            if(db.getStationIfExist(checkpoint).isEmpty()){
-                return false;
-            }
-            return true;
+    private boolean isCheckpointStation(int checkpoint) {
+        return db.getStationIfExist(checkpoint).isPresent();
     }
 
-    private static boolean isSmartStation(StationClient sc){
-        if(sc.getId().contains("A")){
-            return true;
-        }
-        return false;
+    private boolean isSmartStation(StationClient sc){
+        return sc.getId().contains("A");
     }
 
 
 
-    public static Optional<BladeRunnerClient> getBladeRunner(int checkpoint) {
+    private Optional<BladeRunnerClient> getBladeRunner(int checkpoint) {
         String bladeRunnerID = db.getLastBladeRunnerInBlock(checkpoint);
 
         if (bladeRunnerID == null) {
@@ -192,7 +196,7 @@ public class Processor {
 
     // frees ONE blade runner behind the current, he will subsequently free the rest
     // by moving
-    public static void checkForTraffic(int checkpoint) {
+    private void checkForTraffic(int checkpoint) {
         // check block behind
         int blockBefore = calculateNextBlock(checkpoint, -1);
         if (db.isBlockOccupied(blockBefore)) {
@@ -202,7 +206,7 @@ public class Processor {
         }
     }
 
-    public static int calculateNextBlock(int checkpoint, int direction) {
+    private int calculateNextBlock(int checkpoint, int direction) {
         totalBlocks = db.getBlockCount();
 
         while (true) {
@@ -219,20 +223,20 @@ public class Processor {
         }
     }
 
-    public static boolean isNextBlockValid(int checkpoint) {
+    private boolean isNextBlockValid(int checkpoint) {
         String cpId = checkpoint > 9 ? "CP" + checkpoint : "CP0" + checkpoint;
         String stId = checkpoint > 9 ? "ST" + checkpoint : "ST0" + checkpoint;
         return db.getClient(cpId, CheckpointClient.class).isPresent()
                 || db.getClient(stId, StationClient.class).isPresent();
     }
 
-    private static void trainAligned() {
+    private void trainAligned() {
         // Nothing needed at the moment
     }
 
-    public static void bladeRunnerStopped(String bladeRunnerID) {
+    private void bladeRunnerStopped(BladeRunnerStopEvent event) {
         Optional<BladeRunnerClient> bladeRunnerOp =
-                db.getClient(bladeRunnerID, BladeRunnerClient.class);
+                db.getClient(event.getId(), BladeRunnerClient.class);
         if (bladeRunnerOp.isPresent()) {
             BladeRunnerClient bladeRunner = bladeRunnerOp.get();
             bladeRunner.sendExecuteMessage(MessageEnums.CCPAction.STOPO);
@@ -255,7 +259,7 @@ public class Processor {
         }
     }
 
-    public static void bladeRunnerOverShot(BladeRunnerClient bladeRunner, int bladeRunnerZone) {
+    private void bladeRunnerOverShot(BladeRunnerClient bladeRunner, int bladeRunnerZone) {
         Optional<BladeRunnerClient> br = getBladeRunner(calculateNextBlock(bladeRunnerZone, -2));
 
         if (br.isPresent()) {
@@ -268,14 +272,14 @@ public class Processor {
     }
 
 
-    private static void stationBuffer(BladeRunnerClient br, StationClient station) {
+    private void stationBuffer(BladeRunnerClient br, StationClient station) {
         br.sendExecuteMessage(MessageEnums.CCPAction.FFASTC);
         br.updateStatus(MessageEnums.CCPStatus.FFASTC);
         station.sendExecuteMessage(MessageEnums.STCAction.CLOSE);
         station.updateStatus(MessageEnums.STCStatus.OFF);
     }
 
-    private static void notifyStation(BladeRunnerClient br, StationClient sc){
+    private void notifyStation(BladeRunnerClient br, StationClient sc){
         String id = br.getId();
         
         //TODO
@@ -284,8 +288,8 @@ public class Processor {
     }
 
 
-    public static void lastEXECResend(BladeRunnerClient br){
-         MessageEnums.CCPAction action = br.getLastActionSent();
+    public void lastEXECResend(BladeRunnerClient br){
+        MessageEnums.CCPAction action = br.getLastActionSent();
         br.sendExecuteMessage(action);
     } 
 }
