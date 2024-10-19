@@ -3,13 +3,13 @@ package org.example.messages;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.*;
-import org.example.client.BladeRunnerClient;
-import org.example.client.CheckpointClient;
-import org.example.client.ReasonEnum;
-import org.example.client.StationClient;
-import org.example.state.SystemStateManager;
+import org.example.client.*;
+import org.example.events.*;
+import org.example.state.SystemState;
 
+import java.net.DatagramPacket;
 import java.net.InetAddress;
+import java.nio.charset.StandardCharsets;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,24 +17,36 @@ public class MessageHandler {
     private Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private ObjectMapper objectMapper = new ObjectMapper();
     private Database db = Database.getInstance();
-    private SystemStateManager systemStateManager = SystemStateManager.getInstance();
-    private StatHandler statHandler = new StatHandler();
-    private ClientFactory clientFactory = ClientFactory.getInstance();
+    private final EventBus eventBus;
+    private SystemState currentState;
 
-    public void handleMessage(String message, InetAddress address, int port) {
+    public MessageHandler(EventBus eventBus) {
+        this.eventBus = eventBus;
+
+        eventBus.subscribe(StateChangeEvent.class, this::updateCurrentState);
+    }
+
+    private void updateCurrentState(StateChangeEvent event) {
+        currentState = event.getState();
+    }
+
+    public void handleMessage(DatagramPacket packet) {
+        String message = new String(packet.getData(), 0, packet.getLength(),
+                StandardCharsets.UTF_8);
+
         try {
             ReceiveMessage receiveMessage = objectMapper.readValue(message, ReceiveMessage.class);
 
             // Handle based on the client type
             switch (receiveMessage.clientType) {
                 case "CCP":
-                    handleCCPMessage(receiveMessage, address, port);
+                    handleCCPMessage(receiveMessage, packet.getAddress(), packet.getPort());
                     break;
                 case "STC":
-                    handleSTCMessage(receiveMessage, address, port);
+                    handleSTCMessage(receiveMessage, packet.getAddress(), packet.getPort());
                     break;
                 case "CPC":
-                    handleCPCMessage(receiveMessage, address, port);
+                    handleCPCMessage(receiveMessage, packet.getAddress(), packet.getPort());
                     break;
                 default:
                     logger.log(Level.WARNING, "Unknown client type: {0}",
@@ -46,9 +58,7 @@ public class MessageHandler {
         } catch (Exception e) {
             logger.log(Level.SEVERE,
                     "Unexpected error handling message from {0}:{1} \nException: {2}",
-                    new Object[] {address, port, e});
-
-            e.printStackTrace();
+                    new Object[] {packet.getAddress(), packet.getPort(), e});
         }
     }
 
@@ -62,19 +72,17 @@ public class MessageHandler {
                     switch (MessageEnums.CPCStatus.valueOf(receiveMessage.status)) {
                         case MessageEnums.CPCStatus.ON:
                             client.updateStatus(MessageEnums.CPCStatus.ON);
-                            Processor.checkpointTripped(client.getLocation(), false);
+                            eventBus.publish(new TripEvent(client.getLocation(), false));
                             break;
                         case MessageEnums.CPCStatus.OFF:
                             client.updateStatus(MessageEnums.CPCStatus.OFF);
-                            Processor.checkpointTripped(client.getLocation(), true);
+                            eventBus.publish(new TripEvent(client.getLocation(), true));
                             break;
                         case MessageEnums.CPCStatus.ERR:
-                            systemStateManager.addUnresponsiveClient(client.getId(),
-                                    ReasonEnum.CLIENTERR);
+                            eventBus.publish(new ClientErrorEvent(client.getId(), ReasonEnum.CLIENTERR));
                             break;
                         default:
                             break;
-
                     }
 
                     client.sendAcknowledgeMessage(MessageEnums.AKType.AKTR);
@@ -82,7 +90,7 @@ public class MessageHandler {
                             receiveMessage.clientID);
                     break;
                 case "STAT":
-                    statHandler.handleStatMessage(client, receiveMessage);
+                    handleStatMessage(client, receiveMessage);
                     break;
                 case "AKEX":
                     client.expectingAKEXBy(receiveMessage.sequenceNumber);
@@ -99,8 +107,7 @@ public class MessageHandler {
         }, () -> {
             // Client is not present
             if ("CPIN".equals(receiveMessage.message)) {
-                handleInitialise(receiveMessage, address, port);
-
+                eventBus.publish(new ClientIntialiseEvent(receiveMessage, address, port));
                 logger.log(Level.INFO, "Received CPIN message from Checkpoint: {0}",
                         receiveMessage.clientID);
             } else {
@@ -117,8 +124,7 @@ public class MessageHandler {
             // Client is present
             switch (receiveMessage.message) {
                 case "STAT":
-                    statHandler.handleStatMessage(client, receiveMessage);
-
+                    handleStatMessage(client, receiveMessage);
                     break;
                 case "AKEX":
                     client.expectingAKEXBy(receiveMessage.sequenceNumber);
@@ -134,7 +140,7 @@ public class MessageHandler {
         }, () -> {
             // Client is not present
             if ("CCIN".equals(receiveMessage.message)) {
-                handleInitialise(receiveMessage, address, port);
+                eventBus.publish(new ClientIntialiseEvent(receiveMessage, address, port));
                 logger.log(Level.INFO, "Received CCIN message from Blade Runner: {0}",
                         receiveMessage.clientID);
             } else {
@@ -150,7 +156,7 @@ public class MessageHandler {
             // Client is present
             switch (receiveMessage.message) {
                 case "STAT":
-                    statHandler.handleStatMessage(client, receiveMessage);
+                    handleStatMessage(client, receiveMessage);
                     break;
                 case "AKEX":
                     client.expectingAKEXBy(receiveMessage.sequenceNumber);
@@ -159,15 +165,14 @@ public class MessageHandler {
                     switch (MessageEnums.STCStatus.valueOf(receiveMessage.status)) {
                         case MessageEnums.STCStatus.ON:
                             client.updateStatus(MessageEnums.STCStatus.ON);
-                            Processor.checkpointTripped(client.getLocation(), false);
+                            eventBus.publish(new TripEvent(client.getLocation(), false));
                             break;
                         case MessageEnums.STCStatus.OFF:
                             client.updateStatus(MessageEnums.STCStatus.OFF);
-                            Processor.checkpointTripped(client.getLocation(), true);
+                            eventBus.publish(new TripEvent(client.getLocation(), true));
                             break;
                         case MessageEnums.STCStatus.ERR:
-                            systemStateManager.addUnresponsiveClient(client.getId(),
-                                    ReasonEnum.CLIENTERR);
+                            eventBus.publish(new ClientErrorEvent(client.getId(), ReasonEnum.CLIENTERR));
                             break;
                         default:
                             break;
@@ -182,13 +187,10 @@ public class MessageHandler {
                             receiveMessage.message);
                     break;
             }
-            if (client.isMissedAKEX(receiveMessage.sequenceNumber)) {
-                // Has missed the AKEX timing
-            }
         }, () -> {
             // Client is not present
             if ("STIN".equals(receiveMessage.message)) {
-                handleInitialise(receiveMessage, address, port);
+                eventBus.publish(new ClientIntialiseEvent(receiveMessage, address, port));
                 logger.log(Level.INFO, "Received STIN message from Station: {0}",
                         receiveMessage.clientID);
             } else {
@@ -198,8 +200,53 @@ public class MessageHandler {
         });
     }
 
-    // I dont think anything needs to change here except location
-    private void handleInitialise(ReceiveMessage receiveMessage, InetAddress address, int port) {
-        clientFactory.handleInitialise(receiveMessage, address, port);
+    public <S extends Enum<S>, A extends Enum<A> & MessageEnums.ActionToStatus<S>> void handleStatMessage(
+            AbstractClient<S, A> client, ReceiveMessage receiveMessage) {
+
+
+        A lastAction = client.getLastActionSent();
+        MessageEnums.CCPStatus alternateStatus = null;
+
+        if (lastAction != null && receiveMessage.clientType.equals("CCP")
+                && (lastAction.equals(MessageEnums.CCPAction.FSLOWC)
+                || lastAction.equals(MessageEnums.CCPAction.RSLOWC))) {
+            alternateStatus = MessageEnums.CCPStatus.STOPC;
+        }
+
+
+        try {
+            S recievedStatus = Enum.valueOf(client.getStatus().getDeclaringClass(), receiveMessage.status);
+
+            if (!client.isExpectingStat()) {
+                client.sendAcknowledgeMessage(MessageEnums.AKType.AKST);
+            }
+
+            // If client reports ERR
+            if (recievedStatus.toString().equals("ERR")) {
+                eventBus.publish(new ClientErrorEvent(client.getId(), ReasonEnum.CLIENTERR));
+            }
+
+            // For specifically FSLOWC and RSLOWC case
+            if (recievedStatus.equals(alternateStatus) && currentState.equals(SystemState.RUNNING)) {
+                eventBus.publish(new BladeRunnerStopEvent(receiveMessage.clientID));
+            }
+
+            // If the current stat message sequence number is the highest then the stats
+            // missed should = 0
+            if (client.getLatestStatusMessageCount() < receiveMessage.sequenceNumber) {
+                client.updateLatestStatusMessageCount(receiveMessage.sequenceNumber);
+                client.resetMissedStats();
+            }
+
+
+            client.noLongerExpectingStat();
+            client.updateStatus(recievedStatus);
+        } catch (IllegalArgumentException e) {
+            // Handle case where the status in receiveMessage is invalid
+            logger.log(Level.SEVERE, "Invalid status: received {0} for client {1}",
+                    new Object[] {receiveMessage.status, client.getId()});
+        }
+
+        logger.log(Level.INFO, "Received STAT message from Client: {0}", receiveMessage.clientID);
     }
 }

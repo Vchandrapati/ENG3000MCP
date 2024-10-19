@@ -4,6 +4,9 @@ import org.example.App;
 import org.example.Database;
 import org.example.client.AbstractClient;
 import org.example.client.ReasonEnum;
+import org.example.events.ClientErrorEvent;
+import org.example.events.EventBus;
+import org.example.events.StateChangeEvent;
 import org.example.state.SystemState;
 import org.example.state.SystemStateManager;
 
@@ -19,8 +22,9 @@ import java.util.logging.Logger;
  */
 public class CommandHandler implements Runnable {
     private static final Set<String> commands;
-    private static final SystemStateManager systemStateManager = SystemStateManager.getInstance();
     private static boolean isRunning = true;
+    private SystemState currentState;
+    private EventBus eventBus;
 
     // Set of commands
     static {
@@ -36,9 +40,16 @@ public class CommandHandler implements Runnable {
     private final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private final BlockingQueue<String> commandQueue = new LinkedBlockingQueue<>();
 
-    public CommandHandler() {
+    public CommandHandler(EventBus eventBus) {
         Thread commandThread = new Thread(this, "CommandHandler-Thread");
         commandThread.start();
+        this.eventBus = eventBus;
+
+        eventBus.subscribe(StateChangeEvent.class, this::updateCurrentState);
+    }
+
+    public void updateCurrentState (StateChangeEvent event) {
+        this.currentState = event.getState();
     }
 
     // Main loop for command handler
@@ -86,20 +97,20 @@ public class CommandHandler implements Runnable {
                 App.shutdown();
                 break;
             case "start mapping":
-                if (systemStateManager.getState() == SystemState.WAITING)
-                    systemStateManager.setState(SystemState.MAPPING);
+                if (currentState == SystemState.WAITING)
+                    eventBus.publish(new StateChangeEvent(SystemState.MAPPING));
                 else
                     throw new InvalidCommandException("Not in waiting state");
                 break;
             case "override emergency":
-                if (systemStateManager.getState() == SystemState.EMERGENCY)
-                    systemStateManager.setState(SystemState.MAPPING);
+                if (currentState == SystemState.EMERGENCY)
+                    eventBus.publish(new StateChangeEvent(SystemState.MAPPING));
                 else
                     throw new InvalidCommandException("Not in emergency state");
                 break;
             case "start waiting":
-                if (systemStateManager.getState() != SystemState.WAITING)
-                    systemStateManager.setState(SystemState.WAITING);
+                if (currentState != SystemState.WAITING)
+                    eventBus.publish(new StateChangeEvent(SystemState.WAITING));
                 else
                     throw new InvalidCommandException("Already in waiting state");
                 break;
@@ -117,7 +128,7 @@ public class CommandHandler implements Runnable {
         String[] array = input.split(" ");
         if (array.length == 2 && array[0].equals("disconnect")
                 && Database.getInstance().getClient(array[1], AbstractClient.class).isPresent()) {
-            systemStateManager.addUnresponsiveClient(array[1], ReasonEnum.TODISCONNECT);
+            eventBus.publish(new ClientErrorEvent(array[1], ReasonEnum.TODISCONNECT));
         } else {
             throw new InvalidCommandException("Invalid command");
         }

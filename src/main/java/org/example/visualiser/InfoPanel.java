@@ -1,6 +1,8 @@
 package org.example.visualiser;
 
 import org.example.Database;
+import org.example.events.EventBus;
+import org.example.events.StateChangeEvent;
 import org.example.state.SystemState;
 import org.example.state.SystemStateManager;
 
@@ -21,15 +23,20 @@ public class InfoPanel extends JPanel {
     private final JLabel connectedBladeRunnersLabel;
     private final JLabel connectedCheckpointsLabel;
     private final JLabel connectedStationsLabel;
-    private final JLabel currentState;
+    private final JLabel currentStateLabel;
     private final JLabel waitingTimer;
     private final JLabel errorClientList;
     private long startTime = -1;
     private final List<JLabel> errorClients;
     private final transient Database db = Database.getInstance();
+    private final EventBus eventBus;
+    private SystemState currentState;
 
-    public InfoPanel(long startupTime) {
+    public InfoPanel(long startupTime, EventBus eventBus) {
         this.startupTime = startupTime;
+        this.eventBus = eventBus;
+
+        eventBus.subscribe(StateChangeEvent.class, this::updateState);
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -38,7 +45,7 @@ public class InfoPanel extends JPanel {
         connectedBladeRunnersLabel = new JLabel();
         connectedCheckpointsLabel = new JLabel();
         connectedStationsLabel = new JLabel();
-        currentState = new JLabel();
+        currentStateLabel = new JLabel();
         waitingTimer = new JLabel();
         errorClientList = new JLabel();
 
@@ -48,7 +55,7 @@ public class InfoPanel extends JPanel {
         connectedBladeRunnersLabel.setFont(font);
         connectedCheckpointsLabel.setFont(font);
         connectedStationsLabel.setFont(font);
-        currentState.setFont(font);
+        currentStateLabel.setFont(font);
         waitingTimer.setFont(font);
         errorClientList.setFont(font);
 
@@ -59,7 +66,7 @@ public class InfoPanel extends JPanel {
         add(connectedBladeRunnersLabel);
         add(connectedCheckpointsLabel);
         add(connectedStationsLabel);
-        add(currentState);
+        add(currentStateLabel);
         add(waitingTimer);
         add(Box.createVerticalStrut(20)); // Add space between clocks and counts
         add(errorClientList);
@@ -67,6 +74,10 @@ public class InfoPanel extends JPanel {
         startUpdater();
 
         errorClients = new ArrayList<>();
+    }
+
+    private void updateState(StateChangeEvent event) {
+        currentState = event.getState();
     }
 
     private void startUpdater() {
@@ -95,11 +106,10 @@ public class InfoPanel extends JPanel {
     }
 
     private void updateCurrentStateData(long currentTimeMillis) {
-        SystemState currState = SystemStateManager.getInstance().getState();
-        currentState.setText("Current System State: " + currState);
+        currentStateLabel.setText("Current System State: " + currentState);
 
         // Begin timer for waiting state
-        if (currState == SystemState.WAITING) {
+        if (currentState == SystemState.WAITING) {
             waitingTimer.setVisible(true);
             if (startTime == -1)
                 startTime = currentTimeMillis;
@@ -113,7 +123,7 @@ public class InfoPanel extends JPanel {
             clearErrorClientLabels();
         } else {
             waitingTimer.setVisible(false);
-            if (currState == SystemState.EMERGENCY) {
+            if (currentState == SystemState.EMERGENCY) {
                 errorClientList.setText("Following clients are experiencing an error: ");
                 Set<String> clients = db.getAllUnresponsiveClientIDs();
                 clearErrorClientLabels();

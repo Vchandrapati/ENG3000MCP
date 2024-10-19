@@ -2,6 +2,7 @@ package org.example.visualiser;
 
 import org.example.Database;
 import org.example.LoggerConfig;
+import org.example.events.EventBus;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,8 +12,9 @@ public class VisualiserScreen extends JFrame {
     private final JTextField commandInput;
     private final transient CommandHandler commandHandler;
     private final ClientsPanel clientsPanel;
+    private final EventBus eventBus;
 
-    public VisualiserScreen() {
+    public VisualiserScreen(EventBus eventBus) {
         setSize(1900, 1200);
         setTitle("Master Control Protocol");
 
@@ -21,12 +23,12 @@ public class VisualiserScreen extends JFrame {
         long startupTime = System.currentTimeMillis();
 
         trackPanel = new VisualiserPanel();
-        InfoPanel infoPanel = new InfoPanel(startupTime);
+        InfoPanel infoPanel = new InfoPanel(startupTime, eventBus);
 
         JPanel userPanel = new JPanel();
         userPanel.setLayout(new BorderLayout());
         userPanel.setPreferredSize(new Dimension(800, 300));
-
+        this.eventBus = eventBus;
 
         commandInput = new JTextField();
         Font font = new Font("Arial", Font.PLAIN, 20);
@@ -63,7 +65,7 @@ public class VisualiserScreen extends JFrame {
 
         LoggerConfig.setupLogger(logArea);
         startVisualizerUpdater();
-        commandHandler = new CommandHandler();
+        commandHandler = new CommandHandler(eventBus);
     }
 
     // Method to handle user input from the text field

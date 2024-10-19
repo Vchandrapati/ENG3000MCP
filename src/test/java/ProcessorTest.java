@@ -1,12 +1,4 @@
 import org.example.client.*;
-import org.example.messages.MessageSender;
-import org.example.state.SystemStateInterface;
-import org.junit.jupiter.api.*;
-import org.mockito.ArgumentCaptor;
-import org.mockito.MockedStatic;
-import org.mockito.Mockito;
-
-import javassist.bytecode.Opcode;
 
 import java.util.Optional;
 import java.util.logging.*;
@@ -15,8 +7,6 @@ import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 import org.example.Database;
 import org.example.Processor;
-import org.example.messages.StatHandler;
-import org.example.state.SystemState;
 import org.example.state.SystemStateManager;
 import org.example.messages.MessageEnums;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,7 +15,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.ArrayList;
 import java.util.List;
-import static org.junit.jupiter.api.Assertions.*;
 
 class ProcessorTest {
 

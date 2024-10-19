@@ -1,0 +1,84 @@
+Index: src/main/java/org/example/Processor.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package org.example;\r\n\r\nimport java.util.Optional;\r\nimport java.util.logging.Level;\r\nimport java.util.logging.Logger;\r\n\r\npublic class Processor {\r\n\r\n    private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);\r\n    private static final Database db = Database.getInstance();\r\n    private static final int HIGHEST_CHECKPOINT = 10;\r\n    private int totalBlocks = db.getCheckpointCount();\r\n\r\n    public void checkpointTripped(int checkpointTripped, boolean untrip) {\r\n        if (!SystemStateManager.getInstance().needsTrip(checkpointTripped, untrip)) {\r\n\r\n            if (!db.isBlockOccupied(calculatePreviousBlock(checkpointTripped))) {\r\n                logger.log(Level.WARNING, \"inconsistent checkpoint trip\");\r\n                String id = (checkpointTripped > 9) ? \"CH\" + checkpointTripped : \"CH0\" + checkpointTripped;\r\n                SystemStateManager.getInstance().addUnresponsiveClient(id, ReasonEnum.INCORTRIP);\r\n            } else {\r\n                if (!untrip) {\r\n                    handletrip(checkpointTripped, false);\r\n                } else {\r\n                    handletrip(checkpointTripped, true);\r\n                }\r\n            }\r\n        }\r\n    }\r\n\r\n    public void handletrip(int checkpoint, boolean untrip) {\r\n        try {\r\n            Optional<BladeRunnerClient> bladeRunner = getBladeRunner(checkpoint);\r\n\r\n            if (bladeRunner.isPresent()) {\r\n                if (untrip) {\r\n                    int checkNextBlock = calculateNextBlock(checkpoint);\r\n                    // check if next block or current block is occupied\r\n                    if (db.isBlockOccupied(checkNextBlock) || db.isBlockOccupied(checkpoint)) {\r\n                        bladeRunner.get().sendExecuteMessage(SpeedEnum.STOP);\r\n                        bladeRunner.get().updateStatus(\"STOPPED\");\r\n                    }\r\n                    db.updateBladeRunnerBlock(bladeRunner.get().getId(), checkpoint);\r\n                    bladeRunner.get().changeZone(checkpoint);\r\n                    checkForTraffic(checkpoint);\r\n                } else {\r\n                    if (db.isBlockOccupied(checkpoint)) {\r\n                        bladeRunner.get().sendExecuteMessage(SpeedEnum.STOP);\r\n                        bladeRunner.get().updateStatus(\"STOPPED\");\r\n                    }\r\n                }\r\n            } else {\r\n                logger.log(Level.SEVERE, \"Attempted to get non-existant bladerunner\");\r\n            }\r\n        } catch (Exception e) {\r\n            logger.log(Level.SEVERE, \"Unexpected error: \", e);\r\n        }\r\n    }\r\n\r\n    public Optional<BladeRunnerClient> getBladeRunner(int checkpoint) {\r\n        totalBlocks = db.getCheckpointCount();\r\n        String bladeRunnerID = checkpoint == 1 ? db.getLastBladeRunnerInBlock(totalBlocks)\r\n                : db.getLastBladeRunnerInBlock(checkpoint - 1);\r\n        Optional<BladeRunnerClient> opBladeRunner = Optional.empty();\r\n\r\n\r\n        if (db.isBlockOccupied(calculatePreviousBlock(checkpoint))) {\r\n            opBladeRunner = db.getClient(bladeRunnerID, BladeRunnerClient.class);\r\n        }\r\n        Optional<BladeRunnerClient> bladeRunner = Optional.empty();\r\n        if (opBladeRunner.isPresent()) {\r\n            bladeRunner = Optional.of(opBladeRunner.get());\r\n        }\r\n        return bladeRunner;\r\n    }\r\n\r\n    public void checkForTraffic(int block) {\r\n        // Check if block is occupied, if it is rerun handle BladeRunner speed for that\r\n        // BladeRunner\r\n        int trafficBlock = calculatePreviousBlock(block);\r\n\r\n        Optional<BladeRunnerClient> bladeRunner = getBladeRunner(trafficBlock);\r\n        ;\r\n        if (bladeRunner.isPresent()) {\r\n            bladeRunner.get().sendExecuteMessage(SpeedEnum.SLOW);\r\n            bladeRunner.get().updateStatus(\"STARTED\");\r\n        }\r\n//no traffic, do nothing\r\n\r\n    }\r\n\r\n    private int calculateNextBlock(int checkpoint) {\r\n        totalBlocks = db.getCheckpointCount();\r\n        int nextBlock = (checkpoint + 1) % totalBlocks;\r\n        if (nextBlock == 0) {\r\n            return 1;\r\n        } else {\r\n            return nextBlock;\r\n        }\r\n\r\n    }\r\n\r\n    private int calculatePreviousBlock(int checkpoint) {\r\n        totalBlocks = db.getCheckpointCount();\r\n        int previousBlock = (checkpoint - 1) % totalBlocks;\r\n        if (previousBlock == 0) {\r\n            return totalBlocks;\r\n        } else {\r\n            return previousBlock;\r\n        }\r\n    }\r\n\r\n}\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/example/Processor.java b/src/main/java/org/example/Processor.java
+--- a/src/main/java/org/example/Processor.java	
++++ b/src/main/java/org/example/Processor.java	
+@@ -8,7 +8,6 @@
+ 
+     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+     private static final Database db = Database.getInstance();
+-    private static final int HIGHEST_CHECKPOINT = 10;
+     private int totalBlocks = db.getCheckpointCount();
+ 
+     public void checkpointTripped(int checkpointTripped, boolean untrip) {
+@@ -19,16 +18,12 @@
+                 String id = (checkpointTripped > 9) ? "CH" + checkpointTripped : "CH0" + checkpointTripped;
+                 SystemStateManager.getInstance().addUnresponsiveClient(id, ReasonEnum.INCORTRIP);
+             } else {
+-                if (!untrip) {
+-                    handletrip(checkpointTripped, false);
+-                } else {
+-                    handletrip(checkpointTripped, true);
+-                }
++                handleTrip(checkpointTripped, untrip);
+             }
+         }
+     }
+ 
+-    public void handletrip(int checkpoint, boolean untrip) {
++    public void handleTrip(int checkpoint, boolean untrip) {
+         try {
+             Optional<BladeRunnerClient> bladeRunner = getBladeRunner(checkpoint);
+ 
+@@ -50,7 +45,7 @@
+                     }
+                 }
+             } else {
+-                logger.log(Level.SEVERE, "Attempted to get non-existant bladerunner");
++                logger.log(Level.SEVERE, "Attempted to get non-existent bladerunner");
+             }
+         } catch (Exception e) {
+             logger.log(Level.SEVERE, "Unexpected error: ", e);
+@@ -69,7 +64,7 @@
+         }
+         Optional<BladeRunnerClient> bladeRunner = Optional.empty();
+         if (opBladeRunner.isPresent()) {
+-            bladeRunner = Optional.of(opBladeRunner.get());
++            bladeRunner = opBladeRunner;
+         }
+         return bladeRunner;
+     }
+@@ -80,12 +75,11 @@
+         int trafficBlock = calculatePreviousBlock(block);
+ 
+         Optional<BladeRunnerClient> bladeRunner = getBladeRunner(trafficBlock);
+-        ;
+         if (bladeRunner.isPresent()) {
+             bladeRunner.get().sendExecuteMessage(SpeedEnum.SLOW);
+             bladeRunner.get().updateStatus("STARTED");
+         }
+-//no traffic, do nothing
++        //no traffic, do nothing
+ 
+     }
+ 
+@@ -97,7 +91,6 @@
+         } else {
+             return nextBlock;
+         }
+-
+     }
+ 
+     private int calculatePreviousBlock(int checkpoint) {
+@@ -109,6 +102,5 @@
+             return previousBlock;
+         }
+     }
+-
+ }
+ 
