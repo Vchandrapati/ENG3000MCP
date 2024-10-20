@@ -2,7 +2,6 @@ package org.example.client;
 
 import org.example.messages.MessageEnums;
 import org.example.messages.MessageEnums.STCAction;
-import org.example.messages.MessageSender;
 
 public class StationClient extends AbstractClient<MessageEnums.STCStatus, STCAction> {
     private final int location;

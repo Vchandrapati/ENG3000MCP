@@ -5460,3 +5460,1233 @@ java.lang.NullPointerException: Cannot invoke "java.lang.Integer.intValue()" bec
 21:24:00.907 INFO: org.example.messages.Server sendMessageToClient Sent STAT to client at: BR01
 21:24:00.907 INFO: org.example.messages.Server sendMessageToClient Sent STAT to client at: CP04
 21:24:00.907 INFO: org.example.messages.Server sendMessageToClient Sent STAT to client at: CP03
+14:17:45.746 INFO: org.example.visualiser.CommandHandler run MCP online, please input a command, type help to see a list of commands
+14:17:45.831 INFO: org.example.state.SystemStateManager setState Changing to system state WAITING
+14:17:45.839 SEVERE: org.example.messages.ClientFactory readFromFile File: src\main\java\org\example\messages\locations.txt not found
+14:17:45.844 INFO: org.example.messages.Server <init> Server completed startup and listening on PORT: 3001
+14:17:45.846 INFO: org.example.messages.StatusScheduler start StatusScheduler started
+18:30:35.936 INFO: org.example.visualiser.CommandHandler run MCP online, please input a command, type help to see a list of commands
+18:30:36.004 INFO: org.example.state.SystemStateManager setState Changing to system state WAITING
+18:30:36.012 SEVERE: org.example.messages.ClientFactory readFromFile File: src\main\java\org\example\messages\locations.txt not found
+18:30:36.017 INFO: org.example.messages.Server <init> Server completed startup and listening on PORT: 3001
+18:30:36.018 INFO: org.example.messages.StatusScheduler start StatusScheduler started
+18:30:56.545 INFO: org.example.visualiser.CommandHandler run MCP online, please input a command, type help to see a list of commands
+18:30:56.614 INFO: org.example.state.SystemStateManager setState Changing to system state WAITING
+18:30:56.622 SEVERE: org.example.messages.ClientFactory readFromFile File: src\main\java\org\example\messages\locations.txt not found
+18:30:56.628 INFO: org.example.messages.Server <init> Server completed startup and listening on PORT: 3001
+18:30:56.629 INFO: org.example.messages.StatusScheduler start StatusScheduler started
+18:33:47.576 INFO: org.example.visualiser.CommandHandler run MCP online, please input a command, type help to see a list of commands
+18:33:47.641 INFO: org.example.state.SystemStateManager setState Changing to system state WAITING
+18:33:47.648 INFO: org.example.messages.Server <init> Server completed startup and listening on PORT: 3001
+18:33:47.653 SEVERE: org.example.messages.ClientFactory readFromFile File: src\main\java\org\example\messages\locations.txt not found
+18:33:47.656 INFO: org.example.messages.StatusScheduler start StatusScheduler started
+18:34:19.471 INFO: org.example.visualiser.CommandHandler run MCP online, please input a command, type help to see a list of commands
+18:34:19.547 INFO: org.example.state.SystemStateManager setState Changing to system state WAITING
+18:34:19.567 INFO: org.example.messages.Server <init> Server completed startup and listening on PORT: 3001
+18:34:19.573 SEVERE: org.example.messages.ClientFactory readFromFile File: src\main\java\org\example\messages\locations.txt not found
+18:34:19.576 INFO: org.example.messages.StatusScheduler start StatusScheduler started
+18:36:02.331 INFO: org.example.visualiser.CommandHandler run MCP online, please input a command, type help to see a list of commands
+18:36:02.408 INFO: org.example.state.SystemStateManager setState Changing to system state WAITING
+18:36:02.424 INFO: org.example.messages.Server <init> Server completed startup and listening on PORT: 3001
+18:36:02.430 SEVERE: org.example.messages.ClientFactory readFromFile File: src\main\java\org\example\messages\locations.txt not found
+18:36:02.434 INFO: org.example.messages.StatusScheduler start StatusScheduler started
+18:36:15.302 INFO: org.example.visualiser.CommandHandler run MCP online, please input a command, type help to see a list of commands
+18:36:15.371 INFO: org.example.state.SystemStateManager setState Changing to system state WAITING
+18:36:39.487 INFO: org.example.messages.Server <init> Server completed startup and listening on PORT: 3001
+18:36:48.500 SEVERE: org.example.messages.ClientFactory readFromFile File: src\main\java\org\example\messages\locations.txt not found
+18:37:05.040 INFO: org.example.visualiser.CommandHandler run MCP online, please input a command, type help to see a list of commands
+18:37:05.116 INFO: org.example.state.SystemStateManager setState Changing to system state WAITING
+18:37:05.122 INFO: org.example.messages.Server <init> Server completed startup and listening on PORT: 3001
+18:37:05.126 SEVERE: org.example.messages.ClientFactory readFromFile File: src\main\java\org\example\messages\locations.txt not found
+18:37:05.129 INFO: org.example.messages.StatusScheduler start StatusScheduler started
+18:38:33.545 INFO: org.example.visualiser.CommandHandler run MCP online, please input a command, type help to see a list of commands
+18:38:33.610 INFO: org.example.state.SystemStateManager setState Changing to system state WAITING
+18:38:33.618 INFO: org.example.messages.Server <init> Server completed startup and listening on PORT: 3001
+18:38:33.623 SEVERE: org.example.messages.ClientFactory readFromFile File: src\main\java\org\example\messages\locations.txt not found
+18:38:33.625 INFO: org.example.messages.StatusScheduler start StatusScheduler started
+18:39:20.488 INFO: org.example.visualiser.CommandHandler run MCP online, please input a command, type help to see a list of commands
+18:39:20.575 INFO: org.example.state.SystemStateManager setState Changing to system state WAITING
+18:39:20.582 INFO: org.example.messages.Server <init> Server completed startup and listening on PORT: 3001
+18:39:20.588 SEVERE: org.example.messages.ClientFactory readFromFile File: src\main\java\org\example\messages\locations.txt not found
+18:39:20.591 INFO: org.example.messages.StatusScheduler start StatusScheduler started
+18:39:41.512 INFO: org.example.visualiser.CommandHandler run MCP online, please input a command, type help to see a list of commands
+18:39:41.585 INFO: org.example.state.SystemStateManager setState Changing to system state WAITING
+18:39:41.599 INFO: org.example.messages.Server <init> Server completed startup and listening on PORT: 3001
+18:39:46.343 SEVERE: org.example.messages.ClientFactory readFromFile File: src\main\java\org\example\messages\locations.txt not found
+18:39:46.346 INFO: org.example.messages.StatusScheduler start StatusScheduler started
+18:40:39.846 INFO: org.example.visualiser.CommandHandler run MCP online, please input a command, type help to see a list of commands
+18:40:39.924 INFO: org.example.state.SystemStateManager setState Changing to system state WAITING
+18:40:39.930 INFO: org.example.messages.Server <init> Server completed startup and listening on PORT: 3001
+18:40:39.936 SEVERE: org.example.messages.ClientFactory readFromFile File: src\main\java\org\example\messages\locations.txt not found
+18:40:39.939 INFO: org.example.messages.StatusScheduler start StatusScheduler started
+18:40:43.871 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+18:40:43.872 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+18:40:43.872 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+18:40:43.873 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+18:40:43.873 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+18:40:43.874 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+18:41:05.233 INFO: org.example.visualiser.CommandHandler run MCP online, please input a command, type help to see a list of commands
+18:41:05.308 INFO: org.example.state.SystemStateManager setState Changing to system state WAITING
+18:41:05.342 INFO: org.example.messages.Server <init> Server completed startup and listening on PORT: 3001
+18:41:14.048 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+18:41:18.727 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+18:41:26.923 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+18:41:28.883 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+18:41:33.636 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+18:41:33.637 SEVERE: org.example.messages.ClientFactory readFromFile File: src\main\java\org\example\messages\locations.txt not found
+18:41:47.958 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+18:42:03.526 INFO: org.example.messages.StatusScheduler start StatusScheduler started
+18:42:15.353 INFO: org.example.visualiser.CommandHandler run MCP online, please input a command, type help to see a list of commands
+18:42:29.518 INFO: org.example.state.SystemStateManager setState Changing to system state WAITING
+18:42:29.529 INFO: org.example.messages.Server <init> Server completed startup and listening on PORT: 3001
+18:42:29.534 SEVERE: org.example.messages.ClientFactory readFromFile File: src\main\java\org\example\messages\locations.txt not found
+18:43:08.309 INFO: org.example.visualiser.CommandHandler run MCP online, please input a command, type help to see a list of commands
+18:43:08.379 INFO: org.example.state.SystemStateManager setState Changing to system state WAITING
+18:43:29.374 INFO: org.example.messages.Server <init> Server completed startup and listening on PORT: 3001
+18:43:29.379 SEVERE: org.example.messages.ClientFactory readFromFile File: src\main\java\org\example\messages\locations.txt not found
+18:43:31.450 INFO: org.example.visualiser.CommandHandler run MCP online, please input a command, type help to see a list of commands
+18:43:31.534 INFO: org.example.state.SystemStateManager setState Changing to system state WAITING
+18:43:31.541 INFO: org.example.messages.Server <init> Server completed startup and listening on PORT: 3001
+18:43:31.547 SEVERE: org.example.messages.ClientFactory readFromFile File: src\main\java\org\example\messages\locations.txt not found
+18:43:31.549 INFO: org.example.messages.StatusScheduler start StatusScheduler started
+18:43:46.863 INFO: org.example.visualiser.CommandHandler run MCP online, please input a command, type help to see a list of commands
+18:43:46.935 INFO: org.example.state.SystemStateManager setState Changing to system state WAITING
+18:43:48.964 INFO: org.example.messages.Server <init> Server completed startup and listening on PORT: 3001
+18:43:48.970 SEVERE: org.example.messages.ClientFactory readFromFile File: src\main\java\org\example\messages\locations.txt not found
+18:43:48.973 INFO: org.example.messages.StatusScheduler start StatusScheduler started
+18:43:54.621 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+18:44:01.374 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+18:44:07.391 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+18:44:07.391 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+18:44:07.392 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+18:44:07.392 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+18:44:42.653 INFO: org.example.visualiser.CommandHandler run MCP online, please input a command, type help to see a list of commands
+18:44:42.719 INFO: org.example.state.SystemStateManager setState Changing to system state WAITING
+18:44:42.725 INFO: org.example.messages.Server <init> Server completed startup and listening on PORT: 3001
+18:44:42.731 SEVERE: org.example.messages.ClientFactory readFromFile File: src\main\java\org\example\messages\locations.txt not found
+18:44:42.733 INFO: org.example.messages.StatusScheduler start StatusScheduler started
+18:44:46.558 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+18:44:46.559 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+18:44:46.560 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+18:44:46.560 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+18:44:46.560 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+18:44:46.561 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+18:44:58.139 INFO: org.example.visualiser.CommandHandler run MCP online, please input a command, type help to see a list of commands
+18:44:58.212 INFO: org.example.state.SystemStateManager setState Changing to system state WAITING
+18:45:00.070 INFO: org.example.messages.Server <init> Server completed startup and listening on PORT: 3001
+18:45:00.075 SEVERE: org.example.messages.ClientFactory readFromFile File: src\main\java\org\example\messages\locations.txt not found
+18:45:00.078 INFO: org.example.messages.StatusScheduler start StatusScheduler started
+18:45:03.855 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+18:45:06.079 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+18:45:08.680 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+18:45:08.680 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+18:45:08.681 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+18:45:08.681 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+18:46:27.739 INFO: org.example.visualiser.CommandHandler run MCP online, please input a command, type help to see a list of commands
+18:46:27.816 INFO: org.example.state.SystemStateManager setState Changing to system state WAITING
+18:46:27.823 INFO: org.example.messages.Server <init> Server completed startup and listening on PORT: 3001
+18:46:27.987 SEVERE: org.example.messages.ClientFactory readFromFile File: src\main\java\org\example\messages\locations.txt not found
+18:46:27.990 INFO: org.example.messages.StatusScheduler start StatusScheduler started
+18:46:36.870 INFO: org.example.visualiser.CommandHandler run MCP online, please input a command, type help to see a list of commands
+18:46:36.944 INFO: org.example.state.SystemStateManager setState Changing to system state WAITING
+18:46:42.289 INFO: org.example.messages.Server <init> Server completed startup and listening on PORT: 3001
+18:46:42.405 SEVERE: org.example.messages.ClientFactory readFromFile File: src\main\java\org\example\messages\locations.txt not found
+18:46:42.408 INFO: org.example.messages.StatusScheduler start StatusScheduler started
+18:46:47.527 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+18:46:54.535 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+18:46:58.677 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+18:46:58.677 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+18:46:58.678 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+18:46:58.678 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+18:46:58.821 INFO: org.example.messages.MessageHandler lambda$handleCCPMessage$3 Received CCIN message from Blade Runner: BR01
+18:47:03.016 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$1 Received CPIN message from Checkpoint: CP01
+18:47:03.909 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$1 Received CPIN message from Checkpoint: CP02
+18:47:04.895 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$1 Received CPIN message from Checkpoint: CP03
+18:47:05.909 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$1 Received CPIN message from Checkpoint: CP04
+18:47:06.996 INFO: org.example.messages.MessageHandler lambda$handleSTCMessage$5 Received STIN message from Station: ST01
+18:47:23.292 INFO: org.example.visualiser.CommandHandler run MCP online, please input a command, type help to see a list of commands
+18:47:23.357 INFO: org.example.state.SystemStateManager setState Changing to system state WAITING
+18:47:23.362 INFO: org.example.messages.Server <init> Server completed startup and listening on PORT: 3001
+18:47:23.472 SEVERE: org.example.messages.ClientFactory readFromFile File: src\main\java\org\example\messages\locations.txt not found
+18:47:23.474 INFO: org.example.messages.StatusScheduler start StatusScheduler started
+18:47:24.884 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+18:47:24.885 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+18:47:24.886 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+18:47:24.886 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+18:47:24.886 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+18:47:24.887 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+18:47:24.927 INFO: org.example.messages.MessageHandler lambda$handleCCPMessage$3 Received CCIN message from Blade Runner: BR01
+18:47:24.928 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$1 Received CPIN message from Checkpoint: CP01
+18:47:24.928 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$1 Received CPIN message from Checkpoint: CP02
+18:47:24.929 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$1 Received CPIN message from Checkpoint: CP03
+18:47:24.929 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$1 Received CPIN message from Checkpoint: CP04
+18:47:24.930 INFO: org.example.messages.MessageHandler lambda$handleSTCMessage$5 Received STIN message from Station: ST01
+18:48:40.014 INFO: org.example.visualiser.CommandHandler run MCP online, please input a command, type help to see a list of commands
+18:48:40.096 INFO: org.example.state.SystemStateManager setState Changing to system state WAITING
+18:48:40.103 INFO: org.example.messages.Server <init> Server completed startup and listening on PORT: 3001
+18:48:40.224 SEVERE: org.example.messages.ClientFactory readFromFile File: src\main\java\org\example\messages\locations.txt not found
+18:48:40.227 INFO: org.example.messages.StatusScheduler start StatusScheduler started
+18:48:49.317 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+18:48:49.318 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+18:48:49.318 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+18:48:49.318 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+18:48:49.319 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+18:48:49.319 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+18:48:49.361 INFO: org.example.messages.MessageHandler lambda$handleCCPMessage$3 Received CCIN message from Blade Runner: BR01
+18:48:49.362 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$1 Received CPIN message from Checkpoint: CP01
+18:48:49.362 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$1 Received CPIN message from Checkpoint: CP02
+18:48:49.362 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$1 Received CPIN message from Checkpoint: CP03
+18:48:49.362 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$1 Received CPIN message from Checkpoint: CP04
+18:48:49.363 INFO: org.example.messages.MessageHandler lambda$handleSTCMessage$5 Received STIN message from Station: ST01
+18:48:49.364 SEVERE: org.example.client.MessageSender <init> Error starting up server
+java.net.BindException: Address already in use: bind
+	at java.base/sun.nio.ch.Net.bind0(Native Method)
+	at java.base/sun.nio.ch.Net.bind(Net.java:565)
+	at java.base/sun.nio.ch.DatagramChannelImpl.bindInternal(DatagramChannelImpl.java:1329)
+	at java.base/sun.nio.ch.DatagramChannelImpl.bind(DatagramChannelImpl.java:1299)
+	at java.base/sun.nio.ch.DatagramSocketAdaptor.bind(DatagramSocketAdaptor.java:108)
+	at java.base/java.net.DatagramSocket.createDelegate(DatagramSocket.java:1425)
+	at java.base/java.net.DatagramSocket.<init>(DatagramSocket.java:328)
+	at java.base/java.net.DatagramSocket.<init>(DatagramSocket.java:387)
+	at java.base/java.net.DatagramSocket.<init>(DatagramSocket.java:353)
+	at org.example.client.MessageSender.<init>(MessageSender.java:24)
+	at org.example.messages.ClientFactory.handleInitialise(ClientFactory.java:36)
+	at org.example.events.EventBus.emit(EventBus.java:70)
+	at org.example.events.EventBus.lambda$new$0(EventBus.java:25)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+
+18:48:49.365 INFO: org.example.client.AbstractClient updateStatus Updated status for BR01 to STOPC
+18:48:49.366 INFO: org.example.Database addClient Added BR01 to database
+18:48:49.377 SEVERE: org.example.messages.ClientFactory handleInitialise Failed to handle message
+18:48:49.377 SEVERE: org.example.messages.ClientFactory handleInitialise Exception: 
+java.lang.NullPointerException: Cannot invoke "java.net.DatagramSocket.send(java.net.DatagramPacket)" because "this.serverSocket" is null
+	at org.example.client.MessageSender.send(MessageSender.java:35)
+	at org.example.client.AbstractClient.sendMessage(AbstractClient.java:127)
+	at org.example.client.AbstractClient.sendAcknowledgeMessage(AbstractClient.java:116)
+	at org.example.messages.ClientFactory.handleInitialise(ClientFactory.java:63)
+	at org.example.events.EventBus.emit(EventBus.java:70)
+	at org.example.events.EventBus.lambda$new$0(EventBus.java:25)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+
+18:48:49.378 SEVERE: org.example.client.MessageSender <init> Error starting up server
+java.net.BindException: Address already in use: bind
+	at java.base/sun.nio.ch.Net.bind0(Native Method)
+	at java.base/sun.nio.ch.Net.bind(Net.java:565)
+	at java.base/sun.nio.ch.DatagramChannelImpl.bindInternal(DatagramChannelImpl.java:1329)
+	at java.base/sun.nio.ch.DatagramChannelImpl.bind(DatagramChannelImpl.java:1299)
+	at java.base/sun.nio.ch.DatagramSocketAdaptor.bind(DatagramSocketAdaptor.java:108)
+	at java.base/java.net.DatagramSocket.createDelegate(DatagramSocket.java:1425)
+	at java.base/java.net.DatagramSocket.<init>(DatagramSocket.java:328)
+	at java.base/java.net.DatagramSocket.<init>(DatagramSocket.java:387)
+	at java.base/java.net.DatagramSocket.<init>(DatagramSocket.java:353)
+	at org.example.client.MessageSender.<init>(MessageSender.java:24)
+	at org.example.messages.ClientFactory.handleInitialise(ClientFactory.java:36)
+	at org.example.events.EventBus.emit(EventBus.java:70)
+	at org.example.events.EventBus.lambda$new$0(EventBus.java:25)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+
+18:48:49.379 SEVERE: org.example.messages.ClientFactory handleInitialise Failed to handle message
+18:48:49.379 SEVERE: org.example.messages.ClientFactory handleInitialise Exception: 
+java.lang.NullPointerException: Cannot invoke "java.lang.Integer.intValue()" because "zone" is null
+	at org.example.messages.ClientFactory.handleInitialise(ClientFactory.java:46)
+	at org.example.events.EventBus.emit(EventBus.java:70)
+	at org.example.events.EventBus.lambda$new$0(EventBus.java:25)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+
+18:48:49.380 SEVERE: org.example.client.MessageSender <init> Error starting up server
+java.net.BindException: Address already in use: bind
+	at java.base/sun.nio.ch.Net.bind0(Native Method)
+	at java.base/sun.nio.ch.Net.bind(Net.java:565)
+	at java.base/sun.nio.ch.DatagramChannelImpl.bindInternal(DatagramChannelImpl.java:1329)
+	at java.base/sun.nio.ch.DatagramChannelImpl.bind(DatagramChannelImpl.java:1299)
+	at java.base/sun.nio.ch.DatagramSocketAdaptor.bind(DatagramSocketAdaptor.java:108)
+	at java.base/java.net.DatagramSocket.createDelegate(DatagramSocket.java:1425)
+	at java.base/java.net.DatagramSocket.<init>(DatagramSocket.java:328)
+	at java.base/java.net.DatagramSocket.<init>(DatagramSocket.java:387)
+	at java.base/java.net.DatagramSocket.<init>(DatagramSocket.java:353)
+	at org.example.client.MessageSender.<init>(MessageSender.java:24)
+	at org.example.messages.ClientFactory.handleInitialise(ClientFactory.java:36)
+	at org.example.events.EventBus.emit(EventBus.java:70)
+	at org.example.events.EventBus.lambda$new$0(EventBus.java:25)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+
+18:48:49.380 SEVERE: org.example.messages.ClientFactory handleInitialise Failed to handle message
+18:48:49.380 SEVERE: org.example.messages.ClientFactory handleInitialise Exception: 
+java.lang.NullPointerException: Cannot invoke "java.lang.Integer.intValue()" because "zone" is null
+	at org.example.messages.ClientFactory.handleInitialise(ClientFactory.java:46)
+	at org.example.events.EventBus.emit(EventBus.java:70)
+	at org.example.events.EventBus.lambda$new$0(EventBus.java:25)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+
+18:48:49.381 SEVERE: org.example.client.MessageSender <init> Error starting up server
+java.net.BindException: Address already in use: bind
+	at java.base/sun.nio.ch.Net.bind0(Native Method)
+	at java.base/sun.nio.ch.Net.bind(Net.java:565)
+	at java.base/sun.nio.ch.DatagramChannelImpl.bindInternal(DatagramChannelImpl.java:1329)
+	at java.base/sun.nio.ch.DatagramChannelImpl.bind(DatagramChannelImpl.java:1299)
+	at java.base/sun.nio.ch.DatagramSocketAdaptor.bind(DatagramSocketAdaptor.java:108)
+	at java.base/java.net.DatagramSocket.createDelegate(DatagramSocket.java:1425)
+	at java.base/java.net.DatagramSocket.<init>(DatagramSocket.java:328)
+	at java.base/java.net.DatagramSocket.<init>(DatagramSocket.java:387)
+	at java.base/java.net.DatagramSocket.<init>(DatagramSocket.java:353)
+	at org.example.client.MessageSender.<init>(MessageSender.java:24)
+	at org.example.messages.ClientFactory.handleInitialise(ClientFactory.java:36)
+	at org.example.events.EventBus.emit(EventBus.java:70)
+	at org.example.events.EventBus.lambda$new$0(EventBus.java:25)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+
+18:48:49.381 SEVERE: org.example.messages.ClientFactory handleInitialise Failed to handle message
+18:48:49.381 SEVERE: org.example.messages.ClientFactory handleInitialise Exception: 
+java.lang.NullPointerException: Cannot invoke "java.lang.Integer.intValue()" because "zone" is null
+	at org.example.messages.ClientFactory.handleInitialise(ClientFactory.java:46)
+	at org.example.events.EventBus.emit(EventBus.java:70)
+	at org.example.events.EventBus.lambda$new$0(EventBus.java:25)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+
+18:48:49.382 SEVERE: org.example.client.MessageSender <init> Error starting up server
+java.net.BindException: Address already in use: bind
+	at java.base/sun.nio.ch.Net.bind0(Native Method)
+	at java.base/sun.nio.ch.Net.bind(Net.java:565)
+	at java.base/sun.nio.ch.DatagramChannelImpl.bindInternal(DatagramChannelImpl.java:1329)
+	at java.base/sun.nio.ch.DatagramChannelImpl.bind(DatagramChannelImpl.java:1299)
+	at java.base/sun.nio.ch.DatagramSocketAdaptor.bind(DatagramSocketAdaptor.java:108)
+	at java.base/java.net.DatagramSocket.createDelegate(DatagramSocket.java:1425)
+	at java.base/java.net.DatagramSocket.<init>(DatagramSocket.java:328)
+	at java.base/java.net.DatagramSocket.<init>(DatagramSocket.java:387)
+	at java.base/java.net.DatagramSocket.<init>(DatagramSocket.java:353)
+	at org.example.client.MessageSender.<init>(MessageSender.java:24)
+	at org.example.messages.ClientFactory.handleInitialise(ClientFactory.java:36)
+	at org.example.events.EventBus.emit(EventBus.java:70)
+	at org.example.events.EventBus.lambda$new$0(EventBus.java:25)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+
+18:48:49.382 SEVERE: org.example.messages.ClientFactory handleInitialise Failed to handle message
+18:48:49.382 SEVERE: org.example.messages.ClientFactory handleInitialise Exception: 
+java.lang.NullPointerException: Cannot invoke "java.lang.Integer.intValue()" because "zone" is null
+	at org.example.messages.ClientFactory.handleInitialise(ClientFactory.java:46)
+	at org.example.events.EventBus.emit(EventBus.java:70)
+	at org.example.events.EventBus.lambda$new$0(EventBus.java:25)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+
+18:48:49.383 SEVERE: org.example.client.MessageSender <init> Error starting up server
+java.net.BindException: Address already in use: bind
+	at java.base/sun.nio.ch.Net.bind0(Native Method)
+	at java.base/sun.nio.ch.Net.bind(Net.java:565)
+	at java.base/sun.nio.ch.DatagramChannelImpl.bindInternal(DatagramChannelImpl.java:1329)
+	at java.base/sun.nio.ch.DatagramChannelImpl.bind(DatagramChannelImpl.java:1299)
+	at java.base/sun.nio.ch.DatagramSocketAdaptor.bind(DatagramSocketAdaptor.java:108)
+	at java.base/java.net.DatagramSocket.createDelegate(DatagramSocket.java:1425)
+	at java.base/java.net.DatagramSocket.<init>(DatagramSocket.java:328)
+	at java.base/java.net.DatagramSocket.<init>(DatagramSocket.java:387)
+	at java.base/java.net.DatagramSocket.<init>(DatagramSocket.java:353)
+	at org.example.client.MessageSender.<init>(MessageSender.java:24)
+	at org.example.messages.ClientFactory.handleInitialise(ClientFactory.java:36)
+	at org.example.events.EventBus.emit(EventBus.java:70)
+	at org.example.events.EventBus.lambda$new$0(EventBus.java:25)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+
+18:48:49.383 SEVERE: org.example.messages.ClientFactory handleInitialise Failed to handle message
+18:48:49.383 SEVERE: org.example.messages.ClientFactory handleInitialise Exception: 
+java.lang.NullPointerException: Cannot invoke "java.lang.Integer.intValue()" because "zone" is null
+	at org.example.messages.ClientFactory.handleInitialise(ClientFactory.java:52)
+	at org.example.events.EventBus.emit(EventBus.java:70)
+	at org.example.events.EventBus.lambda$new$0(EventBus.java:25)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+
+18:50:24.840 INFO: org.example.visualiser.CommandHandler run MCP online, please input a command, type help to see a list of commands
+18:50:24.911 INFO: org.example.state.SystemStateManager setState Changing to system state WAITING
+18:50:24.918 INFO: org.example.messages.Server <init> Server completed startup and listening on PORT: 3001
+18:50:25.045 INFO: org.example.messages.StatusScheduler start StatusScheduler started
+18:50:30.281 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+18:50:30.282 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+18:50:30.282 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+18:50:30.282 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+18:50:30.283 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+18:50:30.283 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+18:50:30.321 INFO: org.example.messages.MessageHandler lambda$handleCCPMessage$3 Received CCIN message from Blade Runner: BR01
+18:50:30.321 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$1 Received CPIN message from Checkpoint: CP01
+18:50:30.322 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$1 Received CPIN message from Checkpoint: CP02
+18:50:30.322 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$1 Received CPIN message from Checkpoint: CP03
+18:50:30.322 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$1 Received CPIN message from Checkpoint: CP04
+18:50:30.323 INFO: org.example.messages.MessageHandler lambda$handleSTCMessage$5 Received STIN message from Station: ST01
+18:50:30.324 SEVERE: org.example.client.MessageSender <init> Error starting up server
+java.net.BindException: Address already in use: bind
+	at java.base/sun.nio.ch.Net.bind0(Native Method)
+	at java.base/sun.nio.ch.Net.bind(Net.java:565)
+	at java.base/sun.nio.ch.DatagramChannelImpl.bindInternal(DatagramChannelImpl.java:1329)
+	at java.base/sun.nio.ch.DatagramChannelImpl.bind(DatagramChannelImpl.java:1299)
+	at java.base/sun.nio.ch.DatagramSocketAdaptor.bind(DatagramSocketAdaptor.java:108)
+	at java.base/java.net.DatagramSocket.createDelegate(DatagramSocket.java:1425)
+	at java.base/java.net.DatagramSocket.<init>(DatagramSocket.java:328)
+	at java.base/java.net.DatagramSocket.<init>(DatagramSocket.java:387)
+	at java.base/java.net.DatagramSocket.<init>(DatagramSocket.java:353)
+	at org.example.client.MessageSender.<init>(MessageSender.java:24)
+	at org.example.messages.ClientFactory.handleInitialise(ClientFactory.java:36)
+	at org.example.events.EventBus.emit(EventBus.java:70)
+	at org.example.events.EventBus.lambda$new$0(EventBus.java:25)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+
+18:50:30.326 INFO: org.example.client.AbstractClient updateStatus Updated status for BR01 to STOPC
+18:50:30.326 INFO: org.example.Database addClient Added BR01 to database
+18:50:30.337 SEVERE: org.example.messages.ClientFactory handleInitialise Failed to handle message
+18:50:30.337 SEVERE: org.example.messages.ClientFactory handleInitialise Exception: 
+java.lang.NullPointerException: Cannot invoke "java.net.DatagramSocket.send(java.net.DatagramPacket)" because "this.serverSocket" is null
+	at org.example.client.MessageSender.send(MessageSender.java:35)
+	at org.example.client.AbstractClient.sendMessage(AbstractClient.java:127)
+	at org.example.client.AbstractClient.sendAcknowledgeMessage(AbstractClient.java:116)
+	at org.example.messages.ClientFactory.handleInitialise(ClientFactory.java:63)
+	at org.example.events.EventBus.emit(EventBus.java:70)
+	at org.example.events.EventBus.lambda$new$0(EventBus.java:25)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+
+18:50:30.338 SEVERE: org.example.client.MessageSender <init> Error starting up server
+java.net.BindException: Address already in use: bind
+	at java.base/sun.nio.ch.Net.bind0(Native Method)
+	at java.base/sun.nio.ch.Net.bind(Net.java:565)
+	at java.base/sun.nio.ch.DatagramChannelImpl.bindInternal(DatagramChannelImpl.java:1329)
+	at java.base/sun.nio.ch.DatagramChannelImpl.bind(DatagramChannelImpl.java:1299)
+	at java.base/sun.nio.ch.DatagramSocketAdaptor.bind(DatagramSocketAdaptor.java:108)
+	at java.base/java.net.DatagramSocket.createDelegate(DatagramSocket.java:1425)
+	at java.base/java.net.DatagramSocket.<init>(DatagramSocket.java:328)
+	at java.base/java.net.DatagramSocket.<init>(DatagramSocket.java:387)
+	at java.base/java.net.DatagramSocket.<init>(DatagramSocket.java:353)
+	at org.example.client.MessageSender.<init>(MessageSender.java:24)
+	at org.example.messages.ClientFactory.handleInitialise(ClientFactory.java:36)
+	at org.example.events.EventBus.emit(EventBus.java:70)
+	at org.example.events.EventBus.lambda$new$0(EventBus.java:25)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+
+18:50:30.338 INFO: org.example.client.AbstractClient updateStatus Updated status for CP01 to OFF
+18:50:30.339 INFO: org.example.Database addClient Added CP01 to database
+18:50:30.339 SEVERE: org.example.messages.ClientFactory handleInitialise Failed to handle message
+18:50:30.340 SEVERE: org.example.messages.ClientFactory handleInitialise Exception: 
+java.lang.NullPointerException: Cannot invoke "java.net.DatagramSocket.send(java.net.DatagramPacket)" because "this.serverSocket" is null
+	at org.example.client.MessageSender.send(MessageSender.java:35)
+	at org.example.client.AbstractClient.sendMessage(AbstractClient.java:127)
+	at org.example.client.AbstractClient.sendAcknowledgeMessage(AbstractClient.java:116)
+	at org.example.messages.ClientFactory.handleInitialise(ClientFactory.java:63)
+	at org.example.events.EventBus.emit(EventBus.java:70)
+	at org.example.events.EventBus.lambda$new$0(EventBus.java:25)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+
+18:50:30.340 SEVERE: org.example.client.MessageSender <init> Error starting up server
+java.net.BindException: Address already in use: bind
+	at java.base/sun.nio.ch.Net.bind0(Native Method)
+	at java.base/sun.nio.ch.Net.bind(Net.java:565)
+	at java.base/sun.nio.ch.DatagramChannelImpl.bindInternal(DatagramChannelImpl.java:1329)
+	at java.base/sun.nio.ch.DatagramChannelImpl.bind(DatagramChannelImpl.java:1299)
+	at java.base/sun.nio.ch.DatagramSocketAdaptor.bind(DatagramSocketAdaptor.java:108)
+	at java.base/java.net.DatagramSocket.createDelegate(DatagramSocket.java:1425)
+	at java.base/java.net.DatagramSocket.<init>(DatagramSocket.java:328)
+	at java.base/java.net.DatagramSocket.<init>(DatagramSocket.java:387)
+	at java.base/java.net.DatagramSocket.<init>(DatagramSocket.java:353)
+	at org.example.client.MessageSender.<init>(MessageSender.java:24)
+	at org.example.messages.ClientFactory.handleInitialise(ClientFactory.java:36)
+	at org.example.events.EventBus.emit(EventBus.java:70)
+	at org.example.events.EventBus.lambda$new$0(EventBus.java:25)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+
+18:50:30.341 INFO: org.example.client.AbstractClient updateStatus Updated status for CP02 to OFF
+18:50:30.341 INFO: org.example.Database addClient Added CP02 to database
+18:50:30.342 SEVERE: org.example.messages.ClientFactory handleInitialise Failed to handle message
+18:50:30.342 SEVERE: org.example.messages.ClientFactory handleInitialise Exception: 
+java.lang.NullPointerException: Cannot invoke "java.net.DatagramSocket.send(java.net.DatagramPacket)" because "this.serverSocket" is null
+	at org.example.client.MessageSender.send(MessageSender.java:35)
+	at org.example.client.AbstractClient.sendMessage(AbstractClient.java:127)
+	at org.example.client.AbstractClient.sendAcknowledgeMessage(AbstractClient.java:116)
+	at org.example.messages.ClientFactory.handleInitialise(ClientFactory.java:63)
+	at org.example.events.EventBus.emit(EventBus.java:70)
+	at org.example.events.EventBus.lambda$new$0(EventBus.java:25)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+
+18:50:30.342 SEVERE: org.example.client.MessageSender <init> Error starting up server
+java.net.BindException: Address already in use: bind
+	at java.base/sun.nio.ch.Net.bind0(Native Method)
+	at java.base/sun.nio.ch.Net.bind(Net.java:565)
+	at java.base/sun.nio.ch.DatagramChannelImpl.bindInternal(DatagramChannelImpl.java:1329)
+	at java.base/sun.nio.ch.DatagramChannelImpl.bind(DatagramChannelImpl.java:1299)
+	at java.base/sun.nio.ch.DatagramSocketAdaptor.bind(DatagramSocketAdaptor.java:108)
+	at java.base/java.net.DatagramSocket.createDelegate(DatagramSocket.java:1425)
+	at java.base/java.net.DatagramSocket.<init>(DatagramSocket.java:328)
+	at java.base/java.net.DatagramSocket.<init>(DatagramSocket.java:387)
+	at java.base/java.net.DatagramSocket.<init>(DatagramSocket.java:353)
+	at org.example.client.MessageSender.<init>(MessageSender.java:24)
+	at org.example.messages.ClientFactory.handleInitialise(ClientFactory.java:36)
+	at org.example.events.EventBus.emit(EventBus.java:70)
+	at org.example.events.EventBus.lambda$new$0(EventBus.java:25)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+
+18:50:30.343 INFO: org.example.client.AbstractClient updateStatus Updated status for CP03 to OFF
+18:50:30.343 INFO: org.example.Database addClient Added CP03 to database
+18:50:30.344 SEVERE: org.example.messages.ClientFactory handleInitialise Failed to handle message
+18:50:30.344 SEVERE: org.example.messages.ClientFactory handleInitialise Exception: 
+java.lang.NullPointerException: Cannot invoke "java.net.DatagramSocket.send(java.net.DatagramPacket)" because "this.serverSocket" is null
+	at org.example.client.MessageSender.send(MessageSender.java:35)
+	at org.example.client.AbstractClient.sendMessage(AbstractClient.java:127)
+	at org.example.client.AbstractClient.sendAcknowledgeMessage(AbstractClient.java:116)
+	at org.example.messages.ClientFactory.handleInitialise(ClientFactory.java:63)
+	at org.example.events.EventBus.emit(EventBus.java:70)
+	at org.example.events.EventBus.lambda$new$0(EventBus.java:25)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+
+18:50:30.344 SEVERE: org.example.client.MessageSender <init> Error starting up server
+java.net.BindException: Address already in use: bind
+	at java.base/sun.nio.ch.Net.bind0(Native Method)
+	at java.base/sun.nio.ch.Net.bind(Net.java:565)
+	at java.base/sun.nio.ch.DatagramChannelImpl.bindInternal(DatagramChannelImpl.java:1329)
+	at java.base/sun.nio.ch.DatagramChannelImpl.bind(DatagramChannelImpl.java:1299)
+	at java.base/sun.nio.ch.DatagramSocketAdaptor.bind(DatagramSocketAdaptor.java:108)
+	at java.base/java.net.DatagramSocket.createDelegate(DatagramSocket.java:1425)
+	at java.base/java.net.DatagramSocket.<init>(DatagramSocket.java:328)
+	at java.base/java.net.DatagramSocket.<init>(DatagramSocket.java:387)
+	at java.base/java.net.DatagramSocket.<init>(DatagramSocket.java:353)
+	at org.example.client.MessageSender.<init>(MessageSender.java:24)
+	at org.example.messages.ClientFactory.handleInitialise(ClientFactory.java:36)
+	at org.example.events.EventBus.emit(EventBus.java:70)
+	at org.example.events.EventBus.lambda$new$0(EventBus.java:25)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+
+18:50:30.345 INFO: org.example.client.AbstractClient updateStatus Updated status for CP04 to OFF
+18:50:30.345 INFO: org.example.Database addClient Added CP04 to database
+18:50:30.346 SEVERE: org.example.messages.ClientFactory handleInitialise Failed to handle message
+18:50:30.346 SEVERE: org.example.messages.ClientFactory handleInitialise Exception: 
+java.lang.NullPointerException: Cannot invoke "java.net.DatagramSocket.send(java.net.DatagramPacket)" because "this.serverSocket" is null
+	at org.example.client.MessageSender.send(MessageSender.java:35)
+	at org.example.client.AbstractClient.sendMessage(AbstractClient.java:127)
+	at org.example.client.AbstractClient.sendAcknowledgeMessage(AbstractClient.java:116)
+	at org.example.messages.ClientFactory.handleInitialise(ClientFactory.java:63)
+	at org.example.events.EventBus.emit(EventBus.java:70)
+	at org.example.events.EventBus.lambda$new$0(EventBus.java:25)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+
+18:50:30.346 SEVERE: org.example.client.MessageSender <init> Error starting up server
+java.net.BindException: Address already in use: bind
+	at java.base/sun.nio.ch.Net.bind0(Native Method)
+	at java.base/sun.nio.ch.Net.bind(Net.java:565)
+	at java.base/sun.nio.ch.DatagramChannelImpl.bindInternal(DatagramChannelImpl.java:1329)
+	at java.base/sun.nio.ch.DatagramChannelImpl.bind(DatagramChannelImpl.java:1299)
+	at java.base/sun.nio.ch.DatagramSocketAdaptor.bind(DatagramSocketAdaptor.java:108)
+	at java.base/java.net.DatagramSocket.createDelegate(DatagramSocket.java:1425)
+	at java.base/java.net.DatagramSocket.<init>(DatagramSocket.java:328)
+	at java.base/java.net.DatagramSocket.<init>(DatagramSocket.java:387)
+	at java.base/java.net.DatagramSocket.<init>(DatagramSocket.java:353)
+	at org.example.client.MessageSender.<init>(MessageSender.java:24)
+	at org.example.messages.ClientFactory.handleInitialise(ClientFactory.java:36)
+	at org.example.events.EventBus.emit(EventBus.java:70)
+	at org.example.events.EventBus.lambda$new$0(EventBus.java:25)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+
+18:50:30.347 SEVERE: org.example.messages.ClientFactory handleInitialise Failed to handle message
+18:50:30.348 SEVERE: org.example.messages.ClientFactory handleInitialise Exception: 
+java.lang.NullPointerException: Cannot invoke "java.lang.Integer.intValue()" because "zone" is null
+	at org.example.messages.ClientFactory.handleInitialise(ClientFactory.java:52)
+	at org.example.events.EventBus.emit(EventBus.java:70)
+	at org.example.events.EventBus.lambda$new$0(EventBus.java:25)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+
+18:58:38.102 INFO: org.example.visualiser.CommandHandler run MCP online, please input a command, type help to see a list of commands
+18:58:38.167 INFO: org.example.state.SystemStateManager setState Changing to system state WAITING
+18:58:38.173 INFO: org.example.messages.Server <init> Server completed startup and listening on PORT: 3001
+18:58:38.284 INFO: org.example.messages.StatusScheduler start StatusScheduler started
+18:58:39.387 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+18:58:39.387 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+18:58:39.388 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+18:58:39.388 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+18:58:39.388 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+18:58:39.389 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+18:58:39.433 INFO: org.example.messages.MessageHandler lambda$handleCCPMessage$3 Received CCIN message from Blade Runner: BR01
+18:58:39.434 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$1 Received CPIN message from Checkpoint: CP01
+18:58:39.434 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$1 Received CPIN message from Checkpoint: CP02
+18:58:39.435 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$1 Received CPIN message from Checkpoint: CP03
+18:58:39.435 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$1 Received CPIN message from Checkpoint: CP04
+18:58:39.435 INFO: org.example.messages.MessageHandler lambda$handleSTCMessage$5 Received STIN message from Station: ST01
+18:58:39.437 INFO: org.example.client.AbstractClient updateStatus Updated status for BR01 to STOPC
+18:58:39.437 INFO: org.example.Database addClient Added BR01 to database
+18:58:39.449 INFO: org.example.messages.ClientFactory handleInitialise Initialised new client: BR01
+18:58:39.451 INFO: org.example.client.AbstractClient updateStatus Updated status for CP01 to OFF
+18:58:39.451 INFO: org.example.Database addClient Added CP01 to database
+18:58:39.452 INFO: org.example.messages.ClientFactory handleInitialise Initialised new client: CP01
+18:58:39.452 INFO: org.example.client.AbstractClient updateStatus Updated status for CP02 to OFF
+18:58:39.452 INFO: org.example.Database addClient Added CP02 to database
+18:58:39.453 INFO: org.example.messages.ClientFactory handleInitialise Initialised new client: CP02
+18:58:39.454 INFO: org.example.client.AbstractClient updateStatus Updated status for CP03 to OFF
+18:58:39.454 INFO: org.example.Database addClient Added CP03 to database
+18:58:39.455 INFO: org.example.messages.ClientFactory handleInitialise Initialised new client: CP03
+18:58:39.455 INFO: org.example.client.AbstractClient updateStatus Updated status for CP04 to OFF
+18:58:39.455 INFO: org.example.Database addClient Added CP04 to database
+18:58:39.456 INFO: org.example.messages.ClientFactory handleInitialise Initialised new client: CP04
+18:58:39.457 SEVERE: org.example.messages.ClientFactory handleInitialise Failed to handle message
+18:58:39.458 SEVERE: org.example.messages.ClientFactory handleInitialise Exception: 
+java.lang.NullPointerException: Cannot invoke "java.lang.Integer.intValue()" because "zone" is null
+	at org.example.messages.ClientFactory.handleInitialise(ClientFactory.java:53)
+	at org.example.events.EventBus.emit(EventBus.java:70)
+	at org.example.events.EventBus.lambda$new$0(EventBus.java:25)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+
+18:58:39.459 INFO: org.example.messages.Server send Sent AKIN to client at: BR01
+18:58:39.459 INFO: org.example.messages.Server send Sent AKIN to client at: CP01
+18:58:39.460 INFO: org.example.messages.Server send Sent AKIN to client at: CP02
+18:58:39.460 INFO: org.example.messages.Server send Sent AKIN to client at: CP03
+18:58:39.460 INFO: org.example.messages.Server send Sent AKIN to client at: CP04
+18:58:40.299 INFO: org.example.messages.Server send Sent STAT to client at: CP02
+18:58:40.300 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+18:58:40.300 INFO: org.example.client.AbstractClient updateStatus Updated status for CP02 to OFF
+18:58:40.300 INFO: org.example.messages.MessageHandler handleStatMessage Received STAT message from Client: CP02
+18:59:01.603 INFO: org.example.visualiser.CommandHandler run Command executed: start mapping
+18:59:05.703 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+18:59:05.703 INFO: org.example.client.AbstractClient updateStatus Updated status for CP01 to ON
+18:59:05.704 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$0 Received TRIP command from Checkpoint: CP01
+18:59:05.704 INFO: org.example.messages.Server send Sent AKTR to client at: CP01
+18:59:06.884 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+18:59:06.885 INFO: org.example.client.AbstractClient updateStatus Updated status for CP01 to OFF
+18:59:06.885 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$0 Received TRIP command from Checkpoint: CP01
+18:59:06.885 INFO: org.example.messages.Server send Sent AKTR to client at: CP01
+18:59:17.031 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+18:59:17.031 INFO: org.example.client.AbstractClient updateStatus Updated status for CP01 to ON
+18:59:17.031 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$0 Received TRIP command from Checkpoint: CP01
+18:59:17.032 INFO: org.example.messages.Server send Sent AKTR to client at: CP01
+18:59:19.347 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+18:59:19.347 INFO: org.example.client.AbstractClient updateStatus Updated status for CP01 to OFF
+18:59:19.348 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$0 Received TRIP command from Checkpoint: CP01
+18:59:19.348 INFO: org.example.messages.Server send Sent AKTR to client at: CP01
+18:59:53.714 INFO: org.example.visualiser.CommandHandler run MCP online, please input a command, type help to see a list of commands
+18:59:53.787 INFO: org.example.state.SystemStateManager setState Changing to system state WAITING
+18:59:53.796 INFO: org.example.messages.Server <init> Server completed startup and listening on PORT: 3001
+18:59:53.927 INFO: org.example.messages.StatusScheduler start StatusScheduler started
+18:59:58.060 INFO: org.example.visualiser.CommandHandler run MCP online, please input a command, type help to see a list of commands
+18:59:58.128 INFO: org.example.state.SystemStateManager setState Changing to system state WAITING
+18:59:58.135 INFO: org.example.messages.Server <init> Server completed startup and listening on PORT: 3001
+18:59:58.255 INFO: org.example.messages.StatusScheduler start StatusScheduler started
+19:00:01.380 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:00:01.381 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:00:01.382 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:00:01.382 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:00:01.382 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:00:01.422 INFO: org.example.messages.MessageHandler lambda$handleCCPMessage$3 Received CCIN message from Blade Runner: BR01
+19:00:01.423 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$1 Received CPIN message from Checkpoint: CP01
+19:00:01.423 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$1 Received CPIN message from Checkpoint: CP02
+19:00:01.424 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$1 Received CPIN message from Checkpoint: CP03
+19:00:01.424 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$1 Received CPIN message from Checkpoint: CP04
+19:00:01.425 INFO: org.example.client.AbstractClient updateStatus Updated status for BR01 to STOPC
+19:00:01.426 INFO: org.example.Database addClient Added BR01 to database
+19:00:01.436 INFO: org.example.messages.ClientFactory handleInitialise Initialised new client: BR01
+19:00:01.437 INFO: org.example.client.AbstractClient updateStatus Updated status for CP01 to OFF
+19:00:01.438 INFO: org.example.Database addClient Added CP01 to database
+19:00:01.439 INFO: org.example.messages.ClientFactory handleInitialise Initialised new client: CP01
+19:00:01.439 INFO: org.example.client.AbstractClient updateStatus Updated status for CP02 to OFF
+19:00:01.439 INFO: org.example.Database addClient Added CP02 to database
+19:00:01.440 INFO: org.example.messages.ClientFactory handleInitialise Initialised new client: CP02
+19:00:01.441 INFO: org.example.client.AbstractClient updateStatus Updated status for CP03 to OFF
+19:00:01.441 INFO: org.example.Database addClient Added CP03 to database
+19:00:01.442 INFO: org.example.messages.ClientFactory handleInitialise Initialised new client: CP03
+19:00:01.442 INFO: org.example.client.AbstractClient updateStatus Updated status for CP04 to OFF
+19:00:01.442 INFO: org.example.Database addClient Added CP04 to database
+19:00:01.443 INFO: org.example.messages.ClientFactory handleInitialise Initialised new client: CP04
+19:00:01.444 INFO: org.example.messages.Server send Sent AKIN to client at: BR01
+19:00:01.444 INFO: org.example.messages.Server send Sent AKIN to client at: CP01
+19:00:01.445 INFO: org.example.messages.Server send Sent AKIN to client at: CP02
+19:00:01.445 INFO: org.example.messages.Server send Sent AKIN to client at: CP03
+19:00:01.445 INFO: org.example.messages.Server send Sent AKIN to client at: CP04
+19:00:02.261 INFO: org.example.messages.Server send Sent STAT to client at: CP02
+19:00:02.262 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:00:02.262 INFO: org.example.client.AbstractClient updateStatus Updated status for CP02 to OFF
+19:00:02.262 INFO: org.example.messages.MessageHandler handleStatMessage Received STAT message from Client: CP02
+19:00:09.602 INFO: org.example.visualiser.CommandHandler run Command executed: start mapping
+19:00:12.045 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:00:12.045 INFO: org.example.client.AbstractClient updateStatus Updated status for CP01 to ON
+19:00:12.046 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$0 Received TRIP command from Checkpoint: CP01
+19:00:12.047 INFO: org.example.messages.Server send Sent AKTR to client at: CP01
+19:00:13.570 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:00:13.570 INFO: org.example.client.AbstractClient updateStatus Updated status for CP01 to OFF
+19:00:13.571 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$0 Received TRIP command from Checkpoint: CP01
+19:00:13.571 INFO: org.example.messages.Server send Sent AKTR to client at: CP01
+19:01:14.542 INFO: org.example.visualiser.CommandHandler run MCP online, please input a command, type help to see a list of commands
+19:01:14.615 INFO: org.example.state.SystemStateManager setState Changing to system state WAITING
+19:01:14.623 INFO: org.example.messages.Server <init> Server completed startup and listening on PORT: 3001
+19:01:14.754 INFO: org.example.messages.StatusScheduler start StatusScheduler started
+19:01:17.652 INFO: org.example.visualiser.CommandHandler run MCP online, please input a command, type help to see a list of commands
+19:01:17.725 INFO: org.example.state.SystemStateManager setState Changing to system state WAITING
+19:01:21.897 INFO: org.example.messages.Server <init> Server completed startup and listening on PORT: 3001
+19:01:23.309 INFO: org.example.visualiser.CommandHandler run MCP online, please input a command, type help to see a list of commands
+19:01:23.381 INFO: org.example.state.SystemStateManager setState Changing to system state WAITING
+19:01:23.395 INFO: org.example.messages.Server <init> Server completed startup and listening on PORT: 3001
+19:01:23.532 INFO: org.example.messages.StatusScheduler start StatusScheduler started
+19:01:27.472 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:01:27.472 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:01:27.473 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:01:27.473 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:01:27.473 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:01:27.522 INFO: org.example.messages.MessageHandler lambda$handleCCPMessage$3 Received CCIN message from Blade Runner: BR01
+19:01:27.523 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$1 Received CPIN message from Checkpoint: CP01
+19:01:27.523 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$1 Received CPIN message from Checkpoint: CP02
+19:01:27.524 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$1 Received CPIN message from Checkpoint: CP03
+19:01:27.524 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$1 Received CPIN message from Checkpoint: CP04
+19:01:27.526 INFO: org.example.client.AbstractClient updateStatus Updated status for BR01 to STOPC
+19:01:27.527 INFO: org.example.Database addClient Added BR01 to database
+19:01:27.539 INFO: org.example.messages.ClientFactory handleInitialise Initialised new client: BR01
+19:01:27.540 INFO: org.example.client.AbstractClient updateStatus Updated status for CP01 to OFF
+19:01:27.541 INFO: org.example.Database addClient Added CP01 to database
+19:01:27.542 INFO: org.example.messages.ClientFactory handleInitialise Initialised new client: CP01
+19:01:27.542 INFO: org.example.client.AbstractClient updateStatus Updated status for CP02 to OFF
+19:01:27.543 INFO: org.example.Database addClient Added CP02 to database
+19:01:27.543 INFO: org.example.messages.ClientFactory handleInitialise Initialised new client: CP02
+19:01:27.544 INFO: org.example.client.AbstractClient updateStatus Updated status for CP03 to OFF
+19:01:27.544 INFO: org.example.Database addClient Added CP03 to database
+19:01:27.545 INFO: org.example.messages.ClientFactory handleInitialise Initialised new client: CP03
+19:01:27.545 INFO: org.example.client.AbstractClient updateStatus Updated status for CP04 to OFF
+19:01:27.545 INFO: org.example.Database addClient Added CP04 to database
+19:01:27.546 INFO: org.example.messages.ClientFactory handleInitialise Initialised new client: CP04
+19:01:27.546 INFO: org.example.messages.Server send Sent AKIN to client at: BR01
+19:01:27.547 INFO: org.example.messages.Server send Sent STAT to client at: BR01
+19:01:27.547 INFO: org.example.messages.Server send Sent AKIN to client at: CP01
+19:01:27.548 INFO: org.example.messages.Server send Sent AKIN to client at: CP02
+19:01:27.548 INFO: org.example.messages.Server send Sent AKIN to client at: CP03
+19:01:27.548 INFO: org.example.messages.Server send Sent AKIN to client at: CP04
+19:01:27.584 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:01:27.584 INFO: org.example.client.AbstractClient updateStatus Updated status for BR01 to STOPC
+19:01:27.584 INFO: org.example.messages.MessageHandler handleStatMessage Received STAT message from Client: BR01
+19:01:30.918 INFO: org.example.visualiser.CommandHandler run Command executed: start mapping
+19:01:33.509 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:01:33.510 INFO: org.example.client.AbstractClient updateStatus Updated status for CP01 to ON
+19:01:47.319 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$0 Received TRIP command from Checkpoint: CP01
+19:01:47.322 INFO: org.example.messages.Server send Sent AKTR to client at: CP01
+19:02:18.905 INFO: org.example.visualiser.CommandHandler run MCP online, please input a command, type help to see a list of commands
+19:02:18.977 INFO: org.example.state.SystemStateManager setState Changing to system state WAITING
+19:02:21.354 INFO: org.example.messages.Server <init> Server completed startup and listening on PORT: 3001
+19:02:21.471 INFO: org.example.messages.StatusScheduler start StatusScheduler started
+19:02:27.318 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:02:29.130 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:02:29.130 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:02:29.130 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:02:29.131 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:02:29.176 INFO: org.example.messages.MessageHandler lambda$handleCCPMessage$3 Received CCIN message from Blade Runner: BR01
+19:02:29.570 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$1 Received CPIN message from Checkpoint: CP01
+19:02:29.950 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$1 Received CPIN message from Checkpoint: CP02
+19:02:30.150 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$1 Received CPIN message from Checkpoint: CP03
+19:02:30.344 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$1 Received CPIN message from Checkpoint: CP04
+19:02:30.507 INFO: org.example.client.AbstractClient updateStatus Updated status for BR01 to STOPC
+19:02:30.508 INFO: org.example.Database addClient Added BR01 to database
+19:02:30.522 INFO: org.example.messages.ClientFactory handleInitialise Initialised new client: BR01
+19:02:31.101 INFO: org.example.client.AbstractClient updateStatus Updated status for CP01 to OFF
+19:02:31.101 INFO: org.example.Database addClient Added CP01 to database
+19:02:31.102 INFO: org.example.messages.ClientFactory handleInitialise Initialised new client: CP01
+19:02:31.499 INFO: org.example.client.AbstractClient updateStatus Updated status for CP02 to OFF
+19:02:31.499 INFO: org.example.Database addClient Added CP02 to database
+19:02:31.500 INFO: org.example.messages.ClientFactory handleInitialise Initialised new client: CP02
+19:02:31.921 INFO: org.example.client.AbstractClient updateStatus Updated status for CP03 to OFF
+19:02:31.922 INFO: org.example.Database addClient Added CP03 to database
+19:02:31.923 INFO: org.example.messages.ClientFactory handleInitialise Initialised new client: CP03
+19:02:32.341 INFO: org.example.client.AbstractClient updateStatus Updated status for CP04 to OFF
+19:02:32.342 INFO: org.example.Database addClient Added CP04 to database
+19:02:32.343 INFO: org.example.messages.ClientFactory handleInitialise Initialised new client: CP04
+19:02:33.193 INFO: org.example.messages.Server send Sent AKIN to client at: BR01
+19:02:34.711 INFO: org.example.messages.Server send Sent AKIN to client at: CP01
+19:02:37.894 INFO: org.example.messages.Server send Sent STAT to client at: CP01
+19:02:37.895 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:02:42.129 INFO: org.example.messages.Server send Sent AKIN to client at: CP02
+19:02:43.173 INFO: org.example.messages.Server send Sent AKIN to client at: CP03
+19:02:44.303 INFO: org.example.messages.Server send Sent AKIN to client at: CP04
+19:03:24.318 INFO: org.example.client.AbstractClient updateStatus Updated status for CP01 to OFF
+19:03:24.318 INFO: org.example.messages.MessageHandler handleStatMessage Received STAT message from Client: CP01
+19:03:33.053 INFO: org.example.visualiser.CommandHandler run Command executed: start mapping
+19:03:37.033 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:03:50.539 INFO: org.example.client.AbstractClient updateStatus Updated status for CP01 to ON
+19:03:56.528 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$0 Received TRIP command from Checkpoint: CP01
+19:04:03.414 INFO: org.example.messages.Server send Sent AKTR to client at: CP01
+19:04:29.202 INFO: org.example.visualiser.CommandHandler run MCP online, please input a command, type help to see a list of commands
+19:04:29.291 INFO: org.example.state.SystemStateManager setState Changing to system state WAITING
+19:04:31.926 INFO: org.example.messages.Server <init> Server completed startup and listening on PORT: 3001
+19:04:32.275 INFO: org.example.messages.StatusScheduler start StatusScheduler started
+19:04:56.202 INFO: org.example.visualiser.CommandHandler run MCP online, please input a command, type help to see a list of commands
+19:04:56.295 INFO: org.example.state.SystemStateManager setState Changing to system state WAITING
+19:04:56.310 INFO: org.example.messages.Server <init> Server completed startup and listening on PORT: 3001
+19:04:56.499 INFO: org.example.messages.StatusScheduler start StatusScheduler started
+19:05:01.662 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:05:01.663 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:05:01.663 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:05:01.664 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:05:01.664 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:05:01.758 INFO: org.example.messages.MessageHandler lambda$handleCCPMessage$3 Received CCIN message from Blade Runner: BR01
+19:05:01.760 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$1 Received CPIN message from Checkpoint: CP01
+19:05:01.760 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$1 Received CPIN message from Checkpoint: CP02
+19:05:01.761 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$1 Received CPIN message from Checkpoint: CP03
+19:05:01.761 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$1 Received CPIN message from Checkpoint: CP04
+19:05:01.764 INFO: org.example.client.AbstractClient updateStatus Updated status for BR01 to STOPC
+19:05:01.764 INFO: org.example.Database addClient Added BR01 to database
+19:05:01.783 INFO: org.example.messages.ClientFactory handleInitialise Initialised new client: BR01
+19:05:01.786 INFO: org.example.client.AbstractClient updateStatus Updated status for CP01 to OFF
+19:05:01.786 INFO: org.example.Database addClient Added CP01 to database
+19:05:01.787 INFO: org.example.messages.ClientFactory handleInitialise Initialised new client: CP01
+19:05:01.787 INFO: org.example.client.AbstractClient updateStatus Updated status for CP02 to OFF
+19:05:01.788 INFO: org.example.Database addClient Added CP02 to database
+19:05:01.788 INFO: org.example.messages.ClientFactory handleInitialise Initialised new client: CP02
+19:05:01.789 INFO: org.example.client.AbstractClient updateStatus Updated status for CP03 to OFF
+19:05:01.789 INFO: org.example.Database addClient Added CP03 to database
+19:05:01.790 INFO: org.example.messages.ClientFactory handleInitialise Initialised new client: CP03
+19:05:01.790 INFO: org.example.client.AbstractClient updateStatus Updated status for CP04 to OFF
+19:05:01.790 INFO: org.example.Database addClient Added CP04 to database
+19:05:01.791 INFO: org.example.messages.ClientFactory handleInitialise Initialised new client: CP04
+19:05:01.791 INFO: org.example.messages.Server send Sent AKIN to client at: BR01
+19:05:01.792 INFO: org.example.messages.Server send Sent AKIN to client at: CP01
+19:05:01.792 INFO: org.example.messages.Server send Sent AKIN to client at: CP02
+19:05:01.792 INFO: org.example.messages.Server send Sent AKIN to client at: CP03
+19:05:01.792 INFO: org.example.messages.Server send Sent AKIN to client at: CP04
+19:05:02.515 INFO: org.example.messages.Server send Sent STAT to client at: CP02
+19:05:02.516 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:05:02.516 INFO: org.example.client.AbstractClient updateStatus Updated status for CP02 to OFF
+19:05:02.516 INFO: org.example.messages.MessageHandler handleStatMessage Received STAT message from Client: CP02
+19:05:07.136 INFO: org.example.visualiser.CommandHandler run Command executed: start mapping
+19:05:08.853 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:05:08.854 INFO: org.example.client.AbstractClient updateStatus Updated status for CP01 to ON
+19:05:10.841 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$0 Received TRIP command from Checkpoint: CP01
+19:05:10.842 INFO: org.example.messages.Server send Sent AKTR to client at: CP01
+19:07:32.830 INFO: org.example.visualiser.CommandHandler run MCP online, please input a command, type help to see a list of commands
+19:07:32.901 INFO: org.example.state.SystemStateManager setState Changing to system state WAITING
+19:07:32.908 INFO: org.example.messages.Server <init> Server completed startup and listening on PORT: 3001
+19:07:33.031 INFO: org.example.messages.StatusScheduler start StatusScheduler started
+19:07:39.520 INFO: org.example.visualiser.CommandHandler run MCP online, please input a command, type help to see a list of commands
+19:07:39.593 INFO: org.example.state.SystemStateManager setState Changing to system state WAITING
+19:07:39.608 INFO: org.example.messages.Server <init> Server completed startup and listening on PORT: 3001
+19:07:39.798 INFO: org.example.messages.StatusScheduler start StatusScheduler started
+19:07:44.838 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:07:44.838 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:07:44.839 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:07:44.839 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:07:44.840 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:07:44.933 INFO: org.example.messages.MessageHandler lambda$handleCCPMessage$3 Received CCIN message from Blade Runner: BR01
+19:07:44.935 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$1 Received CPIN message from Checkpoint: CP01
+19:07:44.935 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$1 Received CPIN message from Checkpoint: CP02
+19:07:44.936 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$1 Received CPIN message from Checkpoint: CP03
+19:07:44.936 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$1 Received CPIN message from Checkpoint: CP04
+19:07:44.940 INFO: org.example.client.AbstractClient updateStatus Updated status for BR01 to STOPC
+19:07:44.941 INFO: org.example.Database addClient Added BR01 to database
+19:07:44.964 INFO: org.example.messages.ClientFactory handleInitialise Initialised new client: BR01
+19:07:44.967 INFO: org.example.client.AbstractClient updateStatus Updated status for CP01 to OFF
+19:07:44.967 INFO: org.example.Database addClient Added CP01 to database
+19:07:44.968 INFO: org.example.messages.ClientFactory handleInitialise Initialised new client: CP01
+19:07:44.968 INFO: org.example.client.AbstractClient updateStatus Updated status for CP02 to OFF
+19:07:44.969 INFO: org.example.Database addClient Added CP02 to database
+19:07:44.969 INFO: org.example.messages.ClientFactory handleInitialise Initialised new client: CP02
+19:07:44.970 INFO: org.example.client.AbstractClient updateStatus Updated status for CP03 to OFF
+19:07:44.970 INFO: org.example.Database addClient Added CP03 to database
+19:07:44.970 INFO: org.example.messages.ClientFactory handleInitialise Initialised new client: CP03
+19:07:44.971 INFO: org.example.client.AbstractClient updateStatus Updated status for CP04 to OFF
+19:07:44.971 INFO: org.example.Database addClient Added CP04 to database
+19:07:44.971 INFO: org.example.messages.ClientFactory handleInitialise Initialised new client: CP04
+19:07:44.972 INFO: org.example.messages.Server send Sent AKIN to client at: BR01
+19:07:44.972 INFO: org.example.messages.Server send Sent AKIN to client at: CP01
+19:07:44.973 INFO: org.example.messages.Server send Sent AKIN to client at: CP02
+19:07:44.974 INFO: org.example.messages.Server send Sent AKIN to client at: CP03
+19:07:44.974 INFO: org.example.messages.Server send Sent AKIN to client at: CP04
+19:07:45.806 INFO: org.example.messages.Server send Sent STAT to client at: CP02
+19:07:45.806 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:07:45.807 INFO: org.example.client.AbstractClient updateStatus Updated status for CP02 to OFF
+19:07:45.807 INFO: org.example.messages.MessageHandler handleStatMessage Received STAT message from Client: CP02
+19:07:51.359 INFO: org.example.visualiser.CommandHandler run Command executed: start mapping
+19:07:53.123 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:07:53.124 INFO: org.example.client.AbstractClient updateStatus Updated status for CP01 to ON
+19:08:04.949 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$0 Received TRIP command from Checkpoint: CP01
+19:09:11.127 INFO: org.example.messages.Server send Sent AKTR to client at: CP01
+19:09:18.388 INFO: org.example.visualiser.CommandHandler run MCP online, please input a command, type help to see a list of commands
+19:09:18.465 INFO: org.example.state.SystemStateManager setState Changing to system state WAITING
+19:09:18.479 INFO: org.example.messages.Server <init> Server completed startup and listening on PORT: 3001
+19:09:18.657 INFO: org.example.messages.StatusScheduler start StatusScheduler started
+19:09:25.760 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:09:25.761 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:09:25.761 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:09:25.762 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:09:25.762 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:09:25.851 INFO: org.example.messages.MessageHandler lambda$handleCCPMessage$3 Received CCIN message from Blade Runner: BR01
+19:09:25.853 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$1 Received CPIN message from Checkpoint: CP01
+19:09:25.853 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$1 Received CPIN message from Checkpoint: CP02
+19:09:25.853 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$1 Received CPIN message from Checkpoint: CP03
+19:09:25.854 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$1 Received CPIN message from Checkpoint: CP04
+19:09:25.857 INFO: org.example.client.AbstractClient updateStatus Updated status for BR01 to STOPC
+19:09:25.857 INFO: org.example.Database addClient Added BR01 to database
+19:09:25.876 INFO: org.example.messages.ClientFactory handleInitialise Initialised new client: BR01
+19:09:25.878 INFO: org.example.client.AbstractClient updateStatus Updated status for CP01 to OFF
+19:09:25.878 INFO: org.example.Database addClient Added CP01 to database
+19:09:25.879 INFO: org.example.messages.ClientFactory handleInitialise Initialised new client: CP01
+19:09:25.880 INFO: org.example.client.AbstractClient updateStatus Updated status for CP02 to OFF
+19:09:25.880 INFO: org.example.Database addClient Added CP02 to database
+19:09:25.881 INFO: org.example.messages.ClientFactory handleInitialise Initialised new client: CP02
+19:09:25.881 INFO: org.example.client.AbstractClient updateStatus Updated status for CP03 to OFF
+19:09:25.881 INFO: org.example.Database addClient Added CP03 to database
+19:09:25.882 INFO: org.example.messages.ClientFactory handleInitialise Initialised new client: CP03
+19:09:25.882 INFO: org.example.client.AbstractClient updateStatus Updated status for CP04 to OFF
+19:09:25.882 INFO: org.example.Database addClient Added CP04 to database
+19:09:25.883 INFO: org.example.messages.ClientFactory handleInitialise Initialised new client: CP04
+19:09:25.883 INFO: org.example.messages.Server send Sent AKIN to client at: BR01
+19:09:25.883 INFO: org.example.messages.Server send Sent AKIN to client at: CP01
+19:09:25.883 INFO: org.example.messages.Server send Sent AKIN to client at: CP02
+19:09:25.883 INFO: org.example.messages.Server send Sent AKIN to client at: CP03
+19:09:25.884 INFO: org.example.messages.Server send Sent AKIN to client at: CP04
+19:09:26.673 INFO: org.example.messages.Server send Sent STAT to client at: CP02
+19:09:26.673 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:09:26.673 INFO: org.example.client.AbstractClient updateStatus Updated status for CP02 to OFF
+19:09:26.674 INFO: org.example.messages.MessageHandler handleStatMessage Received STAT message from Client: CP02
+19:09:29.400 INFO: org.example.visualiser.CommandHandler run Command executed: start mapping
+19:09:35.410 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:09:35.411 INFO: org.example.client.AbstractClient updateStatus Updated status for CP01 to ON
+19:09:56.304 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$0 Received TRIP command from Checkpoint: CP01
+19:13:23.992 INFO: org.example.messages.Server send Sent AKTR to client at: CP01
+19:13:40.296 INFO: org.example.visualiser.CommandHandler run MCP online, please input a command, type help to see a list of commands
+19:13:40.386 INFO: org.example.state.SystemStateManager setState Changing to system state WAITING
+19:13:40.393 INFO: org.example.messages.Server <init> Server completed startup and listening on PORT: 3001
+19:13:40.531 INFO: org.example.messages.StatusScheduler start StatusScheduler started
+19:14:00.142 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:14:00.143 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:14:00.144 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:14:00.144 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:14:00.145 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:14:00.194 INFO: org.example.messages.MessageHandler lambda$handleCCPMessage$3 Received CCIN message from Blade Runner: BR01
+19:14:00.196 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$1 Received CPIN message from Checkpoint: CP01
+19:14:00.197 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$1 Received CPIN message from Checkpoint: CP02
+19:14:00.198 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$1 Received CPIN message from Checkpoint: CP03
+19:14:00.198 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$1 Received CPIN message from Checkpoint: CP04
+19:14:00.200 INFO: org.example.client.AbstractClient updateStatus Updated status for BR01 to STOPC
+19:14:00.201 INFO: org.example.Database addClient Added BR01 to database
+19:14:00.219 INFO: org.example.messages.ClientFactory handleInitialise Initialised new client: BR01
+19:14:00.221 INFO: org.example.client.AbstractClient updateStatus Updated status for CP01 to OFF
+19:14:00.221 INFO: org.example.Database addClient Added CP01 to database
+19:14:00.222 INFO: org.example.messages.ClientFactory handleInitialise Initialised new client: CP01
+19:14:00.223 INFO: org.example.client.AbstractClient updateStatus Updated status for CP02 to OFF
+19:14:00.223 INFO: org.example.Database addClient Added CP02 to database
+19:14:00.224 INFO: org.example.messages.ClientFactory handleInitialise Initialised new client: CP02
+19:14:00.224 INFO: org.example.client.AbstractClient updateStatus Updated status for CP03 to OFF
+19:14:00.225 INFO: org.example.Database addClient Added CP03 to database
+19:14:00.226 INFO: org.example.messages.ClientFactory handleInitialise Initialised new client: CP03
+19:14:00.226 INFO: org.example.client.AbstractClient updateStatus Updated status for CP04 to OFF
+19:14:00.226 INFO: org.example.Database addClient Added CP04 to database
+19:14:00.227 INFO: org.example.messages.ClientFactory handleInitialise Initialised new client: CP04
+19:14:00.228 INFO: org.example.messages.Server send Sent AKIN to client at: BR01
+19:14:00.228 INFO: org.example.messages.Server send Sent AKIN to client at: CP01
+19:14:00.229 INFO: org.example.messages.Server send Sent AKIN to client at: CP02
+19:14:00.229 INFO: org.example.messages.Server send Sent AKIN to client at: CP03
+19:14:00.230 INFO: org.example.messages.Server send Sent AKIN to client at: CP04
+19:14:00.539 INFO: org.example.messages.Server send Sent STAT to client at: CP02
+19:14:00.540 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:14:00.541 INFO: org.example.client.AbstractClient updateStatus Updated status for CP02 to OFF
+19:14:00.541 INFO: org.example.messages.MessageHandler handleStatMessage Received STAT message from Client: CP02
+19:14:04.294 INFO: org.example.visualiser.CommandHandler run Command executed: start mapping
+19:14:05.873 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:14:05.875 INFO: org.example.client.AbstractClient updateStatus Updated status for CP01 to ON
+19:14:05.876 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$0 Received TRIP command from Checkpoint: CP01
+19:14:05.876 WARNING: org.example.Processor checkpointTripped Sent to mapping state
+19:14:05.877 INFO: org.example.messages.Server send Sent AKTR to client at: CP01
+19:14:07.660 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:14:07.660 INFO: org.example.client.AbstractClient updateStatus Updated status for CP01 to OFF
+19:14:07.661 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$0 Received TRIP command from Checkpoint: CP01
+19:14:07.661 WARNING: org.example.Processor checkpointTripped Sent to mapping state
+19:14:07.661 INFO: org.example.messages.Server send Sent AKTR to client at: CP01
+19:23:45.384 INFO: org.example.state.WaitingState performOperation Timeout state has occured
+19:23:45.385 INFO: org.example.state.SystemStateManager setState Changing to system state MAPPING
+19:23:47.386 INFO: org.example.state.MappingState sendBladeRunnerToNextCheckpoint  moving BR01
+19:23:47.391 INFO: org.example.messages.Server send Sent EXEC to client at: BR01
+19:24:17.390 INFO: org.example.state.MappingState sendBladeRunnerToNextCheckpoint retry moving BR01
+19:24:17.390 INFO: org.example.messages.Server send Sent EXEC to client at: BR01
+19:24:32.390 INFO: org.example.state.MappingState sendBladeRunnerToNextCheckpoint retry moving BR01
+19:24:32.390 INFO: org.example.messages.Server send Sent EXEC to client at: BR01
+19:24:47.390 INFO: org.example.state.MappingState sendBladeRunnerToNextCheckpoint retry moving BR01
+19:24:47.390 INFO: org.example.messages.Server send Sent EXEC to client at: BR01
+19:24:47.890 SEVERE: org.example.state.MappingState checkIfBladeRunnerIsDead Blade runner failed to be mapped in time
+19:24:47.890 INFO: org.example.client.AbstractClient addReason Added reason MAPTIMEOUT
+19:24:47.890 WARNING: org.example.state.SystemStateManager addUnresponsiveClient Client BR01 has MAPTIMEOUT
+19:24:47.891 WARNING: org.example.state.SystemStateManager checkChange Error detected while in state MAPPING
+19:24:47.891 INFO: org.example.state.SystemStateManager setState Changing to system state EMERGENCY
+19:24:48.890 INFO: org.example.messages.Server send Sent EXEC to client at: BR01
+19:24:53.891 INFO: org.example.messages.Server send Sent EXEC to client at: BR01
+19:24:58.891 INFO: org.example.messages.Server send Sent EXEC to client at: BR01
+19:25:03.891 INFO: org.example.messages.Server send Sent EXEC to client at: BR01
+19:25:08.891 INFO: org.example.messages.Server send Sent EXEC to client at: BR01
+19:25:13.891 INFO: org.example.messages.Server send Sent EXEC to client at: BR01
+19:25:18.891 INFO: org.example.messages.Server send Sent EXEC to client at: BR01
+19:25:23.891 INFO: org.example.messages.Server send Sent EXEC to client at: BR01
+19:25:28.891 INFO: org.example.messages.Server send Sent EXEC to client at: BR01
+19:25:33.891 INFO: org.example.messages.Server send Sent EXEC to client at: BR01
+19:25:38.891 INFO: org.example.messages.Server send Sent EXEC to client at: BR01
+19:25:43.891 INFO: org.example.messages.Server send Sent EXEC to client at: BR01
+19:25:48.891 INFO: org.example.messages.Server send Sent EXEC to client at: BR01
+19:25:53.891 INFO: org.example.messages.Server send Sent EXEC to client at: BR01
+19:25:58.891 INFO: org.example.messages.Server send Sent EXEC to client at: BR01
+19:26:03.891 INFO: org.example.messages.Server send Sent EXEC to client at: BR01
+19:26:08.892 INFO: org.example.messages.Server send Sent EXEC to client at: BR01
+19:26:13.892 INFO: org.example.messages.Server send Sent EXEC to client at: BR01
+19:26:18.892 INFO: org.example.messages.Server send Sent EXEC to client at: BR01
+19:26:23.892 INFO: org.example.messages.Server send Sent EXEC to client at: BR01
+19:26:28.892 INFO: org.example.messages.Server send Sent EXEC to client at: BR01
+19:26:33.892 INFO: org.example.messages.Server send Sent EXEC to client at: BR01
+19:26:38.892 INFO: org.example.messages.Server send Sent EXEC to client at: BR01
+19:26:43.892 INFO: org.example.messages.Server send Sent EXEC to client at: BR01
+19:26:48.892 INFO: org.example.messages.Server send Sent EXEC to client at: BR01
+19:26:53.892 INFO: org.example.messages.Server send Sent EXEC to client at: BR01
+19:26:58.892 INFO: org.example.messages.Server send Sent EXEC to client at: BR01
+19:27:03.892 INFO: org.example.messages.Server send Sent EXEC to client at: BR01
+19:27:08.892 INFO: org.example.messages.Server send Sent EXEC to client at: BR01
+19:27:13.892 INFO: org.example.messages.Server send Sent EXEC to client at: BR01
+19:27:18.892 INFO: org.example.messages.Server send Sent EXEC to client at: BR01
+19:27:23.892 INFO: org.example.messages.Server send Sent EXEC to client at: BR01
+19:27:28.892 INFO: org.example.messages.Server send Sent EXEC to client at: BR01
+19:27:33.892 INFO: org.example.messages.Server send Sent EXEC to client at: BR01
+19:27:38.892 INFO: org.example.messages.Server send Sent EXEC to client at: BR01
+19:27:43.892 INFO: org.example.messages.Server send Sent EXEC to client at: BR01
+19:27:48.892 INFO: org.example.messages.Server send Sent EXEC to client at: BR01
+19:27:53.892 INFO: org.example.messages.Server send Sent EXEC to client at: BR01
+19:27:58.892 INFO: org.example.messages.Server send Sent EXEC to client at: BR01
+19:28:03.892 INFO: org.example.messages.Server send Sent EXEC to client at: BR01
+19:28:08.892 INFO: org.example.messages.Server send Sent EXEC to client at: BR01
+19:28:13.892 INFO: org.example.messages.Server send Sent EXEC to client at: BR01
+19:28:18.892 INFO: org.example.messages.Server send Sent EXEC to client at: BR01
+19:28:23.892 INFO: org.example.messages.Server send Sent EXEC to client at: BR01
+19:28:28.892 INFO: org.example.messages.Server send Sent EXEC to client at: BR01
+19:28:33.892 INFO: org.example.messages.Server send Sent EXEC to client at: BR01
+19:28:38.892 INFO: org.example.messages.Server send Sent EXEC to client at: BR01
+19:28:43.892 INFO: org.example.messages.Server send Sent EXEC to client at: BR01
+19:28:48.892 INFO: org.example.messages.Server send Sent EXEC to client at: BR01
+19:28:53.892 INFO: org.example.messages.Server send Sent EXEC to client at: BR01
+19:28:58.892 INFO: org.example.messages.Server send Sent EXEC to client at: BR01
+19:29:03.892 INFO: org.example.messages.Server send Sent EXEC to client at: BR01
+19:29:08.892 INFO: org.example.messages.Server send Sent EXEC to client at: BR01
+19:29:13.892 INFO: org.example.messages.Server send Sent EXEC to client at: BR01
+19:29:18.892 INFO: org.example.messages.Server send Sent EXEC to client at: BR01
+19:29:23.892 INFO: org.example.messages.Server send Sent EXEC to client at: BR01
+19:29:28.892 INFO: org.example.messages.Server send Sent EXEC to client at: BR01
+19:29:33.892 INFO: org.example.messages.Server send Sent EXEC to client at: BR01
+19:29:38.892 INFO: org.example.messages.Server send Sent EXEC to client at: BR01
+19:29:43.892 INFO: org.example.messages.Server send Sent EXEC to client at: BR01
+19:29:47.892 INFO: org.example.messages.Server send Sent EXEC to client at: BR01
+19:34:47.893 INFO: org.example.state.SystemStateManager setState Changing to system state MAPPING
+19:34:49.893 WARNING: org.example.state.MappingState mapClients No BladeRunners to map
+19:34:49.893 INFO: org.example.state.SystemStateManager setState Changing to system state RUNNING
+19:49:08.823 INFO: org.example.visualiser.CommandHandler run MCP online, please input a command, type help to see a list of commands
+19:49:08.935 INFO: org.example.state.SystemStateManager setState Changing to system state WAITING
+19:49:08.958 INFO: org.example.messages.Server <init> Server completed startup and listening on PORT: 3001
+19:49:09.185 INFO: org.example.messages.StatusScheduler start StatusScheduler started
+19:49:13.926 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:49:13.927 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:49:13.928 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:49:13.928 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:49:13.929 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:49:14.045 INFO: org.example.messages.MessageHandler lambda$handleCCPMessage$3 Received CCIN message from Blade Runner: BR01
+19:49:14.046 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$1 Received CPIN message from Checkpoint: CP01
+19:49:14.047 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$1 Received CPIN message from Checkpoint: CP02
+19:49:14.048 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$1 Received CPIN message from Checkpoint: CP03
+19:49:14.048 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$1 Received CPIN message from Checkpoint: CP04
+19:49:14.053 INFO: org.example.client.AbstractClient updateStatus Updated status for BR01 to STOPC
+19:49:14.053 INFO: org.example.Database addClient Added BR01 to database
+19:49:14.078 INFO: org.example.messages.ClientFactory handleInitialise Initialised new client: BR01
+19:49:14.080 INFO: org.example.client.AbstractClient updateStatus Updated status for CP01 to OFF
+19:49:14.081 INFO: org.example.Database addClient Added CP01 to database
+19:49:14.083 INFO: org.example.messages.ClientFactory handleInitialise Initialised new client: CP01
+19:49:14.083 SEVERE: org.example.messages.ClientFactory handleInitialise Failed to handle message
+19:49:14.083 SEVERE: org.example.messages.ClientFactory handleInitialise Exception: 
+java.lang.NullPointerException: Cannot invoke "java.lang.Integer.intValue()" because "zone" is null
+	at org.example.messages.ClientFactory.handleInitialise(ClientFactory.java:47)
+	at org.example.events.EventBus.emit(EventBus.java:70)
+	at org.example.events.EventBus.lambda$new$0(EventBus.java:25)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+
+19:49:14.088 INFO: org.example.client.AbstractClient updateStatus Updated status for CP03 to OFF
+19:49:14.089 INFO: org.example.Database addClient Added CP03 to database
+19:49:14.090 INFO: org.example.messages.ClientFactory handleInitialise Initialised new client: CP03
+19:49:14.090 INFO: org.example.client.AbstractClient updateStatus Updated status for CP04 to OFF
+19:49:14.090 INFO: org.example.Database addClient Added CP04 to database
+19:49:14.091 INFO: org.example.messages.ClientFactory handleInitialise Initialised new client: CP04
+19:49:14.092 INFO: org.example.messages.Server send Sent AKIN to client at: BR01
+19:49:14.092 INFO: org.example.messages.Server send Sent AKIN to client at: CP01
+19:49:14.093 INFO: org.example.messages.Server send Sent AKIN to client at: CP03
+19:49:14.093 INFO: org.example.messages.Server send Sent AKIN to client at: CP04
+19:49:15.188 INFO: org.example.messages.Server send Sent STAT to client at: CP01
+19:49:15.189 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:49:15.189 INFO: org.example.client.AbstractClient updateStatus Updated status for CP01 to OFF
+19:49:15.189 INFO: org.example.messages.MessageHandler handleStatMessage Received STAT message from Client: CP01
+19:49:20.220 INFO: org.example.visualiser.CommandHandler run Command executed: start mapping
+19:49:22.285 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:49:22.287 INFO: org.example.client.AbstractClient updateStatus Updated status for CP01 to ON
+19:49:27.726 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$0 Received TRIP command from Checkpoint: CP01
+19:49:36.075 WARNING: org.example.Processor checkpointTripped Sent to mapping state
+19:49:36.077 INFO: org.example.messages.Server send Sent AKTR to client at: CP01
+19:49:42.362 INFO: org.example.visualiser.CommandHandler run MCP online, please input a command, type help to see a list of commands
+19:49:42.448 INFO: org.example.state.SystemStateManager setState Changing to system state WAITING
+19:49:42.466 INFO: org.example.messages.Server <init> Server completed startup and listening on PORT: 3001
+19:49:42.669 INFO: org.example.messages.StatusScheduler start StatusScheduler started
+19:49:51.330 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:49:51.331 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:49:51.331 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:49:51.331 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:49:51.331 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:49:51.438 INFO: org.example.messages.MessageHandler lambda$handleCCPMessage$3 Received CCIN message from Blade Runner: BR01
+19:49:51.440 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$1 Received CPIN message from Checkpoint: CP01
+19:49:51.441 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$1 Received CPIN message from Checkpoint: CP02
+19:49:51.441 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$1 Received CPIN message from Checkpoint: CP03
+19:49:51.441 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$1 Received CPIN message from Checkpoint: CP04
+19:49:51.445 INFO: org.example.client.AbstractClient updateStatus Updated status for BR01 to STOPC
+19:49:51.445 INFO: org.example.Database addClient Added BR01 to database
+19:49:51.469 INFO: org.example.messages.ClientFactory handleInitialise Initialised new client: BR01
+19:49:51.471 INFO: org.example.client.AbstractClient updateStatus Updated status for CP01 to OFF
+19:49:51.472 INFO: org.example.Database addClient Added CP01 to database
+19:49:51.473 INFO: org.example.messages.ClientFactory handleInitialise Initialised new client: CP01
+19:49:51.474 SEVERE: org.example.messages.ClientFactory handleInitialise Failed to handle message
+19:49:51.474 SEVERE: org.example.messages.ClientFactory handleInitialise Exception: 
+java.lang.NullPointerException: Cannot invoke "java.lang.Integer.intValue()" because "zone" is null
+	at org.example.messages.ClientFactory.handleInitialise(ClientFactory.java:47)
+	at org.example.events.EventBus.emit(EventBus.java:70)
+	at org.example.events.EventBus.lambda$new$0(EventBus.java:25)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+
+19:49:51.478 INFO: org.example.client.AbstractClient updateStatus Updated status for CP03 to OFF
+19:49:51.478 INFO: org.example.Database addClient Added CP03 to database
+19:49:51.478 INFO: org.example.messages.ClientFactory handleInitialise Initialised new client: CP03
+19:49:51.479 INFO: org.example.client.AbstractClient updateStatus Updated status for CP04 to OFF
+19:49:51.479 INFO: org.example.Database addClient Added CP04 to database
+19:49:51.480 INFO: org.example.messages.ClientFactory handleInitialise Initialised new client: CP04
+19:49:51.481 INFO: org.example.messages.Server send Sent AKIN to client at: BR01
+19:49:51.481 INFO: org.example.messages.Server send Sent AKIN to client at: CP01
+19:49:51.481 INFO: org.example.messages.Server send Sent AKIN to client at: CP03
+19:49:51.481 INFO: org.example.messages.Server send Sent AKIN to client at: CP04
+19:49:52.685 INFO: org.example.messages.Server send Sent STAT to client at: CP01
+19:49:52.686 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:49:52.686 INFO: org.example.client.AbstractClient updateStatus Updated status for CP01 to OFF
+19:49:52.687 INFO: org.example.messages.MessageHandler handleStatMessage Received STAT message from Client: CP01
+19:49:53.526 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:49:53.527 INFO: org.example.client.AbstractClient updateStatus Updated status for CP01 to ON
+19:50:29.652 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$0 Received TRIP command from Checkpoint: CP01
+19:50:29.656 WARNING: org.example.Processor getBladeRunner Tried to get blade runner at checkpoint 1 but failed
+19:50:29.656 WARNING: org.example.Processor checkpointTripped Inconsistent checkpoint trip : CP01 on trip boolean : false
+19:50:29.657 INFO: org.example.messages.Server send Sent AKTR to client at: CP01
+19:50:31.096 INFO: org.example.visualiser.CommandHandler run MCP online, please input a command, type help to see a list of commands
+19:50:31.206 INFO: org.example.state.SystemStateManager setState Changing to system state WAITING
+19:50:31.223 INFO: org.example.messages.Server <init> Server completed startup and listening on PORT: 3001
+19:50:31.438 INFO: org.example.messages.StatusScheduler start StatusScheduler started
+19:51:39.519 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:51:39.519 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:51:39.519 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:51:39.520 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:51:39.521 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:51:39.632 INFO: org.example.messages.MessageHandler lambda$handleCCPMessage$3 Received CCIN message from Blade Runner: BR01
+19:51:39.633 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$1 Received CPIN message from Checkpoint: CP01
+19:51:39.634 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$1 Received CPIN message from Checkpoint: CP02
+19:51:39.634 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$1 Received CPIN message from Checkpoint: CP03
+19:51:39.634 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$1 Received CPIN message from Checkpoint: CP04
+19:51:39.637 INFO: org.example.client.AbstractClient updateStatus Updated status for BR01 to STOPC
+19:51:39.638 INFO: org.example.Database addClient Added BR01 to database
+19:51:39.662 INFO: org.example.messages.ClientFactory handleInitialise Initialised new client: BR01
+19:51:39.665 INFO: org.example.client.AbstractClient updateStatus Updated status for CP01 to OFF
+19:51:39.665 INFO: org.example.Database addClient Added CP01 to database
+19:51:39.666 INFO: org.example.messages.ClientFactory handleInitialise Initialised new client: CP01
+19:51:39.667 SEVERE: org.example.messages.ClientFactory handleInitialise Failed to handle message
+19:51:39.667 SEVERE: org.example.messages.ClientFactory handleInitialise Exception: 
+java.lang.NullPointerException: Cannot invoke "java.lang.Integer.intValue()" because "zone" is null
+	at org.example.messages.ClientFactory.handleInitialise(ClientFactory.java:47)
+	at org.example.events.EventBus.emit(EventBus.java:70)
+	at org.example.events.EventBus.lambda$new$0(EventBus.java:25)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+
+19:51:39.670 INFO: org.example.client.AbstractClient updateStatus Updated status for CP03 to OFF
+19:51:39.671 INFO: org.example.Database addClient Added CP03 to database
+19:51:39.671 INFO: org.example.messages.ClientFactory handleInitialise Initialised new client: CP03
+19:51:39.672 INFO: org.example.client.AbstractClient updateStatus Updated status for CP04 to OFF
+19:51:39.672 INFO: org.example.Database addClient Added CP04 to database
+19:51:39.673 INFO: org.example.messages.ClientFactory handleInitialise Initialised new client: CP04
+19:51:39.673 INFO: org.example.messages.Server send Sent AKIN to client at: BR01
+19:51:39.673 INFO: org.example.messages.Server send Sent AKIN to client at: CP01
+19:51:39.674 INFO: org.example.messages.Server send Sent AKIN to client at: CP03
+19:51:39.674 INFO: org.example.messages.Server send Sent AKIN to client at: CP04
+19:51:41.450 INFO: org.example.messages.Server send Sent STAT to client at: CP01
+19:51:41.451 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:51:41.451 INFO: org.example.client.AbstractClient updateStatus Updated status for CP01 to OFF
+19:51:41.451 INFO: org.example.messages.MessageHandler handleStatMessage Received STAT message from Client: CP01
+19:51:43.242 INFO: org.example.visualiser.CommandHandler run Command executed: start mapping
+19:51:46.911 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:51:46.913 INFO: org.example.client.AbstractClient updateStatus Updated status for CP01 to ON
+19:52:01.110 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$0 Received TRIP command from Checkpoint: CP01
+19:52:20.579 WARNING: org.example.Processor checkpointTripped Sent to mapping state
+19:52:25.929 INFO: org.example.messages.Server send Sent AKTR to client at: CP01
+19:52:31.015 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:52:31.016 INFO: org.example.client.AbstractClient updateStatus Updated status for CP01 to OFF
+19:52:31.016 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$0 Received TRIP command from Checkpoint: CP01
+19:53:37.695 WARNING: org.example.Processor checkpointTripped Sent to mapping state
+19:53:37.697 INFO: org.example.messages.Server send Sent AKTR to client at: CP01
+19:54:16.778 INFO: org.example.visualiser.CommandHandler run MCP online, please input a command, type help to see a list of commands
+19:54:16.868 INFO: org.example.state.SystemStateManager setState Changing to system state WAITING
+19:54:16.883 INFO: org.example.messages.Server <init> Server completed startup and listening on PORT: 3001
+19:54:17.025 INFO: org.example.messages.StatusScheduler start StatusScheduler started
+19:54:18.815 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:54:18.816 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:54:18.816 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:54:18.816 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:54:18.817 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:54:18.865 INFO: org.example.messages.MessageHandler lambda$handleCCPMessage$3 Received CCIN message from Blade Runner: BR01
+19:54:18.866 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$1 Received CPIN message from Checkpoint: CP01
+19:54:18.866 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$1 Received CPIN message from Checkpoint: CP02
+19:54:18.867 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$1 Received CPIN message from Checkpoint: CP03
+19:54:18.867 INFO: org.example.messages.MessageHandler lambda$handleCPCMessage$1 Received CPIN message from Checkpoint: CP04
+19:54:18.869 INFO: org.example.client.AbstractClient updateStatus Updated status for BR01 to STOPC
+19:54:18.869 INFO: org.example.Database addClient Added BR01 to database
+19:54:18.882 INFO: org.example.messages.ClientFactory handleInitialise Initialised new client: BR01
+19:54:18.883 INFO: org.example.client.AbstractClient updateStatus Updated status for CP01 to OFF
+19:54:18.884 INFO: org.example.Database addClient Added CP01 to database
+19:54:18.885 INFO: org.example.messages.ClientFactory handleInitialise Initialised new client: CP01
+19:54:18.885 SEVERE: org.example.messages.ClientFactory handleInitialise Failed to handle message
+19:54:18.885 SEVERE: org.example.messages.ClientFactory handleInitialise Exception: 
+java.lang.NullPointerException: Cannot invoke "java.lang.Integer.intValue()" because "zone" is null
+	at org.example.messages.ClientFactory.handleInitialise(ClientFactory.java:47)
+	at org.example.events.EventBus.emit(EventBus.java:70)
+	at org.example.events.EventBus.lambda$new$0(EventBus.java:25)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+
+19:54:18.886 INFO: org.example.client.AbstractClient updateStatus Updated status for CP03 to OFF
+19:54:18.887 INFO: org.example.Database addClient Added CP03 to database
+19:54:18.887 INFO: org.example.messages.ClientFactory handleInitialise Initialised new client: CP03
+19:54:18.887 INFO: org.example.client.AbstractClient updateStatus Updated status for CP04 to OFF
+19:54:18.888 INFO: org.example.Database addClient Added CP04 to database
+19:54:18.889 INFO: org.example.messages.ClientFactory handleInitialise Initialised new client: CP04
+19:54:18.890 INFO: org.example.messages.Server send Sent AKIN to client at: BR01
+19:54:18.890 INFO: org.example.messages.Server send Sent AKIN to client at: CP01
+19:54:18.891 INFO: org.example.messages.Server send Sent AKIN to client at: CP03
+19:54:18.891 INFO: org.example.messages.Server send Sent AKIN to client at: CP04
+19:54:19.042 INFO: org.example.messages.Server send Sent STAT to client at: CP01
+19:54:19.043 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+19:54:19.043 INFO: org.example.client.AbstractClient updateStatus Updated status for CP01 to OFF
+19:54:19.044 INFO: org.example.messages.MessageHandler handleStatMessage Received STAT message from Client: CP01
+20:04:21.865 INFO: org.example.state.WaitingState performOperation Timeout state has occured
+20:04:21.865 INFO: org.example.state.SystemStateManager setState Changing to system state MAPPING
+20:04:23.866 INFO: org.example.state.MappingState sendBladeRunnerToNextCheckpoint  moving BR01
+20:04:23.867 INFO: org.example.messages.Server send Sent EXEC to client at: BR01
+20:04:23.867 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+20:04:23.867 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+20:04:23.867 INFO: org.example.client.AbstractClient updateStatus Updated status for BR01 to FFASTC
+20:04:23.867 INFO: org.example.messages.MessageHandler handleStatMessage Received STAT message from Client: BR01
+20:04:23.868 INFO: org.example.messages.Server send Sent AKST to client at: BR01
+20:04:54.366 INFO: org.example.state.MappingState sendBladeRunnerToNextCheckpoint retry moving BR01
+20:04:54.366 INFO: org.example.messages.Server send Sent EXEC to client at: BR01
+20:04:54.366 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+20:04:54.367 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+20:04:54.367 INFO: org.example.client.AbstractClient updateStatus Updated status for BR01 to FFASTC
+20:04:54.367 INFO: org.example.messages.MessageHandler handleStatMessage Received STAT message from Client: BR01
+20:04:54.367 INFO: org.example.messages.Server send Sent AKST to client at: BR01
+20:05:09.366 INFO: org.example.state.MappingState sendBladeRunnerToNextCheckpoint retry moving BR01
+20:05:09.366 INFO: org.example.messages.Server send Sent EXEC to client at: BR01
+20:05:09.366 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+20:05:09.367 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+20:05:09.367 INFO: org.example.client.AbstractClient updateStatus Updated status for BR01 to FFASTC
+20:05:09.367 INFO: org.example.messages.MessageHandler handleStatMessage Received STAT message from Client: BR01
+20:05:09.367 INFO: org.example.messages.Server send Sent AKST to client at: BR01
+20:05:24.366 INFO: org.example.state.MappingState sendBladeRunnerToNextCheckpoint retry moving BR01
+20:05:24.366 INFO: org.example.messages.Server send Sent EXEC to client at: BR01
+20:05:24.366 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+20:05:24.367 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+20:05:24.367 INFO: org.example.client.AbstractClient updateStatus Updated status for BR01 to FFASTC
+20:05:24.368 INFO: org.example.messages.MessageHandler handleStatMessage Received STAT message from Client: BR01
+20:05:24.368 INFO: org.example.messages.Server send Sent AKST to client at: BR01
+20:05:24.866 SEVERE: org.example.state.MappingState checkIfBladeRunnerIsDead Blade runner failed to be mapped in time
+20:05:24.866 INFO: org.example.client.AbstractClient addReason Added reason MAPTIMEOUT
+20:05:24.866 WARNING: org.example.state.SystemStateManager addUnresponsiveClient Client BR01 has MAPTIMEOUT
+20:05:24.866 WARNING: org.example.state.SystemStateManager checkChange Error detected while in state MAPPING
+20:05:24.866 INFO: org.example.state.SystemStateManager setState Changing to system state EMERGENCY
+20:05:25.866 INFO: org.example.messages.Server send Sent EXEC to client at: BR01
+20:05:25.866 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+20:05:25.866 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
+20:05:25.867 INFO: org.example.client.AbstractClient updateStatus Updated status for BR01 to FSLOWC
+20:05:25.867 INFO: org.example.messages.MessageHandler handleStatMessage Received STAT message from Client: BR01
+20:05:25.867 INFO: org.example.messages.Server send Sent AKST to client at: BR01

@@ -2,6 +2,7 @@ package org.example;
 
 import org.example.events.EventBus;
 import org.example.messages.ClientFactory;
+import org.example.messages.MessageHandler;
 import org.example.messages.Server;
 import org.example.messages.StatusScheduler;
 import org.example.state.SystemStateManager;
@@ -19,6 +20,7 @@ public class App {
     private static ClientFactory clientFactory;
     private static final EventBus eventBus = EventBus.getInstance();
     private static Processor processor;
+    private static MessageHandler messageHandler;
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
@@ -32,10 +34,11 @@ public class App {
     public static void startMCP() {
         new Thread(() -> {
             systemStateManager = SystemStateManager.getInstance(eventBus);
+            server = Server.getInstance(eventBus);
+            messageHandler = new MessageHandler(eventBus);
             processor = new Processor(eventBus);
             clientFactory = new ClientFactory(eventBus);
             clientFactory.readFromFile("src\\main\\java\\org\\example\\messages\\locations.txt");
-            server = Server.getInstance(eventBus);
             statScheduler = new StatusScheduler(eventBus);
             statScheduler.start();
 
