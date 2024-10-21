@@ -1,14 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AnalysisUIOptions">
+    <option name="ANALYZE_TEST_SOURCES" value="false" />
+  </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1d9b5952-4092-4fc7-8340-7dd220ada861" name="Changes" comment="refactored processor and fixed up some bugs">
+    <list default="true" id="1d9b5952-4092-4fc7-8340-7dd220ada861" name="Changes" comment="Jar">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/events/BladeRunnerStopEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/events/ClientErrorEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/events/ClientIntialiseEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/events/Event.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/events/EventBus.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/events/NewStateEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/events/PacketEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/events/StateChangeEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/events/TripEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/messages/StatusScheduler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/messages/TripEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.log" beforeDir="false" afterPath="$PROJECT_DIR$/app.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/App.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Processor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Processor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/StatHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/StatHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/messages/ClientFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/messages/ClientFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/messages/MessageHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/messages/MessageHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/messages/MessageSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/messages/MessageSender.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/messages/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/messages/Server.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/messages/StatHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/messages/locations.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/state/MappingState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/state/MappingState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/state/SystemStateManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/state/SystemStateManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/visualiser/CommandHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/visualiser/CommandHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/visualiser/InfoPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/visualiser/InfoPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/visualiser/VisualiserScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/visualiser/VisualiserScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/ClientFactoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ClientFactoryTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/ProcessorTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ProcessorTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/StatHandlerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/StatHandlerTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,6 +46,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -25,7 +54,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="experimental" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -46,7 +75,8 @@
   &quot;isMigrated&quot;: true
 }</component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="CurrentFile" />
+    <option name="selectedTabId" value="ProjectErrors" />
+    <option name="showPreview" value="true" />
   </component>
   <component name="ProjectCodeStyleSettingsMigration">
     <option name="version" value="2" />
@@ -59,26 +89,51 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.Unnamed.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "SONARLINT_PRECOMMIT_ANALYSIS": "true",
-    "git-widget-placeholder": "experimental",
-    "kotlin-language-version-configured": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "preferences.lookFeel",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Unnamed.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.MessageHandlerTest.executor&quot;: &quot;Coverage&quot;,
+    &quot;JUnit.MessageHandlerTest.test_CCP_STAT_MSG.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ServerTest.testSystemStateManagerOnHighThroughput.executor&quot;: &quot;Debug&quot;,
+    &quot;JUnit.StatHandlerTest.executor&quot;: &quot;Coverage&quot;,
+    &quot;JUnit.StatHandlerTest.test_ERR.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.StatHandlerTest.test_Start_Status_1_MSG_Scheduler.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.StatHandlerTest.test_Start_Status_1_MultiClient_MSG_Scheduler.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.StatHandlerTest.test_Start_Status_3_MSG_Scheduler.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.StatHandlerTest.test_Start_Status_3_MultiClient_MSG_Scheduler.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.StatHandlerTest.test_checkIfClientIsUnresponsive_false.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.StatHandlerTest.test_checkIfClientIsUnresponsive_true.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.StatHandlerTest.test_shutdown.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;SONARLINT_PRECOMMIT_ANALYSIS&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;experimental&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Programming/Java/ENG3000MCP/src/test/java&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.sourceCode&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
-  <component name="RunManager">
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Programming\Java\ENG3000MCP\src\test\java" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Programming\Java\ENG3000MCP\src\test\java" />
+      <recent name="D:\Programming\Java\ENG3000MCP\src\main\java\org\example\messages" />
+    </key>
+  </component>
+  <component name="RunManager" selected="JUnit.ServerTest">
     <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.App" />
       <module name="ENG3000MCP2.0" />
@@ -86,12 +141,68 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="MessageHandlerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ENG3000MCP2.0" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="MessageHandlerTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MessageHandlerTest.test_CCP_STAT_MSG" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ENG3000MCP2.0" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="MessageHandlerTest" />
+      <option name="METHOD_NAME" value="test_CCP_STAT_MSG" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ServerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ENG3000MCP2.0" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="ServerTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="StatHandlerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ENG3000MCP2.0" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="StatHandlerTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="StatHandlerTest.test_Start_Status_3_MultiClient_MSG_Scheduler" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ENG3000MCP2.0" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="StatHandlerTest" />
+      <option name="METHOD_NAME" value="test_Start_Status_3_MultiClient_MSG_Scheduler" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.ServerTest" />
+        <item itemvalue="JUnit.MessageHandlerTest" />
+        <item itemvalue="JUnit.MessageHandlerTest.test_CCP_STAT_MSG" />
+        <item itemvalue="JUnit.StatHandlerTest" />
+        <item itemvalue="JUnit.StatHandlerTest.test_Start_Status_3_MultiClient_MSG_Scheduler" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-b114ca120d71-intellij.indexing.shared.core-IU-242.21829.142" />
-        <option value="bundled-js-predefined-d6986cc7102b-7c0b70fcd90d-JavaScript-IU-242.21829.142" />
+        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.18034.62" />
+        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-IU-241.18034.62" />
       </set>
     </attachedChunks>
   </component>
@@ -122,6 +233,17 @@
       <workItem from="1728358965380" duration="13378000" />
       <workItem from="1728454873014" duration="4358000" />
       <workItem from="1728459319167" duration="2407000" />
+      <workItem from="1728518327776" duration="10121000" />
+      <workItem from="1728528588832" duration="2275000" />
+      <workItem from="1728631997087" duration="1413000" />
+      <workItem from="1728702329898" duration="652000" />
+      <workItem from="1728906571524" duration="5134000" />
+      <workItem from="1728984405168" duration="8320000" />
+      <workItem from="1729003123160" duration="2831000" />
+      <workItem from="1729042326804" duration="14080000" />
+      <workItem from="1729252401386" duration="5846000" />
+      <workItem from="1729259225697" duration="3308000" />
+      <workItem from="1729304326125" duration="2088000" />
     </task>
     <task id="LOCAL-00001" summary="Made some changes to comply with sonarlint">
       <option name="closed" value="true" />
@@ -299,7 +421,87 @@
       <option name="project" value="LOCAL" />
       <updated>1728391832555</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="Moved subsystems into packages and seperated client">
+      <option name="closed" value="true" />
+      <created>1728528001550</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1728528001550</updated>
+    </task>
+    <task id="LOCAL-00024" summary="Moved subsystems into packages and seperated client">
+      <option name="closed" value="true" />
+      <created>1728528043100</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1728528043100</updated>
+    </task>
+    <task id="LOCAL-00025" summary="Moved subsystems into packages and seperated client">
+      <option name="closed" value="true" />
+      <created>1728528792220</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1728528792220</updated>
+    </task>
+    <task id="LOCAL-00026" summary="Moved subsystems into packages and seperated client">
+      <option name="closed" value="true" />
+      <created>1728528804324</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1728528804324</updated>
+    </task>
+    <task id="LOCAL-00027" summary="Moved subsystems into packages and seperated client">
+      <option name="closed" value="true" />
+      <created>1728529120402</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1728529120402</updated>
+    </task>
+    <task id="LOCAL-00028" summary="Added tests">
+      <option name="closed" value="true" />
+      <created>1728702691671</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1728702691671</updated>
+    </task>
+    <task id="LOCAL-00029" summary="Added tests">
+      <option name="closed" value="true" />
+      <created>1728912684623</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1728912684623</updated>
+    </task>
+    <task id="LOCAL-00030" summary="Jar">
+      <option name="closed" value="true" />
+      <created>1729056879138</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1729056879138</updated>
+    </task>
+    <task id="LOCAL-00031" summary="Jar">
+      <option name="closed" value="true" />
+      <created>1729057252068</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1729057252068</updated>
+    </task>
+    <task id="LOCAL-00032" summary="Jar">
+      <option name="closed" value="true" />
+      <created>1729057994629</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1729057994629</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -332,6 +534,13 @@
     <MESSAGE value="Fixed fuck up" />
     <MESSAGE value="Changed stat message to change client status" />
     <MESSAGE value="refactored processor and fixed up some bugs" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactored processor and fixed up some bugs" />
+    <MESSAGE value="Moved subsystems into packages and seperated client" />
+    <MESSAGE value="Added tests" />
+    <MESSAGE value="Jar" />
+    <option name="LAST_COMMIT_MESSAGE" value="Jar" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/ENG3000MCP$StatHandlerTest.ic" NAME="StatHandlerTest Coverage Results" MODIFIED="1729003221320" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+    <SUITE FILE_PATH="coverage/ENG3000MCP$MessageHandlerTest.ic" NAME="MessageHandlerTest Coverage Results" MODIFIED="1729005894033" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
   </component>
 </project>

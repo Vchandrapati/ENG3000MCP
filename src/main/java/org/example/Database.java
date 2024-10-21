@@ -1,5 +1,12 @@
 package org.example;
 
+import org.example.client.AbstractClient;
+import org.example.client.BladeRunnerClient;
+import org.example.client.CheckpointClient;
+import org.example.client.StationClient;
+import org.example.state.SystemStateManager;
+import org.example.client.ReasonEnum;
+
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -8,20 +15,34 @@ import java.util.logging.Logger;
 
 public class Database {
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+
+    // REMOVE AFTER FROM TESTING
+    private static Database instance;
+
+    // REMOVE AFTER FROM TESTING
+    public static synchronized Database getInstanceTest() {
+        if (instance == null) {
+            instance = new Database();
+        }
+        return instance;
+    }
+
     // All client objects
-    private final ConcurrentHashMap<String, Client> clients;
+    private final ConcurrentHashMap<String, AbstractClient> clients;
     private final ConcurrentHashMap<String, Integer> bladeRunnerBlockMap;
 
     // Set of all BladeRunner client IDs
     private final HashSet<String> allBladeRunners;
-    // Set of all unresponsive or "dead" clients
 
+    // Set of all unresponsive or "dead" clients
     private final HashSet<String> unresponsiveClients;
 
     private final AtomicInteger numberOfCheckpoints;
     private final AtomicInteger numberOfStations;
 
-    private Database() {
+    private final ConcurrentHashMap<Integer, String> isStationMap;
+
+    public Database() {
         clients = new ConcurrentHashMap<>();
         bladeRunnerBlockMap = new ConcurrentHashMap<>();
 
@@ -30,6 +51,8 @@ public class Database {
 
         numberOfCheckpoints = new AtomicInteger(0);
         numberOfStations = new AtomicInteger(0);
+
+        isStationMap = new ConcurrentHashMap<>();
     }
 
     /**
@@ -48,13 +71,29 @@ public class Database {
         private static final Database INSTANCE = new Database();
     }
 
+    public Optional<StationClient> getStationIfExist(int zone) {
+
+        String sc = isStationMap.get(zone);
+        if (sc == null) {
+            return Optional.of(null);
+        }
+        return Optional.of(StationClient.class.cast(clients.get(sc)));
+    }
+
+    private void addStationsToMap(int zone, String id) {
+        isStationMap.put(zone, id);
+    }
+
+
+
     // Add any client with this method
-    public void addClient(String id, Client client) {
+    public void addClient(String id, AbstractClient client) {
         // Will attempt to add a client
         // If absent it will happen, however, if it is present the previous client will
         // be handed over
-        Client prevValue = clients.putIfAbsent(id, client);
+        AbstractClient prevValue = clients.putIfAbsent(id, client);
         clients.putIfAbsent(id, client);
+        logger.log(Level.INFO, "Added {0} to database", client.getId());
 
         // If there was a previous client log the error
         if (prevValue != null) {
@@ -74,12 +113,14 @@ public class Database {
 
         if (client instanceof StationClient) {
             numberOfStations.getAndIncrement();
+            StationClient sc = StationClient.class.cast(client);
+            addStationsToMap(sc.getLocation(), id);
         }
     }
 
     // Get any client with this method
-    public <T extends Client> Optional<T> getClient(String id, Class<T> type) {
-        Client c = clients.get(id);
+    public <T extends AbstractClient> Optional<T> getClient(String id, Class<T> type) {
+        AbstractClient c = clients.get(id);
 
         if (c == null)
             return Optional.empty();
@@ -98,21 +139,22 @@ public class Database {
         return unresponsiveClients;
     }
 
-    public void addUnresponsiveClient(String id, ReasonEnum newReason) {
+    public boolean addUnresponsiveClient(String id, ReasonEnum newReason) {
 
-        Optional<Client> cOptional = getClient(id, Client.class);
-        Client c;
+        Optional<AbstractClient> cOptional = getClient(id, AbstractClient.class);
+        AbstractClient c;
 
         if (cOptional.isPresent()) {
             c = cOptional.get();
 
         } else {
             logger.log(Level.WARNING, "Attempted to get non-existent client", id);
-            return;
+            return false;
         }
 
         c.addReason(newReason);
         unresponsiveClients.add(id);
+        return true;
     }
 
     public void fullPurge(String id) {
@@ -121,14 +163,18 @@ public class Database {
         clients.remove(id);
     }
 
+    public static void coom() {
+        System.out.println("coom");
+    }
+
     public void removeReason(String id, ReasonEnum reason) {
         if (!isClientUnresponsive(id)) {
             logger.log(Level.WARNING, "{0} is not an unresponsive client", id);
             return;
         }
 
-        Optional<Client> cOptional = getClient(id, Client.class);
-        Client c;
+        Optional<AbstractClient> cOptional = getClient(id, AbstractClient.class);
+        AbstractClient c;
 
         if (cOptional.isPresent()) {
             c = cOptional.get();
@@ -147,8 +193,8 @@ public class Database {
             return new HashSet<>();
         }
 
-        Optional<Client> cOptional = getClient(id, Client.class);
-        Client c;
+        Optional<AbstractClient> cOptional = getClient(id, AbstractClient.class);
+        AbstractClient c;
 
         if (cOptional.isPresent()) {
             c = cOptional.get();
@@ -195,7 +241,7 @@ public class Database {
         return bladeRunners;
     }
 
-    public List<Client> getClients() {
+    public List<AbstractClient> getClients() {
         return new ArrayList<>(clients.values());
     }
 
@@ -203,11 +249,11 @@ public class Database {
         return allBladeRunners.size();
     }
 
-    public Integer getCheckpointCount() {
+    public int getCheckpointCount() {
         return numberOfCheckpoints.get();
     }
 
-    public Integer getStationCount() {
+    public int getStationCount() {
         return numberOfStations.get();
     }
 
@@ -215,7 +261,7 @@ public class Database {
         unresponsiveClients.clear();
     }
 
-    public Integer getBlockCount() {
+    public int getBlockCount() {
         return getCheckpointCount() + getStationCount();
     }
 }

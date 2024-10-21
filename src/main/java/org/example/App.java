@@ -1,18 +1,28 @@
 package org.example;
 
+import org.example.events.EventBus;
+import org.example.messages.ClientFactory;
+import org.example.messages.Server;
+import org.example.messages.StatusScheduler;
+import org.example.state.SystemStateManager;
+import org.example.visualiser.CommandHandler;
+import org.example.visualiser.VisualiserScreen;
+
 import javax.swing.*;
 
 public class App {
     private static volatile boolean isRunning = true;
     private static Server server;
-    private static StatHandler statReq;
+    private static StatusScheduler statScheduler;
     private static SystemStateManager systemStateManager;
     private static VisualiserScreen screen;
-    private static ClientCreator clinetCreator;
+    private static ClientFactory clientFactory;
+    private static final EventBus eventBus = EventBus.getInstance();
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            screen = new VisualiserScreen();
+            Database.coom();
+            screen = new VisualiserScreen(eventBus);
             screen.setVisible(true);
             startMCP();
         });
@@ -20,12 +30,12 @@ public class App {
 
     public static void startMCP() {
         new Thread(() -> {
-            systemStateManager = SystemStateManager.getInstance();
-            clinetCreator = ClientCreator.getInstance();
-            clinetCreator.readFromFile("src\\main\\java\\org\\example\\locations.txt");
-            server = Server.getInstance();
-            statReq = StatHandler.getInstance();
-            statReq.startStatusScheduler();
+            systemStateManager = SystemStateManager.getInstance(eventBus);
+            clientFactory = new ClientFactory(eventBus);
+            clientFactory.readFromFile("src\\main\\java\\org\\example\\messages\\locations.txt");
+            server = Server.getInstance(eventBus);
+            statScheduler = new StatusScheduler(eventBus);
+            statScheduler.start();
 
 
             // main loop for program
@@ -38,7 +48,8 @@ public class App {
     // shutdown entire program
     public static void shutdown() {
         server.shutdown();
-        statReq.shutdown();
+        statScheduler.shutdown();
+        eventBus.shutdown();
         setRunning(false);
         CommandHandler.shutdown();
         Thread.currentThread().interrupt();

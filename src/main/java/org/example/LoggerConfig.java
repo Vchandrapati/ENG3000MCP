@@ -1,5 +1,7 @@
 package org.example;
 
+import org.example.visualiser.ScreenLogHandler;
+
 import javax.swing.*;
 import java.io.IOException;
 import java.util.logging.*;
