@@ -10,10 +10,10 @@ import java.util.logging.Logger;
 public class WaitingState implements SystemStateInterface {
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
-    private Database db;
+    private static Database db = Database.getInstance();
 
     // All time units in milliseconds
-    private static long STARTUP_CONNECTION_TIME_PERIOD = 600000; // ten minutes
+    private static final long STARTUP_CONNECTION_TIME_PERIOD = 600000; // ten minutes
     private static final long TIME_ON_START = System.currentTimeMillis(); // the time when counter
                                                                           // 10-minute timer started
     private static final long TIME_BETWEEN_RUNNING = 5000; // 5 seconds
@@ -24,8 +24,8 @@ public class WaitingState implements SystemStateInterface {
     // Next state of this state
     private static final SystemState NEXT_STATE = SystemState.MAPPING;
 
-    public WaitingState() {
-        db = Database.getInstance();
+    public static void injectDatabase(Database database) {
+        db = database;
     }
 
     // Performs the operation of this state at set intervals according to TIME_BETWEEN_RUNNING
@@ -44,9 +44,6 @@ public class WaitingState implements SystemStateInterface {
         return false;
     }
 
-    public static void testing() {
-        STARTUP_CONNECTION_TIME_PERIOD = 5000;
-    }
 
     @Override
     public long getTimeToWait() {

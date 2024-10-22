@@ -1,9 +1,12 @@
+
 package org.example.messages;
 
 import org.example.*;
 import org.example.client.*;
 import org.example.events.ClientErrorEvent;
+import org.example.events.ClientIntialiseEvent;
 import org.example.events.EventBus;
+import org.example.client.MessageSender;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -21,12 +24,19 @@ public class ClientFactory {
 
     public ClientFactory(EventBus eventBus) {
         this.eventBus = eventBus;
+
+        eventBus.subscribe(ClientIntialiseEvent.class, this::handleInitialise);
     }
 
-    public void handleInitialise(ReceiveMessage receiveMessage, InetAddress address, int port) {
+    public void handleInitialise(ClientIntialiseEvent event) {
+        InetAddress address = event.getAddress();
+        int port = event.getPort();
+        ReceiveMessage receiveMessage = event.getReceiveMessage();
+
         try {
             MessageGenerator messageGenerator = new MessageGenerator();
-            MessageSender messageSender = new MessageSender(address, port, receiveMessage.clientID);
+            MessageSender messageSender = new MessageSender(address, port,
+                    receiveMessage.clientID, eventBus);
             AbstractClient<?, ?> client = null;
             switch (receiveMessage.clientType) {
                 case "CCP":

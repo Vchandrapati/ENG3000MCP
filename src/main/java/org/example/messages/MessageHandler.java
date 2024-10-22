@@ -24,13 +24,15 @@ public class MessageHandler {
         this.eventBus = eventBus;
 
         eventBus.subscribe(StateChangeEvent.class, this::updateCurrentState);
+        eventBus.subscribe(PacketEvent.class, this::handleMessage);
     }
 
     private void updateCurrentState(StateChangeEvent event) {
         currentState = event.getState();
     }
 
-    public void handleMessage(DatagramPacket packet) {
+    public void handleMessage(PacketEvent event) {
+        DatagramPacket packet = event.getPacket();
         String message = new String(packet.getData(), 0, packet.getLength(),
                 StandardCharsets.UTF_8);
 

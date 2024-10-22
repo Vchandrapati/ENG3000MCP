@@ -10,15 +10,18 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 // Manages the states of the system
-public class SystemStateManager {
+public class SystemStateManager implements Runnable {
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private final Map<SystemState, Supplier<SystemStateInterface>> stateMap;
 
     private Database db;
 
     // Holds the current state and the current state concrete implementation
-    private static volatile SystemStateManager instance = null;
+    private static SystemStateManager instance;
+    //TODO
+    //make this private after testing
     public SystemState currentState;
+    private volatile boolean isRunning;
     private SystemStateInterface currentStateConcrete;
     private boolean error = false;
     private long timeWaited = System.currentTimeMillis();
@@ -27,6 +30,7 @@ public class SystemStateManager {
     // Initial state
     private SystemStateManager(EventBus eventBus) {
         this.eventBus = eventBus;
+        isRunning = true;
 
         db = Database.getInstance();
 
@@ -41,6 +45,13 @@ public class SystemStateManager {
         eventBus.subscribe(NewStateEvent.class, this::updateState);
         eventBus.subscribe(ClientErrorEvent.class, this::addUnresponsiveClient);
         eventBus.subscribe(TripEvent.class, this::handleTrip);
+
+        Thread systemStateThread = new Thread(this, "systemStateThread-Thread");
+        systemStateThread.start();
+    }
+
+    public void injectDatabase(Database database) {
+        db = database;
     }
 
     public void updateState(NewStateEvent event) {
@@ -55,14 +66,21 @@ public class SystemStateManager {
      * @return The singleton instance of SystemStateManager.
      */
     public static SystemStateManager getInstance(EventBus eventBus) {
-        if (instance == null) { // First check (no locking)
-            synchronized (SystemStateManager.class) {
-                if (instance == null) { // Second check (with locking)
-                    instance = new SystemStateManager(eventBus);
-                }
-            }
+        if (instance == null) { 
+            instance = new SystemStateManager(eventBus);
         }
         return instance;
+    }
+
+    // @Override
+    // public void run() {
+    //     while (isRunning) {
+    //        runLoop();
+    //     }
+    // } 
+
+    public void shutdown() {
+        isRunning = false;
     }
 
     // If it is time for the current state to run its perform its operation,
@@ -78,9 +96,8 @@ public class SystemStateManager {
             }
 
             timeWaited = System.currentTimeMillis();
-        } else {
-            checkChange();
-        }
+        } 
+        checkChange();
     }
 
     // Checks to see if the system needs to go to emergency state, if already don't

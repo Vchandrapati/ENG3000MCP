@@ -25,7 +25,7 @@ public class EmergencyState implements SystemStateInterface {
 
     // the time when counter started
     private long timeOnStart;
-    private Database db;
+    private static Database db = Database.getInstance();
     private long timeOnStop;
     private boolean disconnection = false;
     private boolean disconnectOnce = false;
@@ -33,7 +33,10 @@ public class EmergencyState implements SystemStateInterface {
     public EmergencyState() {
         timeOnStart = System.currentTimeMillis();
         timeOnStop = 0;
-        db = Database.getInstance();
+    }
+
+    public static void injectDatabase(Database database) {
+        db = database;
     }
 
     @Override

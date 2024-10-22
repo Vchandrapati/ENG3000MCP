@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 public class RunningState implements SystemStateInterface {
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
-    private Database db;
+    private static Database db = Database.getInstance();
 
     private static final SystemState nextState = SystemState.EMERGENCY;
     private static final long TIME_BETWEEN_RUNNING = 500;
@@ -27,13 +27,16 @@ public class RunningState implements SystemStateInterface {
 
     // constructor
     public RunningState() {
-        db = Database.getInstance();
         allRunning = false;
         grab = false;
         bladeRunners = null;
         startTime = 0;
         curBR = 0;
         runningStartTime = System.currentTimeMillis();
+    }
+
+    public static void injectDatabase(Database database) {
+        db = database;
     }
 
     // Performs the operation of this state at set intervals according to TIME_BETWEEN_RUNNING

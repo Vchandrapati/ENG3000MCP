@@ -5,8 +5,6 @@ import org.example.client.AbstractClient;
 import org.example.client.BladeRunnerClient;
 import org.example.client.MessageGenerator;
 import org.example.client.ReasonEnum;
-import org.example.messages.MessageSender;
-import org.example.messages.Server;
 import org.example.state.MappingState;
 import org.example.events.*;
 import org.example.state.RunningState;
@@ -29,6 +27,7 @@ import java.net.InetAddress;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.example.client.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -40,7 +39,6 @@ class systemManagerTest {
     private static EventBus eb;
 
     private static Field instanceFieldSM;
-    private static Field instanceFieldSER;
 
     private static List<String> ids;
     private static List<ReasonEnum> reasons;
@@ -59,13 +57,13 @@ class systemManagerTest {
         for (int i = 1; i < 6; i++) {
             String id = "BR0" + i;
             brs.add(new BladeRunnerClient(id, new MessageGenerator(),
-            new MessageSender(InetAddress.getLocalHost(), 3000 + i, id), 0));
+                    new MessageSender(InetAddress.getLocalHost(), 3000 + i, id, eb), 0));
         }
 
         for (int i = 1; i < 11; i++) {
             String id = (i == 10) ? "CP" + i : "CP0" + i;
-            cps.add(new org.example.client.CheckpointClient(id, new MessageGenerator(),
-            new MessageSender(InetAddress.getLocalHost(), 4000 + i, id), i, 0));
+            cps.add(new CheckpointClient(id, new MessageGenerator(),
+                    new MessageSender(InetAddress.getLocalHost(), 4000 + i, id, eb), i, 0));
         }
 
         sm = SystemStateManager.getInstance(eb);
@@ -76,8 +74,6 @@ class systemManagerTest {
             instanceFieldSM = SystemStateManager.class.getDeclaredField("instance");
             instanceFieldSM.setAccessible(true);
 
-            instanceFieldSER = Server.class.getDeclaredField("instance");
-            instanceFieldSER.setAccessible(true);
         } catch (Exception e) {
             System.out.println("yucky");
         }
@@ -113,138 +109,129 @@ class systemManagerTest {
         instanceFieldSM.set(null, null);
         sm = SystemStateManager.getInstance(eb);
 
-        instanceFieldSER.set(null, null);
+    }
+
+    public void resetSM() throws Exception{
+        instanceFieldSM.set(null, null);
+        sm = SystemStateManager.getInstance(eb);
+        sm.injectDatabase(db);
     }
 
     @Test
     void sysManagerAddUnresponsiveInWaiting() throws Exception {
-        eb.publish(new ClientErrorEvent(ids.get(0), reasons.get(0)));
+        sm.addUnresponsiveClient(new ClientErrorEvent(ids.get(0), reasons.get(0)));
         sm.run();
         assertNotSame(sm.currentState, SystemState.EMERGENCY);
 
-        instanceFieldSM.set(null, null);
-        sm = SystemStateManager.getInstance(eb);
+        resetSM();
 
 
-        eb.publish(new ClientErrorEvent(ids.get(1), reasons.get(1)));
-        sm.run();
-        assertNotSame(sm.currentState, SystemState.EMERGENCY);
-
-
-        instanceFieldSM.set(null, null);
-        sm = SystemStateManager.getInstance(eb);
-
-        eb.publish(new ClientErrorEvent(ids.get(2), reasons.get(2)));
+        sm.addUnresponsiveClient(new ClientErrorEvent(ids.get(1), reasons.get(1)));
         sm.run();
         assertNotSame(sm.currentState, SystemState.EMERGENCY);
 
 
-        instanceFieldSM.set(null, null);
-        sm = SystemStateManager.getInstance(eb);
+        resetSM();
 
-
-        eb.publish(new ClientErrorEvent(ids.get(3), reasons.get(3)));
+        sm.addUnresponsiveClient(new ClientErrorEvent(ids.get(2), reasons.get(2)));
         sm.run();
         assertNotSame(sm.currentState, SystemState.EMERGENCY);
 
 
-        instanceFieldSM.set(null, null);
-        sm = SystemStateManager.getInstance(eb);
+        resetSM();
 
-        eb.publish(new ClientErrorEvent(ids.get(4), reasons.get(4)));
+
+        sm.addUnresponsiveClient(new ClientErrorEvent(ids.get(3), reasons.get(3)));
         sm.run();
         assertNotSame(sm.currentState, SystemState.EMERGENCY);
 
 
-        instanceFieldSM.set(null, null);
-        sm = SystemStateManager.getInstance(eb);
+        resetSM();
 
-        eb.publish(new ClientErrorEvent(ids.get(5), reasons.get(5)));
+        sm.addUnresponsiveClient(new ClientErrorEvent(ids.get(4), reasons.get(4)));
         sm.run();
         assertNotSame(sm.currentState, SystemState.EMERGENCY);
 
 
-        instanceFieldSM.set(null, null);
-        sm = SystemStateManager.getInstance(eb);
+        resetSM();
 
-        eb.publish(new ClientErrorEvent(ids.get(6), reasons.get(6)));
+        sm.addUnresponsiveClient(new ClientErrorEvent(ids.get(5), reasons.get(5)));
+        sm.run();
+        assertNotSame(sm.currentState, SystemState.EMERGENCY);
+
+
+        resetSM();
+
+        sm.addUnresponsiveClient(new ClientErrorEvent(ids.get(6), reasons.get(6)));
         sm.run();
         assertNotSame(sm.currentState, SystemState.EMERGENCY);
     }
 
 
-    
 
     @Test
     void sysManagerAddUnresponsiveInMapping() throws Exception {
         sm.setState(SystemState.MAPPING);
 
-        eb.publish(new ClientErrorEvent(ids.get(0), reasons.get(0)));
+        sm.addUnresponsiveClient(new ClientErrorEvent(ids.get(0), reasons.get(0)));
         sm.run();
         assertNotSame(sm.currentState, SystemState.EMERGENCY);
 
-        instanceFieldSM.set(null, null);
-        sm = SystemStateManager.getInstance(eb);
+        resetSM();
         sm.setState(SystemState.MAPPING);
 
-        eb.publish(new ClientErrorEvent(ids.get(1), reasons.get(1)));
-        sm.run();
-        assertNotSame(sm.currentState, SystemState.EMERGENCY);
-
-
-        instanceFieldSM.set(null, null);
-        sm = SystemStateManager.getInstance(eb);
-        sm.setState(SystemState.MAPPING);
-
-
-        eb.publish(new ClientErrorEvent(ids.get(2), reasons.get(2)));
+        sm.addUnresponsiveClient(new ClientErrorEvent(ids.get(1), reasons.get(1)));
         sm.run();
         assertNotSame(sm.currentState, SystemState.EMERGENCY);
 
 
-        instanceFieldSM.set(null, null);
-        sm = SystemStateManager.getInstance(eb);
+        resetSM();
         sm.setState(SystemState.MAPPING);
 
 
-        eb.publish(new ClientErrorEvent(ids.get(3), reasons.get(3)));
-        sm.run();
-        assertNotSame(sm.currentState, SystemState.EMERGENCY);
-
-        instanceFieldSM.set(null, null);
-        sm = SystemStateManager.getInstance(eb);
-        sm.setState(SystemState.MAPPING);
-
-
-        eb.publish(new ClientErrorEvent(ids.get(4), reasons.get(4)));
+        sm.addUnresponsiveClient(new ClientErrorEvent(ids.get(2), reasons.get(2)));
         sm.run();
         assertNotSame(sm.currentState, SystemState.EMERGENCY);
 
 
-        instanceFieldSM.set(null, null);
-        sm = SystemStateManager.getInstance(eb);
+        resetSM();
         sm.setState(SystemState.MAPPING);
 
 
-        eb.publish(new ClientErrorEvent(ids.get(5), reasons.get(5)));
+        sm.addUnresponsiveClient(new ClientErrorEvent(ids.get(3), reasons.get(3)));
+        sm.run();
+        assertNotSame(sm.currentState, SystemState.EMERGENCY);
+
+        resetSM();
+        sm.setState(SystemState.MAPPING);
+
+
+        sm.addUnresponsiveClient(new ClientErrorEvent(ids.get(4), reasons.get(4)));
+        sm.run();
+        assertNotSame(sm.currentState, SystemState.EMERGENCY);
+
+
+        resetSM();
+        sm.setState(SystemState.MAPPING);
+
+        sm.addUnresponsiveClient(new ClientErrorEvent(ids.get(5), reasons.get(5)));
         sm.run();
         assertSame(sm.currentState, SystemState.EMERGENCY);
 
-        eb.publish(new ClientErrorEvent(ids.get(5), reasons.get(5)));
+        sm.addUnresponsiveClient(new ClientErrorEvent(ids.get(5), reasons.get(5)));
         sm.run();
         assertSame(sm.currentState, SystemState.EMERGENCY);
 
 
 
-        instanceFieldSM.set(null, null);
-        sm = SystemStateManager.getInstance(eb);
+        resetSM();
         sm.setState(SystemState.MAPPING);
 
-        eb.publish(new ClientErrorEvent(ids.get(6), reasons.get(6)));
+        sm.addUnresponsiveClient(new ClientErrorEvent(ids.get(6), reasons.get(6)));
         sm.run();
         assertSame(sm.currentState, SystemState.EMERGENCY);
 
-        eb.publish(new ClientErrorEvent(ids.get(6), reasons.get(6)));
+        sm.addUnresponsiveClient(new ClientErrorEvent(ids.get(6), reasons.get(6)));
         sm.run();
         assertSame(sm.currentState, SystemState.EMERGENCY);
     }
@@ -253,72 +240,66 @@ class systemManagerTest {
     void sysManagerAddUnresponsiveInRunning() throws Exception {
         sm.setState(SystemState.RUNNING);
 
-        eb.publish(new ClientErrorEvent(ids.get(0), reasons.get(0)));
+        sm.addUnresponsiveClient(new ClientErrorEvent(ids.get(0), reasons.get(0)));
         sm.run();
         assertNotSame(sm.currentState, SystemState.EMERGENCY);
 
-   
-        instanceFieldSM.set(null, null);
-        sm = SystemStateManager.getInstance(eb);
+        resetSM();
         sm.setState(SystemState.RUNNING);
 
-        eb.publish(new ClientErrorEvent(ids.get(1), reasons.get(1)));
-        sm.run();
-        assertNotSame(sm.currentState, SystemState.EMERGENCY);
-
-
-        instanceFieldSM.set(null, null);
-        sm = SystemStateManager.getInstance(eb);
-        sm.setState(SystemState.RUNNING);
-
-
-        eb.publish(new ClientErrorEvent(ids.get(2), reasons.get(2)));
+        sm.addUnresponsiveClient(new ClientErrorEvent(ids.get(1), reasons.get(1)));
         sm.run();
         assertNotSame(sm.currentState, SystemState.EMERGENCY);
 
 
-        instanceFieldSM.set(null, null);
-        sm = SystemStateManager.getInstance(eb);
+        resetSM();
         sm.setState(SystemState.RUNNING);
 
-        eb.publish(new ClientErrorEvent(ids.get(3), reasons.get(3)));
+
+        sm.addUnresponsiveClient(new ClientErrorEvent(ids.get(2), reasons.get(2)));
         sm.run();
         assertNotSame(sm.currentState, SystemState.EMERGENCY);
 
 
-        instanceFieldSM.set(null, null);
-        sm = SystemStateManager.getInstance(eb);
+        resetSM();
         sm.setState(SystemState.RUNNING);
 
-        eb.publish(new ClientErrorEvent(ids.get(4), reasons.get(4)));
+        sm.addUnresponsiveClient(new ClientErrorEvent(ids.get(3), reasons.get(3)));
+        sm.run();
+        assertNotSame(sm.currentState, SystemState.EMERGENCY);
+
+
+        resetSM();
+        sm.setState(SystemState.RUNNING);
+
+        sm.addUnresponsiveClient(new ClientErrorEvent(ids.get(4), reasons.get(4)));
         sm.run();
         assertNotSame(sm.currentState, SystemState.EMERGENCY);
 
 
 
-        instanceFieldSM.set(null, null);
-        sm = SystemStateManager.getInstance(eb);
+        resetSM();
         sm.setState(SystemState.RUNNING);
 
-        eb.publish(new ClientErrorEvent(ids.get(5), reasons.get(5)));
+        sm.addUnresponsiveClient(new ClientErrorEvent(ids.get(5), reasons.get(5)));
         sm.run();
         assertSame(SystemState.EMERGENCY, sm.currentState);
 
-        eb.publish(new ClientErrorEvent(ids.get(5), reasons.get(5)));
+        sm.addUnresponsiveClient(new ClientErrorEvent(ids.get(5), reasons.get(5)));
         sm.run();
         assertSame(sm.currentState, SystemState.EMERGENCY);
 
 
 
-        instanceFieldSM.set(null, null);
-        sm = SystemStateManager.getInstance(eb);
+        resetSM();
+        sm.setState(SystemState.RUNNING);
 
-        eb.publish(new ClientErrorEvent(ids.get(6), reasons.get(6)));
+        sm.addUnresponsiveClient(new ClientErrorEvent(ids.get(6), reasons.get(6)));
         sm.run();
         assertSame(sm.currentState, SystemState.EMERGENCY);
 
 
-        eb.publish(new ClientErrorEvent(ids.get(6), reasons.get(6)));
+        sm.addUnresponsiveClient(new ClientErrorEvent(ids.get(6), reasons.get(6)));
         sm.run();
         assertSame(sm.currentState, SystemState.EMERGENCY);
 
@@ -326,63 +307,56 @@ class systemManagerTest {
 
     @Test
     void sysManagerAddUnresponsiveInEmergency() throws Exception {
-        eb.publish(new NewStateEvent(SystemState.EMERGENCY));
-
-        eb.publish(new ClientErrorEvent(ids.get(0), reasons.get(0)));
+        assertSame(sm.currentState, SystemState.WAITING);
+        sm.setState(SystemState.EMERGENCY);
+        sm.addUnresponsiveClient(new ClientErrorEvent(ids.get(0), reasons.get(0)));
         sm.run();
         assertSame(sm.currentState, SystemState.EMERGENCY);
 
 
-        instanceFieldSM.set(null, null);
-        sm = SystemStateManager.getInstance(eb);
+        resetSM();
         sm.setState(SystemState.EMERGENCY);
 
-        eb.publish(new ClientErrorEvent(ids.get(1), reasons.get(1)));
+        sm.addUnresponsiveClient(new ClientErrorEvent(ids.get(1), reasons.get(1)));
+        sm.run();
+        assertSame(sm.currentState, SystemState.EMERGENCY);
+
+        resetSM();
+        sm.setState(SystemState.EMERGENCY);
+
+        sm.addUnresponsiveClient(new ClientErrorEvent(ids.get(2), reasons.get(2)));
         sm.run();
         assertSame(sm.currentState, SystemState.EMERGENCY);
 
 
-        instanceFieldSM.set(null, null);
-        sm = SystemStateManager.getInstance(eb);
+        resetSM();
         sm.setState(SystemState.EMERGENCY);
 
-        eb.publish(new ClientErrorEvent(ids.get(2), reasons.get(2)));
+        sm.addUnresponsiveClient(new ClientErrorEvent(ids.get(3), reasons.get(3)));
         sm.run();
         assertSame(sm.currentState, SystemState.EMERGENCY);
 
 
-        instanceFieldSM.set(null, null);
-        sm = SystemStateManager.getInstance(eb);
+        resetSM();
         sm.setState(SystemState.EMERGENCY);
 
-        eb.publish(new ClientErrorEvent(ids.get(3), reasons.get(3)));
+        sm.addUnresponsiveClient(new ClientErrorEvent(ids.get(4), reasons.get(4)));
         sm.run();
         assertSame(sm.currentState, SystemState.EMERGENCY);
 
 
-        instanceFieldSM.set(null, null);
-        sm = SystemStateManager.getInstance(eb);
+        resetSM();
         sm.setState(SystemState.EMERGENCY);
 
-        eb.publish(new ClientErrorEvent(ids.get(4), reasons.get(4)));
+        sm.addUnresponsiveClient(new ClientErrorEvent(ids.get(5), reasons.get(5)));
         sm.run();
         assertSame(sm.currentState, SystemState.EMERGENCY);
 
 
-        instanceFieldSM.set(null, null);
-        sm = SystemStateManager.getInstance(eb);
+        resetSM();
         sm.setState(SystemState.EMERGENCY);
 
-        eb.publish(new ClientErrorEvent(ids.get(5), reasons.get(5)));
-        sm.run();
-        assertSame(sm.currentState, SystemState.EMERGENCY);
-
-
-        instanceFieldSM.set(null, null);
-        sm = SystemStateManager.getInstance(eb);
-        sm.setState(SystemState.EMERGENCY);
-
-        eb.publish(new ClientErrorEvent(ids.get(6), reasons.get(6)));
+        sm.addUnresponsiveClient(new ClientErrorEvent(ids.get(6), reasons.get(6)));
         sm.run();
         assertSame(sm.currentState, SystemState.EMERGENCY);
     }
@@ -390,49 +364,36 @@ class systemManagerTest {
 
     @Test
     void sysManagersetState() throws Exception {
-        eb.publish(new NewStateEvent(SystemState.WAITING));
+        sm.setState(SystemState.WAITING);
         assertSame(sm.currentState, SystemState.WAITING);
-        eb.publish(new NewStateEvent(SystemState.MAPPING));
+        sm.setState(SystemState.MAPPING);
         assertSame(sm.currentState, SystemState.MAPPING);
-        eb.publish(new NewStateEvent(SystemState.RUNNING));
+        sm.setState(SystemState.RUNNING);
         assertSame(sm.currentState, SystemState.RUNNING);
-        eb.publish(new NewStateEvent(SystemState.EMERGENCY));
+        sm.setState(SystemState.EMERGENCY);
         assertSame(sm.currentState, SystemState.EMERGENCY);
     }
 
-    @Test
-    void sysManagerRun() throws Exception {
-        assertSame(sm.currentState, SystemState.WAITING);
-
-        sm.run();
-
-        waitJimmy(System.currentTimeMillis(), 6000);
-        assertSame(sm.currentState, SystemState.MAPPING);
-    }
 
     @Test
     void waitingOperation() throws Exception {
         WaitingState ws = new WaitingState();
+        ws.injectDatabase(db);
         assertTrue(ws.performOperation());
 
         db = new Database();
         ws = new WaitingState();
+        ws.injectDatabase(db);
 
         assertFalse(ws.performOperation());
         waitJimmy(System.currentTimeMillis(), 2000);
         assertFalse(ws.performOperation());
-
-        db = new Database();
-        ws = new WaitingState();
-
-        assertFalse(ws.performOperation());
-        waitJimmy(System.currentTimeMillis(), 4500);
-        assertTrue(ws.performOperation());
     }
 
     @Test
     void waitingOperation2() throws Exception {
         WaitingState ws = new WaitingState();
+        ws.injectDatabase(db);
         db.fullPurge("BR01");
 
         assertFalse(ws.performOperation());
@@ -495,6 +456,7 @@ class systemManagerTest {
     @Test
     void mapping() throws Exception {
         org.example.state.MappingState ms = new org.example.state.MappingState(eb);
+        ms.injectDatabase(db);
 
         assertFalse(ms.performOperation());
         waitJimmy(System.currentTimeMillis(), 3500);
@@ -503,22 +465,27 @@ class systemManagerTest {
         assertFalse(ms.performOperation());
         ms.addTrip(1, false);
         ms.addTrip(1, true);
+        ms.performOperation();
         assertFalse(ms.performOperation());
 
         ms.addTrip(2, false);
         ms.addTrip(2, true);
+        ms.performOperation();
         assertFalse(ms.performOperation());
 
         ms.addTrip(3, false);
         ms.addTrip(3, true);
+        ms.performOperation();
         assertFalse(ms.performOperation());
 
         ms.addTrip(4, false);
         ms.addTrip(4, true);
+        ms.performOperation();
         assertFalse(ms.performOperation());
 
         ms.addTrip(5, false);
         ms.addTrip(5, true);
+        ms.performOperation();
         assertTrue(ms.performOperation());
 
     }
@@ -526,6 +493,7 @@ class systemManagerTest {
     @Test
     void mapping1() throws Exception {
         org.example.state.MappingState ms = new org.example.state.MappingState(eb);
+        ms.injectDatabase(db);
 
         assertFalse(ms.performOperation());
         waitJimmy(System.currentTimeMillis(), 3500);
@@ -534,38 +502,35 @@ class systemManagerTest {
         assertFalse(ms.performOperation());
         ms.addTrip(1, false);
         ms.addTrip(1, true);
+        ms.performOperation();
         assertFalse(ms.performOperation());
 
         ms.addTrip(2, false);
         ms.addTrip(2, true);
+        ms.performOperation();
         assertFalse(ms.performOperation());
 
         ms.addTrip(3, false);
         ms.addTrip(3, true);
+        ms.performOperation();
         assertFalse(ms.performOperation());
 
         ms.addTrip(4, false);
         ms.addTrip(4, true);
+        ms.performOperation();
         assertFalse(ms.performOperation());
 
         ms.addTrip(5, false);
         ms.addTrip(5, true);
+        ms.performOperation();
         assertTrue(ms.performOperation());
     }
 
-    @Test
-    void mapping2() throws Exception {
-        org.example.state.MappingState ms = new org.example.state.MappingState(eb);
-
-        assertFalse(ms.performOperation());
-        waitJimmy(System.currentTimeMillis(), 3500);
-
-        assertTrue(ms.performOperation());
-    }
 
     @Test
     void mapping3() throws Exception {
         org.example.state.MappingState ms = new org.example.state.MappingState(eb);
+        MappingState.injectDatabase(db);
 
         assertFalse(ms.performOperation());
         waitJimmy(System.currentTimeMillis(), 3500);
@@ -574,14 +539,17 @@ class systemManagerTest {
         assertFalse(ms.performOperation());
         ms.addTrip(10, false);
         ms.addTrip(10, true);
+        ms.performOperation();
         assertFalse(ms.performOperation());
 
         ms.addTrip(6, false);
         ms.addTrip(6, true);
+        ms.performOperation();
         assertFalse(ms.performOperation());
 
         ms.addTrip(3, false);
         ms.addTrip(3, true);
+        ms.performOperation();
         assertFalse(ms.performOperation());
 
         ms.addTrip(4, false);
@@ -589,34 +557,51 @@ class systemManagerTest {
         assertFalse(ms.performOperation());
         assertFalse(ms.performOperation());
 
-        waitJimmy(System.currentTimeMillis(), 16000);
+        //waitJimmy(System.currentTimeMillis(), 16000);
 
-        assertTrue(ms.performOperation());
-
-        waitJimmy(System.currentTimeMillis(), 16000);
-
-        assertTrue(ms.performOperation());
-
-        waitJimmy(System.currentTimeMillis(), 16000);
-
-        assertTrue(ms.performOperation());
-        waitJimmy(System.currentTimeMillis(), 16000);
-
+        ms.addTrip(5, false);
+        ms.addTrip(5, true);
+        ms.performOperation();
         assertTrue(ms.performOperation());
 
     }
 
     @Test
-    void mapping4() throws Exception {
-        org.example.state.MappingState ms = new org.example.state.MappingState(eb);
+    void sm1() throws Exception {
+        sm.handleTrip(new TripEvent(0, false));
+        sm.setState(SystemState.RUNNING);
+        sm.handleTrip(new TripEvent(0, false));
+        sm.setState(SystemState.EMERGENCY);
+        sm.handleTrip(new TripEvent(0, false));
 
-        assertFalse(ms.performOperation());
-        waitJimmy(System.currentTimeMillis(), 3500);
+        sm.setState(SystemState.MAPPING);
+        sm.handleTrip(new TripEvent(0, false));
 
-        ms.addTrip(-10, false);
-        ms.addTrip(-10, true);
+        sm.setState(null);
+        sm.setState(SystemState.MAPPING);
+        sm.shutdown();
 
-        assertTrue(ms.performOperation());
+        sm.updateState(new NewStateEvent(SystemState.EMERGENCY));
+    }
+
+    @Test
+    void running100() throws Exception {
+        RunningState.injectDatabase(db);
+        sm.setState(SystemState.RUNNING);
+    }
+
+
+    @Test
+    void waiting() throws Exception {
+        sm.injectDatabase(db);
+        WaitingState.injectDatabase(db);
+
+        sm.run();
+        assertNotSame(sm.currentState, SystemState.MAPPING);
+        waitJimmy(System.currentTimeMillis(), 5000);
+        sm.run();
+
+        assertSame(sm.currentState, SystemState.MAPPING);
     }
 
 

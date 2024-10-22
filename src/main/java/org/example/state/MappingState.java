@@ -7,6 +7,7 @@ import org.example.client.BladeRunnerClient;
 import org.example.client.CheckpointClient;
 import org.example.events.ClientErrorEvent;
 import org.example.events.EventBus;
+import org.example.events.StateChangeEvent;
 import org.example.messages.MessageEnums;
 
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ import java.util.concurrent.*;
 
 public class MappingState implements SystemStateInterface {
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-    private Database db;
+    private static Database db = Database.getInstance();
 
     // All time units in milliseconds
     private static final long BLADE_RUNNER_MAPPING_RETRY_TIMEOUT = 15000; // 15 seconds
@@ -46,7 +47,6 @@ public class MappingState implements SystemStateInterface {
 
     // Constructor
     public MappingState(EventBus eventBus) {
-        db = Database.getInstance();
         retryAttemps = 0;
         hasSent = false;
         startMapping = false;
@@ -60,6 +60,10 @@ public class MappingState implements SystemStateInterface {
         tripQueue = new LinkedBlockingQueue<>();
 
         this.eventBus = eventBus;
+    }
+
+    public static void injectDatabase(Database database) {
+        db = database;
     }
 
     // Performs the operation of this state at set intervals according to TIME_BETWEEN_RUNNING
@@ -147,8 +151,13 @@ public class MappingState implements SystemStateInterface {
                 currentTrip = -1;
                 return true;
             } else {
-                //TODO
                 String str = (tripZone == 10) ? "CP10" : "CP" + tripZone;
+                if (db.getStationIfExist(tripZone).isPresent()) {
+                    str = (tripZone == 10) ? "ST10" : "ST" + tripZone;
+                    if (db.getClient(str, StationClient.class).isEmpty()) {
+                        str = (tripZone == 10) ? "STA10" : "STA" + tripZone;
+                    }
+                }
                 eventBus.publish(new ClientErrorEvent(str, ReasonEnum.INCORTRIP));
                 logger.log(Level.WARNING, "Checkpoint : {0} has had inconsistent trip", str);
             }
@@ -183,9 +192,9 @@ public class MappingState implements SystemStateInterface {
         // if this blade runner was detected to be in a collision, it will be going backwards
         // thus want the checkpoint before instead of infront
 
-       if (backwards) {
-           zone = calculateNextBlock(zone, -1);
-       }
+        if (backwards) {
+            zone = calculateNextBlock(zone, -1);
+        }
 
         // if a normal trip, then change to slow
         // do not have to worry about backwards, because cannot go fast backwards
@@ -211,7 +220,8 @@ public class MappingState implements SystemStateInterface {
     // * Returns true if the timeout has occurred */
     private void checkIfBladeRunnerIsDead() {
         if (retryAttemps > MAX_RETRIES && currentBladeRunner != null) {
-            eventBus.publish(new ClientErrorEvent(currentBladeRunner.getId(), ReasonEnum.MAPTIMEOUT));
+            eventBus.publish(
+                    new ClientErrorEvent(currentBladeRunner.getId(), ReasonEnum.MAPTIMEOUT));
             logger.log(Level.SEVERE, "Blade runner failed to be mapped in time");
         }
     }
