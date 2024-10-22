@@ -60,11 +60,12 @@ public class Database {
     }
 
     public Optional<StationClient> getStationIfExist(int zone) {
-
         String sc = isStationMap.get(zone);
+
         if (sc == null) {
-            return Optional.of(null);
+            return Optional.empty();
         }
+
         return Optional.of(StationClient.class.cast(clients.get(sc)));
     }
 
@@ -116,9 +117,9 @@ public class Database {
 
         if (type.isInstance(c)) {
             return Optional.of(type.cast(c));
-        } else
-            logger.log(Level.WARNING, "Client with ID: {0} is not of type: {1}",
-                    new Object[] {id, type.getName()});
+        } else {
+            logger.log(Level.WARNING, "Client with ID: {0} is not of type: {1}", new Object[] {id, type.getName()});
+        }
 
         return Optional.empty();
     }
@@ -128,13 +129,11 @@ public class Database {
     }
 
     public boolean addUnresponsiveClient(String id, ReasonEnum newReason) {
-
         Optional<AbstractClient> cOptional = getClient(id, AbstractClient.class);
         AbstractClient c;
 
         if (cOptional.isPresent()) {
             c = cOptional.get();
-
         } else {
             logger.log(Level.WARNING, "Attempted to get non-existent client", id);
             return false;
@@ -151,8 +150,17 @@ public class Database {
         clients.remove(id);
     }
 
-    public static void coom() {
-        System.out.println("coom");
+    public void ultraPurge() {
+        clients.clear();
+        bladeRunnerBlockMap.clear();
+
+        allBladeRunners.clear();
+        unresponsiveClients.clear();
+
+        numberOfCheckpoints.set(0);
+        numberOfStations.set(0);
+
+        isStationMap.clear();
     }
 
     public void removeReason(String id, ReasonEnum reason) {
@@ -166,7 +174,6 @@ public class Database {
 
         if (cOptional.isPresent()) {
             c = cOptional.get();
-
         } else {
             logger.log(Level.WARNING, "Attempted to get non-existent client {0}", id);
             return;
