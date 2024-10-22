@@ -40,7 +40,12 @@ public class EventBus {
 
         if (pubList != null) {
             for (Consumer<? extends Event> listener : pubList) {
-                ((Consumer<Event>) listener).accept(event);
+                try {
+                    ((Consumer<Event>) listener).accept(event);
+                } catch (Exception e) {
+                    logger.log(Level.SEVERE, "Exception while emitting event ",
+                            new Object[] {event, e});
+                }
             }
         }
     }

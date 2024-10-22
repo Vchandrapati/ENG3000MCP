@@ -171,6 +171,7 @@ public class MappingState implements SystemStateInterface {
             System.out.println("sent fast");
             currentBladeRunner.sendExecuteMessage(MessageEnums.CCPAction.FFASTC);
         }
+
         hasSent = true;
         return true;
     }
