@@ -39,10 +39,10 @@ public class MessageHandler {
         currentState = event.getState();
     }
 
-    public void handleMessage(DatagramPacket packet) {
-        String message =
-                new String(packet.getData(), 0, packet.getLength(), StandardCharsets.UTF_8);
-    }
+    // public void handleMessage(DatagramPacket packet) {
+    // String message =
+    // new String(packet.getData(), 0, packet.getLength(), StandardCharsets.UTF_8);
+    // }
 
     public void handleMessage(PacketEvent event) {
         DatagramPacket packet = event.getPacket();
@@ -71,7 +71,7 @@ public class MessageHandler {
             logger.log(Level.SEVERE, "Failed to parse message: {0} \nException: {1}",
                     new Object[] {message, e.getMessage()});
         } catch (Exception e) {
-            logger.log(Level.SEVERE,
+            logger.log(Level.INFO,
                     "Unexpected error handling message from {0}:{1} \nException: {2}",
                     new Object[] {packet.getAddress(), packet.getPort(), e});
         }
@@ -113,6 +113,7 @@ public class MessageHandler {
             }
 
             if (client.isMissedAKEX(receiveMessage.sequenceNumber)) {
+                // TODO
                 // Has missed the AKEX timing
             }
         }, () -> {
@@ -156,14 +157,14 @@ public class MessageHandler {
                 client.expectingAKEXBy(receiveMessage.sequenceNumber);
                 break;
             case "TRIP":
-                switch (MessageEnums.STCStatus.valueOf(receiveMessage.status)) {
-                    case MessageEnums.STCStatus.ON:
+                switch (receiveMessage.status.toString()) {
+                    case "ON":
                         eventBus.publish(new TripEvent(client.getLocation(), false));
                         break;
-                    case MessageEnums.STCStatus.OFF:
+                    case "OFF":
                         eventBus.publish(new TripEvent(client.getLocation(), true));
                         break;
-                    case MessageEnums.STCStatus.ERR:
+                    case "ERR":
                         eventBus.publish(
                                 new ClientErrorEvent(client.getId(), ReasonEnum.CLIENTERR));
                         break;
@@ -181,9 +182,9 @@ public class MessageHandler {
         }
 
         if (client.isMissedAKEX(receiveMessage.sequenceNumber)) {
+            // TODO
             // Has missed the AKEX timing
         }
-
     }
 
     public <S extends Enum<S>, A extends Enum<A> & MessageEnums.ActionToStatus<S>> void handleStatMessage(

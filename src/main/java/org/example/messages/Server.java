@@ -74,15 +74,10 @@ public class Server {
                         new DatagramPacket(new byte[BUFFER_SIZE], BUFFER_SIZE);
                 serverSocket.receive(receivePacket);
 
-<<<<<<< HEAD
-                if (receivePacket.getLength() > 0)
-                    mailbox.add(receivePacket);
-=======
                 if (receivePacket.getLength() > 0) {
                     mailbox.add(receivePacket);
                     logger.log(Level.FINE, "Received packet from {0}", receivePacket.getAddress());
                 }
->>>>>>> d7252bf48c45153b21d70522f64d8e16fc72cbb6
             } catch (IOException e) {
                 logger.log(Level.SEVERE, "Error receiving packet", e);
             }
@@ -107,11 +102,11 @@ public class Server {
     public void send(SendPacketEvent event) {
         try {
             byte[] buffer = event.getMessage().getBytes();
-            DatagramPacket sendPacket = new DatagramPacket(buffer, buffer.length, event.getClientAddress(),
-                    event.getClientPort());
+            DatagramPacket sendPacket = new DatagramPacket(buffer, buffer.length,
+                    event.getClientAddress(), event.getClientPort());
             serverSocket.send(sendPacket);
-            logger.log(Level.INFO, "Sent {0} to client at: {1}", new Object[] {event.getType(),
-                    event.getId()});
+            logger.log(Level.INFO, "Sent {0} to client at: {1}",
+                    new Object[] {event.getType(), event.getId()});
         } catch (IOException e) {
             logger.log(Level.SEVERE, "Failed to send message to client: {0}", event.getId());
             logger.log(Level.SEVERE, "Exception: ", e);
