@@ -7609,3 +7609,83 @@ java.lang.NullPointerException: Cannot invoke "java.lang.Integer.intValue()" bec
 18:23:30.611 FINE: org.example.messages.Server connectionListener Received packet from /127.0.0.1
 18:23:30.612 INFO: org.example.client.AbstractClient updateStatus Updated status for CP02 to OFF
 18:23:30.612 INFO: org.example.messages.MessageHandler handleStatMessage Received STAT message from Client: CP02
+21:39:12.231 INFO: org.example.visualiser.CommandHandler run MCP online, please input a command, type help to see a list of commands
+21:39:12.314 INFO: org.example.state.SystemStateManager setState Changing to system state WAITING
+21:39:12.326 INFO: org.example.messages.Server <init> Server completed startup and listening on PORT: 3001
+21:39:12.463 INFO: org.example.messages.StatusScheduler start StatusScheduler started
+21:40:01.487 FINE: org.example.messages.Server connectionListener Received packet from /192.168.1.14
+21:40:01.488 FINE: org.example.messages.Server connectionListener Received packet from /192.168.1.14
+21:40:01.489 FINE: org.example.messages.Server connectionListener Received packet from /192.168.1.14
+21:40:01.489 FINE: org.example.messages.Server connectionListener Received packet from /192.168.1.14
+21:40:01.490 FINE: org.example.messages.Server connectionListener Received packet from /192.168.1.14
+21:40:01.490 FINE: org.example.messages.Server connectionListener Received packet from /192.168.1.14
+21:40:01.490 FINE: org.example.messages.Server connectionListener Received packet from /192.168.1.14
+21:40:01.492 FINE: org.example.messages.Server connectionListener Received packet from /192.168.1.14
+21:40:01.544 INFO: org.example.messages.MessageHandler lambda$7 Received CCIN message from Blade Runner: BR01
+21:40:01.544 INFO: org.example.messages.MessageHandler lambda$7 Received CCIN message from Blade Runner: BR02
+21:40:01.545 INFO: org.example.messages.MessageHandler lambda$5 Received CPIN message from Checkpoint: CP01
+21:40:01.545 INFO: org.example.messages.MessageHandler lambda$5 Received CPIN message from Checkpoint: CP02
+21:40:01.547 INFO: org.example.messages.MessageHandler lambda$5 Received CPIN message from Checkpoint: CP03
+21:40:01.547 INFO: org.example.messages.MessageHandler lambda$5 Received CPIN message from Checkpoint: CP04
+21:40:01.548 INFO: org.example.messages.MessageHandler lambda$5 Received CPIN message from Checkpoint: CP05
+21:40:01.548 INFO: org.example.messages.MessageHandler lambda$5 Received CPIN message from Checkpoint: CP06
+21:40:01.551 INFO: org.example.client.AbstractClient updateStatus Updated status for BR01 to STOPC
+21:40:01.551 INFO: org.example.Database addClient Added BR01 to database
+21:40:01.565 INFO: org.example.messages.ClientFactory handleInitialise Initialised new client: BR01
+21:40:01.567 INFO: org.example.client.AbstractClient updateStatus Updated status for BR02 to STOPC
+21:40:01.567 INFO: org.example.Database addClient Added BR02 to database
+21:40:01.568 INFO: org.example.messages.ClientFactory handleInitialise Initialised new client: BR02
+21:40:01.570 SEVERE: org.example.messages.ClientFactory handleInitialise Failed to handle message
+21:40:01.570 SEVERE: org.example.messages.ClientFactory handleInitialise Exception: 
+java.lang.NullPointerException: Cannot invoke "java.lang.Integer.intValue()" because "zone" is null
+	at org.example.messages.ClientFactory.handleInitialise(ClientFactory.java:55)
+	at org.example.events.EventBus.emit(EventBus.java:70)
+	at org.example.events.EventBus.lambda$0(EventBus.java:25)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+
+21:40:01.572 SEVERE: org.example.messages.ClientFactory handleInitialise Failed to handle message
+21:40:01.572 SEVERE: org.example.messages.ClientFactory handleInitialise Exception: 
+java.lang.NullPointerException: Cannot invoke "java.lang.Integer.intValue()" because "zone" is null
+	at org.example.messages.ClientFactory.handleInitialise(ClientFactory.java:55)
+	at org.example.events.EventBus.emit(EventBus.java:70)
+	at org.example.events.EventBus.lambda$0(EventBus.java:25)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+
+21:40:01.572 SEVERE: org.example.messages.ClientFactory handleInitialise Failed to handle message
+21:40:01.574 SEVERE: org.example.messages.ClientFactory handleInitialise Exception: 
+java.lang.NullPointerException: Cannot invoke "java.lang.Integer.intValue()" because "zone" is null
+	at org.example.messages.ClientFactory.handleInitialise(ClientFactory.java:55)
+	at org.example.events.EventBus.emit(EventBus.java:70)
+	at org.example.events.EventBus.lambda$0(EventBus.java:25)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+
+21:40:01.574 SEVERE: org.example.messages.ClientFactory handleInitialise Failed to handle message
+21:40:01.574 SEVERE: org.example.messages.ClientFactory handleInitialise Exception: 
+java.lang.NullPointerException: Cannot invoke "java.lang.Integer.intValue()" because "zone" is null
+	at org.example.messages.ClientFactory.handleInitialise(ClientFactory.java:55)
+	at org.example.events.EventBus.emit(EventBus.java:70)
+	at org.example.events.EventBus.lambda$0(EventBus.java:25)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+
+21:40:01.575 SEVERE: org.example.messages.ClientFactory handleInitialise Failed to handle message
+21:40:01.575 SEVERE: org.example.messages.ClientFactory handleInitialise Exception: 
+java.lang.NullPointerException: Cannot invoke "java.lang.Integer.intValue()" because "zone" is null
+	at org.example.messages.ClientFactory.handleInitialise(ClientFactory.java:55)
+	at org.example.events.EventBus.emit(EventBus.java:70)
+	at org.example.events.EventBus.lambda$0(EventBus.java:25)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+
+21:40:01.576 SEVERE: org.example.messages.ClientFactory handleInitialise Failed to handle message
+21:40:01.577 SEVERE: org.example.messages.ClientFactory handleInitialise Exception: 
+java.lang.NullPointerException: Cannot invoke "java.lang.Integer.intValue()" because "zone" is null
+	at org.example.messages.ClientFactory.handleInitialise(ClientFactory.java:55)
+	at org.example.events.EventBus.emit(EventBus.java:70)
+	at org.example.events.EventBus.lambda$0(EventBus.java:25)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+
+21:40:01.578 INFO: org.example.messages.Server send Sent AKIN to client at: BR01
+21:40:01.578 INFO: org.example.messages.Server send Sent AKIN to client at: BR02
+21:40:02.469 INFO: org.example.messages.Server send Sent STAT to client at: BR02
+21:40:02.470 FINE: org.example.messages.Server connectionListener Received packet from /192.168.1.14
+21:40:02.471 INFO: org.example.client.AbstractClient updateStatus Updated status for BR02 to STOPC
+21:40:02.471 INFO: org.example.messages.MessageHandler handleStatMessage Received STAT message from Client: BR02
