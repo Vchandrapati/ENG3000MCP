@@ -1,19 +1,29 @@
 import org.example.Database;
 import org.example.client.*;
+import org.example.events.BladeRunnerStopEvent;
+import org.example.events.ClientErrorEvent;
+import org.example.events.EventBus;
 import org.example.messages.*;
+import org.example.state.SystemState;
 import org.example.state.SystemStateManager;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.powermock.api.mockito.PowerMockito;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.io.IOException;
+import java.net.DatagramPacket;
 import java.net.InetAddress;
-
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.*;
@@ -21,427 +31,146 @@ import static org.mockito.Mockito.*;
 
 
 class MessageHandlerTest {
+    @Mock
+    Logger l;
 
     @Mock
-    StatHandler sh;
+    EventBus eb;
 
     @Mock
     Database db;
-
-    @Mock
-    SystemStateManager sm;
-
-    @Mock
-    ClientFactory cf;
-
-    @Mock
-    Logger l;
 
     @InjectMocks
     MessageHandler mh;
 
     private ObjectMapper objectMapper = new ObjectMapper();
 
+    private AutoCloseable closeable;
+
+
     @BeforeEach
     void beforeEach() {
-        MockitoAnnotations.openMocks(this);
+        closeable = MockitoAnnotations.openMocks(this);
+    }
 
+    @AfterEach
+    void tearDown() throws Exception {
+        closeable.close();
     }
 
     @Test
-    void test_CCP_STAT_MSG() throws Exception {
-        ReceiveMessage r = new ReceiveMessage();
-        r.clientID = "BR01";
-        r.clientType = "CCP";
-        r.message = "STAT";
-        r.sequenceNumber = 0;
+    void testMessage() {
+        ReceiveMessage message = new ReceiveMessage();
+        message.clientType = "CCP";
+        message.clientID = "BR01";
+        message.message = "AKEX";
+        message.sequenceNumber = 3;
 
         BladeRunnerClient br = mock(BladeRunnerClient.class);
 
         when(db.getClient("BR01", BladeRunnerClient.class)).thenReturn(Optional.of(br));
 
-        String s = objectMapper.writeValueAsString(r);
-        mh.handleMessage(s, InetAddress.getLocalHost(), 0);
+        String msg = "";
+        try {
+            msg = objectMapper.writeValueAsString(message);
+        } catch (Exception e) {
+        }
 
-        verify(sh, times(1)).handleStatMessage(eq(br), isA(ReceiveMessage.class));
-        verifyNoMoreInteractions(sh);
+        byte[] buffer = msg.getBytes();
+        DatagramPacket sendPacket = new DatagramPacket(buffer, buffer.length, null, 3001);
+
+        mh.handleMessage(sendPacket);
+
+        verify(db, times(1)).getClient("BR01", BladeRunnerClient.class);
+        verify(br, times(1)).expectingAKEXBy(3);
+        verify(br, times(1)).isMissedAKEX(3);
     }
 
     @Test
-    void test_CCP_AKEX_MSG() throws Exception {
-        ReceiveMessage r = new ReceiveMessage();
-        r.clientID = "BR01";
-        r.clientType = "CCP";
-        r.message = "AKEX";
-        r.sequenceNumber = 0;
+    void testStationAndCheckpoint() {
+        ReceiveMessage message = new ReceiveMessage();
+        message.clientType = "CPC";
+        message.clientID = "CP01";
+        message.message = "AKEX";
+        message.sequenceNumber = 3;
+
+        CheckpointClient cp = mock(CheckpointClient.class);
+
+        when(db.getClient("CP01", CheckpointClient.class)).thenReturn(Optional.of(cp));
+
+        String msg = "";
+        try {
+            msg = objectMapper.writeValueAsString(message);
+        } catch (Exception e) {
+        }
+
+        byte[] buffer = msg.getBytes();
+        DatagramPacket sendPacket = new DatagramPacket(buffer, buffer.length, null, 3001);
+
+        mh.handleMessage(sendPacket);
+
+
+        verify(db, times(1)).getClient("CP01", CheckpointClient.class);
+        verify(cp, times(1)).setLastResponse("AKEX");
+        verify(cp, times(1)).expectingAKEXBy(3);
+        verify(cp, times(1)).isMissedAKEX(3);
+
+    }
+
+    @Test
+    public void Times100test() {
+
+        Integer scale = 100;
+        ReceiveMessage r1 = new ReceiveMessage();
+        r1.clientType = "CCP";
+        r1.clientID = "BR01";
+        r1.message = "STAT";
+        r1.sequenceNumber = 4;
+        r1.status = "FFASTC";
+
+        ReceiveMessage r2 = new ReceiveMessage();
+        r2.clientType = "CCP";
+        r2.clientID = "BR01";
+        r2.message = "STAT";
+        r2.sequenceNumber = 5;
+        r2.status = "STOPC";
 
         BladeRunnerClient br = mock(BladeRunnerClient.class);
+        // Create a spy on the enum instance
+        // SystemState spyStatus = Mockito.spy(SystemState.RUNNING);
 
-        when(db.getClient("BR01", BladeRunnerClient.class)).thenReturn(Optional.of(br));
+        // Override the behavior of isSuccess() method
 
-        String s = objectMapper.writeValueAsString(r);
-        mh.handleMessage(s, InetAddress.getLocalHost(), 0);
 
-        verifyNoMoreInteractions(sh);
-    }
+        for (int i = 0; i < scale; i++) {
+            when(br.getLastActionSent()).thenReturn(MessageEnums.CCPAction.FSLOWC);
+            when(br.isExpectingStat()).thenReturn(true);
+            when(br.getLatestStatusMessageCount()).thenReturn(3);
+            // Mockito.when(spyStatus.equals(SystemState.RUNNING)).thenReturn(true);
+            when(br.getId()).thenReturn("BR01");
+            when(br.getStatus()).thenReturn(MessageEnums.CCPStatus.FSLOWC); // This does not matter
 
-    @Test
-    void test_CCP_CCIN_MSG() throws Exception {
-        ReceiveMessage r = new ReceiveMessage();
-        r.clientID = "BR01";
-        r.clientType = "CCP";
-        r.message = "CCIN";
-        r.sequenceNumber = 0;
+            mh.handleStatMessage(br, r1);
 
-        String s = objectMapper.writeValueAsString(r);
-        mh.handleMessage(s, InetAddress.getLocalHost(), 0);
+            when(br.getLastActionSent()).thenReturn(MessageEnums.CCPAction.FSLOWC);
+            when(br.isExpectingStat()).thenReturn(false);
+            when(br.getLatestStatusMessageCount()).thenReturn(4);
+            // Mockito.when(spyStatus.equals(SystemState.RUNNING)).thenReturn(true);
+            when(br.getId()).thenReturn("BR01");
+            when(br.getStatus()).thenReturn(MessageEnums.CCPStatus.FSLOWC); // This does not matter
 
-        verify(cf, times(1)).handleInitialise(isA(ReceiveMessage.class),
-                eq(InetAddress.getLocalHost()), eq(0));
-        verifyNoMoreInteractions(sh);
-    }
+            mh.handleStatMessage(br, r2);
+        }
 
-    @Test
-    void test_unknown_CCP_ERR_MSG() throws Exception {
-        ReceiveMessage r = new ReceiveMessage();
-        r.clientID = "BR01";
-        r.clientType = "CCP";
-        r.message = "ERR";
-        r.sequenceNumber = 0;
+        verify(br, times(1 * scale)).sendAcknowledgeMessage(any(MessageEnums.AKType.class));
+        verify(eb, times(1 * scale)).publish(any(BladeRunnerStopEvent.class));
+        verify(br, times(1 * scale)).updateLatestStatusMessageCount(eq(4));
+        verify(br, times(1 * scale)).updateLatestStatusMessageCount(eq(5));
+        verify(br, times(2 * scale)).resetMissedStats();
 
-        String s = objectMapper.writeValueAsString(r);
-        mh.handleMessage(s, InetAddress.getLocalHost(), 0);
+        verify(br, times(2 * scale)).noLongerExpectingStat();
+        verify(br, times(2 * scale)).updateStatus(eq(MessageEnums.CCPStatus.FFASTC));
 
-        verify(l, times(1)).log(eq(Level.SEVERE), isA(String.class), eq("BR01"));
-    }
-
-    @Test
-    void test_known_CCP_ERR_MSG() throws Exception {
-        ReceiveMessage r = new ReceiveMessage();
-        r.clientID = "BR01";
-        r.clientType = "CCP";
-        r.message = "ERR";
-        r.sequenceNumber = 0;
-
-        BladeRunnerClient br = mock(BladeRunnerClient.class);
-        when(db.getClient("BR01", BladeRunnerClient.class)).thenReturn(Optional.of(br));
-
-        String s = objectMapper.writeValueAsString(r);
-        mh.handleMessage(s, InetAddress.getLocalHost(), 0);
-
-        verify(l, times(1)).log(eq(Level.WARNING), isA(String.class), eq(r.message));
-    }
-
-    @Test
-    void test_CPC_AKEX_MSG() throws Exception {
-        ReceiveMessage r = new ReceiveMessage();
-        r.clientID = "CP01";
-        r.clientType = "CPC";
-        r.message = "AKEX";
-        r.sequenceNumber = 0;
-
-        CheckpointClient cp = mock(CheckpointClient.class);
-
-        when(db.getClient("CP01", CheckpointClient.class)).thenReturn(Optional.of(cp));
-
-        String s = objectMapper.writeValueAsString(r);
-        mh.handleMessage(s, InetAddress.getLocalHost(), 0);
-
-        verifyNoMoreInteractions(sh);
-    }
-
-    @Test
-    void test_CPC_STAT_MSG() throws Exception {
-        ReceiveMessage r = new ReceiveMessage();
-        r.clientID = "CP01";
-        r.clientType = "CPC";
-        r.message = "STAT";
-        r.sequenceNumber = 0;
-
-        CheckpointClient cp = mock(CheckpointClient.class);
-
-        when(db.getClient("CP01", CheckpointClient.class)).thenReturn(Optional.of(cp));
-
-        String s = objectMapper.writeValueAsString(r);
-        mh.handleMessage(s, InetAddress.getLocalHost(), 0);
-
-        verify(sh, times(1)).handleStatMessage(eq(cp), isA(ReceiveMessage.class));
-        verifyNoMoreInteractions(sh);
-    }
-
-    @Test
-    void test_CPC_CPIN_MSG() throws Exception {
-        ReceiveMessage r = new ReceiveMessage();
-        r.clientID = "CP01";
-        r.clientType = "CPC";
-        r.message = "CPIN";
-        r.sequenceNumber = 0;
-
-        String s = objectMapper.writeValueAsString(r);
-        mh.handleMessage(s, InetAddress.getLocalHost(), 0);
-
-        verify(cf, times(1)).handleInitialise(isA(ReceiveMessage.class),
-                eq(InetAddress.getLocalHost()), eq(0));
-        verifyNoMoreInteractions(sh);
-    }
-
-    @Test
-    void test_CPC_TRIP_ON_MSG() throws Exception {
-        ReceiveMessage r = new ReceiveMessage();
-        r.clientID = "CP01";
-        r.clientType = "CPC";
-        r.message = "TRIP";
-        r.sequenceNumber = 0;
-        r.status = "ON";
-
-        CheckpointClient cp = mock(CheckpointClient.class);
-
-        when(db.getClient("CP01", CheckpointClient.class)).thenReturn(Optional.of(cp));
-        when(cp.getLocation()).thenReturn(0);
-
-        String s = objectMapper.writeValueAsString(r);
-        mh.handleMessage(s, InetAddress.getLocalHost(), 0);
-
-        verify(cp).sendAcknowledgeMessage(eq(MessageEnums.AKType.AKTR));
-        verify(cp, times(1)).updateStatus(eq(MessageEnums.CPCStatus.ON));
-        verifyNoMoreInteractions(sh);
-    }
-
-    @Test
-    void test_CPC_TRIP_OFF_MSG() throws Exception {
-        ReceiveMessage r = new ReceiveMessage();
-        r.clientID = "CP01";
-        r.clientType = "CPC";
-        r.message = "TRIP";
-        r.sequenceNumber = 0;
-        r.status = "OFF";
-
-        CheckpointClient cp = mock(CheckpointClient.class);
-
-        when(db.getClient("CP01", CheckpointClient.class)).thenReturn(Optional.of(cp));
-        when(cp.getLocation()).thenReturn(0);
-
-        String s = objectMapper.writeValueAsString(r);
-        mh.handleMessage(s, InetAddress.getLocalHost(), 0);
-
-        verify(cp).sendAcknowledgeMessage(eq(MessageEnums.AKType.AKTR));
-        verify(cp, times(1)).updateStatus(eq(MessageEnums.CPCStatus.OFF));
-        verifyNoMoreInteractions(sh);
-    }
-
-    @Test
-    void test_CPC_TRIP_ERR_MSG() throws Exception {
-        ReceiveMessage r = new ReceiveMessage();
-        r.clientID = "CP01";
-        r.clientType = "CPC";
-        r.message = "TRIP";
-        r.sequenceNumber = 0;
-        r.status = "ERR";
-
-        CheckpointClient cp = mock(CheckpointClient.class);
-
-        when(db.getClient("CP01", CheckpointClient.class)).thenReturn(Optional.of(cp));
-        when(cp.getId()).thenReturn("CP01");
-
-        String s = objectMapper.writeValueAsString(r);
-        mh.handleMessage(s, InetAddress.getLocalHost(), 0);
-
-        verify(cp).sendAcknowledgeMessage(eq(MessageEnums.AKType.AKTR));
-        verify(sm, times(1)).addUnresponsiveClient(eq("CP01"), eq(ReasonEnum.CLIENTERR));
-        verifyNoMoreInteractions(sh);
-    }
-
-    @Test
-    void test_unkown_CPC_MSG() throws Exception {
-        ReceiveMessage r = new ReceiveMessage();
-        r.clientID = "CP01";
-        r.clientType = "CPC";
-        r.message = "???";
-        r.sequenceNumber = 0;
-        r.status = "ERR";
-
-        CheckpointClient cp = mock(CheckpointClient.class);
-
-        String s = objectMapper.writeValueAsString(r);
-        mh.handleMessage(s, InetAddress.getLocalHost(), 0);
-
-        verify(l, times(1)).log(eq(Level.SEVERE), isA(String.class), eq("CP01"));
-        verifyNoMoreInteractions(sh);
-    }
-
-    @Test
-    void test_kown_CPC_MSG() throws Exception {
-        ReceiveMessage r = new ReceiveMessage();
-        r.clientID = "CP01";
-        r.clientType = "CPC";
-        r.message = "???";
-        r.sequenceNumber = 0;
-        r.status = "ERR";
-
-        CheckpointClient cp = mock(CheckpointClient.class);
-
-        when(db.getClient("CP01", CheckpointClient.class)).thenReturn(Optional.of(cp));
-        when(cp.getId()).thenReturn("CP01");
-
-        String s = objectMapper.writeValueAsString(r);
-        mh.handleMessage(s, InetAddress.getLocalHost(), 0);
-
-        verify(l, times(1)).log(eq(Level.SEVERE), isA(String.class), isA(ReceiveMessage.class));
-        verifyNoMoreInteractions(sh);
-    }
-
-    @Test
-    void test_STC_STAT_MSG() throws Exception {
-        ReceiveMessage r = new ReceiveMessage();
-        r.clientID = "ST01";
-        r.clientType = "STC";
-        r.message = "STAT";
-        r.sequenceNumber = 0;
-
-        StationClient st = mock(StationClient.class);
-
-        when(db.getClient("ST01", StationClient.class)).thenReturn(Optional.of(st));
-
-        String s = objectMapper.writeValueAsString(r);
-        mh.handleMessage(s, InetAddress.getLocalHost(), 0);
-
-        verify(sh, times(1)).handleStatMessage(eq(st), isA(ReceiveMessage.class));
-        verifyNoMoreInteractions(sh);
-    }
-
-    @Test
-    void test_STC_AKEX_MSG() throws Exception {
-        ReceiveMessage r = new ReceiveMessage();
-        r.clientID = "ST01";
-        r.clientType = "STC";
-        r.message = "AKEX";
-        r.sequenceNumber = 0;
-
-        StationClient st = mock(StationClient.class);
-
-        when(db.getClient("ST01", StationClient.class)).thenReturn(Optional.of(st));
-
-        String s = objectMapper.writeValueAsString(r);
-        mh.handleMessage(s, InetAddress.getLocalHost(), 0);
-
-        verifyNoMoreInteractions(sh);
-    }
-
-    @Test
-    void test_STC_STIN_MSG() throws Exception {
-        ReceiveMessage r = new ReceiveMessage();
-        r.clientID = "ST01";
-        r.clientType = "STC";
-        r.message = "STIN";
-        r.sequenceNumber = 0;
-
-        StationClient st = mock(StationClient.class);
-
-        String s = objectMapper.writeValueAsString(r);
-        mh.handleMessage(s, InetAddress.getLocalHost(), 0);
-
-        verify(cf).handleInitialise(isA(ReceiveMessage.class), eq(InetAddress.getLocalHost()),
-                eq(0));
-        verifyNoMoreInteractions(sh);
-    }
-
-    @Test
-    void test_STC_TRIP_ON_MSG() throws Exception {
-        ReceiveMessage r = new ReceiveMessage();
-        r.clientID = "ST01";
-        r.clientType = "STC";
-        r.message = "TRIP";
-        r.sequenceNumber = 0;
-        r.status = "ON";
-
-        StationClient st = mock(StationClient.class);
-
-        when(db.getClient("ST01", StationClient.class)).thenReturn(Optional.of(st));
-
-        String s = objectMapper.writeValueAsString(r);
-        mh.handleMessage(s, InetAddress.getLocalHost(), 0);
-
-        verify(st).sendAcknowledgeMessage(eq(MessageEnums.AKType.AKTR));
-        verify(st).updateStatus(eq(MessageEnums.STCStatus.ON));
-        verifyNoMoreInteractions(sh);
-    }
-
-    @Test
-    void test_STC_TRIP_OFF_MSG() throws Exception {
-        ReceiveMessage r = new ReceiveMessage();
-        r.clientID = "ST01";
-        r.clientType = "STC";
-        r.message = "TRIP";
-        r.sequenceNumber = 0;
-        r.status = "OFF";
-
-        StationClient st = mock(StationClient.class);
-
-        when(db.getClient("ST01", StationClient.class)).thenReturn(Optional.of(st));
-
-        String s = objectMapper.writeValueAsString(r);
-        mh.handleMessage(s, InetAddress.getLocalHost(), 0);
-
-        verify(st).sendAcknowledgeMessage(eq(MessageEnums.AKType.AKTR));
-        verify(st).updateStatus(eq(MessageEnums.STCStatus.OFF));
-        verifyNoMoreInteractions(sh);
-    }
-
-    @Test
-    void test_STC_TRIP_ERR_MSG() throws Exception {
-        ReceiveMessage r = new ReceiveMessage();
-        r.clientID = "ST01";
-        r.clientType = "STC";
-        r.message = "TRIP";
-        r.sequenceNumber = 0;
-        r.status = "ERR";
-
-        StationClient st = mock(StationClient.class);
-
-        when(db.getClient("ST01", StationClient.class)).thenReturn(Optional.of(st));
-        when(st.getId()).thenReturn("ST01");
-
-        String s = objectMapper.writeValueAsString(r);
-        mh.handleMessage(s, InetAddress.getLocalHost(), 0);
-
-        verify(st).sendAcknowledgeMessage(eq(MessageEnums.AKType.AKTR));
-        verify(sm).addUnresponsiveClient(eq("ST01"), eq(ReasonEnum.CLIENTERR));
-        verifyNoMoreInteractions(sh);
-    }
-
-    @Test
-    void test_STC_known_ERR_MSG() throws Exception {
-        ReceiveMessage r = new ReceiveMessage();
-        r.clientID = "ST01";
-        r.clientType = "STC";
-        r.message = "???";
-        r.sequenceNumber = 0;
-
-        StationClient st = mock(StationClient.class);
-
-        when(db.getClient("ST01", StationClient.class)).thenReturn(Optional.of(st));
-        when(st.getId()).thenReturn("ST01");
-
-        String s = objectMapper.writeValueAsString(r);
-        mh.handleMessage(s, InetAddress.getLocalHost(), 0);
-
-        verify(l).log(eq(Level.WARNING), isA(String.class), eq(r.message));
-        verifyNoMoreInteractions(sh);
-    }
-
-    @Test
-    void test_STC_unknown_ERR_MSG() throws Exception {
-        ReceiveMessage r = new ReceiveMessage();
-        r.clientID = "ST01";
-        r.clientType = "STC";
-        r.message = "???";
-        r.sequenceNumber = 0;
-
-        String s = objectMapper.writeValueAsString(r);
-        mh.handleMessage(s, InetAddress.getLocalHost(), 0);
-
-
-        verify(l).log(eq(Level.SEVERE), isA(String.class), eq("ST01"));
-        verifyNoMoreInteractions(sh);
+        verify(l, times(2 * scale)).log(eq(Level.INFO), isA(String.class), isA(Object.class));
     }
 }

@@ -17,12 +17,19 @@ public class MessageHandler {
     private Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private ObjectMapper objectMapper = new ObjectMapper();
     private Database db = Database.getInstance();
-    private final EventBus eventBus;
+    private EventBus eventBus;
     private SystemState currentState;
 
     public MessageHandler(EventBus eventBus) {
         this.eventBus = eventBus;
+        eventBus.subscribe(StateChangeEvent.class, this::updateCurrentState);
+    }
 
+    // Remove me ig?
+    public MessageHandler(EventBus eventBus, Database db, Logger l) {
+        this.eventBus = eventBus;
+        this.db = db;
+        this.logger = l;
         eventBus.subscribe(StateChangeEvent.class, this::updateCurrentState);
     }
 
@@ -31,8 +38,8 @@ public class MessageHandler {
     }
 
     public void handleMessage(DatagramPacket packet) {
-        String message = new String(packet.getData(), 0, packet.getLength(),
-                StandardCharsets.UTF_8);
+        String message =
+                new String(packet.getData(), 0, packet.getLength(), StandardCharsets.UTF_8);
 
         try {
             ReceiveMessage receiveMessage = objectMapper.readValue(message, ReceiveMessage.class);
@@ -65,45 +72,7 @@ public class MessageHandler {
     // Handles all checkpoint messages
     private void handleCPCMessage(ReceiveMessage receiveMessage, InetAddress address, int port) {
         db.getClient(receiveMessage.clientID, CheckpointClient.class).ifPresentOrElse(client -> {
-            client.setLastResponse(receiveMessage.message);
-            // Client is present
-            switch (receiveMessage.message) {
-                case "TRIP":
-                    switch (MessageEnums.CPCStatus.valueOf(receiveMessage.status)) {
-                        case MessageEnums.CPCStatus.ON:
-                            client.updateStatus(MessageEnums.CPCStatus.ON);
-                            eventBus.publish(new TripEvent(client.getLocation(), false));
-                            break;
-                        case MessageEnums.CPCStatus.OFF:
-                            client.updateStatus(MessageEnums.CPCStatus.OFF);
-                            eventBus.publish(new TripEvent(client.getLocation(), true));
-                            break;
-                        case MessageEnums.CPCStatus.ERR:
-                            eventBus.publish(new ClientErrorEvent(client.getId(), ReasonEnum.CLIENTERR));
-                            break;
-                        default:
-                            break;
-                    }
-
-                    client.sendAcknowledgeMessage(MessageEnums.AKType.AKTR);
-                    logger.log(Level.INFO, "Received TRIP command from Checkpoint: {0}",
-                            receiveMessage.clientID);
-                    break;
-                case "STAT":
-                    handleStatMessage(client, receiveMessage);
-                    break;
-                case "AKEX":
-                    client.expectingAKEXBy(receiveMessage.sequenceNumber);
-                    break;
-                default:
-                    logger.log(Level.SEVERE, "Failed to handle checkpoint message: {0}",
-                            receiveMessage);
-                    break;
-            }
-
-            if (client.isMissedAKEX(receiveMessage.sequenceNumber)) {
-                // Has missed the AKEX timing
-            }
+            checkpointOrStation(client, receiveMessage);
         }, () -> {
             // Client is not present
             if ("CPIN".equals(receiveMessage.message)) {
@@ -152,41 +121,8 @@ public class MessageHandler {
 
     private void handleSTCMessage(ReceiveMessage receiveMessage, InetAddress address, int port) {
         db.getClient(receiveMessage.clientID, StationClient.class).ifPresentOrElse(client -> {
-            client.setLastResponse(receiveMessage.message);
-            // Client is present
-            switch (receiveMessage.message) {
-                case "STAT":
-                    handleStatMessage(client, receiveMessage);
-                    break;
-                case "AKEX":
-                    client.expectingAKEXBy(receiveMessage.sequenceNumber);
-                    break;
-                case "TRIP":
-                    switch (MessageEnums.STCStatus.valueOf(receiveMessage.status)) {
-                        case MessageEnums.STCStatus.ON:
-                            client.updateStatus(MessageEnums.STCStatus.ON);
-                            eventBus.publish(new TripEvent(client.getLocation(), false));
-                            break;
-                        case MessageEnums.STCStatus.OFF:
-                            client.updateStatus(MessageEnums.STCStatus.OFF);
-                            eventBus.publish(new TripEvent(client.getLocation(), true));
-                            break;
-                        case MessageEnums.STCStatus.ERR:
-                            eventBus.publish(new ClientErrorEvent(client.getId(), ReasonEnum.CLIENTERR));
-                            break;
-                        default:
-                            break;
-                    }
+            checkpointOrStation(client, receiveMessage);
 
-                    client.sendAcknowledgeMessage(MessageEnums.AKType.AKTR);
-                    logger.log(Level.INFO, "Received TRIP command from Checkpoint: {0}",
-                            receiveMessage.clientID);
-                    break;
-                default:
-                    logger.log(Level.WARNING, "Unknown station message: {0}",
-                            receiveMessage.message);
-                    break;
-            }
         }, () -> {
             // Client is not present
             if ("STIN".equals(receiveMessage.message)) {
@@ -200,6 +136,48 @@ public class MessageHandler {
         });
     }
 
+    private void checkpointOrStation(StationAndCheckpoint client, ReceiveMessage receiveMessage) {
+
+        client.setLastResponse(receiveMessage.message);
+        // Client is present
+        switch (receiveMessage.message) {
+            case "STAT":
+                handleStatMessage(client, receiveMessage);
+                break;
+            case "AKEX":
+                client.expectingAKEXBy(receiveMessage.sequenceNumber);
+                break;
+            case "TRIP":
+                switch (MessageEnums.STCStatus.valueOf(receiveMessage.status)) {
+                    case MessageEnums.STCStatus.ON:
+                        eventBus.publish(new TripEvent(client.getLocation(), false));
+                        break;
+                    case MessageEnums.STCStatus.OFF:
+                        eventBus.publish(new TripEvent(client.getLocation(), true));
+                        break;
+                    case MessageEnums.STCStatus.ERR:
+                        eventBus.publish(
+                                new ClientErrorEvent(client.getId(), ReasonEnum.CLIENTERR));
+                        break;
+                    default:
+                        break;
+                }
+
+                client.sendAcknowledgeMessage(MessageEnums.AKType.AKTR);
+                logger.log(Level.INFO, "Received TRIP command from Checkpoint: {0}",
+                        receiveMessage.clientID);
+                break;
+            default:
+                logger.log(Level.WARNING, "Unknown station message: {0}", receiveMessage.message);
+                break;
+        }
+
+        if (client.isMissedAKEX(receiveMessage.sequenceNumber)) {
+            // Has missed the AKEX timing
+        }
+
+    }
+
     public <S extends Enum<S>, A extends Enum<A> & MessageEnums.ActionToStatus<S>> void handleStatMessage(
             AbstractClient<S, A> client, ReceiveMessage receiveMessage) {
 
@@ -209,13 +187,14 @@ public class MessageHandler {
 
         if (lastAction != null && receiveMessage.clientType.equals("CCP")
                 && (lastAction.equals(MessageEnums.CCPAction.FSLOWC)
-                || lastAction.equals(MessageEnums.CCPAction.RSLOWC))) {
+                        || lastAction.equals(MessageEnums.CCPAction.RSLOWC))) {
             alternateStatus = MessageEnums.CCPStatus.STOPC;
         }
 
 
         try {
-            S recievedStatus = Enum.valueOf(client.getStatus().getDeclaringClass(), receiveMessage.status);
+            S recievedStatus =
+                    Enum.valueOf(client.getStatus().getDeclaringClass(), receiveMessage.status);
 
             if (!client.isExpectingStat()) {
                 client.sendAcknowledgeMessage(MessageEnums.AKType.AKST);
@@ -227,7 +206,8 @@ public class MessageHandler {
             }
 
             // For specifically FSLOWC and RSLOWC case
-            if (recievedStatus.equals(alternateStatus) && currentState.equals(SystemState.RUNNING)) {
+            if (recievedStatus.equals(alternateStatus)
+                    && SystemState.RUNNING.equals(currentState)) {
                 eventBus.publish(new BladeRunnerStopEvent(receiveMessage.clientID));
             }
 

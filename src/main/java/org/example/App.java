@@ -32,13 +32,11 @@ public class App {
         new Thread(() -> {
             systemStateManager = SystemStateManager.getInstance(eventBus);
             clientFactory = new ClientFactory(eventBus);
-            clientFactory.readFromFile("src\\main\\java\\org\\example\\messages\\locations.txt");
+            clientFactory.readFromFile("locations.txt");
             server = Server.getInstance(eventBus);
             statScheduler = new StatusScheduler(eventBus);
             statScheduler.start();
 
-
-            // main loop for program
             while (isRunning()) {
                 systemStateManager.run();
             }

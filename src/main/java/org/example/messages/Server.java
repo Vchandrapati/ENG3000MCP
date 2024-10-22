@@ -72,10 +72,12 @@ public class Server implements Runnable {
     private void connectionListener() {
         while (serverRunning.get()) {
             try {
-                DatagramPacket receivePacket = new DatagramPacket(new byte[BUFFER_SIZE], BUFFER_SIZE);
+                DatagramPacket receivePacket =
+                        new DatagramPacket(new byte[BUFFER_SIZE], BUFFER_SIZE);
                 serverSocket.receive(receivePacket);
 
-                if (receivePacket.getLength() > 0) mailbox.add(receivePacket);
+                if (receivePacket.getLength() > 0)
+                    mailbox.add(receivePacket);
             } catch (IOException e) {
                 logger.log(Level.SEVERE, "Error receiving packet", e);
             }
