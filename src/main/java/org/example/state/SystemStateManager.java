@@ -18,9 +18,8 @@ public class SystemStateManager implements Runnable {
 
     // Holds the current state and the current state concrete implementation
     private static SystemStateManager instance;
-    //TODO
-    //make this private after testing
-    public SystemState currentState;
+
+    private SystemState currentState;
     private volatile boolean isRunning;
     private SystemStateInterface currentStateConcrete;
     private boolean error = false;
@@ -50,10 +49,6 @@ public class SystemStateManager implements Runnable {
         systemStateThread.start();
     }
 
-    public void injectDatabase(Database database) {
-        db = database;
-    }
-
     public void updateState(NewStateEvent event) {
         setState(event.getNewState());
     }
@@ -72,12 +67,12 @@ public class SystemStateManager implements Runnable {
         return instance;
     }
 
-    // @Override
-    // public void run() {
-    //     while (isRunning) {
-    //        runLoop();
-    //     }
-    // } 
+    @Override
+    public void run() {
+        while (isRunning) {
+           runLoop();
+        }
+    } 
 
     public void shutdown() {
         isRunning = false;
@@ -85,7 +80,7 @@ public class SystemStateManager implements Runnable {
 
     // If it is time for the current state to run its perform its operation,
     // otherwise checkChange
-    public void run() {
+    public void runLoop() {
         long timeToWait = currentStateConcrete.getTimeToWait();
 
         if (System.currentTimeMillis() - timeWaited >= timeToWait) {
@@ -97,8 +92,10 @@ public class SystemStateManager implements Runnable {
 
             timeWaited = System.currentTimeMillis();
         } 
+
         checkChange();
     }
+
 
     // Checks to see if the system needs to go to emergency state, if already don't
     public void checkChange() {
@@ -135,7 +132,7 @@ public class SystemStateManager implements Runnable {
         // if in the appropriate state of MAPPING only
         if (currentState == SystemState.MAPPING) {
             ((MappingState) currentStateConcrete).addTrip(event.getLocation(), event.isUntrip());
-            logger.log(Level.INFO, "System state manager has detected untrip {0}",
+            logger.log(Level.INFO, "System state manager has detected a trip {0}",
                     event.getLocation());
         }
     }

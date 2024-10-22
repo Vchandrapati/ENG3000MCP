@@ -6,6 +6,7 @@ import org.example.client.AbstractClient;
 import org.example.client.ReasonEnum;
 import org.example.events.ClientErrorEvent;
 import org.example.events.EventBus;
+import org.example.events.NewStateEvent;
 import org.example.events.StateChangeEvent;
 import org.example.state.SystemState;
 
@@ -97,19 +98,19 @@ public class CommandHandler implements Runnable {
                 break;
             case "start mapping":
                 if (currentState == SystemState.WAITING)
-                    eventBus.publish(new StateChangeEvent(SystemState.MAPPING));
+                    eventBus.publish(new NewStateEvent(SystemState.MAPPING));
                 else
                     throw new InvalidCommandException("Not in waiting state");
                 break;
             case "override emergency":
                 if (currentState == SystemState.EMERGENCY)
-                    eventBus.publish(new StateChangeEvent(SystemState.MAPPING));
+                    eventBus.publish(new NewStateEvent(SystemState.MAPPING));
                 else
                     throw new InvalidCommandException("Not in emergency state");
                 break;
             case "start waiting":
                 if (currentState != SystemState.WAITING)
-                    eventBus.publish(new StateChangeEvent(SystemState.WAITING));
+                    eventBus.publish(new NewStateEvent(SystemState.WAITING));
                 else
                     throw new InvalidCommandException("Already in waiting state");
                 break;

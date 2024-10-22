@@ -3,7 +3,7 @@ package org.example.client;
 import org.example.messages.MessageEnums;
 import org.example.messages.MessageEnums.CPCAction;
 
-public class CheckpointClient extends AbstractClient<MessageEnums.CPCStatus, CPCAction> {
+public class CheckpointClient extends StationAndCheckpoint<MessageEnums.CPCStatus, CPCAction> {
     private final int location;
 
     public CheckpointClient(String id, MessageGenerator messageGenerator,
@@ -24,6 +24,7 @@ public class CheckpointClient extends AbstractClient<MessageEnums.CPCStatus, CPC
             this.lastActionSent = action;
         }
 
+        updateStatus(action.getStatus());
         lastExecMessageSent = action.toString();
         String message = messageGenerator.generateExecuteMessage(type, super.getId(),
                 outgoingSequenceNumber.getAndIncrement(), String.valueOf(action));

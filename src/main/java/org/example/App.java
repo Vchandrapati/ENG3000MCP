@@ -38,8 +38,7 @@ public class App {
             clientFactory = new ClientFactory(eventBus);
             clientFactory.readFromFile("src\\main\\java\\org\\example\\messages\\locations.txt");
             statScheduler = new StatusScheduler(eventBus);
-            statScheduler.start();
-            systemStateManager.run();
+            statScheduler.startStatusScheduler();
         }).start();
     }
 

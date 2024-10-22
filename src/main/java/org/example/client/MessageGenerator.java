@@ -31,33 +31,34 @@ public class MessageGenerator implements MessageBuilder {
     }
 
     @Override
-    public String generateAcknowledgeMessage(String clientType, String clientID,
-            int sequenceNumber, MessageEnums.AKType akType) {
+    public String generateAcknowledgeMessage(String clientType, String clientID, int sequenceNumber,
+            MessageEnums.AKType akType) {
         SendMessage message = preGen(clientType, clientID, sequenceNumber);
         message.message = akType.toString();
         return convertToJson(message);
     }
 
     @Override
-    public String generateStatusMessage(String clientType, String clientID,
-            int sequenceNumber) {
+    public String generateStatusMessage(String clientType, String clientID, int sequenceNumber) {
         SendMessage message = preGen(clientType, clientID, sequenceNumber);
         message.message = MessageType.STRQ.toString();
         return convertToJson(message);
     }
 
     @Override
-    public String generateExecuteMessage(String clientType, String clientID,
-            int sequenceNumber, String action) {
+    public String generateExecuteMessage(String clientType, String clientID, int sequenceNumber,
+            String action) {
         SendMessage message = preGen(clientType, clientID, sequenceNumber);
         message.message = MessageType.EXEC.toString();
         message.action = action;
         return convertToJson(message);
     }
 
+
+
     @Override
-    public String generateDoorMessage (String clientType, String clientID,
-                                       int sequenceNumber, String action) {
+    public String generateDoorMessage(String clientType, String clientID, int sequenceNumber,
+            String action) {
         SendMessage message = preGen(clientType, clientID, sequenceNumber);
         message.message = MessageType.DOOR.toString();
         message.action = action;
@@ -67,5 +68,15 @@ public class MessageGenerator implements MessageBuilder {
     // Enums for types of message types
     public enum MessageType {
         EXEC, STRQ, DOOR
+    }
+
+    @Override
+    public String generateStationNotificationMessage(String clientType, String clientID,
+            int sequenceNumber, String action, String CCPID) {
+        SendMessage message = preGen(clientType, clientID, sequenceNumber);
+        message.message = MessageType.EXEC.toString();
+        message.action = action;
+        message.arrivingBR = CCPID;
+        return convertToJson(message);
     }
 }

@@ -35,9 +35,6 @@ public class EmergencyState implements SystemStateInterface {
         timeOnStop = 0;
     }
 
-    public static void injectDatabase(Database database) {
-        db = database;
-    }
 
     @Override
     public boolean performOperation() {
@@ -175,7 +172,7 @@ public class EmergencyState implements SystemStateInterface {
             List<BladeRunnerClient> bladeRunners = db.getBladeRunnerClients();
             timeOnStop = System.currentTimeMillis();
             for (org.example.client.BladeRunnerClient BladeRunnerClient : bladeRunners) {
-                BladeRunnerClient.sendExecuteMessage(MessageEnums.CCPAction.FSLOWC);
+                BladeRunnerClient.sendExecuteMessage(MessageEnums.CCPAction.STOPC);
             }
         }
         return true;
@@ -189,9 +186,5 @@ public class EmergencyState implements SystemStateInterface {
     @Override
     public SystemState getNextState() {
         return NEXT_STATE;
-    }
-
-    public long getStateTimeout() {
-        return System.currentTimeMillis() - timeOnStart;
     }
 }

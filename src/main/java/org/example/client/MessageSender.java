@@ -3,9 +3,7 @@ package org.example.client;
 import org.example.events.EventBus;
 import org.example.events.SendPacketEvent;
 
-import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class MessageSender {

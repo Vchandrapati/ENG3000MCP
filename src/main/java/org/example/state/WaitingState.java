@@ -24,10 +24,6 @@ public class WaitingState implements SystemStateInterface {
     // Next state of this state
     private static final SystemState NEXT_STATE = SystemState.MAPPING;
 
-    public static void injectDatabase(Database database) {
-        db = database;
-    }
-
     // Performs the operation of this state at set intervals according to TIME_BETWEEN_RUNNING
     // If returns true then system goes to NEXT_STATE
     @Override

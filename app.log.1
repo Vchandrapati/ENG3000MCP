@@ -55,9 +55,11 @@ java.net.BindException: Address already in use: bind
 	at org.example.App.lambda$1(App.java:33)
 	at java.base/java.lang.Thread.run(Thread.java:1570)
 
-19:27:06.840 INFO: org.example.visualiser.CommandHandler run MCP online, please input a command, type help to see a list of commands
-19:27:06.901 INFO: org.example.state.SystemStateManager setState Changing to system state WAITING
-19:27:06.910 SEVERE: org.example.messages.Server <init> Error starting up server
+17:02:35.817 INFO: org.example.visualiser.CommandHandler run MCP online, please input a command, type help to see a list of commands
+17:02:35.899 INFO: org.example.state.SystemStateManager setState Changing to system state WAITING
+00:59:34.667 INFO: org.example.visualiser.CommandHandler run MCP online, please input a command, type help to see a list of commands
+00:59:34.730 INFO: org.example.state.SystemStateManager setState Changing to system state WAITING
+00:59:34.742 SEVERE: org.example.messages.Server <init> Error starting up server
 java.net.BindException: Address already in use: bind
 	at java.base/sun.nio.ch.Net.bind0(Native Method)
 	at java.base/sun.nio.ch.Net.bind(Net.java:565)
@@ -70,26 +72,7 @@ java.net.BindException: Address already in use: bind
 	at java.base/java.net.DatagramSocket.<init>(DatagramSocket.java:353)
 	at org.example.messages.Server.<init>(Server.java:43)
 	at org.example.messages.Server.getInstance(Server.java:57)
-	at org.example.App.lambda$startMCP$1(App.java:36)
+	at org.example.App.lambda$1(App.java:36)
 	at java.base/java.lang.Thread.run(Thread.java:1583)
 
-19:27:07.050 INFO: org.example.messages.StatusScheduler start StatusScheduler started
-23:22:50.281 INFO: org.example.visualiser.CommandHandler run MCP online, please input a command, type help to see a list of commands
-23:22:50.338 INFO: org.example.state.SystemStateManager setState Changing to system state WAITING
-23:22:50.345 SEVERE: org.example.messages.Server <init> Error starting up server
-java.net.BindException: Address already in use: bind
-	at java.base/sun.nio.ch.Net.bind0(Native Method)
-	at java.base/sun.nio.ch.Net.bind(Net.java:565)
-	at java.base/sun.nio.ch.DatagramChannelImpl.bindInternal(DatagramChannelImpl.java:1267)
-	at java.base/sun.nio.ch.DatagramChannelImpl.bind(DatagramChannelImpl.java:1237)
-	at java.base/sun.nio.ch.DatagramSocketAdaptor.bind(DatagramSocketAdaptor.java:111)
-	at java.base/java.net.DatagramSocket.createDelegate(DatagramSocket.java:1425)
-	at java.base/java.net.DatagramSocket.<init>(DatagramSocket.java:328)
-	at java.base/java.net.DatagramSocket.<init>(DatagramSocket.java:387)
-	at java.base/java.net.DatagramSocket.<init>(DatagramSocket.java:353)
-	at org.example.messages.Server.<init>(Server.java:43)
-	at org.example.messages.Server.getInstance(Server.java:57)
-	at org.example.App.lambda$startMCP$1(App.java:35)
-	at java.base/java.lang.Thread.run(Thread.java:1583)
-
-23:22:50.488 INFO: org.example.messages.StatusScheduler start StatusScheduler started
+00:59:34.865 INFO: org.example.messages.StatusScheduler <init> StatusScheduler started

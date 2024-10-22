@@ -13,8 +13,6 @@ import java.util.concurrent.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-// [x] need to check backwards
-
 public class Processor {
     private final EventBus eventBus;
     private final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
@@ -38,6 +36,13 @@ public class Processor {
     }
 
     private void checkpointTripped(TripEvent event) {
+
+        if (currentState == SystemState.WAITING || currentState == SystemState.MAPPING) {
+            logger.log(Level.WARNING, "Sent to mapping state");
+            mappingStateTriggered = true;
+            return;
+        }
+
         int checkpointTripped = event.getLocation();
         boolean untrip = event.isUntrip();
         totalBlocks = db.getBlockCount();
@@ -48,11 +53,6 @@ public class Processor {
             return;
         }
 
-        if (currentState == SystemState.WAITING || currentState == SystemState.MAPPING) {
-            logger.log(Level.WARNING, "Sent to mapping state");
-            mappingStateTriggered = true;
-            return;
-        }
 
         mappingStateTriggered = false;
 
@@ -179,7 +179,7 @@ public class Processor {
         return db.getStationIfExist(checkpoint).isPresent();
     }
 
-    private boolean isSmartStation(StationClient sc){
+    private boolean isSmartStation(StationClient sc) {
         return sc.getId().contains("A");
     }
 
@@ -231,7 +231,8 @@ public class Processor {
         String stId = checkpoint > 9 ? "ST" + checkpoint : "ST0" + checkpoint;
         String smartstId = checkpoint > 9 ? "STA" + checkpoint : "STA0" + checkpoint;
         return db.getClient(cpId, CheckpointClient.class).isPresent()
-                || db.getClient(stId, StationClient.class).isPresent() || db.getClient(smartstId, StationClient.class).isPresent();
+                || db.getClient(stId, StationClient.class).isPresent()
+                || db.getClient(smartstId, StationClient.class).isPresent();
     }
 
     private void trainAligned() {
@@ -283,16 +284,16 @@ public class Processor {
         station.updateStatus(MessageEnums.STCStatus.OFF);
     }
 
-    private void notifyStation(BladeRunnerClient br, StationClient sc){
+    private void notifyStation(BladeRunnerClient br, StationClient sc) {
         String id = br.getId();
-        
-        //TODO
+
+        // TODO
         sc.sendMessage("Blade Runner coming", id);
 
     }
 
 
-    public void lastEXECResend(BladeRunnerClient br){
+    public void lastEXECResend(BladeRunnerClient br) {
         MessageEnums.CCPAction action = br.getLastActionSent();
         br.sendExecuteMessage(action);
     }

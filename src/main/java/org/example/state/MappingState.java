@@ -7,7 +7,6 @@ import org.example.client.BladeRunnerClient;
 import org.example.client.CheckpointClient;
 import org.example.events.ClientErrorEvent;
 import org.example.events.EventBus;
-import org.example.events.StateChangeEvent;
 import org.example.messages.MessageEnums;
 
 import java.util.ArrayList;
@@ -60,10 +59,6 @@ public class MappingState implements SystemStateInterface {
         tripQueue = new LinkedBlockingQueue<>();
 
         this.eventBus = eventBus;
-    }
-
-    public static void injectDatabase(Database database) {
-        db = database;
     }
 
     // Performs the operation of this state at set intervals according to TIME_BETWEEN_RUNNING
@@ -182,6 +177,7 @@ public class MappingState implements SystemStateInterface {
         } else {
             currentBladeRunner.sendExecuteMessage(MessageEnums.CCPAction.FFASTC);
         }
+
         hasSent = true;
         return true;
     }
@@ -253,7 +249,7 @@ public class MappingState implements SystemStateInterface {
         tripQueue.add(str.toString());
     }
 
-    private int calculateNextBlock(int checkpoint, int direction) {
+    public int calculateNextBlock(int checkpoint, int direction) {
         int totalBlocks = db.getBlockCount();
 
         while (true) {
@@ -270,7 +266,7 @@ public class MappingState implements SystemStateInterface {
         }
     }
 
-    private boolean isNextBlockValid(int checkpoint) {
+    public boolean isNextBlockValid(int checkpoint) {
         String cpId = checkpoint > 9 ? "CP" + checkpoint : "CP0" + checkpoint;
         String stId = checkpoint > 9 ? "ST" + checkpoint : "ST0" + checkpoint;
         return db.getClient(cpId, CheckpointClient.class).isPresent()

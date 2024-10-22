@@ -69,7 +69,8 @@ public class Server {
     private void connectionListener() {
         while (serverRunning.get()) {
             try {
-                DatagramPacket receivePacket = new DatagramPacket(new byte[BUFFER_SIZE], BUFFER_SIZE);
+                DatagramPacket receivePacket =
+                        new DatagramPacket(new byte[BUFFER_SIZE], BUFFER_SIZE);
                 serverSocket.receive(receivePacket);
 
                 if (receivePacket.getLength() > 0) {
@@ -99,11 +100,11 @@ public class Server {
     public void send(SendPacketEvent event) {
         try {
             byte[] buffer = event.getMessage().getBytes();
-            DatagramPacket sendPacket = new DatagramPacket(buffer, buffer.length, event.getClientAddress(),
-                    event.getClientPort());
+            DatagramPacket sendPacket = new DatagramPacket(buffer, buffer.length,
+                    event.getClientAddress(), event.getClientPort());
             serverSocket.send(sendPacket);
-            logger.log(Level.INFO, "Sent {0} to client at: {1}", new Object[] {event.getType(),
-                    event.getId()});
+            logger.log(Level.INFO, "Sent {0} to client at: {1}",
+                    new Object[] {event.getType(), event.getId()});
         } catch (IOException e) {
             logger.log(Level.SEVERE, "Failed to send message to client: {0}", event.getId());
             logger.log(Level.SEVERE, "Exception: ", e);

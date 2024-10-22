@@ -35,10 +35,6 @@ public class RunningState implements SystemStateInterface {
         runningStartTime = System.currentTimeMillis();
     }
 
-    public static void injectDatabase(Database database) {
-        db = database;
-    }
-
     // Performs the operation of this state at set intervals according to TIME_BETWEEN_RUNNING
     // If returns true then system goes to NEXT_STATE
     @Override
