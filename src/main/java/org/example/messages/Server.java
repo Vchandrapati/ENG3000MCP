@@ -47,6 +47,8 @@ public class Server implements Runnable {
             synchronized (Server.class) {
                 if (instance == null) {
                     instance = new Server(eventBus);
+                    Thread serverThread = new Thread(instance, "Server-Thread");
+                    serverThread.start();
                 }
             }
         }

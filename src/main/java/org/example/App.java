@@ -33,7 +33,6 @@ public class App {
             clientFactory = new ClientFactory(eventBus);
             //clientFactory.readFromFile("src\\main\\java\\org\\example\\messages\\locations.txt");
             server = Server.getInstance(eventBus);
-            server.run();
             statScheduler = new StatusScheduler(eventBus);
             statScheduler.start();
 

@@ -11,14 +11,8 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.log" beforeDir="false" afterPath="$PROJECT_DIR$/app.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Database.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Processor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Processor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/messages/ClientFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/messages/ClientFactory.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/messages/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/messages/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/state/EmergencyState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/state/EmergencyState.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/state/MappingState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/state/MappingState.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/state/RunningState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/state/RunningState.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/state/SystemStateManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/state/SystemStateManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/state/WaitingState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/state/WaitingState.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/systemManagerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/systemManagerTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -88,7 +82,10 @@
     "JUnit.StatHandlerTest.test_checkIfClientIsUnresponsive_true.executor": "Run",
     "JUnit.StatHandlerTest.test_shutdown.executor": "Run",
     "JUnit.systemManagerTest.executor": "Run",
-    "JUnit.systemManagerTest.sysManagerAddUnresponsiveInMapping.executor": "Run",
+    "JUnit.systemManagerTest.sysManagerAddUnresponsiveInEmergency.executor": "Run",
+    "JUnit.systemManagerTest.sysManagerAddUnresponsiveInMapping.executor": "Debug",
+    "JUnit.systemManagerTest.sysManagerAddUnresponsiveInRunning.executor": "Run",
+    "JUnit.systemManagerTest.sysManagerAddUnresponsiveInWaiting.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
@@ -126,39 +123,21 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="MessageHandlerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="ENG3000MCP2.0" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="MessageHandlerTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="MessageHandlerTest.test_CCP_STAT_MSG" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="ENG3000MCP2.0" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="MessageHandlerTest" />
-      <option name="METHOD_NAME" value="test_CCP_STAT_MSG" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ServerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="ENG3000MCP2.0" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="ServerTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="systemManagerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="ENG3000MCP2.0" />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="systemManagerTest" />
       <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="systemManagerTest.sysManagerAddUnresponsiveInEmergency" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ENG3000MCP2.0" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="systemManagerTest" />
+      <option name="METHOD_NAME" value="sysManagerAddUnresponsiveInEmergency" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -173,13 +152,33 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="systemManagerTest.sysManagerAddUnresponsiveInRunning" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ENG3000MCP2.0" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="systemManagerTest" />
+      <option name="METHOD_NAME" value="sysManagerAddUnresponsiveInRunning" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="systemManagerTest.sysManagerAddUnresponsiveInWaiting" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ENG3000MCP2.0" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="systemManagerTest" />
+      <option name="METHOD_NAME" value="sysManagerAddUnresponsiveInWaiting" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.systemManagerTest.sysManagerAddUnresponsiveInMapping" />
         <item itemvalue="JUnit.systemManagerTest" />
-        <item itemvalue="JUnit.ServerTest" />
-        <item itemvalue="JUnit.MessageHandlerTest" />
-        <item itemvalue="JUnit.MessageHandlerTest.test_CCP_STAT_MSG" />
+        <item itemvalue="JUnit.systemManagerTest.sysManagerAddUnresponsiveInWaiting" />
+        <item itemvalue="JUnit.systemManagerTest.sysManagerAddUnresponsiveInRunning" />
+        <item itemvalue="JUnit.systemManagerTest.sysManagerAddUnresponsiveInEmergency" />
       </list>
     </recent_temporary>
   </component>
@@ -529,15 +528,30 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/Database.java</url>
+          <line>132</line>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/test/java/systemManagerTest.java</url>
-          <line>158</line>
-          <option name="timeStamp" value="3" />
+          <line>228</line>
+          <option name="timeStamp" value="10" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+    <pin-to-top-manager>
+      <pinned-members>
+        <PinnedItemInfo parentTag="java.util.Optional" memberName="value" />
+      </pinned-members>
+    </pin-to-top-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/ENG3000MCP$StatHandlerTest.ic" NAME="StatHandlerTest Coverage Results" MODIFIED="1729003221320" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+    <SUITE FILE_PATH="coverage/MCP$systemManagerTest_waitingOperation.ic" NAME="systemManagerTest.waitingOperation Coverage Results" MODIFIED="1728990356086" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
     <SUITE FILE_PATH="coverage/ENG3000MCP$MessageHandlerTest.ic" NAME="MessageHandlerTest Coverage Results" MODIFIED="1729005894033" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+    <SUITE FILE_PATH="coverage/MCP$systemManagerTest_mapping.ic" NAME="systemManagerTest.mapping Coverage Results" MODIFIED="1728997111756" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+    <SUITE FILE_PATH="coverage/MCP$systemManagerTest_sysManagerAddUnresponsiveInWaiting.ic" NAME="systemManagerTest.sysManagerAddUnresponsiveInWaiting Coverage Results" MODIFIED="1728985069627" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+    <SUITE FILE_PATH="coverage/MCP$systemManagerTest_runningOperation.ic" NAME="systemManagerTest.runningOperation Coverage Results" MODIFIED="1728995955365" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+    <SUITE FILE_PATH="coverage/MCP$systemManagerTest.ic" NAME="systemManagerTest Coverage Results" MODIFIED="1729580971596" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
   </component>
 </project>
