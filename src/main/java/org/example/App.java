@@ -24,7 +24,6 @@ public class App {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            Database.coom();
             screen = new VisualiserScreen(eventBus);
             screen.setVisible(true);
             startMCP();
@@ -36,7 +35,7 @@ public class App {
             systemStateManager = SystemStateManager.getInstance(eventBus);
             server = Server.getInstance(eventBus);
             messageHandler = new MessageHandler(eventBus);
-            processor = new Processor(eventBus);
+            processor = new Processor(eventBus, Database.getInstance());
             clientFactory = new ClientFactory(eventBus);
             clientFactory.readFromFile("src\\main\\java\\org\\example\\messages\\locations.txt");
             statScheduler = new StatusScheduler(eventBus);
