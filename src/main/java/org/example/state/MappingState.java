@@ -5,6 +5,7 @@ import org.example.client.ReasonEnum;
 import org.example.client.BladeRunnerClient;
 import org.example.events.ClientErrorEvent;
 import org.example.events.EventBus;
+import org.example.events.StateChangeEvent;
 import org.example.messages.MessageEnums;
 
 import java.util.ArrayList;
@@ -246,6 +247,7 @@ public class MappingState implements SystemStateInterface {
 
     @Override
     public SystemState getNextState() {
+        eventBus.publish(new StateChangeEvent(NEXT_STATE));
         return NEXT_STATE;
     }
 }

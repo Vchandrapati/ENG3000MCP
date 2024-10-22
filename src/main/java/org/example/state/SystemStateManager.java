@@ -27,19 +27,18 @@ public class SystemStateManager {
     private SystemStateManager(EventBus eventBus) {
         this.eventBus = eventBus;
 
-
         stateMap = new EnumMap<>(SystemState.class);
         stateMap.put(SystemState.WAITING, WaitingState::new);
         stateMap.put(SystemState.MAPPING, () -> new MappingState(eventBus));
         stateMap.put(SystemState.RUNNING, RunningState::new);
         stateMap.put(SystemState.EMERGENCY, EmergencyState::new);
 
-
         setState(SystemState.WAITING);
 
         eventBus.subscribe(NewStateEvent.class, this::updateState);
         eventBus.subscribe(ClientErrorEvent.class, this::addUnresponsiveClient);
         eventBus.subscribe(TripEvent.class, this::handleTrip);
+        eventBus.subscribe(StateChangeEvent.class, this::updateState);
     }
 
     public void updateState(NewStateEvent event) {
@@ -94,6 +93,10 @@ public class SystemStateManager {
     // gets current state
     public SystemState getState() {
         return currentState;
+    }
+
+    public void updateState(StateChangeEvent event) {
+        setState(event.getState());
     }
 
     // Sets the state of the program to the given one
