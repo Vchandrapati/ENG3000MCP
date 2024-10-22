@@ -36,14 +36,9 @@ public class App {
             systemStateManager = SystemStateManager.getInstance(eventBus);
             server = Server.getInstance(eventBus);
             messageHandler = new MessageHandler(eventBus);
-            processor = new Processor(eventBus);
+            processor = new Processor(eventBus, Database.getInstance());
             clientFactory = new ClientFactory(eventBus);
-<<<<<<< HEAD
-            clientFactory.readFromFile("locations.txt");
-            server = Server.getInstance(eventBus);
-=======
             clientFactory.readFromFile("src\\main\\java\\org\\example\\messages\\locations.txt");
->>>>>>> d7252bf48c45153b21d70522f64d8e16fc72cbb6
             statScheduler = new StatusScheduler(eventBus);
             statScheduler.start();
 

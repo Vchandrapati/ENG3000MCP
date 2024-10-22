@@ -42,11 +42,12 @@ public class MessageHandler {
     public void handleMessage(DatagramPacket packet) {
         String message =
                 new String(packet.getData(), 0, packet.getLength(), StandardCharsets.UTF_8);
+    }
 
     public void handleMessage(PacketEvent event) {
         DatagramPacket packet = event.getPacket();
-        String message = new String(packet.getData(), 0, packet.getLength(),
-                StandardCharsets.UTF_8);
+        String message =
+                new String(packet.getData(), 0, packet.getLength(), StandardCharsets.UTF_8);
 
         try {
             ReceiveMessage receiveMessage = objectMapper.readValue(message, ReceiveMessage.class);
@@ -75,6 +76,7 @@ public class MessageHandler {
                     new Object[] {packet.getAddress(), packet.getPort(), e});
         }
     }
+
 
     // Handles all checkpoint messages
     private void handleCPCMessage(ReceiveMessage receiveMessage, InetAddress address, int port) {
@@ -129,7 +131,6 @@ public class MessageHandler {
     private void handleSTCMessage(ReceiveMessage receiveMessage, InetAddress address, int port) {
         db.getClient(receiveMessage.clientID, StationClient.class).ifPresentOrElse(client -> {
             checkpointOrStation(client, receiveMessage);
-
         }, () -> {
             // Client is not present
             if ("STIN".equals(receiveMessage.message)) {

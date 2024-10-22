@@ -18,7 +18,7 @@ import java.util.logging.Logger;
 public class Processor {
     private final EventBus eventBus;
     private final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-    private Database db = Database.getInstance();
+    private final Database db;
     private int totalBlocks;
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
     private SystemState currentState;
@@ -53,6 +53,7 @@ public class Processor {
             mappingStateTriggered = true;
             return;
         }
+
         mappingStateTriggered = false;
 
         Optional<BladeRunnerClient> reversingBladeRunner = getBladeRunner(checkpointTripped);

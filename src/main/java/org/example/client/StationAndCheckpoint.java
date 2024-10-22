@@ -1,7 +1,5 @@
 package org.example.client;
 
-import org.example.messages.MessageSender;
-
 public abstract class StationAndCheckpoint<S extends Enum<S>, A extends Enum<A>>
         extends AbstractClient<S, A> {
 
