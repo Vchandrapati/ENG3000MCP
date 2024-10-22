@@ -24,24 +24,22 @@ public class StatusScheduler {
 
     public StatusScheduler(EventBus eventBus) {
         this.lock = new Object();
-        this.scheduler = Executors.newSingleThreadScheduledExecutor();
-    }
+        this.scheduler = Executors.newScheduledThreadPool(1);
+        this.eventBus = eventBus;
 
-    public void start() {
-        scheduler.scheduleAtFixedRate(this::sendStatusMessage, 0, STAT_INTERVAL_SECONDS, TimeUnit.SECONDS);
         logger.log(Level.INFO, "StatusScheduler started");
     }
 
     // send stats at specified intervals
-    public void sendStatusMessage() {
-        List<AbstractClient> clients = db.getClients();
-        synchronized (lock) {
+    public void startStatusScheduler() {
+        scheduler.scheduleAtFixedRate(() -> {
+            List<AbstractClient> clients = db.getClients();
             for (AbstractClient client : clients) {
                 client.sendStatusMessage();
                 client.nowExpectingStat();
                 checkIfClientIsUnresponsive(client);
             }
-        }
+        }, 0, STAT_INTERVAL_SECONDS, TimeUnit.SECONDS);
     }
 
     private void checkIfClientIsUnresponsive(AbstractClient client) {
