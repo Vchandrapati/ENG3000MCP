@@ -1,8 +1,5 @@
 import org.example.client.*;
-import org.example.events.ClientErrorEvent;
-import org.example.events.EventBus;
-import org.example.events.StateChangeEvent;
-import org.example.events.TripEvent;
+import org.example.events.*;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -125,8 +122,21 @@ class ProcessorTest {
         return captor; // Return the captor containing the captured event
     }
 
+    ArgumentCaptor<BladeRunnerStopEvent> bladeRunnerStoppedAccess(String id) throws Exception {
+        // Use reflection to access the private bladeRunnerStopped method
+        Method method = Processor.class.getDeclaredMethod("bladeRunnerStopped", BladeRunnerStopEvent.class);
+        method.setAccessible(true);  // Allow access to the private method
 
+        // Create a BladeRunnerStopEvent and invoke the method
+        BladeRunnerStopEvent event = new BladeRunnerStopEvent(id);
+        method.invoke(processor, event);
 
+        // Capture the event to verify later
+        ArgumentCaptor<BladeRunnerStopEvent> captor = ArgumentCaptor.forClass(BladeRunnerStopEvent.class);
+        verify(mockEventBus).publish(captor.capture()); // Verify that the publish method was called
+
+        return captor; // Return the captor containing the captured event
+    }
 
 
     //CHECKPOINT TRIPPED 100% coverage
@@ -254,24 +264,24 @@ class ProcessorTest {
 
 //handleTrip
 
-@Test
-void testHandleTripEmptyBR() throws Exception {
-    // Mock the behavior to return no BladeRunner in block 3
-    when(mockDb.getLastBladeRunnerInBlock(3)).thenReturn(null);
+    @Test
+    void testHandleTripEmptyBR() throws Exception {
+        // Mock the behavior to return no BladeRunner in block 3
+        when(mockDb.getLastBladeRunnerInBlock(3)).thenReturn(null);
 
-    // Call the method using the appropriate access method
-    ArgumentCaptor<ClientErrorEvent> captor = handleTripAccess(3, 2, true);
+        // Call the method using the appropriate access method
+        ArgumentCaptor<ClientErrorEvent> captor = handleTripAccess(3, 2, true);
 
-    // Verify that the publish method was called
-    verify(mockEventBus).publish(captor.capture());
+        // Verify that the publish method was called
+        verify(mockEventBus).publish(captor.capture());
 
-    // Assert that the log contains the expected warning
-    assertTrue(logHandler.containsLog(Level.WARNING, "Tried to get blade runner at checkpoint {0} but failed"));
+        // Assert that the log contains the expected warning
+        assertTrue(logHandler.containsLog(Level.WARNING, "Tried to get blade runner at checkpoint {0} but failed"));
 
-    // Additional assertions on the captured event if necessary
-    ClientErrorEvent capturedEvent = captor.getValue();
-    // Add assertions specific to the captured event here
-}
+        // Additional assertions on the captured event if necessary
+        ClientErrorEvent capturedEvent = captor.getValue();
+        // Add assertions specific to the captured event here
+    }
 
     @Test
     void testHandleTripTrippedBlockFull() throws Exception {
@@ -304,7 +314,7 @@ void testHandleTripEmptyBR() throws Exception {
 
 
     @Test
-    void testHandleTripCheckpointStation(){
+    void testHandleTripCheckpointStation() {
         CheckpointClient cc = mock(CheckpointClient.class);
         StationClient st = mock(StationClient.class);
         BladeRunnerClient br = mock(BladeRunnerClient.class);
@@ -375,7 +385,6 @@ void testHandleTripEmptyBR() throws Exception {
     }
 
 
-
     @Test
     void testReverseTripBRInPreviousBlock() throws Exception {
         StationClient sc = mock(StationClient.class);
@@ -399,28 +408,74 @@ void testHandleTripEmptyBR() throws Exception {
     }
 
 
-class TestLogHandler extends Handler {
-    private final CopyOnWriteArrayList<String> logMessages = new CopyOnWriteArrayList<>();
+    //bladeRunner stopped
 
-    @Override
-    public void publish(LogRecord record) {
-        logMessages.add(record.getMessage());
+    @Test
+    void testBladeRunnerStoppedWithPresentClient() throws Exception {
+        BladeRunnerClient br = mock(BladeRunnerClient.class);
+        StationClient sc = mock(StationClient.class);
+
+        // Mocking necessary database interactions
+        when(mockDb.getClient("BR01", BladeRunnerClient.class)).thenReturn(Optional.of(br));
+        when(mockDb.getStationIfExist(1)).thenReturn(Optional.of(sc)); // Assuming calculateNextBlock returns 1 for this example
+        when(mockDb.getBlockCount()).thenReturn(10);
+        when(mockDb.getClient("STA02", StationClient.class)).thenReturn(Optional.of(sc));
+        when(br.getZone()).thenReturn(1); // Adjust the return value as necessary
+        when(mockDb.getStationIfExist(2)).thenReturn(Optional.of(sc));
+        when(sc.getId()).thenReturn("STA02");
+
+
+
+        ArgumentCaptor<BladeRunnerStopEvent> captor = bladeRunnerStoppedAccess("BR01");
+
+
+        verify(br).sendExecuteMessage(MessageEnums.CCPAction.STOPO);
+        verify(br).updateStatus(MessageEnums.CCPStatus.STOPO);
+
+
+        verify(sc).sendExecuteMessage(MessageEnums.STCAction.OPEN);
+        verify(sc).updateStatus(MessageEnums.STCStatus.ONOPEN);
     }
 
-    @Override
-    public void flush() {}
+    @Test
+    void testBladeRunnerStoppedWithAbsentClient() throws Exception {
+        String id = "BR02";
 
-    @Override
-    public void close() throws SecurityException {}
+        when(mockDb.getClient(id, BladeRunnerClient.class)).thenReturn(Optional.empty());
 
-    public List<String> getLogs() {
-        return logMessages;
+
+        ArgumentCaptor<BladeRunnerStopEvent> captor = bladeRunnerStoppedAccess(id);
+
+
+        verify(mockDb, times(1)).getClient(id, BladeRunnerClient.class);
+        verify(mockEventBus, never()).publish(any());
     }
 
-    public boolean containsLog(Level level, String message) {
-        return logMessages.stream()
-                .anyMatch(log -> log.contains(level.getName()) && log.contains(message));
+
+    class TestLogHandler extends Handler {
+        private final CopyOnWriteArrayList<String> logMessages = new CopyOnWriteArrayList<>();
+
+        @Override
+        public void publish(LogRecord record) {
+            logMessages.add(record.getMessage());
+        }
+
+        @Override
+        public void flush() {
+        }
+
+        @Override
+        public void close() throws SecurityException {
+        }
+
+        public List<String> getLogs() {
+            return logMessages;
+        }
+
+        public boolean containsLog(Level level, String message) {
+            return logMessages.stream()
+                    .anyMatch(log -> log.contains(level.getName()) && log.contains(message));
+        }
     }
-}
 }
 

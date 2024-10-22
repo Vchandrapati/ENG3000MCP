@@ -231,8 +231,9 @@ public class Processor {
     private boolean isNextBlockValid(int checkpoint) {
         String cpId = checkpoint > 9 ? "CP" + checkpoint : "CP0" + checkpoint;
         String stId = checkpoint > 9 ? "ST" + checkpoint : "ST0" + checkpoint;
+        String smartstId = checkpoint > 9 ? "STA" + checkpoint : "STA0" + checkpoint;
         return db.getClient(cpId, CheckpointClient.class).isPresent()
-                || db.getClient(stId, StationClient.class).isPresent();
+                || db.getClient(stId, StationClient.class).isPresent() || db.getClient(smartstId, StationClient.class).isPresent();
     }
 
     private void trainAligned() {
@@ -250,6 +251,7 @@ public class Processor {
             int stationCheckpoint = calculateNextBlock(bladeRunner.getZone(), 1);
             Optional<StationClient> sc = db.getStationIfExist(stationCheckpoint);
             logger.log(Level.FINEST, "ST0{0}", stationCheckpoint);
+
             if (sc.isPresent() && isSmartStation(sc.get())) {
                 StationClient station = sc.get();
                 station.sendExecuteMessage(MessageEnums.STCAction.OPEN);

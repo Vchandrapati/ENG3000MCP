@@ -8,34 +8,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1d9b5952-4092-4fc7-8340-7dd220ada861" name="Changes" comment="Jar">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/events/BladeRunnerStopEvent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/events/ClientErrorEvent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/events/ClientIntialiseEvent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/events/Event.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/events/EventBus.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/events/NewStateEvent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/events/PacketEvent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/events/StateChangeEvent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/events/TripEvent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/messages/StatusScheduler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/messages/TripEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/App.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Processor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Processor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/messages/ClientFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/messages/ClientFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/messages/MessageHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/messages/MessageHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/messages/MessageSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/messages/MessageSender.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/messages/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/messages/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/messages/StatHandler.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/messages/locations.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/state/MappingState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/state/MappingState.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/state/SystemStateManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/state/SystemStateManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/visualiser/CommandHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/visualiser/CommandHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/visualiser/InfoPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/visualiser/InfoPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/visualiser/VisualiserScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/visualiser/VisualiserScreen.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/ClientFactoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ClientFactoryTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/MessageHandlerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/MessageHandlerTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/ProcessorTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ProcessorTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/ServerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ServerTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/StatHandlerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/StatHandlerTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -89,41 +67,55 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.Unnamed.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.MessageHandlerTest.executor&quot;: &quot;Coverage&quot;,
-    &quot;JUnit.MessageHandlerTest.test_CCP_STAT_MSG.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ServerTest.testSystemStateManagerOnHighThroughput.executor&quot;: &quot;Debug&quot;,
-    &quot;JUnit.StatHandlerTest.executor&quot;: &quot;Coverage&quot;,
-    &quot;JUnit.StatHandlerTest.test_ERR.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.StatHandlerTest.test_Start_Status_1_MSG_Scheduler.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.StatHandlerTest.test_Start_Status_1_MultiClient_MSG_Scheduler.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.StatHandlerTest.test_Start_Status_3_MSG_Scheduler.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.StatHandlerTest.test_Start_Status_3_MultiClient_MSG_Scheduler.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.StatHandlerTest.test_checkIfClientIsUnresponsive_false.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.StatHandlerTest.test_checkIfClientIsUnresponsive_true.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.StatHandlerTest.test_shutdown.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;SONARLINT_PRECOMMIT_ANALYSIS&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;experimental&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Programming/Java/ENG3000MCP/src/test/java&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.sourceCode&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Unnamed.executor": "Run",
+    "JUnit.MessageHandlerTest.executor": "Coverage",
+    "JUnit.MessageHandlerTest.test_CCP_STAT_MSG.executor": "Run",
+    "JUnit.ProcessorTest.executor": "Coverage",
+    "JUnit.ProcessorTest.testBladeRunnerStoppedWithAbsentClient.executor": "Debug",
+    "JUnit.ProcessorTest.testBladeRunnerStoppedWithPresentClient.executor": "Debug",
+    "JUnit.ProcessorTest.testCheckPointTrippedBladeRunnerMissing.executor": "Run",
+    "JUnit.ProcessorTest.testCheckPointTrippedForward.executor": "Debug",
+    "JUnit.ProcessorTest.testCheckPointTrippedForwardButBladeRunnerMissing.executor": "Debug",
+    "JUnit.ProcessorTest.testCheckPointTrippedInvalidTrip.executor": "Run",
+    "JUnit.ProcessorTest.testCheckPointTrippedReversing.executor": "Run",
+    "JUnit.ProcessorTest.testCheckPointTrippedSendToMapping.executor": "Debug",
+    "JUnit.ProcessorTest.testHandleTripCheckpointStation.executor": "Run",
+    "JUnit.ProcessorTest.testHandleTripEmptyBR.executor": "Debug",
+    "JUnit.ProcessorTest.testHandleTripTrippedBlockFull.executor": "Debug",
+    "JUnit.ProcessorTest.testReverseTripBRInPreviousBlock.executor": "Run",
+    "JUnit.ProcessorTest.testReverseTripBadReverse.executor": "Run",
+    "JUnit.ServerTest.testSystemStateManagerOnHighThroughput.executor": "Debug",
+    "JUnit.StatHandlerTest.executor": "Coverage",
+    "JUnit.StatHandlerTest.test_ERR.executor": "Run",
+    "JUnit.StatHandlerTest.test_Start_Status_1_MSG_Scheduler.executor": "Run",
+    "JUnit.StatHandlerTest.test_Start_Status_1_MultiClient_MSG_Scheduler.executor": "Run",
+    "JUnit.StatHandlerTest.test_Start_Status_3_MSG_Scheduler.executor": "Run",
+    "JUnit.StatHandlerTest.test_Start_Status_3_MultiClient_MSG_Scheduler.executor": "Run",
+    "JUnit.StatHandlerTest.test_checkIfClientIsUnresponsive_false.executor": "Run",
+    "JUnit.StatHandlerTest.test_checkIfClientIsUnresponsive_true.executor": "Run",
+    "JUnit.StatHandlerTest.test_shutdown.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "SONARLINT_PRECOMMIT_ANALYSIS": "true",
+    "git-widget-placeholder": "experimental",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/Programming/Java/ENG3000MCP/src/test/java",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "preferences.sourceCode",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Programming\Java\ENG3000MCP\src\test\java" />
@@ -133,7 +125,7 @@
       <recent name="D:\Programming\Java\ENG3000MCP\src\main\java\org\example\messages" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.ServerTest">
+  <component name="RunManager" selected="JUnit.ProcessorTest">
     <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.App" />
       <module name="ENG3000MCP2.0" />
@@ -141,48 +133,50 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="MessageHandlerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="ProcessorTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="ENG3000MCP2.0" />
       <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="MessageHandlerTest" />
+      <option name="MAIN_CLASS_NAME" value="ProcessorTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="MessageHandlerTest.test_CCP_STAT_MSG" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="ProcessorTest.testBladeRunnerStoppedWithAbsentClient" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="ENG3000MCP2.0" />
       <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="MessageHandlerTest" />
-      <option name="METHOD_NAME" value="test_CCP_STAT_MSG" />
+      <option name="MAIN_CLASS_NAME" value="ProcessorTest" />
+      <option name="METHOD_NAME" value="testBladeRunnerStoppedWithAbsentClient" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ServerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="ProcessorTest.testBladeRunnerStoppedWithPresentClient" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="ENG3000MCP2.0" />
       <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="ServerTest" />
-      <option name="TEST_OBJECT" value="class" />
+      <option name="MAIN_CLASS_NAME" value="ProcessorTest" />
+      <option name="METHOD_NAME" value="testBladeRunnerStoppedWithPresentClient" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="StatHandlerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="ProcessorTest.testReverseTripBRInPreviousBlock" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="ENG3000MCP2.0" />
       <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="StatHandlerTest" />
-      <option name="TEST_OBJECT" value="class" />
+      <option name="MAIN_CLASS_NAME" value="ProcessorTest" />
+      <option name="METHOD_NAME" value="testReverseTripBRInPreviousBlock" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="StatHandlerTest.test_Start_Status_3_MultiClient_MSG_Scheduler" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="ProcessorTest.testReverseTripBadReverse" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="ENG3000MCP2.0" />
       <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="StatHandlerTest" />
-      <option name="METHOD_NAME" value="test_Start_Status_3_MultiClient_MSG_Scheduler" />
+      <option name="MAIN_CLASS_NAME" value="ProcessorTest" />
+      <option name="METHOD_NAME" value="testReverseTripBadReverse" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -190,19 +184,19 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.ServerTest" />
-        <item itemvalue="JUnit.MessageHandlerTest" />
-        <item itemvalue="JUnit.MessageHandlerTest.test_CCP_STAT_MSG" />
-        <item itemvalue="JUnit.StatHandlerTest" />
-        <item itemvalue="JUnit.StatHandlerTest.test_Start_Status_3_MultiClient_MSG_Scheduler" />
+        <item itemvalue="JUnit.ProcessorTest" />
+        <item itemvalue="JUnit.ProcessorTest.testBladeRunnerStoppedWithPresentClient" />
+        <item itemvalue="JUnit.ProcessorTest.testBladeRunnerStoppedWithAbsentClient" />
+        <item itemvalue="JUnit.ProcessorTest.testReverseTripBRInPreviousBlock" />
+        <item itemvalue="JUnit.ProcessorTest.testReverseTripBadReverse" />
       </list>
     </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.18034.62" />
-        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-IU-241.18034.62" />
+        <option value="bundled-jdk-9823dce3aa75-b114ca120d71-intellij.indexing.shared.core-IU-242.21829.142" />
+        <option value="bundled-js-predefined-d6986cc7102b-7c0b70fcd90d-JavaScript-IU-242.21829.142" />
       </set>
     </attachedChunks>
   </component>
@@ -244,6 +238,7 @@
       <workItem from="1729252401386" duration="5846000" />
       <workItem from="1729259225697" duration="3308000" />
       <workItem from="1729304326125" duration="2088000" />
+      <workItem from="1729505129899" duration="13482000" />
     </task>
     <task id="LOCAL-00001" summary="Made some changes to comply with sonarlint">
       <option name="closed" value="true" />
@@ -539,8 +534,218 @@
     <MESSAGE value="Jar" />
     <option name="LAST_COMMIT_MESSAGE" value="Jar" />
   </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/messages/TripEvent.java</url>
+          <line>14</line>
+          <option name="timeStamp" value="21" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/events/EventBus.java</url>
+          <line>52</line>
+          <option name="timeStamp" value="102" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/events/EventBus.java</url>
+          <line>53</line>
+          <option name="timeStamp" value="103" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/events/EventBus.java</url>
+          <line>54</line>
+          <option name="timeStamp" value="104" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/events/EventBus.java</url>
+          <line>55</line>
+          <option name="timeStamp" value="105" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/events/EventBus.java</url>
+          <line>56</line>
+          <option name="timeStamp" value="106" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/events/EventBus.java</url>
+          <line>57</line>
+          <option name="timeStamp" value="107" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/events/EventBus.java</url>
+          <line>64</line>
+          <option name="timeStamp" value="108" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/events/EventBus.java</url>
+          <line>65</line>
+          <option name="timeStamp" value="109" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/events/EventBus.java</url>
+          <line>67</line>
+          <option name="timeStamp" value="110" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/events/EventBus.java</url>
+          <line>68</line>
+          <option name="timeStamp" value="111" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/events/EventBus.java</url>
+          <line>69</line>
+          <option name="timeStamp" value="112" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/Processor.java</url>
+          <line>247</line>
+          <option name="timeStamp" value="185" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/Processor.java</url>
+          <line>248</line>
+          <option name="timeStamp" value="186" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/Processor.java</url>
+          <line>250</line>
+          <option name="timeStamp" value="187" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/Processor.java</url>
+          <line>251</line>
+          <option name="timeStamp" value="188" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/Processor.java</url>
+          <line>252</line>
+          <option name="timeStamp" value="189" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/Processor.java</url>
+          <line>254</line>
+          <option name="timeStamp" value="190" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/Processor.java</url>
+          <line>256</line>
+          <option name="timeStamp" value="191" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/Processor.java</url>
+          <line>257</line>
+          <option name="timeStamp" value="192" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/Processor.java</url>
+          <line>255</line>
+          <option name="timeStamp" value="193" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/Processor.java</url>
+          <line>258</line>
+          <properties>
+            <option name="lambda-ordinal" value="-1" />
+          </properties>
+          <option name="timeStamp" value="194" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/Processor.java</url>
+          <line>263</line>
+          <option name="timeStamp" value="195" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/Processor.java</url>
+          <line>214</line>
+          <option name="timeStamp" value="197" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/Processor.java</url>
+          <line>216</line>
+          <option name="timeStamp" value="198" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/Processor.java</url>
+          <line>218</line>
+          <option name="timeStamp" value="199" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/Processor.java</url>
+          <line>219</line>
+          <option name="timeStamp" value="200" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/Processor.java</url>
+          <line>221</line>
+          <option name="timeStamp" value="201" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/Processor.java</url>
+          <line>226</line>
+          <option name="timeStamp" value="202" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/Processor.java</url>
+          <line>222</line>
+          <option name="timeStamp" value="203" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/Processor.java</url>
+          <line>225</line>
+          <option name="timeStamp" value="204" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/Processor.java</url>
+          <line>224</line>
+          <option name="timeStamp" value="205" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/Processor.java</url>
+          <line>231</line>
+          <option name="timeStamp" value="206" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/Processor.java</url>
+          <line>232</line>
+          <option name="timeStamp" value="207" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/Processor.java</url>
+          <line>234</line>
+          <option name="timeStamp" value="208" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/Processor.java</url>
+          <line>235</line>
+          <option name="timeStamp" value="209" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/Processor.java</url>
+          <line>233</line>
+          <option name="timeStamp" value="210" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/Processor.java</url>
+          <line>213</line>
+          <properties class="org.example.Processor" method="calculateNextBlock">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="196" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/ENG3000MCP$StatHandlerTest.ic" NAME="StatHandlerTest Coverage Results" MODIFIED="1729003221320" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+    <SUITE FILE_PATH="coverage/ENG3000MCP$ProcessorTest_testCheckPointTrippedNeedsTrip.ic" NAME="ProcessorTest.testCheckPointTrippedNeedsTrip Coverage Results" MODIFIED="1728986857854" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+    <SUITE FILE_PATH="coverage/ENG3000MCP$ProcessorTest.ic" NAME="ProcessorTest Coverage Results" MODIFIED="1729571608694" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+    <SUITE FILE_PATH="coverage/ENG3000MCP$ProcessorTest_testHandleTripWithOccupiedBlock.ic" NAME="ProcessorTest.testHandleTripWithOccupiedBlock Coverage Results" MODIFIED="1728984671733" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
     <SUITE FILE_PATH="coverage/ENG3000MCP$MessageHandlerTest.ic" NAME="MessageHandlerTest Coverage Results" MODIFIED="1729005894033" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+    <SUITE FILE_PATH="coverage/ENG3000MCP$ProcessorTest_testHandleTripCheckpointStation.ic" NAME="ProcessorTest.testHandleTripCheckpointStation Coverage Results" MODIFIED="1728992260877" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+    <SUITE FILE_PATH="coverage/ENG3000MCP$ProcessorTest_testCheckPointTrippedvalidTrip.ic" NAME="ProcessorTest.testCheckPointTrippedvalidTrip Coverage Results" MODIFIED="1728986917451" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+    <SUITE FILE_PATH="coverage/ENG3000MCP$ProcessorTest_testCheckPointTrippedReversing.ic" NAME="ProcessorTest.testCheckPointTrippedReversing Coverage Results" MODIFIED="1728986808542" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+    <SUITE FILE_PATH="coverage/ENG3000MCP$ProcessorTest_testHandleTripNextBlockOccupied.ic" NAME="ProcessorTest.testHandleTripNextBlockOccupied Coverage Results" MODIFIED="1728992007897" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
   </component>
 </project>
