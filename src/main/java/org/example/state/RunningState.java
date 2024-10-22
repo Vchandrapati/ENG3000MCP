@@ -2,18 +2,16 @@ package org.example.state;
 
 import org.example.Database;
 import org.example.client.BladeRunnerClient;
-import org.example.client.ReasonEnum;
 import org.example.messages.MessageEnums;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 // If no issues this state performs the operation of the system normally
 public class RunningState implements SystemStateInterface {
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-    private static final Database db = Database.getInstance();
+
+    private Database db;
 
     private static final SystemState nextState = SystemState.EMERGENCY;
     private static final long TIME_BETWEEN_RUNNING = 500;
@@ -29,6 +27,7 @@ public class RunningState implements SystemStateInterface {
 
     // constructor
     public RunningState() {
+        db = Database.getInstance();
         allRunning = false;
         grab = false;
         bladeRunners = null;

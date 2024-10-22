@@ -18248,3 +18248,34 @@ Exception: java.lang.NullPointerException: Cannot invoke "org.example.state.Syst
 13:56:45.792 SEVERE: org.example.messages.ClientFactory readFromFile File: src\main\java\org\example\messages\locations.txt not found
 13:56:45.799 INFO: org.example.messages.Server <init> Server completed startup and listening on PORT: 3001
 13:56:45.802 INFO: org.example.messages.StatusScheduler start StatusScheduler started
+13:58:54.857 INFO: org.example.visualiser.CommandHandler run MCP online, please input a command, type help to see a list of commands
+13:58:54.919 INFO: org.example.state.SystemStateManager setState Changing to system state WAITING
+13:58:54.923 SEVERE: org.example.messages.ClientFactory readFromFile File: src\main\java\org\example\messages\locations.txt not found
+13:58:54.931 INFO: org.example.messages.Server <init> Server completed startup and listening on PORT: 3001
+13:58:54.932 INFO: org.example.messages.StatusScheduler start StatusScheduler started
+14:01:49.793 INFO: org.example.visualiser.CommandHandler run MCP online, please input a command, type help to see a list of commands
+14:01:49.851 INFO: org.example.state.SystemStateManager setState Changing to system state WAITING
+14:01:49.856 SEVERE: org.example.messages.ClientFactory readFromFile File: src\main\java\org\example\messages\locations.txt not found
+14:01:49.872 INFO: org.example.messages.Server <init> Server completed startup and listening on PORT: 3001
+14:01:49.874 INFO: org.example.messages.StatusScheduler start StatusScheduler started
+14:02:13.483 INFO: org.example.visualiser.CommandHandler run MCP online, please input a command, type help to see a list of commands
+14:02:13.544 INFO: org.example.state.SystemStateManager setState Changing to system state WAITING
+14:02:13.552 INFO: org.example.messages.Server <init> Server completed startup and listening on PORT: 3001
+14:02:13.554 INFO: org.example.messages.StatusScheduler start StatusScheduler started
+14:02:27.134 INFO: org.example.visualiser.CommandHandler run MCP online, please input a command, type help to see a list of commands
+14:02:27.191 INFO: org.example.state.SystemStateManager setState Changing to system state WAITING
+14:02:27.200 INFO: org.example.messages.Server <init> Server completed startup and listening on PORT: 3001
+14:02:27.202 INFO: org.example.messages.StatusScheduler start StatusScheduler started
+17:18:40.458 INFO: org.example.visualiser.CommandHandler run MCP online, please input a command, type help to see a list of commands
+17:18:40.519 INFO: org.example.state.SystemStateManager setState Changing to system state WAITING
+17:18:40.527 INFO: org.example.messages.Server <init> Server completed startup and listening on PORT: 3001
+17:18:40.530 INFO: org.example.messages.StatusScheduler start StatusScheduler started
+17:18:54.523 INFO: org.example.visualiser.CommandHandler run Command executed: start mapping
+17:20:53.683 INFO: org.example.visualiser.CommandHandler run MCP online, please input a command, type help to see a list of commands
+17:20:53.742 INFO: org.example.state.SystemStateManager setState Changing to system state WAITING
+17:20:53.754 INFO: org.example.messages.Server <init> Server completed startup and listening on PORT: 3001
+17:20:53.755 INFO: org.example.messages.StatusScheduler start StatusScheduler started
+17:22:52.680 INFO: org.example.visualiser.CommandHandler run MCP online, please input a command, type help to see a list of commands
+17:22:52.741 INFO: org.example.state.SystemStateManager setState Changing to system state WAITING
+17:22:52.760 INFO: org.example.messages.Server <init> Server completed startup and listening on PORT: 3001
+17:22:52.762 INFO: org.example.messages.StatusScheduler start StatusScheduler started

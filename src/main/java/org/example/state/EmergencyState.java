@@ -14,6 +14,7 @@ import java.util.ArrayList;
 public class EmergencyState implements SystemStateInterface {
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
+
     // All time units in milliseconds
     private static final long EMERGENCY_TIMEOUT = 300000; // 5 minutes
     private static final long TIME_BETWEEN_RUNNING = 1000;
@@ -24,7 +25,7 @@ public class EmergencyState implements SystemStateInterface {
 
     // the time when counter started
     private long timeOnStart;
-    private final Database db = Database.getInstance();
+    private Database db;
     private long timeOnStop;
     private boolean disconnection = false;
     private boolean disconnectOnce = false;
@@ -32,6 +33,7 @@ public class EmergencyState implements SystemStateInterface {
     public EmergencyState() {
         timeOnStart = System.currentTimeMillis();
         timeOnStop = 0;
+        db = Database.getInstance();
     }
 
     @Override

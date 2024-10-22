@@ -30,7 +30,6 @@ public class Server implements Runnable {
     private DatagramSocket serverSocket;
     private final EventBus eventBus;
 
-
     private Server(EventBus eventBus) {
         serverRunning = new AtomicBoolean(true);
         this.eventBus = eventBus;

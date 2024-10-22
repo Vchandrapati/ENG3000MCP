@@ -12,12 +12,13 @@ import java.util.logging.Logger;
 // Manages the states of the system
 public class SystemStateManager {
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-    private static final Database db = Database.getInstance();
     private final Map<SystemState, Supplier<SystemStateInterface>> stateMap;
+
+    private Database db;
 
     // Holds the current state and the current state concrete implementation
     private static volatile SystemStateManager instance = null;
-    private SystemState currentState;
+    public SystemState currentState;
     private SystemStateInterface currentStateConcrete;
     private boolean error = false;
     private long timeWaited = System.currentTimeMillis();
@@ -27,13 +28,13 @@ public class SystemStateManager {
     private SystemStateManager(EventBus eventBus) {
         this.eventBus = eventBus;
 
+        db = Database.getInstance();
 
         stateMap = new EnumMap<>(SystemState.class);
         stateMap.put(SystemState.WAITING, WaitingState::new);
         stateMap.put(SystemState.MAPPING, () -> new MappingState(eventBus));
         stateMap.put(SystemState.RUNNING, RunningState::new);
         stateMap.put(SystemState.EMERGENCY, EmergencyState::new);
-
 
         setState(SystemState.WAITING);
 
@@ -83,7 +84,7 @@ public class SystemStateManager {
     }
 
     // Checks to see if the system needs to go to emergency state, if already don't
-    private void checkChange() {
+    public void checkChange() {
         if (error && currentState != SystemState.EMERGENCY) {
             error = false;
             logger.log(Level.WARNING, "Error detected while in state {0}", currentState);
@@ -91,15 +92,10 @@ public class SystemStateManager {
         }
     }
 
-    // gets current state
-    public SystemState getState() {
-        return currentState;
-    }
-
     // Sets the state of the program to the given one
-    public boolean setState(SystemState newState) {
+    public void setState(SystemState newState) {
         if (newState == null || currentState == newState) {
-            return false;
+            return;
         }
 
         currentState = newState;
@@ -107,7 +103,6 @@ public class SystemStateManager {
         eventBus.publish(new StateChangeEvent(newState));
 
         logger.log(Level.INFO, "Changing to system state {0}", newState);
-        return true;
     }
 
 

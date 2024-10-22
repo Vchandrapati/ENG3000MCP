@@ -2,7 +2,9 @@ package org.example.state;
 
 import org.example.Database;
 import org.example.client.ReasonEnum;
+import org.example.client.StationClient;
 import org.example.client.BladeRunnerClient;
+import org.example.client.CheckpointClient;
 import org.example.events.ClientErrorEvent;
 import org.example.events.EventBus;
 import org.example.messages.MessageEnums;
@@ -15,7 +17,7 @@ import java.util.concurrent.*;
 
 public class MappingState implements SystemStateInterface {
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-    private final Database db = Database.getInstance();
+    private Database db;
 
     // All time units in milliseconds
     private static final long BLADE_RUNNER_MAPPING_RETRY_TIMEOUT = 15000; // 15 seconds
@@ -44,6 +46,7 @@ public class MappingState implements SystemStateInterface {
 
     // Constructor
     public MappingState(EventBus eventBus) {
+        db = Database.getInstance();
         retryAttemps = 0;
         hasSent = false;
         startMapping = false;
@@ -144,6 +147,7 @@ public class MappingState implements SystemStateInterface {
                 currentTrip = -1;
                 return true;
             } else {
+                //TODO
                 String str = (tripZone == 10) ? "CP10" : "CP" + tripZone;
                 eventBus.publish(new ClientErrorEvent(str, ReasonEnum.INCORTRIP));
                 logger.log(Level.WARNING, "Checkpoint : {0} has had inconsistent trip", str);
@@ -178,9 +182,10 @@ public class MappingState implements SystemStateInterface {
 
         // if this blade runner was detected to be in a collision, it will be going backwards
         // thus want the checkpoint before instead of infront
-//        if (backwards) {
-//            zone = Processor.calculateNextBlock(zone, -1);
-//        }
+
+       if (backwards) {
+           zone = calculateNextBlock(zone, -1);
+       }
 
         // if a normal trip, then change to slow
         // do not have to worry about backwards, because cannot go fast backwards
@@ -218,7 +223,7 @@ public class MappingState implements SystemStateInterface {
             for (org.example.client.BladeRunnerClient BladeRunnerClient : grabbedBladeRunners) {
                 // returns true if the blade runner has had a collision
                 if (BladeRunnerClient.collision(false, null)) {
-                    //bladeRunnersToMap.addFirst(BladeRunnerClient);
+                    bladeRunnersToMap.addFirst(BladeRunnerClient);
                 }
                 // returns true if the blade runner is unmapped
                 else if (BladeRunnerClient.isUnmapped()) {
@@ -236,6 +241,30 @@ public class MappingState implements SystemStateInterface {
         str.append(",");
         str.append(untrip);
         tripQueue.add(str.toString());
+    }
+
+    private int calculateNextBlock(int checkpoint, int direction) {
+        int totalBlocks = db.getBlockCount();
+
+        while (true) {
+            checkpoint += direction;
+            if (checkpoint > totalBlocks)
+                checkpoint = 1;
+
+            if (checkpoint < 1)
+                checkpoint = totalBlocks;
+
+            if (isNextBlockValid(checkpoint)) {
+                return checkpoint;
+            }
+        }
+    }
+
+    private boolean isNextBlockValid(int checkpoint) {
+        String cpId = checkpoint > 9 ? "CP" + checkpoint : "CP0" + checkpoint;
+        String stId = checkpoint > 9 ? "ST" + checkpoint : "ST0" + checkpoint;
+        return db.getClient(cpId, CheckpointClient.class).isPresent()
+                || db.getClient(stId, StationClient.class).isPresent();
     }
 
     @Override

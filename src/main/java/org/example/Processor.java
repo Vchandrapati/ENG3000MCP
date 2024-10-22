@@ -98,7 +98,7 @@ public class Processor {
                 String id = bladeRunnerOptional.get().getId();
                 logger.log(Level.WARNING, "Multiple blade runners in the same zone, includes : {0}",
                         id);
-                eventBus.publish(new ClientErrorEvent(id, ReasonEnum.INCORTRIP));
+                eventBus.publish(new ClientErrorEvent(id, ReasonEnum.COLLISION));
             }
             return;
         }

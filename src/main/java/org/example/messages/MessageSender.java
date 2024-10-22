@@ -12,7 +12,7 @@ public class MessageSender {
     private final InetAddress clientAddress;
     private final int clientPort;
     private final String clientId;
-    private DatagramSocket serverSocket;
+    private DatagramSocket clientSocket;
 
     public MessageSender(InetAddress clientAddress, int clientPort,
                          String clientID) {
@@ -21,10 +21,9 @@ public class MessageSender {
         this.clientId = clientID;
 
         try {
-            serverSocket = new DatagramSocket(3001);
-            logger.info("Server completed startup and listening on PORT: " + 3001);
+            clientSocket = new DatagramSocket(clientPort);
         } catch (Exception e) {
-            logger.log(Level.SEVERE, "Error starting up server", e);
+            logger.log(Level.SEVERE, "Error making client connection", e);
         }
     }
 
@@ -32,7 +31,7 @@ public class MessageSender {
         try {
             byte[] buffer = message.getBytes();
             DatagramPacket sendPacket = new DatagramPacket(buffer, buffer.length, clientAddress, clientPort);
-            serverSocket.send(sendPacket);
+            clientSocket.send(sendPacket);
             logger.log(Level.INFO, "Sent {0} to client at: {1}", new Object[] {type, clientId});
         } catch (IOException e) {
             logger.log(Level.SEVERE, "Failed to send message to client: {0}", clientId);
