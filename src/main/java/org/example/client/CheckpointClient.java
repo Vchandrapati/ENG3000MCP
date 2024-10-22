@@ -2,7 +2,6 @@ package org.example.client;
 
 import org.example.messages.MessageEnums;
 import org.example.messages.MessageEnums.CPCAction;
-import org.example.messages.MessageSender;
 
 public class CheckpointClient extends StationAndCheckpoint<MessageEnums.CPCStatus, CPCAction> {
     private final int location;

@@ -1,10 +1,0 @@
-
-
-java:S1104
-"SMake message a static final constant or non-public and provide accessors if needed.(ÕÃØ·J$2d564302-6a91-4e37-9517-84e916c1b8a0
-–
-java:S1104"UMake timestamp a static final constant or non-public and provide accessors if needed.(Å·ºšøÿÿÿÿJ$c099fd60-2874-499e-a76c-f691b124a590
-
-java:S1104"RMake status a static final constant or non-public and provide accessors if needed.(œ©²ÿJ$e858dedf-12aa-4503-b617-abcb86d0fbaf
-•
-java:S1104"TMake location a static final constant or non-public and provide accessors if needed.(ÌÄñ”üÿÿÿÿJ$70708d6b-2b67-472c-b30a-68b19d13ee73

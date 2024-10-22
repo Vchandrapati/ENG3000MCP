@@ -4,7 +4,7 @@
 // import org.example.client.BladeRunnerClient;
 // import org.example.client.MessageGenerator;
 // import org.example.client.ReasonEnum;
-// import org.example.messages.MessageSender;
+// import org.example.client.MessageSender;
 // import org.example.messages.Server;
 // import org.example.messages.StatHandler;
 // import org.example.state.SystemState;

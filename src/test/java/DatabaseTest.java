@@ -1,7 +1,7 @@
 // import org.example.Database;
 // import org.example.Processor;
 // import org.example.client.*;
-// import org.example.messages.MessageSender;
+// import org.example.client.MessageSender;
 // import org.example.messages.StatHandler;
 // import org.example.state.SystemState;
 // import org.example.state.SystemStateManager;

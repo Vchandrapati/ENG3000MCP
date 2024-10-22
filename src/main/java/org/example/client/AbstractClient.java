@@ -55,10 +55,7 @@ public abstract class AbstractClient<S extends Enum<S>, A extends Enum<A>> {
     abstract int getLocation();
 
     public boolean isMissedAKEX(int curSequence) {
-        if (curSequence >= expectingAKEXByThis) {
-            return true;
-        }
-        return false;
+        return curSequence >= expectingAKEXByThis;
     }
 
     public String getId() {

@@ -23,6 +23,7 @@ public class MessageHandler {
     public MessageHandler(EventBus eventBus) {
         this.eventBus = eventBus;
         eventBus.subscribe(StateChangeEvent.class, this::updateCurrentState);
+        eventBus.subscribe(PacketEvent.class, this::handleMessage);
     }
 
     // Remove me ig?
@@ -31,6 +32,7 @@ public class MessageHandler {
         this.db = db;
         this.logger = l;
         eventBus.subscribe(StateChangeEvent.class, this::updateCurrentState);
+        eventBus.subscribe(PacketEvent.class, this::handleMessage);
     }
 
     private void updateCurrentState(StateChangeEvent event) {
@@ -40,6 +42,11 @@ public class MessageHandler {
     public void handleMessage(DatagramPacket packet) {
         String message =
                 new String(packet.getData(), 0, packet.getLength(), StandardCharsets.UTF_8);
+
+    public void handleMessage(PacketEvent event) {
+        DatagramPacket packet = event.getPacket();
+        String message = new String(packet.getData(), 0, packet.getLength(),
+                StandardCharsets.UTF_8);
 
         try {
             ReceiveMessage receiveMessage = objectMapper.readValue(message, ReceiveMessage.class);
