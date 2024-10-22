@@ -52,6 +52,8 @@ public abstract class AbstractClient<S extends Enum<S>, A extends Enum<A>> {
         expectingAKEXByThis = nowSequence + 2;
     }
 
+    abstract int getLocation();
+
     public boolean isMissedAKEX(int curSequence) {
         return curSequence >= expectingAKEXByThis;
     }

@@ -1,7 +1,7 @@
 package org.example.client;
 
 import java.util.concurrent.atomic.AtomicInteger;
-
+import java.util.logging.Level;
 import org.example.messages.MessageEnums;
 import org.example.messages.MessageEnums.CCPAction;
 
@@ -20,6 +20,8 @@ public class BladeRunnerClient extends AbstractClient<MessageEnums.CCPStatus, CC
         this.isCurrentlyMapped = false;
         this.dockedAtStation = false;
     }
+
+
 
     public Integer getZone() {
         return zone.get();
@@ -52,9 +54,17 @@ public class BladeRunnerClient extends AbstractClient<MessageEnums.CCPStatus, CC
     @Override
     public void sendExecuteMessage(CCPAction action) {
         this.lastActionSent = action;
+        updateStatus(action.getStatus());
         String message = messageGenerator.generateExecuteMessage(type, super.getId(),
                 outgoingSequenceNumber.getAndIncrement(), action.toString());
         sendMessage(message, "EXEC");
 
+    }
+
+    @Override
+    protected int getLocation() {
+        logger.log(Level.SEVERE,
+                "Can no get location from bladerunner using this method, will return {0}", 0);
+        return 0;
     }
 }

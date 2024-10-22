@@ -24,6 +24,7 @@ public class App {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
+            Database.coom();
             screen = new VisualiserScreen(eventBus);
             screen.setVisible(true);
             startMCP();
@@ -41,8 +42,6 @@ public class App {
             statScheduler = new StatusScheduler(eventBus);
             statScheduler.start();
 
-
-            // main loop for program
             while (isRunning()) {
                 systemStateManager.run();
             }

@@ -3,7 +3,7 @@ package org.example.client;
 import org.example.messages.MessageEnums;
 import org.example.messages.MessageEnums.STCAction;
 
-public class StationClient extends AbstractClient<MessageEnums.STCStatus, STCAction> {
+public class StationClient extends StationAndCheckpoint<MessageEnums.STCStatus, STCAction> {
     private final int location;
 
     public StationClient(String id, MessageGenerator messageGenerator, MessageSender messageSender,
@@ -24,6 +24,8 @@ public class StationClient extends AbstractClient<MessageEnums.STCStatus, STCAct
         if (!action.equals(MessageEnums.STCAction.BLINK)) {
             this.lastActionSent = action;
         }
+
+        updateStatus(action.getStatus());
         lastExecMessageSent = action.toString();
         String message = messageGenerator.generateExecuteMessage(type, super.getId(),
                 outgoingSequenceNumber.getAndIncrement(), String.valueOf(action));
@@ -32,6 +34,7 @@ public class StationClient extends AbstractClient<MessageEnums.STCStatus, STCAct
 
     public void sendDoorMessage(STCAction action) {
         this.lastActionSent = action;
+        updateStatus(action.getStatus());
         String message = messageGenerator.generateDoorMessage(type, super.getId(),
                 outgoingSequenceNumber.getAndIncrement(), String.valueOf(action));
         sendMessage(message, "DOOR");
