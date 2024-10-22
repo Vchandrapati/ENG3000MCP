@@ -1,9 +1,6 @@
 package org.example.events;
 
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.*;
 import java.util.function.Consumer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -12,28 +9,9 @@ public class EventBus {
     private final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private final ConcurrentHashMap<Class<? extends Event>, CopyOnWriteArrayList<Consumer<?
             extends Event>>> listeners = new ConcurrentHashMap<>();
-
-    private final BlockingQueue<Event> eventQueue = new LinkedBlockingQueue<>();
-    private volatile boolean running = true;
-    private final Thread publisherThread;
+    private final ExecutorService executor = Executors.newSingleThreadExecutor();
 
     private EventBus() {
-        publisherThread = new Thread(() -> {
-            while (running || !eventQueue.isEmpty()) {
-                try {
-                    Event event = eventQueue.take();
-                    emit(event);
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
-                    logger.log(Level.SEVERE, "Dispatcher interrupted", e);
-                }
-            }
-
-            logger.log(Level.INFO, "Dispatcher stopped");
-        });
-
-        publisherThread.setName("Publisher-Thread");
-        publisherThread.start();
     }
 
     private static class Holder {
@@ -50,13 +28,8 @@ public class EventBus {
 
     @SuppressWarnings("unchecked")
     public void publish (Event event) {
-        if (running) {
-            try {
-                eventQueue.put(event);
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-                logger.log(Level.SEVERE, "Dispatcher interrupted", e);
-            }
+        if (!executor.isShutdown()) {
+            executor.submit(() -> emit(event));
         }
     }
 
@@ -73,7 +46,6 @@ public class EventBus {
     }
 
     public void shutdown() {
-        running = false;
-        publisherThread.interrupt();
+        executor.shutdown();
     }
 }
