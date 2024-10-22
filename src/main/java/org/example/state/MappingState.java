@@ -1,9 +1,10 @@
 package org.example.state;
 
 import org.example.Database;
-import org.example.Processor;
 import org.example.client.ReasonEnum;
 import org.example.client.BladeRunnerClient;
+import org.example.events.ClientErrorEvent;
+import org.example.events.EventBus;
 import org.example.messages.MessageEnums;
 
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ import java.util.concurrent.*;
 
 public class MappingState implements SystemStateInterface {
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-    private static final Database db = Database.getInstance();
+    private final Database db = Database.getInstance();
 
     // All time units in milliseconds
     private static final long BLADE_RUNNER_MAPPING_RETRY_TIMEOUT = 15000; // 15 seconds
@@ -25,7 +26,7 @@ public class MappingState implements SystemStateInterface {
 
     private static final SystemState NEXT_STATE = SystemState.RUNNING;
 
-    private static BlockingQueue<String> tripQueue;
+    private BlockingQueue<String> tripQueue;
 
     private List<BladeRunnerClient> bladeRunnersToMap;
     private boolean startMapping;
@@ -34,13 +35,15 @@ public class MappingState implements SystemStateInterface {
     private boolean hasSent;
     private long currentBladeRunnerStartTime;
     private int retryAttemps;
-    private long startTime;
+    private final long startTime;
 
     private int currentTrip;
     private boolean backwards;
 
+    private final EventBus eventBus;
+
     // Constructor
-    public MappingState() {
+    public MappingState(EventBus eventBus) {
         retryAttemps = 0;
         hasSent = false;
         startMapping = false;
@@ -52,6 +55,8 @@ public class MappingState implements SystemStateInterface {
         backwards = false;
         currentTrip = -1;
         tripQueue = new LinkedBlockingQueue<>();
+
+        this.eventBus = eventBus;
     }
 
     // Performs the operation of this state at set intervals according to TIME_BETWEEN_RUNNING
@@ -140,7 +145,7 @@ public class MappingState implements SystemStateInterface {
                 return true;
             } else {
                 String str = (tripZone == 10) ? "CP10" : "CP" + tripZone;
-                SystemStateManager.getInstance().addUnresponsiveClient(str, ReasonEnum.INCORTRIP);
+                eventBus.publish(new ClientErrorEvent(str, ReasonEnum.INCORTRIP));
                 logger.log(Level.WARNING, "Checkpoint : {0} has had inconsistent trip", str);
             }
         }
@@ -173,9 +178,9 @@ public class MappingState implements SystemStateInterface {
 
         // if this blade runner was detected to be in a collision, it will be going backwards
         // thus want the checkpoint before instead of infront
-        if (backwards) {
-            zone = Processor.calculateNextBlock(zone, -1);
-        }
+//        if (backwards) {
+//            zone = Processor.calculateNextBlock(zone, -1);
+//        }
 
         // if a normal trip, then change to slow
         // do not have to worry about backwards, because cannot go fast backwards
@@ -199,14 +204,11 @@ public class MappingState implements SystemStateInterface {
     // if a BladeRunner does not map in a minute time, send stop message to current
     // BladeRunner and go to waiting state
     // * Returns true if the timeout has occurred */
-    private boolean checkIfBladeRunnerIsDead() {
+    private void checkIfBladeRunnerIsDead() {
         if (retryAttemps > MAX_RETRIES && currentBladeRunner != null) {
-            SystemStateManager.getInstance().addUnresponsiveClient(currentBladeRunner.getId(),
-                    ReasonEnum.MAPTIMEOUT);
+            eventBus.publish(new ClientErrorEvent(currentBladeRunner.getId(), ReasonEnum.MAPTIMEOUT));
             logger.log(Level.SEVERE, "Blade runner failed to be mapped in time");
-            return true;
         }
-        return false;
     }
 
     // Grabs all unmapped blade runners, and also blade runners that have collided
@@ -216,7 +218,7 @@ public class MappingState implements SystemStateInterface {
             for (org.example.client.BladeRunnerClient BladeRunnerClient : grabbedBladeRunners) {
                 // returns true if the blade runner has had a collision
                 if (BladeRunnerClient.collision(false, null)) {
-                    bladeRunnersToMap.addFirst(BladeRunnerClient);
+                    //bladeRunnersToMap.addFirst(BladeRunnerClient);
                 }
                 // returns true if the blade runner is unmapped
                 else if (BladeRunnerClient.isUnmapped()) {
@@ -228,7 +230,7 @@ public class MappingState implements SystemStateInterface {
         return grabbedBladeRunners;
     }
 
-    public static void addTrip(int trip, boolean untrip) {
+    public void addTrip(int trip, boolean untrip) {
         StringBuilder str = new StringBuilder();
         str.append(trip);
         str.append(",");

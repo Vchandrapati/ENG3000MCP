@@ -13,9 +13,9 @@ public class BladeRunnerClient extends AbstractClient<MessageEnums.CCPStatus, CC
     private volatile boolean dockedAtStation;
 
 
-    public BladeRunnerClient (String id, MessageGenerator messageGenerator,
-                              MessageSender messageSender) {
-        super(id, messageGenerator, messageSender);
+    public BladeRunnerClient(String id, MessageGenerator messageGenerator,
+            MessageSender messageSender, int sequenceNumber) {
+        super(id, messageGenerator, messageSender, sequenceNumber);
         this.updateStatus(MessageEnums.CCPStatus.STOPC);
         this.type = "CCP";
         this.isCurrentlyMapped = false;

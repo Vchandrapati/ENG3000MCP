@@ -2,6 +2,8 @@ package org.example.messages;
 
 import org.example.*;
 import org.example.client.*;
+import org.example.events.ClientErrorEvent;
+import org.example.events.EventBus;
 import org.example.state.SystemState;
 import org.example.state.SystemStateManager;
 
@@ -17,37 +19,32 @@ public class ClientFactory {
     private Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private HashMap<String, Integer> locations = new HashMap<>();
     private Database db = Database.getInstance();
+    private final EventBus eventBus;
 
-    private static class Holder {
-        private static final ClientFactory INSTANCE = new ClientFactory();
-    }
-
-    public static ClientFactory getInstance() {
-        return Holder.INSTANCE;
+    public ClientFactory(EventBus eventBus) {
+        this.eventBus = eventBus;
     }
 
     public void handleInitialise(ReceiveMessage receiveMessage, InetAddress address, int port) {
         try {
             MessageGenerator messageGenerator = new MessageGenerator();
-            MessageSender messageSender =
-                    new MessageSender(Server.getInstance(), address, port, receiveMessage.clientID);
+            MessageSender messageSender = new MessageSender(address, port, receiveMessage.clientID);
             AbstractClient<?, ?> client = null;
             switch (receiveMessage.clientType) {
                 case "CCP":
                     client = new BladeRunnerClient(receiveMessage.clientID, messageGenerator,
-                            messageSender);
+                            messageSender, receiveMessage.sequenceNumber);
                     break;
                 case "CPC": {
                     Integer zone = locations.get(address.toString() + port);
-                    System.out.println(address.toString());
                     client = new CheckpointClient(receiveMessage.clientID, messageGenerator,
-                            messageSender, zone);
+                            messageSender, zone, receiveMessage.sequenceNumber);
                     break;
                 }
                 case "STC": {
                     Integer zone = locations.get(address.toString() + port);
                     client = new StationClient(receiveMessage.clientID, messageGenerator,
-                            messageSender, zone);
+                            messageSender, zone, receiveMessage.sequenceNumber);
                     break;
                 }
                 default:
@@ -61,9 +58,7 @@ public class ClientFactory {
                 client.sendAcknowledgeMessage(MessageEnums.AKType.AKIN);
                 logger.log(Level.INFO, "Initialised new client: {0}", receiveMessage.clientID);
                 // if a client joins while not in waiting state, goes to emergency mode
-                SystemStateManager.getInstance().addUnresponsiveClient(receiveMessage.clientID,
-                        ReasonEnum.INVALCONNECT);
-
+                eventBus.publish(new ClientErrorEvent(receiveMessage.clientID, ReasonEnum.INVALCONNECT));
             }
 
         } catch (Exception e) {
@@ -80,10 +75,9 @@ public class ClientFactory {
             while (s.hasNextLine()) {
                 String str = s.nextLine();
                 String[] splitStr = str.split("_");
-                if (splitStr.length == 2) {
+                if (splitStr.length == 2)
                     locations.put(splitStr[0], Integer.parseInt(splitStr[1]));
-                    System.out.println(splitStr[0] + "there");
-                }
+
             }
 
             s.close();

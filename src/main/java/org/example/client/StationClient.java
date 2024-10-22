@@ -1,4 +1,5 @@
 package org.example.client;
+
 import org.example.messages.MessageEnums;
 import org.example.messages.MessageEnums.STCAction;
 import org.example.messages.MessageSender;
@@ -6,8 +7,9 @@ import org.example.messages.MessageSender;
 public class StationClient extends AbstractClient<MessageEnums.STCStatus, STCAction> {
     private final int location;
 
-    public StationClient (String id, MessageGenerator messageGenerator, MessageSender messageSender, int location) {
-        super(id, messageGenerator, messageSender);
+    public StationClient(String id, MessageGenerator messageGenerator, MessageSender messageSender,
+            int location, int sequenceNumber) {
+        super(id, messageGenerator, messageSender, sequenceNumber);
         // Everyone starts like this but maybe they dont is the thing
         this.updateStatus(MessageEnums.STCStatus.OFF);
         this.location = location;
@@ -29,7 +31,7 @@ public class StationClient extends AbstractClient<MessageEnums.STCStatus, STCAct
         sendMessage(message, "EXEC");
     }
 
-    public void sendDoorMessage (STCAction action) {
+    public void sendDoorMessage(STCAction action) {
         this.lastActionSent = action;
         String message = messageGenerator.generateDoorMessage(type, super.getId(),
                 outgoingSequenceNumber.getAndIncrement(), String.valueOf(action));

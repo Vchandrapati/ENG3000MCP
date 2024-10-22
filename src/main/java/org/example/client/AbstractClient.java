@@ -22,15 +22,18 @@ public abstract class AbstractClient<S extends Enum<S>, A extends Enum<A>> {
 
     private String lastResponse;
     AtomicInteger outgoingSequenceNumber = new AtomicInteger(0);
+    AtomicInteger incomingSequenceNumber;
     protected int latestStatusMessage;
     private final AtomicInteger missedStats;
     protected boolean expectingStat;
 
+    protected int expectingAKEXByThis;
+
     protected boolean registered = false;
     protected Set<ReasonEnum> unresponsiveReasons;
 
-    protected AbstractClient (String id, MessageGenerator messageGenerator,
-                              MessageSender messageSender) {
+    protected AbstractClient(String id, MessageGenerator messageGenerator,
+            MessageSender messageSender, int sequenceNumber) {
         this.id = id;
         this.messageGenerator = messageGenerator;
         this.messageSender = messageSender;
@@ -40,7 +43,20 @@ public abstract class AbstractClient<S extends Enum<S>, A extends Enum<A>> {
         this.lastActionSent = null;
         this.expectingStat = false;
 
+        expectingAKEXByThis = Integer.MAX_VALUE;
+
         unresponsiveReasons = new HashSet<>();
+    }
+
+    public void expectingAKEXBy(int nowSequence) {
+        expectingAKEXByThis = nowSequence + 2;
+    }
+
+    public boolean isMissedAKEX(int curSequence) {
+        if (curSequence >= expectingAKEXByThis) {
+            return true;
+        }
+        return false;
     }
 
     public String getId() {

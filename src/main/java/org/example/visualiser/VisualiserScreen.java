@@ -2,6 +2,7 @@ package org.example.visualiser;
 
 import org.example.Database;
 import org.example.LoggerConfig;
+import org.example.events.EventBus;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,46 +12,23 @@ public class VisualiserScreen extends JFrame {
     private final JTextField commandInput;
     private final transient CommandHandler commandHandler;
     private final ClientsPanel clientsPanel;
+    private final EventBus eventBus;
 
-    public VisualiserScreen() {
+    public VisualiserScreen(EventBus eventBus) {
         setSize(1900, 1200);
         setTitle("Master Control Protocol");
 
-        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        // Get all screen devices (monitors)
-        GraphicsDevice[] gs = ge.getScreenDevices();
-
-        // Check if we have more than one monitor
-        String username = System.getProperty("user.name");
-        if (gs.length > 1 && username.equalsIgnoreCase("tshie")) {
-            // Get the bounds of the second monitor
-            GraphicsDevice secondMonitor = gs[0];
-            Rectangle secondMonitorBounds = secondMonitor.getDefaultConfiguration().getBounds();
-
-            // Set the frame size to the size of the second monitor
-            setBounds(secondMonitorBounds);
-            setLocation(secondMonitorBounds.x, secondMonitorBounds.y);
-        } else if (username.equalsIgnoreCase("xtheg")) {
-            setSize(1800, 900);
-            setLocationRelativeTo(null);
-        }
-        else {
-            setLocationRelativeTo(null);
-            System.out.println("No second monitor detected.");
-        }
-
-
-        setResizable(false);
+        setResizable(true);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         long startupTime = System.currentTimeMillis();
 
         trackPanel = new VisualiserPanel();
-        InfoPanel infoPanel = new InfoPanel(startupTime);
+        InfoPanel infoPanel = new InfoPanel(startupTime, eventBus);
 
         JPanel userPanel = new JPanel();
         userPanel.setLayout(new BorderLayout());
         userPanel.setPreferredSize(new Dimension(800, 300));
-
+        this.eventBus = eventBus;
 
         commandInput = new JTextField();
         Font font = new Font("Arial", Font.PLAIN, 20);
@@ -87,7 +65,7 @@ public class VisualiserScreen extends JFrame {
 
         LoggerConfig.setupLogger(logArea);
         startVisualizerUpdater();
-        commandHandler = new CommandHandler();
+        commandHandler = new CommandHandler(eventBus);
     }
 
     // Method to handle user input from the text field
