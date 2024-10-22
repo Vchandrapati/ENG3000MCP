@@ -26,6 +26,14 @@ public class ClientFactory {
         eventBus.subscribe(ClientIntialiseEvent.class, this::handleInitialise);
     }
 
+    public ClientFactory(EventBus eventBus, HashMap<String, Integer> hm, Database db, Logger l) {
+        this.eventBus = eventBus;
+        this.locations = hm;
+        this.db = db;
+        this.logger = l;
+        eventBus.subscribe(ClientIntialiseEvent.class, this::handleInitialise);
+    }
+
     public void handleInitialise(ClientIntialiseEvent event) {
         InetAddress address = event.getAddress();
         int port = event.getPort();
@@ -33,8 +41,8 @@ public class ClientFactory {
 
         try {
             MessageGenerator messageGenerator = new MessageGenerator();
-            MessageSender messageSender = new MessageSender(address, port,
-                    receiveMessage.clientID, eventBus);
+            MessageSender messageSender =
+                    new MessageSender(address, port, receiveMessage.clientID, eventBus);
             AbstractClient<?, ?> client = null;
             switch (receiveMessage.clientType) {
                 case "CCP":
@@ -64,12 +72,12 @@ public class ClientFactory {
                 client.sendAcknowledgeMessage(MessageEnums.AKType.AKIN);
                 logger.log(Level.INFO, "Initialised new client: {0}", receiveMessage.clientID);
                 // if a client joins while not in waiting state, goes to emergency mode
-                eventBus.publish(new ClientErrorEvent(receiveMessage.clientID, ReasonEnum.INVALCONNECT));
+                eventBus.publish(
+                        new ClientErrorEvent(receiveMessage.clientID, ReasonEnum.INVALCONNECT));
             }
 
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Failed to handle message");
-            logger.log(Level.SEVERE, "Exception: ", e);
         }
     }
 
@@ -83,13 +91,11 @@ public class ClientFactory {
                 String[] splitStr = str.split("_");
                 if (splitStr.length == 2)
                     locations.put(splitStr[0], Integer.parseInt(splitStr[1]));
-
             }
 
             s.close();
         } catch (FileNotFoundException e) {
             logger.log(Level.SEVERE, "File: {0} not found", fileLocation);
-            e.printStackTrace();
         }
     }
 }

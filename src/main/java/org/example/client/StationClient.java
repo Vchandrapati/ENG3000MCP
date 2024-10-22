@@ -40,4 +40,6 @@ public class StationClient extends StationAndCheckpoint<MessageEnums.STCStatus, 
         sendMessage(message, "DOOR");
     }
 
+
+
 }
