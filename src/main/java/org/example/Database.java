@@ -180,6 +180,10 @@ public class Database {
         }
 
         c.removeReason(reason);
+
+        if (c.isReasonsEmpty()) {
+            unresponsiveClients.remove(id);
+        }
     }
 
     public Set<ReasonEnum> getClientReasons(String id) {

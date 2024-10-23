@@ -142,6 +142,10 @@ public abstract class AbstractClient<S extends Enum<S>, A extends Enum<A>> {
         unresponsiveReasons.remove(r);
     }
 
+    public boolean isReasonsEmpty() {
+        return unresponsiveReasons.isEmpty();
+    }
+
     public int getMissedStatCount() {
         return missedStats.get();
     }

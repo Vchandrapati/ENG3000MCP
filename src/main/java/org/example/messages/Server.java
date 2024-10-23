@@ -20,7 +20,7 @@ import java.util.logging.Logger;
  * Utilises the Singleton pattern to ensure only one instance of the Server exists.
  */
 public class Server {
-    public static final int PORT = 3001;
+    public static final int PORT = 2000;
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private static final int BUFFER_SIZE = 1024;
     private static volatile Server instance = null;

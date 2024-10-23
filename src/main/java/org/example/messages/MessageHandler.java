@@ -89,6 +89,9 @@ public class MessageHandler {
                 logger.log(Level.INFO, "Received CPIN message from Checkpoint: {0}",
                         receiveMessage.clientID);
             } else {
+                logger.log(Level.FINEST, "msg: {0}", receiveMessage.sequenceNumber);
+                logger.log(Level.FINEST, "msg: {0}", receiveMessage.message);
+                logger.log(Level.FINEST, "msg: {0}", receiveMessage.clientType);
                 logger.log(Level.SEVERE, "Attempted to get non-existent checkpoint: {0}",
                         receiveMessage.clientID);
             }

@@ -123,6 +123,8 @@ public class EmergencyState implements SystemStateInterface {
             case ReasonEnum.CLIENTERR: {
                 AbstractClient<?, ?> clientInstance = db.getClient(client, AbstractClient.class).get();
                 if (clientInstance.getLastActionSent() != MessageEnums.CCPStatus.ERR) {
+                    logger.log(Level.INFO, "Has fixed issue {0} for client : {1}",
+                            new Object[] {reason, client});
                     db.removeReason(client, reason);
                 }
                 break;
