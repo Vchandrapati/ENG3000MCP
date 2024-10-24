@@ -200,7 +200,6 @@ public class MessageHandler {
     public <S extends Enum<S>, A extends Enum<A> & MessageEnums.ActionToStatus<S>> void handleStatMessage(
             AbstractClient<S, A> client, ReceiveMessage receiveMessage) {
 
-
         A lastAction = client.getLastActionSent();
         MessageEnums.CCPStatus alternateStatus = null;
 

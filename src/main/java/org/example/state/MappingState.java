@@ -79,6 +79,7 @@ public class MappingState implements SystemStateInterface {
             // maps the clients, returns true if all are mapped
             return mapClients();
         }
+
         return false;
     }
 
@@ -115,8 +116,7 @@ public class MappingState implements SystemStateInterface {
     private boolean processCurrentBladeRunner() {
         // every BLADE_RUNNER_MAPPING_RETRY_TIMEOUT seconds, while not mapped, will try to move
         // the blade runner again
-        if (retryAttemps == 0
-                || System.currentTimeMillis() - currentBladeRunnerStartTime > (retryAttemps + 1)
+        if (retryAttemps == 0 || System.currentTimeMillis() - currentBladeRunnerStartTime > (retryAttemps + 1)
                         * BLADE_RUNNER_MAPPING_RETRY_TIMEOUT) {
             sendBladeRunnerToNextCheckpoint(retryAttemps != 0);
             retryAttemps++;

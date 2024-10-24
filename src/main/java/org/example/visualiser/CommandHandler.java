@@ -3,14 +3,17 @@ package org.example.visualiser;
 import org.example.App;
 import org.example.Database;
 import org.example.client.AbstractClient;
+import org.example.client.BladeRunnerClient;
 import org.example.client.ReasonEnum;
 import org.example.events.ClientErrorEvent;
 import org.example.events.EventBus;
 import org.example.events.NewStateEvent;
 import org.example.events.StateChangeEvent;
+import org.example.messages.MessageEnums;
 import org.example.state.SystemState;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -36,6 +39,7 @@ public class CommandHandler implements Runnable {
         commands.add("override emergency");
         commands.add("start waiting");
         commands.add("disconnect <ID>");
+        commands.add("exec <ID> <cmd>");
         commands.add("help");
     }
 
@@ -120,12 +124,29 @@ public class CommandHandler implements Runnable {
                     throw new InvalidCommandException("Already in waiting state");
                 break;
             default:
-
                 if (input.contains("disconnect")) {
                     processDisconnect(input);
+                } else if (input.contains("exec")) {
+                    if (input.split(" ").length != 3) {
+                        throw new InvalidCommandException("Invalid command");
+                    } else {
+                        processCommand(input);
+                    }
                 } else {
                     throw new InvalidCommandException("Invalid command");
                 }
+        }
+    }
+
+    private void processCommand(String input) throws InvalidCommandException {
+        String[] array = input.split(" ");
+        Optional<BladeRunnerClient> br = Database.getInstance().getClient(array[1],
+                BladeRunnerClient.class);
+
+        if(br.isPresent())
+            br.get().sendExecuteMessage(MessageEnums.CCPAction.valueOf(array[2].toUpperCase()));
+        else {
+            throw new InvalidCommandException("Invalid command");
         }
     }
 

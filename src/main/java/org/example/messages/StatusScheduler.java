@@ -35,9 +35,9 @@ public class StatusScheduler {
         scheduler.scheduleAtFixedRate(() -> {
             List<AbstractClient> clients = db.getClients();
             for (AbstractClient client : clients) {
-                client.sendStatusMessage();
+                // client.sendStatusMessage();
                 client.nowExpectingStat();
-                checkIfClientIsUnresponsive(client);
+                //checkIfClientIsUnresponsive(client);
             }
         }, 0, STAT_INTERVAL_SECONDS, TimeUnit.SECONDS);
     }

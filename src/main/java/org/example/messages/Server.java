@@ -4,9 +4,10 @@ import org.example.events.EventBus;
 import org.example.events.PacketEvent;
 import org.example.events.SendPacketEvent;
 
-import java.io.IOException;
+import java.io.*;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.nio.charset.StandardCharsets;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
@@ -27,9 +28,10 @@ public class Server {
     private static final Object lock = new Object();
 
     private static final BlockingQueue<DatagramPacket> mailbox = new LinkedBlockingQueue<>();
+    private static final BlockingQueue<String> logQueue = new LinkedBlockingQueue<>();
     private final AtomicBoolean serverRunning;
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-    private final ExecutorService executorService = Executors.newFixedThreadPool(2);
+    private final ExecutorService executorService = Executors.newFixedThreadPool(3);
     private DatagramSocket serverSocket;
     private final EventBus eventBus;
 
@@ -45,6 +47,7 @@ public class Server {
 
             executorService.execute(this::connectionListener);
             executorService.execute(this::packetProcessor);
+            executorService.execute(this::logWriter);
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Error starting up server", e);
         }
@@ -86,6 +89,9 @@ public class Server {
         while (serverRunning.get()) {
             try {
                 DatagramPacket receivePacket = mailbox.take();
+                String message =
+                        new String(receivePacket.getData(), 0, receivePacket.getLength(), StandardCharsets.UTF_8);
+                submitLog(message, "Received");
                 eventBus.publish(new PacketEvent(receivePacket));
             } catch (InterruptedException e) {
                 logger.log(Level.SEVERE, "Packet processor was interrupted", e);
@@ -103,6 +109,7 @@ public class Server {
             DatagramPacket sendPacket = new DatagramPacket(buffer, buffer.length,
                     event.getClientAddress(), event.getClientPort());
             serverSocket.send(sendPacket);
+            submitLog(event.getMessage(), "Sent");
             logger.log(Level.INFO, "Sent {0} to client at: {1}",
                     new Object[] {event.getType(), event.getId()});
         } catch (IOException e) {
@@ -124,6 +131,29 @@ public class Server {
             }
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Error shutting down server", e);
+        }
+    }
+
+    private void submitLog(String message, String action) {
+        String logMessage = action + ": " + message;
+        try {
+            logQueue.put(logMessage);  // Add to queue for processing
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            logger.log(Level.SEVERE, "Failed to log message", e);
+        }
+    }
+
+    private void logWriter() {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("messages.txt", true))) {
+            while (serverRunning.get() || !logQueue.isEmpty()) {
+                writer.write(logQueue.take());
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            logger.log(Level.SEVERE, "Exception: ", e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
     }
 }
