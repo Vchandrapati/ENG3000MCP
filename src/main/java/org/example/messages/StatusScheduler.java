@@ -36,7 +36,7 @@ public class StatusScheduler {
             List<AbstractClient> clients = db.getClients();
             for (AbstractClient client : clients) {
                 // client.sendStatusMessage();
-                client.nowExpectingStat();
+                // client.nowExpectingStat();
                 //checkIfClientIsUnresponsive(client);
             }
         }, 0, STAT_INTERVAL_SECONDS, TimeUnit.SECONDS);

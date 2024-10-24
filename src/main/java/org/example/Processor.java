@@ -125,7 +125,6 @@ public class Processor {
 
         // checks if next block is full, if so stop only if untrip
         int nextCheckpoint = calculateNextBlock(checkpointTripped, 1);
-
         if (isCheckpointStation(nextCheckpoint)) {
             if (untrip)
                 bladeRunner.sendExecuteMessage(MessageEnums.CCPAction.FSLOWC);
@@ -134,7 +133,7 @@ public class Processor {
             // give station blade runner
         }
 
-        if (db.isBlockOccupied(nextCheckpoint) && untrip) {
+        if (db.isBlockOccupied(nextCheckpoint) && untrip && bladeRunner.getLastActionSent() != MessageEnums.CCPAction.FSLOWC && currentState != SystemState.MAPPING) {
             bladeRunnerOptional.get().sendExecuteMessage(MessageEnums.CCPAction.STOPC);
         }
 
@@ -151,9 +150,6 @@ public class Processor {
                 checkForTraffic(previousCheckpoint);
             }
         }
-
-        // for Test
-        logger.log(Level.FINEST, "succesfully exited handleTrip");
     }
 
     private void reverseTrip(BladeRunnerClient reversingBladeRunner, int checkpointTripped,
@@ -217,15 +213,10 @@ public class Processor {
         int blockBefore = calculateNextBlock(checkpoint, -1);
         if (db.isBlockOccupied(blockBefore)) {
             Optional<BladeRunnerClient> bladeRunnerOptional = getBladeRunner(blockBefore);
-
-            // if (isCheckpointStation(calculateNextBlock(checkpoint, 1))) {
-            //     bladeRunnerOptional
-            //             .ifPresent(br -> br.sendExecuteMessage(MessageEnums.CCPAction.FSLOWC));
-            // } else {
+            if (bladeRunnerOptional.isPresent() && bladeRunnerOptional.get().getLastActionSent() != MessageEnums.CCPAction.RSLOWC)
                 bladeRunnerOptional
                         .ifPresent(br -> br.sendExecuteMessage(MessageEnums.CCPAction.FFASTC));
-            }
-       // }
+        }
     }
 
     private int calculateNextBlock(int checkpoint, int direction) {
