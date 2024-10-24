@@ -4,7 +4,9 @@ import org.example.events.EventBus;
 import org.example.events.PacketEvent;
 import org.example.events.SendPacketEvent;
 
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.nio.charset.StandardCharsets;
@@ -24,18 +26,17 @@ public class Server {
     public static final int PORT = 2000;
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private static final int BUFFER_SIZE = 1024;
-    private static volatile Server instance = null;
     private static final Object lock = new Object();
-
     private static final BlockingQueue<DatagramPacket> mailbox = new LinkedBlockingQueue<>();
     private static final BlockingQueue<String> logQueue = new LinkedBlockingQueue<>();
+    private static volatile Server instance = null;
     private final AtomicBoolean serverRunning;
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
     private final ExecutorService executorService = Executors.newFixedThreadPool(3);
-    private DatagramSocket serverSocket;
     private final EventBus eventBus;
+    private DatagramSocket serverSocket;
 
-    private Server(EventBus eventBus) {
+    private Server (EventBus eventBus) {
         serverRunning = new AtomicBoolean(true);
         this.eventBus = eventBus;
 
@@ -53,7 +54,7 @@ public class Server {
         }
     }
 
-    public static Server getInstance(EventBus eventBus) {
+    public static Server getInstance (EventBus eventBus) {
         if (instance == null) {
             synchronized (lock) {
                 if (instance == null) {
@@ -69,7 +70,7 @@ public class Server {
      * Listens for incoming UDP packets and processes them. If a client is recognized, processes the
      * packet with the existing client. Otherwise, creates a new client instance and registers it.
      */
-    private void connectionListener() {
+    private void connectionListener () {
         while (serverRunning.get()) {
             try {
                 DatagramPacket receivePacket =
@@ -85,7 +86,7 @@ public class Server {
         }
     }
 
-    private void packetProcessor() {
+    private void packetProcessor () {
         while (serverRunning.get()) {
             try {
                 DatagramPacket receivePacket = mailbox.take();
@@ -103,23 +104,23 @@ public class Server {
         logger.log(Level.INFO, "Packet processor terminated");
     }
 
-    public void send(SendPacketEvent event) {
+    public void send (SendPacketEvent event) {
         try {
-            byte[] buffer = event.getMessage().getBytes();
+            byte[] buffer = event.message().getBytes();
             DatagramPacket sendPacket = new DatagramPacket(buffer, buffer.length,
-                    event.getClientAddress(), event.getClientPort());
+                    event.clientAddress(), event.clientPort());
             serverSocket.send(sendPacket);
-            submitLog(event.getMessage(), "Sent");
+            submitLog(event.message(), "Sent");
             logger.log(Level.INFO, "Sent {0} to client at: {1}",
-                    new Object[] {event.getType(), event.getId()});
+                    new Object[] {event.type(), event.id()});
         } catch (IOException e) {
-            logger.log(Level.SEVERE, "Failed to send message to client: {0}", event.getId());
+            logger.log(Level.SEVERE, "Failed to send message to client: {0}", event.id());
             logger.log(Level.SEVERE, "Exception: ", e);
         }
     }
 
     // Closes the active threads safely
-    public void shutdown() {
+    public void shutdown () {
         try {
             if (serverSocket != null) {
                 serverRunning.set(false);
@@ -134,7 +135,7 @@ public class Server {
         }
     }
 
-    private void submitLog(String message, String action) {
+    private void submitLog (String message, String action) {
         String logMessage = action + ": " + message;
         try {
             logQueue.put(logMessage);  // Add to queue for processing
@@ -144,7 +145,7 @@ public class Server {
         }
     }
 
-    private void logWriter() {
+    private void logWriter () {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("messages.txt", true))) {
             while (serverRunning.get() || !logQueue.isEmpty()) {
                 writer.write(logQueue.take());
@@ -153,7 +154,8 @@ public class Server {
         } catch (IOException e) {
             logger.log(Level.SEVERE, "Exception: ", e);
         } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+            Thread.currentThread().interrupt();
+            logger.log(Level.SEVERE, "Exception: ", e);
         }
     }
 }

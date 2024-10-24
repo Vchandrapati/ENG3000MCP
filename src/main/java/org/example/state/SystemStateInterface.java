@@ -1,9 +1,9 @@
 package org.example.state;
 
 public interface SystemStateInterface {
-    boolean performOperation();
+    boolean performOperation ();
 
-    long getTimeToWait();
+    long getTimeToWait ();
 
-    SystemState getNextState();
+    SystemState getNextState ();
 }

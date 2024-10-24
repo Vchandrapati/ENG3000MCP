@@ -10,13 +10,13 @@ public class ScreenLogHandler extends Handler {
     private final JTextArea textArea;
     private final Formatter formatter;
 
-    public ScreenLogHandler(JTextArea textArea) {
+    public ScreenLogHandler (JTextArea textArea) {
         this.textArea = textArea;
         this.formatter = new SimpleFormatter();
     }
 
     @Override
-    public void publish(LogRecord logRecord) {
+    public void publish (LogRecord logRecord) {
         if (!isLoggable(logRecord))
             return;
 
@@ -29,12 +29,12 @@ public class ScreenLogHandler extends Handler {
     }
 
     @Override
-    public void flush() {
+    public void flush () {
         // Not needed for JTextArea
     }
 
     @Override
-    public void close() throws SecurityException {
+    public void close () throws SecurityException {
         // Not needed for JTextArea
     }
 }

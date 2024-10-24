@@ -1,6 +1,9 @@
 package org.example.events;
 
-import java.util.concurrent.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.function.Consumer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -11,14 +14,10 @@ public class EventBus {
             extends Event>>> listeners = new ConcurrentHashMap<>();
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
 
-    private EventBus() {
+    private EventBus () {
     }
 
-    private static class Holder {
-        private static final EventBus INSTANCE = new EventBus();
-    }
-
-    public static EventBus getInstance() {
+    public static EventBus getInstance () {
         return EventBus.Holder.INSTANCE;
     }
 
@@ -26,7 +25,6 @@ public class EventBus {
         listeners.computeIfAbsent(eventType, k -> new CopyOnWriteArrayList<>()).add(listener);
     }
 
-    @SuppressWarnings("unchecked")
     public void publish (Event event) {
         if (!executor.isShutdown()) {
             executor.submit(() -> emit(event));
@@ -43,14 +41,18 @@ public class EventBus {
                 try {
                     ((Consumer<Event>) listener).accept(event);
                 } catch (Exception e) {
-                    logger.log(Level.SEVERE, "Exception while emitting event ",
+                    logger.log(Level.SEVERE, "Exception while emitting event {0}: {1}",
                             new Object[] {event, e});
                 }
             }
         }
     }
 
-    public void shutdown() {
+    public void shutdown () {
         executor.shutdown();
+    }
+
+    private static class Holder {
+        private static final EventBus INSTANCE = new EventBus();
     }
 }

@@ -7,11 +7,11 @@ import java.io.IOException;
 import java.util.logging.*;
 
 public class LoggerConfig {
-    private LoggerConfig() {
+    private LoggerConfig () {
         throw new IllegalStateException("Utility class");
     }
 
-    public static void setupLogger(JTextArea logArea) {
+    public static void setupLogger (JTextArea logArea) {
         System.setProperty("java.util.logging.SimpleFormatter.format", "%1$tT.%1$tL %4$s: %2$s %5$s%6$s%n");
         Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
@@ -35,7 +35,7 @@ public class LoggerConfig {
             logger.setUseParentHandlers(false);
 
             // Add handlers to the logger
-             logger.addHandler(consoleHandler);
+            logger.addHandler(consoleHandler);
             logger.addHandler(fileHandler);
             logger.addHandler(textAreaHandler);
 

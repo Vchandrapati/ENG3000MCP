@@ -12,7 +12,7 @@ import java.util.List;
 public class ClientsPanel extends JPanel {
     private final DefaultTableModel tableModel;
 
-    public ClientsPanel() {
+    public ClientsPanel () {
         setLayout(new BorderLayout());
 
         String[] columnNames = {"Client ID", "Type", "Status", "Last Exec Message Sent", "last Message Received", "Missed Stat Count"};
@@ -26,7 +26,8 @@ public class ClientsPanel extends JPanel {
         setPreferredSize(new Dimension(800, 400));
     }
 
-    public void updateClientsData() {
+    @SuppressWarnings("rawtypes")
+    public void updateClientsData () {
         List<AbstractClient> updatedClients = Database.getInstance().getClients();
         updatedClients.sort(Comparator.comparing(AbstractClient::getId));
 

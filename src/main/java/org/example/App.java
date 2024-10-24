@@ -11,17 +11,18 @@ import org.example.visualiser.VisualiserScreen;
 
 import javax.swing.*;
 
+@SuppressWarnings("unused")
 public class App {
+    private static final EventBus eventBus = EventBus.getInstance();
     private static Server server;
     private static StatusScheduler statScheduler;
     private static SystemStateManager systemStateManager;
     private static VisualiserScreen screen;
     private static ClientFactory clientFactory;
-    private static final EventBus eventBus = EventBus.getInstance();
     private static Processor processor;
     private static MessageHandler messageHandler;
 
-    public static void main(String[] args) {
+    public static void main (String[] args) {
         SwingUtilities.invokeLater(() -> {
             screen = new VisualiserScreen(eventBus);
             screen.setVisible(true);
@@ -29,7 +30,7 @@ public class App {
         });
     }
 
-    public static void startMCP() {
+    public static void startMCP () {
         new Thread(() -> {
             systemStateManager = SystemStateManager.getInstance(eventBus);
             server = Server.getInstance(eventBus);
@@ -43,7 +44,7 @@ public class App {
     }
 
     // shutdown entire program
-    public static void shutdown() {
+    public static void shutdown () {
         server.shutdown();
         statScheduler.shutdown();
         eventBus.shutdown();

@@ -2,23 +2,20 @@ package org.example.visualiser;
 
 import org.example.Database;
 import org.example.client.BladeRunnerClient;
-import org.example.client.StationClient;
-import org.example.messages.MessageEnums;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class VisualiserPanel extends JPanel {
     private static final Database db = Database.getInstance();
     private static final double SEGMENT_DRAW_LENGTH = 10;
     private transient List<BladeRunnerClient> bladeRunnerZones = new ArrayList<>();
 
-    private static void drawSegments(double angleIncrement, int centerX, double radiusX,
-            int centerY, double radiusY, Graphics2D g2d) {
+    private static void drawSegments (double angleIncrement, int centerX, double radiusX,
+                                      int centerY, double radiusY, Graphics2D g2d) {
         for (int i = 1; i <= db.getBlockCount(); i++) {
             // Current angle for this segment
             double angle = i * angleIncrement;
@@ -31,18 +28,26 @@ public class VisualiserPanel extends JPanel {
             double endX = centerX + (radiusX - SEGMENT_DRAW_LENGTH) * Math.cos(angle);
             double endY = centerY + (radiusY - SEGMENT_DRAW_LENGTH) * Math.sin(angle);
 
+            // Check if it's a station or regular checkpoint
+            if (isStation(i)) {
+                g2d.setColor(Color.MAGENTA);  // Draw stations in purple
+            } else {
+                g2d.setColor(Color.BLACK);    // Draw checkpoints in black
+            }
+
             // Draw the segment line
             g2d.draw(new Line2D.Double(startX, startY, endX, endY));
 
+            // Calculate the label position for checkpoint/station ID
             double labelAngle = angle + angleIncrement / 2;
             double labelRadiusX = radiusX - 30; // Adjust distance from center
             double labelRadiusY = radiusY - 30;
             double labelX = centerX + labelRadiusX * Math.cos(labelAngle);
             double labelY = centerY + labelRadiusY * Math.sin(labelAngle);
 
-            g2d.setColor(Color.BLACK);
-            g2d.setFont(new Font("Arial", Font.BOLD, 14));
-            String zoneNumber = String.valueOf(i);
+            g2d.setColor(Color.BLACK);  // Label color is always black
+            g2d.setFont(new Font("Arial", Font.BOLD, 12));
+            String zoneNumber = getCheckpointOrStationId(i);
 
             // Center the label
             FontMetrics fm = g2d.getFontMetrics();
@@ -50,39 +55,28 @@ public class VisualiserPanel extends JPanel {
             int labelHeight = fm.getAscent();
             g2d.drawString(zoneNumber, (float) labelX - (float) labelWidth / 2,
                     (float) labelY + (float) labelHeight / 2);
-
-             // Check if the current checkpoint has a station
-//             Optional<StationClient> stationClientOpt = db.getClient("ST" + (i < 10 ? "0" + i :
-//                 i), StationClient.class);
-//                 if (stationClientOpt.isPresent()) {
-//                 StationClient stationClient = stationClientOpt.get();
-//
-//                 // Calculate the position of the station text box
-//                 double stationLabelX = centerX + (radiusX - 50) * Math.cos(labelAngle);
-//                 double stationLabelY = centerY + (radiusY - 50) * Math.sin(labelAngle);
-//
-//                 // Get station ID and status
-//                 String stationId = stationClient.getId();
-//                 String stationStatus = stationClient.getStatus().toString();
-//
-//                 // Draw the station ID and status
-//                 g2d.setFont(new Font("Arial", Font.PLAIN, 12));
-//                 String stationInfo = stationId + " (" + stationStatus + ")";
-//                 int stationLabelWidth = fm.stringWidth(stationInfo);
-//                 g2d.setColor(Color.BLUE);
-//                 g2d.drawString(stationInfo, (float) stationLabelX - (float) stationLabelWidth / 2,
-//                 (float) stationLabelY);
-//             }
         }
     }
 
-    public void updateBladeRunnerZones(List<BladeRunnerClient> newBladeRunnerZones) {
+    private static boolean isStation (int block) {
+        return db.getStationIfExist(block).isPresent();
+    }
+
+    private static String getCheckpointOrStationId (int block) {
+        if (isStation(block)) {
+            return "ST" + block;  // Station ID prefix
+        } else {
+            return "CP" + block;  // Checkpoint ID prefix
+        }
+    }
+
+    public void updateBladeRunnerZones (List<BladeRunnerClient> newBladeRunnerZones) {
         bladeRunnerZones = newBladeRunnerZones;
         repaint(); // Request the panel to be repainted
     }
 
     @Override
-    protected void paintComponent(Graphics g) {
+    protected void paintComponent (Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -117,8 +111,8 @@ public class VisualiserPanel extends JPanel {
         drawBladeRunnerLocations(angleIncrement, centerX, radiusX, centerY, radiusY, g2d);
     }
 
-    private void drawBladeRunnerLocations(double angleIncrement, int centerX, double radiusX,
-            int centerY, double radiusY, Graphics2D g2d) {
+    private void drawBladeRunnerLocations (double angleIncrement, int centerX, double radiusX,
+                                           int centerY, double radiusY, Graphics2D g2d) {
         for (BladeRunnerClient bladeRunner : bladeRunnerZones) {
             if (bladeRunner.isUnmapped())
                 continue;
@@ -153,7 +147,7 @@ public class VisualiserPanel extends JPanel {
 
             Shape rotatedRect = transform.createTransformedShape(rect);
 
-            if (bladeRunner.getStatus() != MessageEnums.CCPStatus.ERR)
+            if (!bladeRunner.isUnresponsive())
                 g2d.setColor(Color.GREEN);
             else
                 g2d.setColor(Color.RED);
@@ -167,7 +161,7 @@ public class VisualiserPanel extends JPanel {
 
             double idOffsetX = -idWidth / 2.0;
             double idOffsetY = -rectHeight / 2.0 - 15; // Move the ID further away from the
-                                                       // rectangle
+            // rectangle
 
             AffineTransform idTransform = new AffineTransform();
             idTransform.translate(bladeRunnerX, bladeRunnerY);

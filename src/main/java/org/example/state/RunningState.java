@@ -1,10 +1,5 @@
 package org.example.state;
 
-import org.example.Database;
-import org.example.client.BladeRunnerClient;
-import org.example.messages.MessageEnums;
-import java.util.Collections;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -18,14 +13,14 @@ public class RunningState implements SystemStateInterface {
     private boolean allRunning;
 
     // constructor
-    public RunningState() {
+    public RunningState () {
         allRunning = false;
     }
 
     // Performs the operation of this state at set intervals according to TIME_BETWEEN_RUNNING
     // If returns true then system goes to NEXT_STATE
     @Override
-    public boolean performOperation() {
+    public boolean performOperation () {
         if (!allRunning) {
             logger.log(Level.INFO, "System mapped, startup handed to Processor");
             allRunning = true;
@@ -35,12 +30,12 @@ public class RunningState implements SystemStateInterface {
     }
 
     @Override
-    public long getTimeToWait() {
+    public long getTimeToWait () {
         return TIME_BETWEEN_RUNNING;
     }
 
     @Override
-    public SystemState getNextState() {
+    public SystemState getNextState () {
         return nextState;
     }
 }

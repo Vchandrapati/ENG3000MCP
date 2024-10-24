@@ -1,12 +1,10 @@
-
 package org.example.messages;
 
-import org.example.*;
+import org.example.Database;
 import org.example.client.*;
 import org.example.events.ClientErrorEvent;
 import org.example.events.ClientIntialiseEvent;
 import org.example.events.EventBus;
-import org.example.client.MessageSender;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -17,29 +15,21 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ClientFactory {
-    private Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-    private HashMap<String, Integer> locations = new HashMap<>();
-    private Database db = Database.getInstance();
     private final EventBus eventBus;
+    private final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+    private final HashMap<String, Integer> locations = new HashMap<>();
+    private final Database db = Database.getInstance();
 
-    public ClientFactory(EventBus eventBus) {
+    public ClientFactory (EventBus eventBus) {
         this.eventBus = eventBus;
 
         eventBus.subscribe(ClientIntialiseEvent.class, this::handleInitialise);
     }
 
-    public ClientFactory(EventBus eventBus, HashMap<String, Integer> hm, Database db, Logger l) {
-        this.eventBus = eventBus;
-        this.locations = hm;
-        this.db = db;
-        this.logger = l;
-        eventBus.subscribe(ClientIntialiseEvent.class, this::handleInitialise);
-    }
-
-    public void handleInitialise(ClientIntialiseEvent event) {
-        InetAddress address = event.getAddress();
-        int port = event.getPort();
-        ReceiveMessage receiveMessage = event.getReceiveMessage();
+    public void handleInitialise (ClientIntialiseEvent event) {
+        InetAddress address = event.address();
+        int port = event.port();
+        ReceiveMessage receiveMessage = event.receiveMessage();
 
         try {
             MessageGenerator messageGenerator = new MessageGenerator();
@@ -78,12 +68,11 @@ public class ClientFactory {
                         new ClientErrorEvent(receiveMessage.clientID, ReasonEnum.INVALCONNECT));
             }
         } catch (Exception e) {
-            logger.log(Level.SEVERE, "Failed to handle message");
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Failed to handle message: {0}", e.getMessage());
         }
     }
 
-    public void readFromFile(String fileLocation) {
+    public void readFromFile (String fileLocation) {
         try {
             File file = new File(fileLocation);
             Scanner s = new Scanner(file);

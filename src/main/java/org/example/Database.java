@@ -1,10 +1,6 @@
 package org.example;
 
-import org.example.client.AbstractClient;
-import org.example.client.BladeRunnerClient;
-import org.example.client.CheckpointClient;
-import org.example.client.StationClient;
-import org.example.client.ReasonEnum;
+import org.example.client.*;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -12,6 +8,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+@SuppressWarnings("rawtypes")
 public class Database {
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
@@ -30,7 +27,7 @@ public class Database {
 
     private final ConcurrentHashMap<Integer, String> isStationMap;
 
-    public Database() {
+    public Database () {
         clients = new ConcurrentHashMap<>();
         bladeRunnerBlockMap = new ConcurrentHashMap<>();
 
@@ -48,35 +45,26 @@ public class Database {
      *
      * @return the singleton Server instance
      */
-    public static Database getInstance() {
+    public static Database getInstance () {
         return Holder.INSTANCE;
     }
 
-    /**
-     * Holder class for implementing the Singleton pattern.
-     */
-    private static class Holder {
-        private static final Database INSTANCE = new Database();
-    }
-
-    public Optional<StationClient> getStationIfExist(int zone) {
+    public Optional<StationClient> getStationIfExist (int zone) {
         String sc = isStationMap.get(zone);
 
         if (sc == null) {
             return Optional.empty();
         }
 
-        return Optional.of(StationClient.class.cast(clients.get(sc)));
+        return Optional.of((StationClient) clients.get(sc));
     }
 
-    private void addStationsToMap(int zone, String id) {
+    private void addStationsToMap (int zone, String id) {
         isStationMap.put(zone, id);
     }
 
-
-
     // Add any client with this method
-    public void addClient(String id, AbstractClient client) {
+    public void addClient (String id, AbstractClient client) {
         // Will attempt to add a client
         // If absent it will happen, however, if it is present the previous client will
         // be handed over
@@ -100,15 +88,14 @@ public class Database {
             numberOfCheckpoints.getAndIncrement();
         }
 
-        if (client instanceof StationClient) {
+        if (client instanceof StationClient sc) {
             numberOfStations.getAndIncrement();
-            StationClient sc = StationClient.class.cast(client);
             addStationsToMap(sc.getLocation(), id);
         }
     }
 
     // Get any client with this method
-    public <T extends AbstractClient> Optional<T> getClient(String id, Class<T> type) {
+    public <T extends AbstractClient> Optional<T> getClient (String id, Class<T> type) {
         AbstractClient c = clients.get(id);
 
         if (c == null)
@@ -124,18 +111,18 @@ public class Database {
         return Optional.empty();
     }
 
-    public Set<String> getAllUnresponsiveClientIDs() {
+    public Set<String> getAllUnresponsiveClientIDs () {
         return unresponsiveClients;
     }
 
-    public boolean addUnresponsiveClient(String id, ReasonEnum newReason) {
+    public boolean addUnresponsiveClient (String id, ReasonEnum newReason) {
         Optional<AbstractClient> cOptional = getClient(id, AbstractClient.class);
         AbstractClient c;
 
         if (cOptional.isPresent()) {
             c = cOptional.get();
         } else {
-            logger.log(Level.WARNING, "Attempted to get non-existent client", id);
+            logger.log(Level.WARNING, "Attempted to get non-existent client {0}", id);
             return false;
         }
 
@@ -144,13 +131,13 @@ public class Database {
         return true;
     }
 
-    public void fullPurge(String id) {
+    public void fullPurge (String id) {
         allBladeRunners.remove(id);
         unresponsiveClients.remove(id);
         clients.remove(id);
     }
 
-    public void ultraPurge() {
+    public void ultraPurge () {
         clients.clear();
         bladeRunnerBlockMap.clear();
 
@@ -163,7 +150,7 @@ public class Database {
         isStationMap.clear();
     }
 
-    public void removeReason(String id, ReasonEnum reason) {
+    public void removeReason (String id, ReasonEnum reason) {
         if (!isClientUnresponsive(id)) {
             logger.log(Level.WARNING, "{0} is not an unresponsive client", id);
             return;
@@ -186,7 +173,7 @@ public class Database {
         }
     }
 
-    public Set<ReasonEnum> getClientReasons(String id) {
+    public Set getClientReasons (String id) {
         if (!isClientUnresponsive(id)) {
             logger.log(Level.WARNING, "{0} is not an unresponsive client", id);
             return new HashSet<>();
@@ -205,29 +192,29 @@ public class Database {
         return new HashSet<>();
     }
 
-    public boolean isClientUnresponsive(String id) {
+    public boolean isClientUnresponsive (String id) {
         return unresponsiveClients.contains(id);
     }
 
-    public boolean isUnresponsiveEmpty() {
+    public boolean isUnresponsiveEmpty () {
         return unresponsiveClients.isEmpty();
     }
 
-    public void updateBladeRunnerBlock(String bladeRunnerId, int newBlock) {
+    public void updateBladeRunnerBlock (String bladeRunnerId, int newBlock) {
         bladeRunnerBlockMap.put(bladeRunnerId, newBlock);
     }
 
-    public boolean isBlockOccupied(int blockId) {
+    public boolean isBlockOccupied (int blockId) {
         return bladeRunnerBlockMap.containsValue(blockId);
     }
 
-    public String getLastBladeRunnerInBlock(int blockId) {
+    public String getLastBladeRunnerInBlock (int blockId) {
         return bladeRunnerBlockMap.entrySet().stream()
                 .filter(entry -> entry.getValue().equals(blockId)).map(Map.Entry::getKey)
                 .reduce((first, second) -> second).orElse(null);
     }
 
-    public List<BladeRunnerClient> getBladeRunnerClients() {
+    public List<BladeRunnerClient> getBladeRunnerClients () {
         List<BladeRunnerClient> bladeRunners = new ArrayList<>();
         for (String id : allBladeRunners) {
             if (clients.get(id) instanceof BladeRunnerClient bladeRunnerClient) {
@@ -240,27 +227,30 @@ public class Database {
         return bladeRunners;
     }
 
-    public List<AbstractClient> getClients() {
+    public List<AbstractClient> getClients () {
         return new ArrayList<>(clients.values());
     }
 
-    public int getBladeRunnerCount() {
+    public int getBladeRunnerCount () {
         return allBladeRunners.size();
     }
 
-    public int getCheckpointCount() {
+    public int getCheckpointCount () {
         return numberOfCheckpoints.get();
     }
 
-    public int getStationCount() {
+    public int getStationCount () {
         return numberOfStations.get();
     }
 
-    public void clearUnresponsive() {
-        unresponsiveClients.clear();
+    public int getBlockCount () {
+        return getCheckpointCount() + getStationCount();
     }
 
-    public int getBlockCount() {
-        return getCheckpointCount() + getStationCount();
+    /**
+     * Holder class for implementing the Singleton pattern.
+     */
+    private static class Holder {
+        private static final Database INSTANCE = new Database();
     }
 }

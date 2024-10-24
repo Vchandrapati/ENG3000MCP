@@ -25,20 +25,17 @@ public class InfoPanel extends JPanel {
     private final JLabel currentStateLabel;
     private final JLabel waitingTimer;
     private final JLabel errorClientList;
-    private long startTime = -1;
     private final List<JLabel> errorClients;
     private final transient Database db = Database.getInstance();
-    private final EventBus eventBus;
+    private long startTime = -1;
     private SystemState currentState;
 
-    public InfoPanel(long startupTime, EventBus eventBus) {
+    public InfoPanel (long startupTime, EventBus eventBus) {
         this.startupTime = startupTime;
-        this.eventBus = eventBus;
 
         eventBus.subscribe(StateChangeEvent.class, this::updateState);
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
         currentTimeLabel = new JLabel();
         elapsedTimeLabel = new JLabel();
         connectedBladeRunnersLabel = new JLabel();
@@ -75,24 +72,24 @@ public class InfoPanel extends JPanel {
         errorClients = new ArrayList<>();
     }
 
-    private void updateState(StateChangeEvent event) {
-        currentState = event.getState();
+    private void updateState (StateChangeEvent event) {
+        currentState = event.state();
     }
 
-    private void startUpdater() {
+    private void startUpdater () {
         int delay = 1000; // Update every second
         Timer timer = new Timer(delay, e -> updateInfo());
         timer.start();
     }
 
-    public void updateInfo() {
+    public void updateInfo () {
         // Update time labels
         long currentTimeMillis = updateTime();
         updateCounts();
         updateCurrentStateData(currentTimeMillis);
     }
 
-    private long updateTime() {
+    private long updateTime () {
         long currentTimeMillis = System.currentTimeMillis();
         String currentTimeStr = formatTime(currentTimeMillis);
 
@@ -104,7 +101,7 @@ public class InfoPanel extends JPanel {
         return currentTimeMillis;
     }
 
-    private void updateCurrentStateData(long currentTimeMillis) {
+    private void updateCurrentStateData (long currentTimeMillis) {
         currentStateLabel.setText("Current System State: " + currentState);
 
         // Begin timer for waiting state
@@ -134,22 +131,21 @@ public class InfoPanel extends JPanel {
         }
     }
 
-    private void createErrorClientLabels(Set<String> clients) {
+    private void createErrorClientLabels (Set<String> clients) {
         Font font = new Font("Arial", Font.BOLD, 16);
 
         for (String client : clients) {
-            StringBuilder str = new StringBuilder();
-            str.append(client);
-            str.append(" ");
-            str.append(db.getClientReasons(client));
-            JLabel label = new JLabel(str.toString());
+            String str = client +
+                    " " +
+                    db.getClientReasons(client);
+            JLabel label = new JLabel(str);
             label.setFont(font);
             errorClients.add(label);
             add(label);
         }
     }
 
-    private void clearErrorClientLabels() {
+    private void clearErrorClientLabels () {
         for (JLabel label : errorClients) {
             label.setVisible(false);
             remove(label);
@@ -158,18 +154,18 @@ public class InfoPanel extends JPanel {
         errorClients.clear();
     }
 
-    private void updateCounts() {
+    private void updateCounts () {
         connectedBladeRunnersLabel.setText("Connected BladeRunners: " + db.getBladeRunnerCount());
         connectedCheckpointsLabel.setText("Connected checkpoints: " + db.getCheckpointCount());
         connectedStationsLabel.setText("Connected stations: " + db.getStationCount());
     }
 
-    private String formatTime(long timeMillis) {
+    private String formatTime (long timeMillis) {
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
         return timeFormat.format(new Date(timeMillis));
     }
 
-    private String formatElapsedTime(long elapsedMillis, boolean timer) {
+    private String formatElapsedTime (long elapsedMillis, boolean timer) {
         long seconds = elapsedMillis / 1000 % 60;
         long minutes = elapsedMillis / (1000 * 60) % 60;
         long hours = elapsedMillis / (1000 * 60 * 60);

@@ -1,9 +1,9 @@
 package org.example.client;
 
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.logging.Level;
 import org.example.messages.MessageEnums;
 import org.example.messages.MessageEnums.CCPAction;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class BladeRunnerClient extends AbstractClient<MessageEnums.CCPStatus, CCPAction> {
     private final AtomicInteger zone = new AtomicInteger();
@@ -12,8 +12,8 @@ public class BladeRunnerClient extends AbstractClient<MessageEnums.CCPStatus, CC
     private volatile boolean dockedAtStation;
 
 
-    public BladeRunnerClient(String id, MessageGenerator messageGenerator,
-            MessageSender messageSender, int sequenceNumber) {
+    public BladeRunnerClient (String id, MessageGenerator messageGenerator,
+                              MessageSender messageSender, int sequenceNumber) {
         super(id, messageGenerator, messageSender, sequenceNumber);
         this.updateStatus(MessageEnums.CCPStatus.STOPC);
         this.type = "CCP";
@@ -22,49 +22,42 @@ public class BladeRunnerClient extends AbstractClient<MessageEnums.CCPStatus, CC
     }
 
 
-
-    public Integer getZone() {
+    public Integer getZone () {
         return zone.get();
     }
 
-    public void changeZone(int zone) {
+    public void changeZone (int zone) {
         this.zone.set(zone);
         isCurrentlyMapped = true;
     }
 
-    public boolean isUnmapped() {
+    public boolean isUnmapped () {
         return !isCurrentlyMapped;
     }
 
-    public boolean collision(boolean hasCollide, Object o) {
-        if (o != null) {
-            collision = hasCollide;
-        }
+    public boolean getCollision () {
         return collision;
     }
 
-    public boolean isDockedAtStation() {
+    public void setCollision (boolean hasCollide) {
+        collision = hasCollide;
+    }
+
+    public boolean isDockedAtStation () {
         return dockedAtStation;
     }
 
-    public void setDockedAtStation(Boolean b) {
+    public void setDockedAtStation (Boolean b) {
         dockedAtStation = b;
     }
 
     @Override
-    public void sendExecuteMessage(CCPAction action) {
+    public void sendExecuteMessage (CCPAction action) {
         this.lastActionSent = action;
         updateStatus(action.getStatus());
         String message = messageGenerator.generateExecuteMessage(type, super.getId(),
                 outgoingSequenceNumber.getAndIncrement(), action.toString());
         sendMessage(message, "EXEC");
 
-    }
-
-    @Override
-    protected int getLocation() {
-        logger.log(Level.SEVERE,
-                "Can no get location from bladerunner using this method, will return {0}", 0);
-        return 0;
     }
 }

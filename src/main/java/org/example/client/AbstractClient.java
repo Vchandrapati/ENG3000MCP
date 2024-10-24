@@ -1,6 +1,6 @@
 package org.example.client;
 
-import org.example.messages.*;
+import org.example.messages.MessageEnums;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -10,30 +10,24 @@ import java.util.logging.Logger;
 
 public abstract class AbstractClient<S extends Enum<S>, A extends Enum<A>> {
     protected static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-
-    protected MessageGenerator messageGenerator;
-    protected MessageSender messageSender;
     protected final String id;
-
-    A lastActionSent;
-    S currentStatus;
+    protected final MessageGenerator messageGenerator;
+    protected final MessageSender messageSender;
+    protected final Set<ReasonEnum> unresponsiveReasons;
+    final AtomicInteger outgoingSequenceNumber = new AtomicInteger(0);
+    private final AtomicInteger missedStats;
     protected String type;
     protected String lastExecMessageSent;
-
-    private String lastResponse;
-    AtomicInteger outgoingSequenceNumber = new AtomicInteger(0);
-    AtomicInteger incomingSequenceNumber;
     protected int latestStatusMessage;
-    private final AtomicInteger missedStats;
     protected boolean expectingStat;
-
     protected int expectingAKEXByThis;
+    A lastActionSent;
+    S currentStatus;
+    AtomicInteger incomingSequenceNumber;
+    private String lastResponse;
 
-    protected boolean registered = false;
-    protected Set<ReasonEnum> unresponsiveReasons;
-
-    protected AbstractClient(String id, MessageGenerator messageGenerator,
-            MessageSender messageSender, int sequenceNumber) {
+    protected AbstractClient (String id, MessageGenerator messageGenerator,
+                              MessageSender messageSender, int sequenceNumber) {
         this.id = id;
         this.messageGenerator = messageGenerator;
         this.messageSender = messageSender;
@@ -48,30 +42,28 @@ public abstract class AbstractClient<S extends Enum<S>, A extends Enum<A>> {
         unresponsiveReasons = new HashSet<>();
     }
 
-    public void expectingAKEXBy(int nowSequence) {
+    public void expectingAKEXBy (int nowSequence) {
         expectingAKEXByThis = nowSequence + 2;
     }
 
-    abstract int getLocation();
-
-    public boolean isMissedAKEX(int curSequence) {
+    public boolean isMissedAKEX (int curSequence) {
         return curSequence >= expectingAKEXByThis;
     }
 
-    public String getId() {
+    public String getId () {
         return id;
     }
 
-    public S getStatus() {
+    public S getStatus () {
         return currentStatus;
     }
 
-    public void updateStatus(S newStatus) {
+    public void updateStatus (S newStatus) {
         this.currentStatus = newStatus;
         logger.log(Level.INFO, "Updated status for {0} to {1}", new Object[] {id, newStatus});
     }
 
-    public boolean checkResponsive() {
+    public boolean checkResponsive () {
         this.missedStats.getAndIncrement();
 
         if (missedStats.get() >= 3) {
@@ -82,79 +74,82 @@ public abstract class AbstractClient<S extends Enum<S>, A extends Enum<A>> {
         return false;
     }
 
-    public boolean isExpectingStat() {
+    public boolean isUnresponsive () {
+        return !unresponsiveReasons.isEmpty();
+    }
+
+    public boolean isExpectingStat () {
         return expectingStat;
     }
 
-    public void noLongerExpectingStat() {
+    public void noLongerExpectingStat () {
         expectingStat = false;
     }
 
-    public void nowExpectingStat() {
+    public void nowExpectingStat () {
         expectingStat = true;
     }
 
-    public void resetMissedStats() {
+    public void resetMissedStats () {
         this.missedStats.set(0);
     }
 
-    public A getLastActionSent() {
+    public A getLastActionSent () {
         return lastActionSent;
     }
 
-    public void updateLatestStatusMessageCount(Integer count) {
+    public void updateLatestStatusMessageCount (Integer count) {
         latestStatusMessage = count;
     }
 
-    public Integer getLatestStatusMessageCount() {
+    public Integer getLatestStatusMessageCount () {
         return latestStatusMessage;
     }
 
-    protected abstract void sendExecuteMessage(A action);
+    protected abstract void sendExecuteMessage (A action);
 
-    public void sendAcknowledgeMessage(MessageEnums.AKType akType) {
+    public void sendAcknowledgeMessage (MessageEnums.AKType akType) {
         String message = messageGenerator.generateAcknowledgeMessage(type, id,
                 outgoingSequenceNumber.getAndIncrement(), akType);
         sendMessage(message, String.valueOf(akType));
-        registered = true;
     }
 
-    public void sendStatusMessage() {
+    public void sendStatusMessage () {
         String message = messageGenerator.generateStatusMessage(type, id,
                 outgoingSequenceNumber.getAndIncrement());
         sendMessage(message, "STAT");
     }
 
-    public void sendMessage(String message, String type) {
+    public void sendMessage (String message, String type) {
         messageSender.send(message, type);
     }
 
-    public void addReason(ReasonEnum reason) {
+    public void addReason (ReasonEnum reason) {
         unresponsiveReasons.add(reason);
         logger.log(Level.INFO, "Added reason {0}", reason);
     }
 
-    public Set<ReasonEnum> getUnresponsiveReasons() {
+    public Set<ReasonEnum> getUnresponsiveReasons () {
         return unresponsiveReasons;
     }
 
-    public void removeReason(ReasonEnum r) {
+    public void removeReason (ReasonEnum r) {
         unresponsiveReasons.remove(r);
     }
 
-    public boolean isReasonsEmpty() {
+    public boolean isReasonsEmpty () {
         return unresponsiveReasons.isEmpty();
     }
 
-    public int getMissedStatCount() {
+    public int getMissedStatCount () {
         return missedStats.get();
     }
 
-    public void setLastResponse(String lastResponse) {
-        this.lastResponse = lastResponse;
+    public String getLastResponse () {
+        return lastResponse;
     }
 
-    public String getLastResponse() {
-        return lastResponse;
+    public void setLastResponse (String lastResponse) {
+        this.lastResponse = lastResponse;
     }
 }

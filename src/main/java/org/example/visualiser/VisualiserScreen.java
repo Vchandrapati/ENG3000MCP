@@ -12,9 +12,8 @@ public class VisualiserScreen extends JFrame {
     private final JTextField commandInput;
     private final transient CommandHandler commandHandler;
     private final ClientsPanel clientsPanel;
-    private final EventBus eventBus;
 
-    public VisualiserScreen(EventBus eventBus) {
+    public VisualiserScreen (EventBus eventBus) {
         setSize(1900, 1200);
         setTitle("Master Control Protocol");
 
@@ -28,7 +27,6 @@ public class VisualiserScreen extends JFrame {
         JPanel userPanel = new JPanel();
         userPanel.setLayout(new BorderLayout());
         userPanel.setPreferredSize(new Dimension(800, 300));
-        this.eventBus = eventBus;
 
         commandInput = new JTextField();
         Font font = new Font("Arial", Font.PLAIN, 20);
@@ -69,13 +67,13 @@ public class VisualiserScreen extends JFrame {
     }
 
     // Method to handle user input from the text field
-    private void handleCommand() {
+    private void handleCommand () {
         String input = commandInput.getText();
         commandInput.setText(""); // Clear the input field
         commandHandler.processInput(input);
     }
 
-    private void startVisualizerUpdater() {
+    private void startVisualizerUpdater () {
         int delay = 1000; // milliseconds
 
         Timer timer = new Timer(delay, e -> {
@@ -86,7 +84,7 @@ public class VisualiserScreen extends JFrame {
         timer.start();
     }
 
-    private void updateVisualizer() {
+    private void updateVisualizer () {
         trackPanel.updateBladeRunnerZones(Database.getInstance().getBladeRunnerClients());
     }
 }

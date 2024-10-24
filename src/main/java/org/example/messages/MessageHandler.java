@@ -2,7 +2,7 @@ package org.example.messages;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.example.*;
+import org.example.Database;
 import org.example.client.*;
 import org.example.events.*;
 import org.example.state.SystemState;
@@ -14,38 +14,24 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class MessageHandler {
-    private Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-    private ObjectMapper objectMapper = new ObjectMapper();
-    private Database db = Database.getInstance();
-    private EventBus eventBus;
+    private final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final Database db = Database.getInstance();
+    private final EventBus eventBus;
     private SystemState currentState;
 
-    public MessageHandler(EventBus eventBus) {
+    public MessageHandler (EventBus eventBus) {
         this.eventBus = eventBus;
         eventBus.subscribe(StateChangeEvent.class, this::updateCurrentState);
         eventBus.subscribe(PacketEvent.class, this::handleMessage);
     }
 
-    // Remove me ig?
-    public MessageHandler(EventBus eventBus, Database db, Logger l) {
-        this.eventBus = eventBus;
-        this.db = db;
-        this.logger = l;
-        eventBus.subscribe(StateChangeEvent.class, this::updateCurrentState);
-        eventBus.subscribe(PacketEvent.class, this::handleMessage);
+    private void updateCurrentState (StateChangeEvent event) {
+        currentState = event.state();
     }
 
-    private void updateCurrentState(StateChangeEvent event) {
-        currentState = event.getState();
-    }
-
-    // public void handleMessage(DatagramPacket packet) {
-    // String message =
-    // new String(packet.getData(), 0, packet.getLength(), StandardCharsets.UTF_8);
-    // }
-
-    public void handleMessage(PacketEvent event) {
-        DatagramPacket packet = event.getPacket();
+    public void handleMessage (PacketEvent event) {
+        DatagramPacket packet = event.packet();
         String message =
                 new String(packet.getData(), 0, packet.getLength(), StandardCharsets.UTF_8);
 
@@ -79,19 +65,14 @@ public class MessageHandler {
 
 
     // Handles all checkpoint messages
-    private void handleCPCMessage(ReceiveMessage receiveMessage, InetAddress address, int port) {
-        db.getClient(receiveMessage.clientID, CheckpointClient.class).ifPresentOrElse(client -> {
-            checkpointOrStation(client, receiveMessage);
-        }, () -> {
+    private void handleCPCMessage (ReceiveMessage receiveMessage, InetAddress address, int port) {
+        db.getClient(receiveMessage.clientID, CheckpointClient.class).ifPresentOrElse(client -> checkpointOrStation(client, receiveMessage), () -> {
             // Client is not present
             if ("CPIN".equals(receiveMessage.message)) {
                 eventBus.publish(new ClientIntialiseEvent(receiveMessage, address, port));
                 logger.log(Level.INFO, "Received CPIN message from Checkpoint: {0}",
                         receiveMessage.clientID);
             } else {
-                logger.log(Level.FINEST, "msg: {0}", receiveMessage.sequenceNumber);
-                logger.log(Level.FINEST, "msg: {0}", receiveMessage.message);
-                logger.log(Level.FINEST, "msg: {0}", receiveMessage.clientType);
                 logger.log(Level.SEVERE, "Attempted to get non-existent checkpoint: {0}",
                         receiveMessage.clientID);
             }
@@ -99,7 +80,7 @@ public class MessageHandler {
     }
 
 
-    private void handleCCPMessage(ReceiveMessage receiveMessage, InetAddress address, int port) {
+    private void handleCCPMessage (ReceiveMessage receiveMessage, InetAddress address, int port) {
         db.getClient(receiveMessage.clientID, BladeRunnerClient.class).ifPresentOrElse(client -> {
             client.setLastResponse(receiveMessage.message);
             // Client is present
@@ -132,14 +113,8 @@ public class MessageHandler {
         });
     }
 
-    private void handleSTCMessage(ReceiveMessage receiveMessage, InetAddress address, int port) {
-        db.getClient(receiveMessage.clientID, StationClient.class).ifPresentOrElse(client -> {
-            checkpointOrStation(client, receiveMessage);
-        }, () -> {
-            logger.log(Level.FINEST, "msg: {0}", receiveMessage.sequenceNumber);
-            logger.log(Level.FINEST, "msg: {0}", receiveMessage.message);
-            logger.log(Level.FINEST, "msg: {0}", receiveMessage.clientType);
-            logger.log(Level.FINEST, "msg: {0}", receiveMessage.clientID);
+    private void handleSTCMessage (ReceiveMessage receiveMessage, InetAddress address, int port) {
+        db.getClient(receiveMessage.clientID, StationClient.class).ifPresentOrElse(client -> checkpointOrStation(client, receiveMessage), () -> {
             // Client is not present
             if ("STIN".equals(receiveMessage.message)) {
                 eventBus.publish(new ClientIntialiseEvent(receiveMessage, address, port));
@@ -149,13 +124,14 @@ public class MessageHandler {
                 logger.log(Level.SEVERE, "Attempted to get non-existent station: {0}",
                         receiveMessage.clientID);
 
-                        logger.log(Level.SEVERE, "Attempted to get non-existent checkpoint: {0}",
-                                receiveMessage.clientID);
+                logger.log(Level.SEVERE, "Attempted to get non-existent checkpoint: {0}",
+                        receiveMessage.clientID);
             }
         });
     }
 
-    private void checkpointOrStation(StationAndCheckpoint client, ReceiveMessage receiveMessage) {
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    private void checkpointOrStation (StationAndCheckpoint client, ReceiveMessage receiveMessage) {
 
         client.setLastResponse(receiveMessage.message);
         // Client is present
@@ -167,7 +143,7 @@ public class MessageHandler {
                 client.expectingAKEXBy(receiveMessage.sequenceNumber);
                 break;
             case "TRIP":
-                switch (receiveMessage.status.toString()) {
+                switch (receiveMessage.status) {
                     case "ON":
                         eventBus.publish(new TripEvent(client.getLocation(), false));
                         break;
@@ -197,7 +173,7 @@ public class MessageHandler {
         }
     }
 
-    public <S extends Enum<S>, A extends Enum<A> & MessageEnums.ActionToStatus<S>> void handleStatMessage(
+    public <S extends Enum<S>, A extends Enum<A> & MessageEnums.ActionToStatus<S>> void handleStatMessage (
             AbstractClient<S, A> client, ReceiveMessage receiveMessage) {
 
         A lastAction = client.getLastActionSent();
@@ -205,7 +181,7 @@ public class MessageHandler {
 
         if (lastAction != null && receiveMessage.clientType.equals("CCP")
                 && (lastAction.equals(MessageEnums.CCPAction.FSLOWC)
-                        || lastAction.equals(MessageEnums.CCPAction.RSLOWC))) {
+                || lastAction.equals(MessageEnums.CCPAction.RSLOWC))) {
             alternateStatus = MessageEnums.CCPStatus.STOPC;
         }
 

@@ -26,8 +26,6 @@ import java.util.logging.Logger;
 public class CommandHandler implements Runnable {
     private static final Set<String> commands;
     private static boolean isRunning = true;
-    private SystemState currentState;
-    private EventBus eventBus;
 
     // Set of commands
     static {
@@ -45,8 +43,10 @@ public class CommandHandler implements Runnable {
 
     private final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private final BlockingQueue<String> commandQueue = new LinkedBlockingQueue<>();
+    private final EventBus eventBus;
+    private SystemState currentState;
 
-    public CommandHandler(EventBus eventBus) {
+    public CommandHandler (EventBus eventBus) {
         Thread commandThread = new Thread(this, "CommandHandler-Thread");
         commandThread.start();
         this.eventBus = eventBus;
@@ -54,13 +54,17 @@ public class CommandHandler implements Runnable {
         eventBus.subscribe(StateChangeEvent.class, this::updateCurrentState);
     }
 
+    public static void shutdown () {
+        isRunning = false;
+    }
+
     public void updateCurrentState (StateChangeEvent event) {
-        this.currentState = event.getState();
+        this.currentState = event.state();
     }
 
     // Main loop for command handler
     @Override
-    public void run() {
+    public void run () {
         logger.log(Level.INFO,
                 "MCP online, please input a command, type help to see a list of commands");
 
@@ -83,7 +87,7 @@ public class CommandHandler implements Runnable {
         }
     }
 
-    public void processInput(String input) {
+    public void processInput (String input) {
         try {
             commandQueue.put(input); // Submit the command to the queue
         } catch (InterruptedException e) {
@@ -93,7 +97,7 @@ public class CommandHandler implements Runnable {
     }
 
     // takes an input string and executes its command, if invalid throw exception
-    private void executeCommand(String input) throws InvalidCommandException {
+    private void executeCommand (String input) throws InvalidCommandException {
         // using the substring find the command
         switch (input) {
             case "help":
@@ -109,7 +113,7 @@ public class CommandHandler implements Runnable {
                     throw new InvalidCommandException("Not in waiting state");
                 break;
             case "start emergency":
-                    eventBus.publish(new NewStateEvent(SystemState.EMERGENCY));
+                eventBus.publish(new NewStateEvent(SystemState.EMERGENCY));
                 break;
             case "override emergency":
                 if (currentState == SystemState.EMERGENCY)
@@ -126,31 +130,32 @@ public class CommandHandler implements Runnable {
             default:
                 if (input.contains("disconnect")) {
                     processDisconnect(input);
-                } else if (input.contains("exec")) {
-                    if (input.split(" ").length != 3) {
-                        throw new InvalidCommandException("Invalid command");
+                } else
+                    if (input.contains("exec")) {
+                        if (input.split(" ").length != 3) {
+                            throw new InvalidCommandException("Invalid command");
+                        } else {
+                            processCommand(input);
+                        }
                     } else {
-                        processCommand(input);
+                        throw new InvalidCommandException("Invalid command");
                     }
-                } else {
-                    throw new InvalidCommandException("Invalid command");
-                }
         }
     }
 
-    private void processCommand(String input) throws InvalidCommandException {
+    private void processCommand (String input) throws InvalidCommandException {
         String[] array = input.split(" ");
         Optional<BladeRunnerClient> br = Database.getInstance().getClient(array[1],
                 BladeRunnerClient.class);
 
-        if(br.isPresent())
+        if (br.isPresent())
             br.get().sendExecuteMessage(MessageEnums.CCPAction.valueOf(array[2].toUpperCase()));
         else {
             throw new InvalidCommandException("Invalid command");
         }
     }
 
-    private void processDisconnect(String input) throws InvalidCommandException {
+    private void processDisconnect (String input) throws InvalidCommandException {
         String[] array = input.split(" ");
         if (array.length == 2 && array[0].equals("disconnect")
                 && Database.getInstance().getClient(array[1], AbstractClient.class).isPresent()) {
@@ -161,7 +166,7 @@ public class CommandHandler implements Runnable {
     }
 
     // Prints all set commands to the console
-    private void help() {
+    private void help () {
         StringBuilder commandString = new StringBuilder();
         commandString.append("\n").append("List of valid commands");
 
@@ -173,12 +178,8 @@ public class CommandHandler implements Runnable {
 
     // Exception for invalid commands
     private class InvalidCommandException extends Exception {
-        public InvalidCommandException(String message) {
+        public InvalidCommandException (String message) {
             logger.log(Level.WARNING, message);
         }
-    }
-
-    public static void shutdown() {
-        isRunning = false;
     }
 }
