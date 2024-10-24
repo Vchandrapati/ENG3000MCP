@@ -136,6 +136,10 @@ public class MessageHandler {
         db.getClient(receiveMessage.clientID, StationClient.class).ifPresentOrElse(client -> {
             checkpointOrStation(client, receiveMessage);
         }, () -> {
+            logger.log(Level.FINEST, "msg: {0}", receiveMessage.sequenceNumber);
+            logger.log(Level.FINEST, "msg: {0}", receiveMessage.message);
+            logger.log(Level.FINEST, "msg: {0}", receiveMessage.clientType);
+            logger.log(Level.FINEST, "msg: {0}", receiveMessage.clientID);
             // Client is not present
             if ("STIN".equals(receiveMessage.message)) {
                 eventBus.publish(new ClientIntialiseEvent(receiveMessage, address, port));
@@ -144,6 +148,9 @@ public class MessageHandler {
             } else {
                 logger.log(Level.SEVERE, "Attempted to get non-existent station: {0}",
                         receiveMessage.clientID);
+
+                        logger.log(Level.SEVERE, "Attempted to get non-existent checkpoint: {0}",
+                                receiveMessage.clientID);
             }
         });
     }

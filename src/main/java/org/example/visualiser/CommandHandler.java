@@ -30,6 +30,8 @@ public class CommandHandler implements Runnable {
     static {
         commands = new HashSet<>();
         commands.add("start mapping");
+        commands.add("bdsm");
+        commands.add("start emergency");
         commands.add("quit");
         commands.add("override emergency");
         commands.add("start waiting");
@@ -96,11 +98,14 @@ public class CommandHandler implements Runnable {
             case "quit":
                 App.shutdown();
                 break;
-            case "start mapping":
+            case "bdsm":
                 if (currentState == SystemState.WAITING)
                     eventBus.publish(new NewStateEvent(SystemState.MAPPING));
                 else
                     throw new InvalidCommandException("Not in waiting state");
+                break;
+            case "start emergency":
+                    eventBus.publish(new NewStateEvent(SystemState.EMERGENCY));
                 break;
             case "override emergency":
                 if (currentState == SystemState.EMERGENCY)

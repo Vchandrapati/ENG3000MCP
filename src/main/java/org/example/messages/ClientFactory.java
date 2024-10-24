@@ -77,9 +77,9 @@ public class ClientFactory {
                 eventBus.publish(
                         new ClientErrorEvent(receiveMessage.clientID, ReasonEnum.INVALCONNECT));
             }
-
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Failed to handle message");
+            e.printStackTrace();
         }
     }
 

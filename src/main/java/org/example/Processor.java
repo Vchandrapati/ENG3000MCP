@@ -47,7 +47,7 @@ public class Processor {
         boolean untrip = event.isUntrip();
         totalBlocks = db.getBlockCount();
         if (!isNextBlockValid(checkpointTripped)) {
-            logger.log(Level.WARNING, "Inconsistent checkpoint trip : {0} on trip boolean : {1}",
+            logger.log(Level.WARNING, "Inconsistent checkpoint trip : {0} on trip boooooooolean : {1}",
                     new Object[] { checkpointTripped, untrip });
             eventBus.publish(new ClientErrorEvent("CP0" + checkpointTripped, ReasonEnum.INCORTRIP));
             return;
@@ -234,7 +234,7 @@ public class Processor {
     private boolean isNextBlockValid(int checkpoint) {
         String cpId = checkpoint > 9 ? "CP" + checkpoint : "CP0" + checkpoint;
         String stId = checkpoint > 9 ? "ST" + checkpoint : "ST0" + checkpoint;
-        String smartstId = checkpoint > 9 ? "STA" + checkpoint : "STA0" + checkpoint;
+        String smartstId = checkpoint > 9 ? "STA" + checkpoint : "STA" + checkpoint;
         return db.getClient(cpId, CheckpointClient.class).isPresent()
                 || db.getClient(stId, StationClient.class).isPresent()
                 || db.getClient(smartstId, StationClient.class).isPresent();
