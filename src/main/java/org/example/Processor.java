@@ -10,9 +10,7 @@ import org.example.state.SystemState;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,16 +19,45 @@ public class Processor {
     private final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private final Database db;
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+    private final ExecutorService tripQueueExecutor = Executors.newSingleThreadExecutor();
     private int totalBlocks;
     private SystemState currentState;
+    private LinkedBlockingQueue<TripEvent> tripQueue;
 
     public Processor (EventBus eventBus, Database db) {
         this.eventBus = eventBus;
         this.db = db;
+        this.tripQueue = new LinkedBlockingQueue<>();
+
         eventBus.subscribe(StateChangeEvent.class, this::updateState);
-        eventBus.subscribe(TripEvent.class, this::checkpointTripped);
+        eventBus.subscribe(TripEvent.class, this::queueTripEvent);
         eventBus.subscribe(BladeRunnerStopEvent.class, this::bladeRunnerStopped);
 
+        startTripProcessor();
+    }
+
+    private void queueTripEvent(TripEvent event) {
+        try {
+            tripQueue.put(event); // Add event to the queue
+            logger.log(Level.INFO, "Trip event enqueued: {0}", event.location());
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            logger.log(Level.SEVERE, "Failed to enqueue trip event", e);
+        }
+    }
+
+    private void startTripProcessor() {
+        tripQueueExecutor.submit(() -> {
+            while (true) {
+                try {
+                    TripEvent event = tripQueue.take(); // Blocks until an event is available
+                    checkpointTripped(event);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    break; // Exit loop if interrupted
+                }
+            }
+        });
     }
 
     private void updateState (StateChangeEvent event) {
@@ -304,6 +331,9 @@ public class Processor {
         br.updateStatus(MessageEnums.CCPStatus.STOPC);
         br.sendExecuteMessage(MessageEnums.CCPAction.FFASTC);
         br.updateStatus(MessageEnums.CCPStatus.FFASTC);
+        checkForTraffic(br.getZone());
+        br.changeZone(br.getZone() + 1);
+        db.updateBladeRunnerBlock(br.getId(), br.getZone());
 
         if (isSmartStation(station)) {
             station.sendExecuteMessage(MessageEnums.STCAction.CLOSE);

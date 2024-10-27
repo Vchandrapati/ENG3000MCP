@@ -2,12 +2,14 @@ package org.example.visualiser;
 
 import org.example.Database;
 import org.example.client.BladeRunnerClient;
+import org.example.client.StationClient;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class VisualiserPanel extends JPanel {
     private static final Database db = Database.getInstance();
@@ -29,7 +31,7 @@ public class VisualiserPanel extends JPanel {
             double endY = centerY + (radiusY - SEGMENT_DRAW_LENGTH) * Math.sin(angle);
 
             // Check if it's a station or regular checkpoint
-            if (isStation(i)) {
+            if (db.getStationIfExist(i).isPresent()) {
                 g2d.setColor(Color.MAGENTA);  // Draw stations in purple
             } else {
                 g2d.setColor(Color.BLACK);    // Draw checkpoints in black
@@ -47,7 +49,7 @@ public class VisualiserPanel extends JPanel {
 
             g2d.setColor(Color.BLACK);  // Label color is always black
             g2d.setFont(new Font("Arial", Font.BOLD, 12));
-            String zoneNumber = getCheckpointOrStationId(i);
+            String zoneNumber = getCheckpointOrStationId(i) + ":" + i;
 
             // Center the label
             FontMetrics fm = g2d.getFontMetrics();
@@ -58,13 +60,10 @@ public class VisualiserPanel extends JPanel {
         }
     }
 
-    private static boolean isStation (int block) {
-        return db.getStationIfExist(block).isPresent();
-    }
-
     private static String getCheckpointOrStationId (int block) {
-        if (isStation(block)) {
-            return "ST" + block;  // Station ID prefix
+        Optional<StationClient> sc = db.getStationIfExist(block);
+        if (sc.isPresent()) {
+            return sc.get().getId(); // Station ID prefix
         } else {
             return "CP" + block;  // Checkpoint ID prefix
         }
