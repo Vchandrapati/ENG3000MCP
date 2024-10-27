@@ -35,7 +35,7 @@ public class StatusScheduler {
             for (AbstractClient client : clients) {
                 client.sendStatusMessage();
                 client.nowExpectingStat();
-                checkIfClientIsUnresponsive(client);
+//                checkIfClientIsUnresponsive(client);
             }
         }, 0, STAT_INTERVAL_SECONDS, TimeUnit.SECONDS);
     }

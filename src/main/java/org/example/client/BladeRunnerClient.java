@@ -10,6 +10,7 @@ public class BladeRunnerClient extends AbstractClient<MessageEnums.CCPStatus, CC
     private volatile boolean isCurrentlyMapped;
     private volatile boolean collision;
     private volatile boolean dockedAtStation;
+    private volatile boolean overshot;
 
 
     public BladeRunnerClient (String id, MessageGenerator messageGenerator,
@@ -49,6 +50,18 @@ public class BladeRunnerClient extends AbstractClient<MessageEnums.CCPStatus, CC
 
     public void setDockedAtStation (Boolean b) {
         dockedAtStation = b;
+    }
+
+    public void bladeRunnerOvershot(){
+        overshot = true;
+    }
+
+    public void setBladeRunnerOvershot(boolean overshot){
+        this.overshot = overshot;
+    }
+
+    public boolean didBladeRunnerOvershot (){
+        return overshot;
     }
 
     @Override

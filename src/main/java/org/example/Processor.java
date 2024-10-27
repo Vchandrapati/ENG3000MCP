@@ -30,6 +30,7 @@ public class Processor {
         eventBus.subscribe(StateChangeEvent.class, this::updateState);
         eventBus.subscribe(TripEvent.class, this::checkpointTripped);
         eventBus.subscribe(BladeRunnerStopEvent.class, this::bladeRunnerStopped);
+
     }
 
     private void updateState (StateChangeEvent event) {
@@ -120,8 +121,19 @@ public class Processor {
 
         // checks if next block is full, if so stop only if untrip
         int nextCheckpoint = calculateNextBlock(checkpointTripped, 1);
-        if (isCheckpointStation(nextCheckpoint) && untrip)
-            bladeRunner.sendExecuteMessage(MessageEnums.CCPAction.FSLOWC);
+
+        if (isCheckpointStation(nextCheckpoint)) {
+
+        }
+
+        if (isCheckpointStation(checkpointTripped) && !untrip) {
+            //going forward into station, show slow now
+            if (bladeRunner.getStatus().equals(MessageEnums.CCPStatus.FFASTC)) {
+                bladeRunner.sendExecuteMessage(MessageEnums.CCPAction.FSLOWC);
+            }
+            //reversing into station
+
+        }
 
 
         if (db.isBlockOccupied(nextCheckpoint) && untrip && bladeRunner.getLastActionSent() != MessageEnums.CCPAction.FSLOWC && currentState != SystemState.MAPPING) {
@@ -136,6 +148,7 @@ public class Processor {
             if (isCheckpointStation(checkpointTripped) && !bladeRunner.isDockedAtStation()) { // overshot
                 // Station
                 bladeRunnerOverShot(bladeRunner, checkpointTripped);
+                bladeRunner.setBladeRunnerOvershot(!bladeRunner.didBladeRunnerOvershot());
             } else {
                 bladeRunner.setDockedAtStation(false);
                 checkForTraffic(previousCheckpoint);
@@ -167,6 +180,7 @@ public class Processor {
         if (untrip) {
             reversingBladeRunner.sendExecuteMessage(MessageEnums.CCPAction.FSLOWC);
             reversingBladeRunner.updateStatus(MessageEnums.CCPStatus.FSLOWC);
+            reversingBladeRunner.setBladeRunnerOvershot(!reversingBladeRunner.didBladeRunnerOvershot());
             logger.log(Level.INFO, "blade Runner reversing but previous block occupied");
 
             db.updateBladeRunnerBlock(reversingBladeRunner.getId(), previousBlock);
@@ -240,11 +254,23 @@ public class Processor {
         Optional<BladeRunnerClient> bladeRunnerOp = db.getClient(event.id(), BladeRunnerClient.class);
         if (bladeRunnerOp.isPresent()) {
             BladeRunnerClient bladeRunner = bladeRunnerOp.get();
+
+            db.updateBladeRunnerBlock(bladeRunner.getId(),calculateNextBlock(bladeRunner.getZone(),1));
+            int stationCheckpoint = bladeRunner.getZone();
+
+            if(!bladeRunner.didBladeRunnerOvershot()){
+                stationCheckpoint = calculateNextBlock(stationCheckpoint, 1);
+                Optional<StationClient> sc = db.getStationIfExist(stationCheckpoint);
+            }
+            bladeRunner.setBladeRunnerOvershot(false);
+            Optional<StationClient> sc = db.getStationIfExist(stationCheckpoint);
+
+
+
             bladeRunner.sendExecuteMessage(MessageEnums.CCPAction.STOPO);
             bladeRunner.updateStatus(MessageEnums.CCPStatus.STOPO);
 
-            int stationCheckpoint = calculateNextBlock(bladeRunner.getZone(), 1);
-            Optional<StationClient> sc = db.getStationIfExist(stationCheckpoint);
+
 
             if (sc.isPresent()) {
                 scheduler.schedule(() -> stationBuffer(bladeRunner, sc.get()), 5, TimeUnit.SECONDS);
@@ -255,9 +281,7 @@ public class Processor {
                 }
             }
 
-            // time for 5 seconds or whatever
             bladeRunner.setDockedAtStation(true);
-            // set speed to forward/ back to forward
         }
     }
 
@@ -267,11 +291,13 @@ public class Processor {
         if (br.isPresent()) {
             br.get().sendExecuteMessage(MessageEnums.CCPAction.STOPC);
             br.get().updateStatus(MessageEnums.CCPStatus.STOPC);
-        }
 
+        }
         bladeRunner.sendExecuteMessage(MessageEnums.CCPAction.RSLOWC);
         bladeRunner.updateStatus(MessageEnums.CCPStatus.RSLOWC);
     }
+
+
 
     private void stationBuffer (BladeRunnerClient br, StationClient station) {
         br.sendExecuteMessage(MessageEnums.CCPAction.STOPC);
@@ -283,5 +309,8 @@ public class Processor {
             station.sendExecuteMessage(MessageEnums.STCAction.CLOSE);
             station.updateStatus(MessageEnums.STCStatus.OFF);
         }
+    }
+
+    private void notifyStation(StationClient sc){
     }
 }
