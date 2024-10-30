@@ -5,12 +5,19 @@ import org.example.events.*;
 
 import java.util.EnumMap;
 import java.util.Map;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.example.events.EventBus;
+
+
+
 // Manages the states of the system
-public class SystemStateManager implements Runnable {
+public class SystemStateManager {
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     // Holds the current state and the current state concrete implementation
     private static SystemStateManager instance;
@@ -22,6 +29,8 @@ public class SystemStateManager implements Runnable {
     private SystemStateInterface currentStateConcrete;
     private boolean error = false;
     private long timeWaited = System.currentTimeMillis();
+
+    private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
     // Initial state
     private SystemStateManager (EventBus eventBus) {
@@ -42,8 +51,7 @@ public class SystemStateManager implements Runnable {
         eventBus.subscribe(ClientErrorEvent.class, this::addUnresponsiveClient);
         eventBus.subscribe(TripEvent.class, this::handleTrip);
 
-        Thread systemStateThread = new Thread(this, "systemStateThread-Thread");
-        systemStateThread.start();
+        scheduler.schedule(this::runLoop, 500, TimeUnit.MILLISECONDS);
     }
 
     /**
@@ -64,12 +72,6 @@ public class SystemStateManager implements Runnable {
         setState(event.newState());
     }
 
-    @Override
-    public void run () {
-        while (isRunning) {
-            runLoop();
-        }
-    }
 
     public void shutdown () {
         isRunning = false;
